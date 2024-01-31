@@ -1,0 +1,155 @@
+:: StoryTitle
+Phone Retro Mailbox
+
+
+:: StoryData
+{
+  "ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1",
+  "format": "SugarCube",
+  "format-version": "2.36.1",
+  "start": "Start",
+  "zoom": 1
+}
+
+
+:: Start [nobr]
+<div class="email">
+	<div class="object"><<email `hasVisited("Email")`>>From [[Emilia|Email]]</div>
+    <div class="snippet">I just wanted to know if...</div>
+</div>
+<div class="email">
+	<div class="object"><<email `hasVisited("Email")`>>From [[StateFarm|Email]]</div>
+    <div class="snippet">Let me tell you about your car...</div>
+</div>
+<div class="email">
+	<div class="object"><<email `hasVisited("Email")`>>From [[Boss|Email]]</div>
+    <div class="snippet">Why aren't you at work?</div>
+</div>
+<div class="email">
+	<div class="object"><<email `hasVisited("Email")`>>From [[mom|Email]]</div>
+    <div class="snippet">Hi sweetie, can you come fix...</div>
+</div>
+<div class="email">
+	<div class="object"><<email `hasVisited("Email")`>>From [[dad|Email]]</div>
+    <div class="snippet">you should call your mother...</div>
+</div>
+<div class="email">
+	<div class="object"><<email `hasVisited("Email")`>>From [[Emilia|Email]]</div>
+    <div class="snippet">So about Friday...</div>
+</div>
+<div class="email">
+	<div class="object"><<email `hasVisited("Email")`>>From [[spam|Email]]</div>
+    <div class="snippet">I just wanted to know if...</div>
+</div>
+<div class="email">
+	<div class="object"><<email `hasVisited("Email")`>>From [[spam|Email]]</div>
+    <div class="snippet">Lorem ipsum dolor sit amet...</div>
+</div>
+<div class="email">
+	<div class="object"><<email `hasVisited("Email")`>>From [[spam|Email]]</div>
+    <div class="snippet">Lorem ipsum dolor sit amet...</div>
+</div>
+<div class="email">
+	<div class="object"><<email `hasVisited("Email")`>>From [[spam|Email]]</div>
+    <div class="snippet">Lorem ipsum dolor sit amet...</div>
+</div>
+<div class="email">
+	<div class="object"><<email `hasVisited("Email")`>>From [[spam|Email]]</div>
+    <div class="snippet">Lorem ipsum dolor sit amet...</div>
+</div>
+<div class="email">
+	<div class="object"><<email `hasVisited("Email")`>>From [[spam|Email]]</div>
+    <div class="snippet">Lorem ipsum dolor sit amet...</div>
+</div>
+<div class="email">
+	<div class="object"><<email `hasVisited("Email")`>>From [[spam|Email]]</div>
+    <div class="snippet">Lorem ipsum dolor sit amet...</div>
+</div>
+
+
+
+:: StoryInterface
+<div id="container">
+	<div id="header">[NAME]'s Mailbox</div>
+    <div id="passages"></div>
+	<div id="footer">powered by [whatever]</div>
+</div>
+
+
+:: Widget [widget nobr]
+<<widget "email">>
+	<<if !_args[0]>>
+		<span style="color: lime;"><i class="fa-solid fa-envelope"></i></span>
+	<<else>>
+		<i class="fa-solid fa-envelope-open"></i>
+	<</if>>
+<</widget>>
+
+
+:: StoryStylesheet [stylesheet]
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+
+
+#container {
+  	height: 740px;
+    width: 350px;
+    margin: auto;
+    position: absolute;
+    outline: 1px solid lime;
+    font-family: monospace;
+    color: lime;
+  	top: 0;
+  	bottom: 0;
+  	left: 0;
+  	right: 0;
+}
+
+#passages {
+        margin: 5px;
+    width: calc(100% - 10px);
+    height: calc(100% - 86px);
+
+    overflow: auto;
+}
+.passage {
+    position: relative;
+  	margin: inherit;
+}
+
+  
+#header {
+    height: 35px;
+    font-size: 1.5em;
+    text-align: center;
+    border-bottom: 1px dashed;
+    padding-top: 10px;
+}
+  
+#footer {
+    height: 22px;
+    border-top: 1px dashed;
+    font-size: 0.8em;
+    text-align: center;
+  	padding-top: 7px;
+}
+  
+#main-block {
+    overflow-y: scroll;
+    height: 666px;
+    border-right: 2px dashed #a0ffa0;
+}
+  
+.email {
+    height: 60px;
+    outline: 1px solid #00b500;
+    font-size: 18px;
+    font-family: 'VT323', monospace;
+    display: flex;
+    padding-left: 2%;
+    color: #00b500;
+  	flex-direction: column;
+}
+.snippet {
+  font-size: 0.8em;
+  margin-left: 5%;
+}
