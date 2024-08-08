@@ -19,8 +19,9 @@ The directory of this repository is organised as follow:
 ## Harlowe Templates (TBA)
 
 ## SugarCube Templates 
-The templates in this folder are made for SugarCube 2.36.1. Any use with a previous version may break the code.\
-The HTML template file can be opened in any Twine 2 version from  2.3.16 onward.
+The templates in this folder are made for SugarCube 2.36.1. Any use with a previous or later version may break the code.\
+The HTML template file can be opened in any Twine 2 version from 2.36.1 onward.
+> All the templates will be updated for 2.37, a copy of the 2.36.1 will be kept available.
 
 The templates are organised in 2 categories:
 * Code Templates (settings, character creator)
@@ -29,8 +30,8 @@ The templates are organised in 2 categories:
 ## Ready-to-Use Tweego Folder
 This *Ready-to-Use Tweego* folder is not of the easiest (if not **the** easiest) install for Tweego.\
 Just:
-1. Download the Zip File
-2. Extract it
+1. Download the Zip Folder.
+2. Extract it.
 3. Open the folder in VSCode.
 
 -> You're ready to code!
