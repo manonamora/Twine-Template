@@ -1,0 +1,47 @@
+- update the templates to 2.67
+- have the coded files easily visible
+- new template release 
+
+
+// Check list //
+
+Tweego Folder:
+    - Add the last version of SugarCube 
+    - Add major SugarCube versions (2.36)
+    - Add Harlowe (major versions)
+    - Add Chapbook (major versions)
+    - Add Snowman
+  > Create build files for all of them (check if they can be put in a folder instead?)
+    - Find a way for the Mac OS version 
+
+~ SugarCube Templates ~
+
+ Character Creator:
+    - Update for 2.37 <<do/redo>> formatting
+    - Put code into .tw files 
+ Settings:
+    - Update for 2.37
+    - Put code into .tw files 
+ UI One Page:
+    - Update for 2.37
+    - Put code into .tw files 
+ UI Simplet Book:
+    - Update for 2.37 (<<do/redo>>)
+    - Put code into .tw files 
+ UI Space Tech:
+    - Update for 2.37
+    - Put code into .tw files 
+ Title Page:
+    - Update for 2.37
+    - Put code into .tw files 
+ VN-lite:
+    - Update for 2.37
+    - Put code into .tw files 
+
+To Do:
+    - Phone Template
+
+~ Harlowe Templates ~
+  Settings:
+    - Finish it
+    - Figure out how to display code~
