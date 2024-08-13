@@ -1,8 +1,3 @@
-- update the templates to 2.67
-- have the coded files easily visible
-- new template release 
-
-
 // Check list //
 
 Tweego Folder:
@@ -18,30 +13,29 @@ Tweego Folder:
 
  Character Creator:
     - Update for 2.37 <<do/redo>> formatting
-    - Put code into .tw files 
+    - Relase code into .tw file copy
  Settings:
     - Update for 2.37
-    - Put code into .tw files 
+    - Relase code into .tw file copy
  UI One Page:
     - Update for 2.37
-    - Put code into .tw files 
+    - Relase code into .tw file copy
  UI Simplet Book:
     - Update for 2.37 (<<do/redo>>)
-    - Put code into .tw files 
+    - Relase code into .tw file copy
  UI Space Tech:
     - Update for 2.37
-    - Put code into .tw files 
+    - Relase code into .tw file copy 
  Title Page:
     - Update for 2.37
-    - Put code into .tw files 
+    - Relase code into .tw file copy
  VN-lite:
     - Update for 2.37
-    - Put code into .tw files 
+    - Relase code into .tw file copy
 
 To Do:
     - Phone Template
+    - À la Harlowe
 
 ~ Harlowe Templates ~
-  Settings:
-    - Finish it
-    - Figure out how to display code~
+  - Iminate SugarCube and Chapbook

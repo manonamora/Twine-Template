@@ -1,0 +1,307 @@
+/*
+      // TABLE OF CONTENT
+  // I   - BASE FIXES
+  // II  - HEADER/FOOTER
+  // III - POPUPS
+  // IV  - SETTINGS RELATED CODE
+  // V   - MEDIA RESIZE
+*/
+
+  /***** BASE FIXES *****/
+/*
+  These fixes are mainly because I wanted the guide to look a certain way. 
+  You can disregard them in your own project.
+
+  Includes:
+  - fixed header/footer (resize of passage)
+  - moved background to body (avoid blank space during scrolling)
+  - changed the cursor for relevant interactive elements
+*/
+body {
+  background: black;
+  color: white;
+}
+tw-story {
+  background: unset;
+  color: unset;
+}
+tw-sidebar {
+  z-index: 100;
+}
+
+tw-dialog {
+  border-radius: 8px;
+}
+
+select, input[type="checkbox"], label {
+  cursor: pointer;
+}
+
+  /***** HEADER/FOOTER *****/
+/*
+  While colours are set in the settings, I'm just leaving these as a backup/testing purposes.
+  The background is needed, or you'd see the passage text under it. (correct color in the SETTING section)
+*/
+tw-header, tw-footer {
+  display:block;
+  position: fixed;
+  background: black;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+tw-header {
+  top: 0;
+  border-bottom: 1px white dotted;
+  font-size: 2em;
+  padding: 10px;
+}
+tw-footer {
+  bottom:0;
+  border-top: 1px white dotted;
+  font-size: 1.5em;
+  padding: 3px;
+}
+
+  /***** POPUPS *****/
+/*
+  This is the code for the custom popups.
+  Again the black background is for backup loading
+*/
+.popup {
+  width: max-content;
+  height: max-content;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  visibility: hidden;
+  display:none;
+
+  background: black;
+  outline: 1px solid darkred;
+}
+/* 
+  With every custom popup you create, you need to add the new ID below, or it won't open. 
+*/
+#popup-save.open, #popup-settings.open, #popup-credits.open, #popup-save1.open {
+  visibility: visible;
+  z-index: 110;
+  display: block;
+}
+#popup-close {
+  position: absolute;
+  top: 11px;
+  right: 10px;
+  font-size: 50px;
+  height: 58px;
+  width: 50px;
+}
+#popup-close tw-hook {
+  margin-left: 15px;
+}
+#popup-close tw-link {
+  color: darkred;
+}
+#popup-close tw-link:hover {
+  color: white;
+  text-shadow: 0px 0px 20px red;
+}
+
+#popup-title {
+  text-align: center;
+  margin: 0.2em 0 0.3em;
+  line-height: 0.8em;
+}
+.popup hr {
+  border: none;
+  border-bottom: 2px dotted;
+}
+#popup-body {
+  overflow: auto;
+  padding: 1% 2% 3%;
+  width: 100%;
+  height: max-content;
+  margin: auto;
+  max-height: 75vh;
+  max-width: 600px;
+}
+  /* Popup Specific */
+.fake-button {
+  font-weight: bold;
+  color: grey;
+  cursor: not-allowed;
+}
+imp-exp#saves {
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+imp-exp#saves > * {
+  padding: 0 5px;
+}
+
+table#settings td {
+  min-width: 200px;
+  text-align: right;
+}
+table#settings th {
+  text-align: right;
+  width: 150px;
+}
+
+  /***** SETTINGS *****/
+/*
+  Below is the code for any settings requiring a class.
+*/
+  /* Font Family */
+
+.serif tw-story {
+  font-family: serif;
+}
+.sansserif tw-story {
+  font-family: sans-serif;
+}
+.monospace tw-story {
+  font-family: monospace;
+}
+
+  /* Themes */
+
+body.light-theme {
+  background-color: white;
+  color: black;
+}
+body.dark-theme {
+  background-color: #242424;
+  color: #e8e7e7;
+}
+body.sepia-theme {
+  background-color: #F7F4F1;
+  color: #7b3012;
+}
+
+.light-theme tw-header, .light-theme tw-footer {
+  background: white;
+  border-color: black;
+}
+.dark-theme tw-header, .dark-theme tw-footer {
+  background: #242424;
+  border-color: white;
+}
+.sepia-theme tw-header, .sepia-theme tw-footer {
+  background: #F7F4F1;
+  border-color: black;
+}
+
+.light-theme tw-dialog {
+  background: white;
+  color: black;
+  border-color: black;
+}
+.dark-theme tw-dialog {
+  background: #242424;
+  color: #e8e7e7;
+  border-color: white;
+}
+.sepia-theme tw-dialog {
+  background: #F7F4F1;
+  color: #7b3012;
+  border-color: black;
+}
+
+.light-theme .popup {
+  background: white;
+}
+.dark-theme .popup {
+  background: #242424;
+}
+.sepia-theme .popup {
+  background: #F7F4F1;
+}
+
+.light-theme #popup-close tw-link:hover {
+  color: red;
+}
+.sepia-theme #popup-close tw-link:hover {
+  color: red;
+}
+
+.light-theme tw-story select {
+  background: white;
+}
+.dark-theme tw-story select {
+  background: #222;
+}
+.sepia-theme tw-story select {
+  background: white;
+}
+
+.light-theme tw-link {
+  color: #3559c4;
+}
+.dark-theme tw-link {
+  color: #6487ee;
+}
+.sepia-theme tw-link {
+  color: #3559c4;
+}
+
+.light-theme tw-link:hover {
+  color: darkred;
+}
+.dark-theme tw-link:hover {
+  color: #43d0ff;
+}
+.sepia-theme tw-link:hover {
+  color: #048b00;
+}
+
+  /***** MOBILE *****/
+/*
+  Because I added a header and footer, and it's messing with stuff.
+  And this is the UGLIEST way of doing mobile accessibility.
+    What really should be done is:
+      - reduce the font of the header/footer as you decrease the width
+      - *then* mess around with the padding of tw-story
+    (this would really not be an issue with tw-sidebar wasn't nested inside tw-story, but that's a rant for another template)
+*/
+@media screen and (max-width: 1000px) {
+  tw-story {
+    padding: 9% 20% 5%;
+  }
+}
+@media screen and (max-width: 600px) {
+  tw-story {
+    padding: 16% 5%;
+  }
+  .popup {
+    max-width: 97%;
+  }
+}
+@media screen and (max-width: 375px) {
+  tw-story {
+    padding: 35% 5%;
+  }
+}
+
+  /***** OTHER *****/
+/*
+  Below is the code for any settings requiring a class.
+*/
+/*This code is so I could display the examples*/
+pre {
+  width: fit-content;
+  padding: 0 1em 1em;
+  border-radius: 6px;
+}
+.light-theme pre, .sepia-theme pre {
+  background: lavender;
+}
+.dark-theme pre {
+  background: #333357;
+}

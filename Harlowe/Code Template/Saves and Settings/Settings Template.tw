@@ -1,0 +1,1048 @@
+:: StoryTitle
+Harlowe Settings
+
+
+:: StoryData
+{
+  "ifid": "37BFE9B3-93E0-4A2C-B74E-3FAEF445DBC3",
+  "format": "Harlowe",
+  "format-version": "3.3.9",
+  "start": "Start",
+  "tag-colors": {
+    "startup": "orange",
+    "footer": "orange",
+    "header": "orange"
+  },
+  "zoom": 1
+}
+
+
+:: Credits {"position":"150,275","size":"100,100"}
+The ''Save System and Settings'' template was created by (link-repeat: "manonamora ⎘")[(open-url:"https://manonamora.itch.io/")] on Twine 2 with Harlowe (v3.3.9).
+<hr>
+''It was made possible thanks to:''
+* Chris Klimas, creator of (link-repeat: "Twine ⎘")[(open-url:"https://twinery.org/")]
+* Leon Arnott, creator and maintainer of the (link-repeat: "Harlowe ⎘")[(open-url:"https://twine2.neocities.org/")] format
+* Greyelf's answers on the old Twine Forums, the Discord, and Reddit
+* (link-repeat: "Kajot-dev's Harlowe Save-To-File Macros ⎘")[(open-url: "https://github.com/Kajot-dev/Twine-Harlowe-Save-To_File")]
+<hr>
+''Twine Resources:''
+* Download (link-repeat: "Twine ⎘")[(open-url:"https://twinery.org/")]
+* Check the (link-repeat: "Harlowe manual ⎘")[(open-url:"https://twine2.neocities.org/")]
+* Check the (link-repeat: "Twine Resource Masterlist ⎘")[(open-url:"https://intfiction.org/t/twine-resource-masterlist-wiki/65903")]
+* Community Help: (link-repeat: "IntFiction Forum ⎘")[(open-url:"https://intfiction.org/c/authoring/twine")], (link-repeat: "Reddit r/twinegames ⎘")[(open-url:"https://www.reddit.com/r/twinegames/")], (link-repeat: "Discord ⎘")[(open-url:"https://discordapp.com/invite/n5dJvPp")]
+<h5>You can find my other Twine templates and guides (link-repeat: "here ⎘")[(open-url:"https://itch.io/c/2917452/")]
+
+
+:: Footer-Menu [footer] {"position":"25,275","size":"100,100"}
+{(append: ?SideBar)
+    [<tw-footer>{
+      (link-repeat: "SAVES")[
+        <script>$(".popup").removeClass("open");$("#popup-save").addClass("open");</script>
+      ] — 
+      (link-repeat: "SETTINGS")[
+        <script>$(".popup").removeClass("open");$("#popup-settings").addClass("open");</script>
+      ] — 
+      (link-repeat: "CREDITS")[
+        <script>$(".popup").removeClass("open");$("#popup-credits").addClass("open");</script>
+      ]
+    }</tw-footer>]
+{
+<div id="popup-save" class="popup">
+  <div id="popup-titlebar">
+  	<h2 id="popup-title">SAVES</h2>
+	  <span id="popup-close">
+		  (link-repeat: "&times;")[
+			  <script>$("#popup-save").removeClass("open");</script>
+		  ]
+	  </span>
+  </div>
+	<div id="popup-body">
+		(display: "SAVELOADSYSTEM")
+	</div>
+</div>
+<div id="popup-settings" class="popup">
+  <div id="popup-titlebar">
+    <h2 id="popup-title">SETTINGS</h2>
+    <span id="popup-close">
+      (link-repeat: "&times;")[
+        <script>$("#popup-settings").removeClass("open");</script>
+      ]
+    </span>
+	</div>
+	<div id="popup-body">
+		(display: "SETTINGSSYSTEM")
+	</div>
+</div>
+<div id="popup-credits" class="popup">
+  <div id="popup-titlebar">
+  	<h2 id="popup-title">CREDITS</h2>
+    <span id="popup-close">
+      (link-repeat: "&times;")[
+        <script>$("#popup-credits").removeClass("open");</script>
+      ]
+    </span>
+	</div>
+	<div id="popup-body">
+		(display: "Credits")
+	</div>
+</div>
+}
+<!-- You can obviously change the popups for actual passages, but I personally like this vibe best for myself ~ -->}
+
+
+:: Header [header] {"position":"25,150","size":"100,100"}
+{
+  <!-- Code to send the player back to a story passage -->
+  (if: not ((passage:)'s tags contains "no-return"))[
+	  (set: $lastpassage to (passage:)'s name)
+  ]
+  <!--The title Header-->
+  (prepend:?SideBar)[<tw-header>SAVES! AND SETTINGS! IT'S A TEMPLATE!</tw-header>]
+  <!--The Settings Autoloader-->
+  (if: $chosenTheme is "Sepia Theme")[
+    <script>settingThemeChange(2)</script>
+  ](elseif: $chosenTheme is "Dark Theme")[
+    <script>settingThemeChange(1)</script>
+  ](else:)[
+    <script>settingThemeChange(0)</script>
+  ]
+  (if: $chosenFront is "Serif")[
+    <script>settingFontFamily(2)</script>
+  ](elseif: $chosenFront is "Sans-Serif")[
+    <script>settingFontFamily(1)</script>
+  ](else:)[
+    <script>settingFontFamily(0)</script>
+  ]
+  <script>settingFontSize($fontSize);</script>
+}
+
+
+:: SAVELOADSYSTEM {"position":"150,25","size":"100,100"}
+//Save up to the last visited passage//
+{
+  <!-- This System incldudes the Export/Import - Don't forget to get the JavaScript-->
+  <table id="saves">
+    <tr>
+      <td>//Slot 1:// [(if: (saved-games: ) contains "Slot 1")[(print: (saved-games: )'s "Slot 1")](else:)[(Empty)]]<saveslot1|</td>
+      <td>(link-repeat: "SAVE")[
+          (if: $setNamingSaves is "Custom name")[
+            (set: $tempName to (prompt: [Enter Save Name:], "...", "Default", "Confirm"))
+            (if: $tempName is not "...")[
+              (set: $savesName to $tempName)
+            ]
+          ]
+          (if: (save-game: "Slot 1", $savesName))[
+            (replace: ?saveslot1)[[//Saving...//]<Target|(live: 2s)[(replace: ?Target)[(if: (saved-games: ) contains "Slot 1")[(print: (saved-games: )'s "Slot 1")](else:)[(Empty)]](stop:)]]
+          ](else:)[
+            (replace: ?saveslot1)[Error - Save Failed]
+          ]
+        ]
+      </td>
+      <td>(if: (savedgames:) contains "Slot 1")[
+        (link: "LOAD")[
+    	    (load-game:"Slot 1")
+          (go-to: $lastpassage)
+        ]
+        ](else:)[<span class="fake-button">LOAD</span>]
+      </td>
+    </tr>
+    <tr>
+      <td>//Slot 2:// [(if: (saved-games: ) contains "Slot 2")[(print: (saved-games: )'s "Slot 2")](else:)[(Empty)]]<saveslot2|</td>
+      <td>(link-repeat: "SAVE")[
+          (if: $setNamingSaves is "Custom name")[
+            (set: $tempName to (prompt: [Enter Save Name:], "...", "Default", "Confirm"))
+            (if: $tempName is not "...")[
+              (set: $savesName to $tempName)
+            ]
+          ]
+          (if: (save-game: "Slot 2", $savesName))[
+            (replace: ?saveslot2)[[//Saving...//]<Target|(live: 2s)[(replace: ?Target)[(if: (saved-games: ) contains "Slot 2")[(print: (saved-games: )'s "Slot 2")](else:)[(Empty)]](stop:)]]
+          ](else:)[
+            (replace: ?saveslot2)[Error - Save Failed]
+          ]
+        ]
+      </td>
+      <td>(if: (savedgames:) contains "Slot 2")[
+        (link: "LOAD")[
+    	    (load-game:"Slot 2")
+          (go-to: $lastpassage)
+        ]
+        ](else:)[<span class="fake-button">LOAD</span>]
+      </td>
+    </tr>
+    <tr>
+      <td>//Slot 3:// [(if: (saved-games: ) contains "Slot 3")[(print: (saved-games: )'s "Slot 3")](else:)[(Empty)]]<saveslot3|</td>
+      <td>(link-repeat: "SAVE")[
+          (if: $setNamingSaves is "Custom name")[
+            (set: $tempName to (prompt: [Enter Save Name:], "...", "Default", "Confirm"))
+            (if: $tempName is not "...")[
+              (set: $savesName to $tempName)
+            ]
+          ]
+          (if: (save-game: "Slot 3", $savesName))[
+            (replace: ?saveslot3)[[//Saving...//]<Target|(live: 2s)[(replace: ?Target)[(if: (saved-games: ) contains "Slot 3")[(print: (saved-games: )'s "Slot 3")](else:)[(Empty)]](stop:)]]
+          ](else:)[
+            (replace: ?saveslot3)[Error - Save Failed]
+          ]
+        ]
+      </td>
+      <td>(if: (savedgames:) contains "Slot 3")[
+        (link: "LOAD")[
+    	    (load-game:"Slot 3")
+          (go-to: $lastpassage)
+        ]
+        ](else:)[<span class="fake-button">LOAD</span>]
+      </td>
+    </tr>
+  </table>
+  <!-- You can add more slots if you want, I settled for three for the template.
+  Also... It's probable there's a better way of doing this with Loops, but... I suck at those...-->
+  <imp-exp id="saves">
+    (dropdown: 2bind $externalSave, "Slot 1", "Slot 2", "Slot 3")
+    <span class="save-buttons">{(link-repeat: "Load from Disk")[(if: (savedgames:) contains $externalSave)[(dialog: bind $confirm, "Override $externalSave?", "Yes", "No")(if: $confirm is "Yes")[(readfromfile: $externalSave)]](if: (savedgames:) does not contain $externalSave)[(dialog: bind $confirm, "Load into $externalSave?", "Yes", "No")(if: $confirm is "Yes")[(readfromfile: $externalSave)]]]}</span>
+    <span>(link-repeat: "Export to Disk")[(savetofile: "The-Game-Name", $externalSave)]</span>
+  </imp-exp>
+<!--there are no links here, it's just because of the replace/live of the savings-->}
+
+
+:: SETTINGSSYSTEM {"position":"150,150","size":"100,100"}
+{
+  <!-- You don't need a table, but I just wanted to build one.-->
+  <table id="settings">
+    <tr>
+      <th>Theme:</th>
+      <td>
+        (dropdown: 2bind $chosenTheme, "Bright Theme", "Dark Theme", "Sepia Theme")
+        <span class="mini-buttons">
+          (link-repeat: "✔")[
+            (if: $chosenTheme is "Sepia Theme")[
+              <script>settingThemeChange(2)</script>
+            ](elseif: $chosenTheme is "Dark Theme")[
+              <script>settingThemeChange(1)</script>
+            ](else:)[
+              <script>settingThemeChange(0)</script>
+            ]
+          ]
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <th>Font Type:</th>
+      <td>
+        (dropdown: 2bind $chosenFront, "Serif", "Sans-Serif", "MonoSpace")
+        <span class="mini-buttons">
+          (link-repeat: "✔")[
+            (if: $chosenFront is "Serif")[
+              <script>settingFontFamily(2)</script>
+            ](elseif: $chosenFront is "Sans-Serif")[
+              <script>settingFontFamily(1)</script>
+            ](else:)[
+              <script>settingFontFamily(0)</script>
+            ]
+          ]
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <th>Font Size:</th>
+      <td><span class="mini-buttons">
+        (link-repeat: "−")[(set: $fontSize to it - 0.1)<script>settingFontSize($fontSize);</script>] / 
+        (link-repeat: "+")[(set: $fontSize to it + 0.1)<script>settingFontSize($fontSize);</script>]
+      </span></td>
+    </tr>
+    <tr>
+      <th>Auto-name:</th>
+      <td>(cycling-link: 2bind $setNamingSaves, "Autoname", "Custom name")</td>
+    </tr>
+  </table>
+  <!--Essentially, if you want to add more, just add a row and fill it up.-->
+}
+
+
+:: Save/Load Page [no-return] {"position":"325,600","size":"100,100"}
+(if: (savedgames:) contains "Slot 1")[(set:$slot1 to "(Override)")](else:)[(set:$slot1 to "(Empty)")] (if: (savedgames:) contains "Slot 2")[(set:$slot2 to "(Override)")](else:)[(set:$slot2 to "(Empty)")]<!-- This is only to customise a bit more the save slot. -->
+### Simple Example of a Save/Load System with Multiple Slots:
+This example only includes 2 slots, but you can add as many as you would like.
+(text-indent: 36)[> ''Note'': loading one of these saves will send you back to the last saved point.]
+<hr>
+{(link-repeat: '[Slot 1 $slot1]<saverepeat|')[<!--This hook will update every time it's clicked on-->
+	(if:(save-game:"Slot 1"))[
+		(set:$slot1 to "(Override)")
+		(replace: ?saverepeat)[Slot 1 $slot1]
+		(dialog: "#### Saved Game!")<!-- While there is a popup, it is not necessary to include it.-->
+	]
+    (if: not (save-game:"Slot 1"))[
+		(dialog: "### Save Failed...", "Bummer...")
+	]
+] — (if: (savedgames:) contains "Slot 1")[
+	(link: "Load Save")[
+    	(load-game:"Slot 1")
+        (go-to: $lastpassage)
+    ]
+]
+(else:)[
+	Empty Slot.
+]
+}
+{(link-repeat: '[Slot 2 $slot2]<saverepeat|')[
+	(if:(save-game:"Slot 2"))[
+		(set:$slot2 to "(Override)")
+		(replace: ?saverepeat)[Slot 1 $slot2]
+		(dialog: "#### Saved Game!")
+	]
+    (if: not (save-game:"Slot 2"))[
+		(dialog: "### Save Failed...", "Bummer...")
+	]
+] — (if: (savedgames:) contains "Slot 2")[
+	(link: "Load Save")[
+    	(load-game:"Slot 2")
+        (go-to: $lastpassage)
+    ]
+]
+(else:)[
+	Empty Slot.
+]
+}
+
+
+:: Saves {"position":"525,350","size":"100,100"}
+(align:'=><=')[<h2>The Save Systems</h2>]
+Here are different examples to what can be done with Saves.
+Do note that:
+* Harlowe saves automatically a current playthrough with each new passage.
+* Unless exported (see last option), playthroughs are saved in the browser's cache.
+* So, a returning player will pick up where they left off, even if a Save System is not implemented.
+** Reloading (F5) the page does not change anything.
+* However, clearing the cache will delete this progress.
+** But this is true to all non-exported saves.
+
+Because the different examples are pretty long, I've broken it down into multiple passages:
+* [[Basic Save System: One Save/Load|Saves-One]]
+* [[Multi-Slots Save/Load System|Saves-Multi]]
+* [[External Saves (Export/Import)|Saves-External]]
+* [[Further Customisations|Saves-Custom]]
+<hr>
+* [[Return to Main Menu|Start]]
+
+
+:: Saves-Custom {"position":"575,600","size":"100,100"}
+(set: $fakesave1 to (either: "slimy forest", "goopy swamp", "slippery road"), $fakesave2 to (either: "dry", "patchy", "coarse"))(save-game: "FakeSlot1", $fakesave1)(save-game: "FakeSlot2", $fakesave2 + " Desert - day 57")(move: $fakesave1 into _temp)(move: $fakesave2 into _temp)
+### Further Customisations
+There are further options to customise your save system, such as:
+* naming your saves 
+* using dropdowns to minify the save system
+* <small>and probably other things I can't think about right now (but if you remind me, I can include them)</small>
+
+### Naming saves 
+To give saves a bit more panache and help players differentiate them further than just a number, you can create a special name for playthroughs, based on characteristics of the game itself and its customisations (e.g. name of the PC, chapter, quest, etc...).
+The Name for a save can be as simple as the player's name or any other single tracked variable:
+<pre><code>
+`(save-game: "Slot XYZ", $PlayerName)
+(save-game: "Slot XYZ", $DaysSurvived)`
+</code></pre>
+or can require a more complex combination of variables:
+<pre><code>
+`(set: $NameSave to $PlayerName + " LastName  - " + $Chapter)
+(save-game: "Slot XYZ", $NameSave)`
+</code></pre>
+It is even possible to save an imput from the player:
+<pre><code>
+`(set: $NameSave to (prompt: [Enter Save Name:], "Slot XYS", "Default", "Confirm"))
+(save-game: "Slot XYZ", $NameSave)`
+</code></pre>
+(text-indent: 36)[> ''Note'': You can //also// let the player choose between different modes with an [[autoname setting|Settings]]]
+
+This can be especially useful when listing available saves to load:
+{(set: _saves to (saved-games:))
+(for: each _name, ...(datanames: _saves))[
+  (link: "<br>Slot: _name - File Name: (print: _saves's (_name))")[(load-game: _name)]
+]}
+<details><summary>Check out the code</summary><pre><code>
+`{(set: _saves to (saved-games:))
+(for: each _name, ...(datanames: _saves))[
+  (link: "<br>Slot: _name - File Name: (print: _saves's (_name))")[(load-game: _name)]
+]}`
+</code></pre></details>
+(text-indent: 36)[> ''Note'': The first two examples were set in advance. Any aditional ones were created while interacting with this file.]
+
+### Compact Save System 
+If you prefer minified systems for saves, you may want to consider using dropdowns to let the player select the wanted slot.
+
+A very basic option can be done as follow:
+{(dropdown: 2bind $currentslot, "Slot One", "Slot Two", "Slot Three"):
+(link:"Save")[(if:(save-game:$currentslot))[SAVED!]] - 
+(link: "Load")[
+    (if: (savedgames:) contains $currentslot)[(load-game:$currentslot)
+  ]
+]}
+
+<details><summary>Check out the code</summary><pre><code>
+`{(dropdown: 2bind $currentslot, "Slot One", "Slot Two", "Slot Three"):
+(link:"Save")[(if:(save-game:$currentslot))[SAVED!]] - 
+(link: "Load")[
+    (if: (savedgames:) contains $currentslot)[(load-game:$currentslot)
+  ]
+]}`
+</code></pre></details>
+Of course, this example doesn't take into account errors during saving and loading, or indicate to the player whether a save has already been filled.
+* [[Return to Saves Menu|Saves]]
+
+
+:: Saves-External {"position":"575,475","size":"100,100"}
+(align:'=><=')[<h2>External Saves (Export/Import)</h2>]
+As a final option, you can also include disk saves, so players can keep their playthroughs safely outside of the browser. This Export/Import function requires extra custom code, provided here by Kajot-dev.
+
+That code creates 3 custom macros, letting players the possibility to download and upload their playthroughs at ease.
+
+{(link-repeat: "Export From Save Slot 1")[(savetofile: "The-Game-Saving", "GameSlot1")]
+— (link-repeat: "Direct Export Save")[(savetofiledirect: "GameSlotX", "The-Game-Saving")]
+— (link-repeat: "Load Save File")[
+	(if: (savedgames:) contains "GameSlot1") [
+		(dialog: bind $confirm, "Override Slot 1?", "Yes", "No")
+    ](else:)[
+    	(dialog: bind $confirm, "Load into Slot 1?", "Yes", "No")
+    ]
+    (if: $confirm is "Yes")[(readfromfile: "GAmeSlot1")]
+]}
+
+The first link create an export from a used slot save. The second link create an export from the current playthrough, and saves it as a defined slot. The third link loads an imported file into a defined save slot (and potentially override it if filled).
+If you are planning on including more than one save slot with this Export/Import system, you will need as many `Load Save File` link as save slots.
+
+<details><summary>Check out the code</summary><pre><code>
+`{(link-repeat: "Export From Save Slot 1")[(savetofile: "The-Game-Saving", "GameSlot1")]
+— (link-repeat: "Direct Export Save")[(savetofiledirect: "GameSlotX", "The-Game-Saving")]
+— (link-repeat: "Load Save File")[
+	(if: (savedgames:) contains "GameSlot1") [
+		(dialog: bind $confirm, "Override Slot 1?", "Yes", "No")
+    ](else:)[
+    	(dialog: bind $confirm, "Load into Slot 1?", "Yes", "No")
+    ]
+    (if: $confirm is "Yes")[(readfromfile: "GAmeSlot1")]
+]}`
+</code></pre></details>
+For more customisation of this custom macro, see its (link-repeat:"documentation ⎘")[(open-url:"https://github.com/Kajot-dev/Twine-Harlowe-Save-To_File")]
+* [[Return to Saves Menu|Saves]]
+
+
+:: Saves-Multi {"position":"450,600","size":"100,100"}
+(align:'=><=')[<h2>Multi-Slots Save/Load System</h2>]
+This system is not much more complex than the [[basic one|Saves-One]], as you can simply copy-paste the same code and change the name of the Save Slot in further copy. This last step is necessary, otherwise, players will unknowingly override or load the wrong save slots.
+
+Accessibility-wise, this method is not recommended to be kept in the Sidebar, as there is only so much space on the screen before it starts looking too... busy. So, to enable players to save multiple playthroughs, there are essentially two ways to go at it:
+* send the player to a new passage, where they can save
+** this requires keeping track of the last story passage, so you can send the player back after loading the save.
+* show a popup on the screen to avoid messing with the player's history
+** this requires creating a custom popup.
+
+#### Saves Passage
+For this manner, you will need to run a small block of code in the Header passage ((link-repeat: "manual ⎘")[(open-url: "https://twine2.neocities.org/#passagetag_header")]):
+<pre><code>
+`(if: not ((passage:)'s tags contains "no-return"))[
+	(set: $lastpassage to (passage:)'s name)
+]`
+</code></pre>
+This code will check whether a certain passage includes the <code>`no-return`</code> tag ((link-repeat:"manual ⎘")[(open-url:"https://twinery.org/reference/en/editing-stories/tagging.html")]), and if it does not, it will save the passage into the variable.
+
+As such, you will need to tag all non-story passages with the <code>`no-return`</code>, including your Save System passage.
+
+(text-indent:36)[> ''Note:'' regardless of its use in the Save System, the code above can still be useful for "Return to Story" links (e.g. in Codexes or other non-Story passages).]
+
+[[Go to the Save System Page|Save/Load Page]] 
+
+#### Saves Popup
+This manner requires a bit more custom parts, as you will not only require to build a custom popup (<code>`(dialog:)`</code> does //not// work well for this, I've tested and failed) with HTML and CSS, but also some JavaScript (jQuery) to display the popup.
+
+Both the link to trigger the popup and the HTML of the popup itself should be added to wherever you plan on having your menu (probably a passage tagged as <code>header</code> or <code>footer</code>). 
+
+{(link-repeat: "Open the Saves Popup")[<script>$("#popup-save1").addClass("open");</script>]
+<div id="popup-save1" class="popup">
+  <div id="popup-titlebar">
+  	<h2 id="popup-title">SAVES SYSTEM</h2>
+	  <span id="popup-close">
+      (link: "&times;")[<script>$("#popup-save1").removeClass("open");</script>]
+    </span>
+	</div>
+	<div id="popup-body">
+		(display: "Save/Load Page")
+	</div>
+</div>}
+<!-- Yes, I know the code is slightly different, but it's to avoid issues between the template itself and the guide part.-->
+<details><summary>Check out the code</summary><pre><code>
+`{(link-repeat: "Open the Saves Popup")[
+	<script>$("#popup-save").addClass("open");</script>
+]
+<div id="popup-save1" class="popup">
+  <div id="popup-titlebar">
+  	<h2 id="popup-title">SAVES SYSTEM</h2>
+	  <span id="popup-close">
+      (link: "&times;")[<script>$("#popup-save1").removeClass("open");</script>]
+    </span>
+	</div>
+	<div id="popup-body">
+		(display: "Save/Load Page")
+	</div>
+</div>}`
+</code></pre></details>
+* [[Return to Saves Menu|Saves]]
+
+
+:: Saves-One {"position":"450,475","size":"100,100"}
+(align:'=><=')[<h2>Basic Save System: One Save/Load</h2>]
+This is the system you will find in SideBars, where you give one and only one save slot to players.
+It is easily accessible to players, but limit them to one save-file per playthrough.
+For fun, we've added a popup to warn the player whether it worked or not.
+
+{(link-repeat:'[SAVE HERE!]<saverepeat|')[
+	(if: (save-game:"GameSlot1"))[
+    	(replace: ?saverepeat)[SAVE AGAIN!]
+    	(dialog: "#### Save Successful!")
+	]
+    (if: not (save-game:"GameSlot1"))[
+    	(replace: ?saverepeat)[Save... Again?]
+		(dialog: "### Save Failed...", "Bummer...")
+	]
+  ]
+And (link-repeat:'Load Here')[
+	(if: (savedgames:) contains "GameSlot1") [
+		(dialog: "### Loaded Save", "Yay!")
+		(load-game:"GameSlot1")      
+  ]
+  (else:)[
+    (dialog: "### No Savefile!", "Ah...")
+  ]
+]}
+
+<details><summary>Check out the code</summary><pre><code>
+`{(link-repeat:'[SAVE HERE!]<saverepeat|')[
+	(if: (save-game:"GameSlot1"))[
+		(replace: ?saverepeat)[SAVE AGAIN!]
+		(dialog: "#### Save Successful!")
+	]
+	(if: not (save-game:"GameSlot1"))[
+		(replace: ?saverepeat)[Save... Again?]
+		(dialog: "### Save Failed...", "Bummer...")
+	]
+]
+And (link-repeat:'Load Here')[
+  (if: (savedgames:) contains "GameSlot1") [
+		(dialog: "### Loaded Save", "Yay!")
+		(load-game:"GameSlot1")      
+	](else:)[
+		(dialog: "### No Savefile!", "Ah...")
+	]
+]}`
+</code></pre></details>
+* [[Return to Saves Menu|Saves]]
+
+
+:: Settings {"position":"875,350","size":"100,100"}
+(align:'=><=')[<h2>The Settings</h2>]
+Because Harlowe does not have Built-In Settings APIs, if you would like to include Accessibility settings for your players, just as Theme changes, Font customisation and other, you will often need to build it from scratch... with some JavaScript/jQuery.
+
+There is still a caveat with Settings related to the StyleSheet, in that they won't stick during a page refresh/game re-load due to the way Harlowe is built and restricts communication between the JavaScript and Story passages. There are ways of going around this issue, through saving Setting choices in a variable and:
+* "(link-repeat:"hacking Harlowe ⎘")[(open-url:"https://twinelab.net/harlowe-macro-api/#/")]" with Chapel's custom code, allowing the use of Harlowe variable in the JavaScript
+* [[load|Settings-Load]] all the settings with each passage transition, in a header/footer-tagged passage ((link-repeat:"manual ⎘")[(open-url:"https://twinery.org/reference/en/editing-stories/tagging.html")])
+
+Because of this, there are //as many// ways of doing it as there are people coding.
+However, this template includes one example for different options, broken down into neat small chapters:
+* [[Theme Change (Dark/Light or more)|Settings-Theme]]
+* [[Text Customisation and Fonts|Settings-Fonts]]
+* [[Save Settings|Settings-Saves]]
+* [[Volume Controls|Settings-Sound]]
+* [[Other Toggle Settings|Settings-Other]]
+* [[Automatic Settings Load|Settings-Load]]
+<hr>
+* [[Return to Main Menu|Start]]
+
+
+:: Settings-Fonts {"position":"750,475","size":"100,100"}
+(align:'=><=')[<h2>Text Customisation and Fonts</h2>]
+### Changing the Font Type
+While using custom fonts and text formatting, it is important to prioritise legibility of the text. Providing alternative fonts (like one serif, one sans-serif and a monospace), will allow readers to have more comfortable experiences.
+
+To add a Setting for the Font family, you will need to:
+* import the wanted fonts, each defined by a class (e.g. <code>.monospace</code>)
+* add some JavaScript to display the correct font 
+* create an interactive element (e.g. link, button, etc...) to select the font 
+
+Assuming, we have imported three fonts:
+* a serif one, assigned the class <code>.serif</code>
+* a sans-serif one, assigned the class <code>.sansserif</code>
+* a monospace one, assigned the class <code>.monospace</code>
+<details><summary>Example in the StyleSheet</summary>
+The code below will use the default font of each family set by the user's device (a.k.a. I didn't import fonts because I was a bit lazy, sorry).
+<pre><code>
+`.serif tw-story{
+  font-family: serif;
+}
+.sansserif tw-story{
+  font-family: sans-serif;
+}
+.monospace tw-story{
+  font-family: monospace;
+}`
+</code></pre>
+(text-indent: 36)[> ''Note'': font styling is saved in <code>tw-story</code>, but the class is added to <code>body</code>]
+</details>
+
+Then, in the JavaScript, we will create a function to change which theme to be loaded:
+<pre><code>
+`window.settingFontFamily = function(mode) {
+	$('body').removeClass('serif sansserif monospace');
+  switch (mode) {
+    case 2:
+      $('body').addClass("serif");
+      break;
+    case 1:
+      $('body').addClass("sansserif");
+      break;
+    default:
+      $('body').addClass("monospace");
+      break;
+  }
+};`
+</code></pre>
+This code allows the possibility to add or remove as many theme as you'd like, as long as you keep a minimum of 2 (one <code>case</code> and <code>default</code>).
+<details><summary>Alternative code</summary>
+The option below assumes the monospace font is the default - i.e. in the targetted element (<code>button</code>), not coded inside a separate class (<code>button.class</code>).
+<pre><code>
+`window.settingFontFamily = function(mode) {
+	$('body').removeClass('serif sansserif');
+  switch (mode) {
+    case 2:
+      $('body').addClass("serif");
+      break;
+    case 1:
+      $('body').addClass("sansserif");
+      break;
+  }
+};`
+</code></pre>
+</details>
+
+And lastly, we need the interactive element the player will click on to choose the font they prefer. This can be done in multiple fashion, but we will use multiple links for this example.
+
+{
+  Choose Font: 
+  (link-repeat: "Serif Font")[
+    (set: $chosenFront to "serif")
+    <script>settingFontFamily(2)</script>
+  ] — 
+  (link-repeat: "Sans-Serif Font")[
+    (set: $chosenFront to "sansserif")
+    <script>settingFontFamily(1)</script>
+  ] — 
+  (link-repeat: "Monospace Font")[
+    (set: $chosenFront to "sansserif")
+    <script>settingFontFamily(0)</script>
+  ]
+}
+
+<details><summary>Check out the code</summary>
+<pre><code>
+`{
+  Choose Font: 
+  (link-repeat: "Serif Font")[
+    (set: $chosenFront to "serif")
+    <script>settingFontFamily(2)</script>
+  ] — 
+  (link-repeat: "Sans-Serif Font")[
+    (set: $chosenFront to "sansserif")
+    <script>settingFontFamily(1)</script>
+  ] — 
+  (link-repeat: "Monospace Font")[
+    (set: $chosenFront to "sansserif")
+    <script>settingFontFamily(0)</script>
+  ]
+}`
+</code></pre>
+</details>
+
+### Change the Font Size 
+To make the text easier to read for your players, you may want to include a setting allowing them to change the size of the font. Just like this:
+
+{
+  Font Size: 
+  (link-repeat: "Smaller")[
+    (set: $fontSize to it - 0.1)
+    <script>settingFontSize($fontSize);</script>
+  ] — 
+  (link-repeat: "Bigger")[
+    (set: $fontSize to it + 0.1)
+    <script>settingFontSize($fontSize);</script>
+  ]
+}
+
+<details><summary>Check out the code</summary>
+<pre><code>
+`{
+  Font Size: 
+  (link-repeat: "Smaller")[
+    (set: $fontSize to it - 0.1)
+    <script>settingFontSize($fontSize);</script>
+  ] — 
+  (link-repeat: "Bigger")[
+    (set: $fontSize to it + 0.1)
+    <script>settingFontSize($fontSize);</script>
+  ]
+}`
+(text-indent: 36)[> ''Note'': you can change the incrementation from 0.1 to whichever number you prefer.]
+</code></pre>
+</details>
+This setting relies on a bif ot JavaScript (see below) and a <code>`$fontSize`</code> variable (number!), which defines the size of the font in <code>em</code>.
+(text-indent: 36)[> ''Note'': <code>`$fontSize`</code> must be defined in the first passage of the game, with a number equal to the one defined in the StyleSheet for the <code>tw-story</code> element (<code>1.5</code> is the default in Harlowe)]
+
+And finally, a bit of JavaScript:
+<pre><code>
+`window.settingFontSize = function(mode) {
+  $('tw-story').css( "fontSize", mode + "em" );
+};`
+</code></pre>
+* [[Return to Settings Menu|Settings]]
+
+
+:: Settings-Load {"position":"1000,475","size":"100,100"}
+(align:'=><=')[<h2>Automatic Settings Load</h2>]
+Due to how Harlowe is built, restricting the access of Harlowe variables in JavaScript, any refresh of the page will "reset" all Setting change done. To avoid this, and if you are not comfortable "(link-repeat:"hacking Harlowe ⎘")[(open-url:"https://twinelab.net/harlowe-macro-api/#/")]", here's an alternative to making the player re-set the Settings they want.
+
+The logic behind the Automatic Settings Load is that you will "load" the Settings with every passage transition (i.e. everytime the player moves to a new passage), by placing the code in the a header- or footer-tagged passage ((link-repeat:"manual ⎘")[(open-url:"https://twinery.org/reference/en/editing-stories/tagging.html")]). This will mean that everytime the game is loaded, at any point during the playthrough, it will not reset to the default.
+
+For this to work, however, it requires each setting to be linked to a variable, which is defined with a default option in (link-repeat: "startup ⎘")[(open-url: "https://twine2.neocities.org/#passagetag_startup")].
+
+### Setting up the Settings
+First thing you will want to do is set up all the Settings you would like to include in your project, and list down all the ones requiring JavaScript (essentially, themes and fonts). For those, you will need to ensure a variable keeps track of the choice made by the player.
+(text-indent:36)[> ''Note'': All the examples in this template do so already.]
+
+For example, the Theme Setting is linked to <code>`$chosenTheme`</code>:
+<pre><code>
+`{
+  Choose Theme: 
+  (dropdown: 2bind $chosenTheme, "Bright Theme", "Dark Theme", "Sepia Theme")
+  (link-repeat: "Confirm")[
+    (if: $chosenTheme is "Sepia Theme")[
+      <script>settingThemeChange(2)</script>
+    ](elseif: $chosenTheme is "Dark Theme")[
+      <script>settingThemeChange(1)</script>
+    ](else:)[
+      <script>settingThemeChange(0)</script>
+    ]
+  ]
+}`
+</code></pre>
+
+### Choose the Defaults in Startup 
+In a passage tagged with (link-repeat: "startup ⎘")[(open-url: "https://twine2.neocities.org/#passagetag_startup")], you need to set the default option for your settings. If all your customisations is linked to a custom class, this will allow to load the default "look" at the start.
+
+For example, with the Theme Setting:
+<pre><code>
+`  :: Startup [startup]
+  (set: $chosenTheme to "Bright Theme")`
+</code></pre>
+
+### Set up the Automation 
+In a passage tagged either with (link-repeat: "header ⎘")[(open-url: "https://twine2.neocities.org/#passagetag_header")] or (link-repeat: "footer ⎘")[(open-url: "https://twine2.neocities.org/#passagetag_footer")], add the code to trigger the JavaScript (and load the wanted customisation).
+
+For example, with the Theme Setting:
+<pre><code>
+`  :: Load Settings [header]
+  (if: $chosenTheme is "Sepia Theme")[
+    <script>settingThemeChange(2)</script>
+  ](elseif: $chosenTheme is "Dark Theme")[
+    <script>settingThemeChange(1)</script>
+  ](else:)[
+    <script>settingThemeChange(0)</script>
+  ]`
+</code></pre>
+
+And you are done! No more worries~
+* [[Return to Settings Menu|Settings]]
+
+
+:: Settings-Other {"position":"750,600","size":"100,100"}
+(align:'=><=')[<h2>Other Toggle Settings</h2>]
+If you are looking to implement notifications in your project, animated elements, or other indicators, you may want to include a related settings, to allow the player to pick and choose which element they want to have displayed while playing.
+For this, you will simply need to set a variable through an interactive element. For example:
+* Notifications: {
+  (link-repeat:"[Disabled]<notif|")[
+    (if: $notifications is false)[
+      (set: $notifications to true)
+      (replace: ?notif)[Enabled]
+    ](else:)[
+      (set: $notifications to false)
+      (replace: ?notif)[Disabled]
+    ]
+  ]
+}
+* (checkbox: 2bind $animation, "Enable Animation")
+* Romance Icon: (cycling-link: 2bind $romIcon, "Displayed", "Hidden")
+<details><summary>Check out the code</summary>
+<pre><code>
+`* Notifications: {
+  (link-repeat:"[Disabled]<notif|")[
+    (if: $notifications is false)[
+      (set: $notifications to true)
+      (replace: ?notif)[Enabled]
+    ](else:)[
+      (set: $notifications to false)
+      (replace: ?notif)[Disabled]
+    ]
+  ]
+}
+* (checkbox: 2bind $animation, "Enable Animation")
+* Romance Icon: (cycling-link: 2bind $romIcon, "Displayed", "Hidden")`
+</code></pre>
+</details>
+(text-indent:36)[> ''Note'': I picked the interactive element at random for each. You should choose the one you prefer, or even do something completely different!]
+
+In practice, these settings would affect the passages in the following way:
+<pre><code>
+`(if: $notifications is true)[
+  (dialog: [Increased Hostility from XYZ], "Sure.")
+]
+
+(if: $animation is "Enable Animation")[
+  (after: 2s)[[You'd better get going now, partner.]<this|(animate:?this, "rumble")]
+](else:)[
+  You'd better get going now, partner.
+]
+
+* [[Kiss Him, You Idiot]] (if: $romIcon is "Displayed")[“♥”]
+`<!-- this link is the reason for the red side btw-->
+</code></pre>
+* [[Return to Settings Menu|Settings]]
+
+
+:: Settings-Saves {"position":"875,600","size":"100,100"}
+(align:'=><=')[<h2>Save Settings</h2>]
+### Auto-Name of Saves
+As mentioned in the [[Saves Customisation|Saves-Custom]] chapter, you can create settings to autoname a save to let the player decide whether they want to enter a name themselves or let it be decided by you. The easiest way of doing it is through a cycling interactive element:
+
+{
+  Saves Name: 
+  (cycling-link: 2bind $nameSaves, "Autoname", "Custom name")
+}
+
+<details><summary>Check out the code</summary>
+<pre><code>
+`{
+  Saves Name: 
+  (cycling-link: 2bind $nameSaves, "Autoname", "Custom name")
+}`
+</code></pre>
+</details>
+
+And, in your Saves passage, you can include it like the following:
+<pre><code>
+`(link-repeat:'Save Here')[
+  (if: $nameSaves is "Custom name")[
+    (set: $NameSave to (prompt: [Enter Save Name:], "Slot XYS", "Default", "Confirm"))
+    (save-game: "Slot XYZ", $NameSave)
+  ] (else:) [
+    (save-game: "Slot XYZ", $preSetNameSave)
+  ]
+]`
+</code></pre>
+(text-indent: 36)[> ''Note'': this is a basic example of a save slot for the purpose of the setting. See [[Saves]], for more detailed general versions.]
+
+### Auto-Saves
+While Harlowe automatically saves progress with every visited passage, there may be situations where having an autosave can be helpful. For example: a branching story with multiple fail endings having "Save Points" to travel back to in case of dead ends, to avoid restarting. This could look something like:
+
+{
+  (checkbox: 2bind $autoSave, "Enable Save Points")
+}
+
+Then, at pre-selected points of the story:
+<pre><code>
+`(if: $autoSave is "Enable Save Points")[
+  (save-game: "AutoSave Slot")
+]`
+</code></pre>
+
+Finally, in dead ends:
+<pre><code>
+`(if: ($autoSave is "Enable Save Points") and ((saved-games:) contains "AutoSave Slot"))[
+  (link: "Rewind to last Save Point?")[
+    (load-game: "AutoSave Slot")
+  ]
+] (elseif: ($autoSave is "Enable Save Points"))[
+  //No Save Point passed//
+]`
+</code></pre>
+* [[Return to Settings Menu|Settings]]
+
+
+:: Settings-Sound {"position":"1000,600","size":"100,100"}
+(align:'=><=')[<h2>Volume Controls</h2>]
+If you are including audio and sound to your project, it is recommending to also include settings to allow users to (un)mute any tracks playing or adjust the volume. Since audio is not native to Harlowe, how to implement such a setting will depend on how audio is included in your project.
+(text-indent:36)[> ''Note'':This template will only cover HAL. For other custom libraries, see their respective documentation.]
+
+### Chapel's Harlowe Audio Library (HAL)
+Along with enabling you to include audio files to your project, HAL comes with a built-in SideBar with audio controls (volume and mute). However, if this SideBar doesn't fit your project aethetic, you can choose to edit it in the StyleSheet (even "removing" it with <code>#audio-overlay{display:none}</code>).
+
+The library also includes macros to emulate the Settings in the SideBar, such as muting the audio:
+<pre><code>
+`{
+(link-repeat: 'Mute')[
+    (if: (masteraudio: 'ismuted'))[
+        (masteraudio: 'mute', false)
+    ](else:)[
+        (masteraudio: 'mute', true)
+    ]
+]
+}`
+</code></pre>
+or changing the volume (assuming that <code>`$volume`</code> is defined):
+<pre><code>
+`{
+  (link-repeat: "<")[
+    (set: $volume to it - 0.1)
+    (masteraudio: 'mute', $volume)
+  ] — Volume — 
+  (link-repeat: ">")[
+    (set: $volume to it + 0.1)
+    (masteraudio: 'mute', $volume)
+  ]
+}`
+</code></pre>
+(text-indent:36)[> ''Note'': In this case, I would recommend only editing the SideBar, rather than creating your own volume setting.]
+* [[Return to Settings Menu|Settings]]
+
+
+:: Settings-Theme {"position":"875,475","size":"100,100"}
+(align:'=><=')[<h2>Theme Change (Dark/Light or more)</h2>]
+When customising the palette of your project, you may want to include alternative themes, like having both a dark and light mode to accomodate eye strain, or different colour combinations to match the themes.
+
+To do so, you will need:
+* the different stylings saved in the StyleSheet, each defined by a class (e.g. <code>.light-theme</code>)
+* the JavaScript code to load those depending on the choice made
+* the interactive element in the Settings (e.g. link, button, other...)
+
+In the example below, there will be three defined themes: 
+* a bright one, assigned the class <code>.light-theme</code>
+* a dark one, assigned the class <code>.dark-theme</code>
+* and a middle-toned one, assigned the class <code>.sepia-theme</code>
+<details><summary>Example in the StyleSheet</summary>
+<pre><code>
+`body.light-theme {
+  background: white;
+}
+body.dark-theme {
+  background: black;
+}
+body.sepia-theme {
+  background: cream;
+}
+
+.light-theme a {
+  color: blue;
+}
+.dark-theme a {
+  color: lightblue;
+}
+.sepia-theme a {
+  color: darkblue;
+}
+`
+</code></pre>
+</details>
+
+Then, in the JavaScript, we will create a function to change which theme to be loaded:
+<pre><code>
+`window.settingThemeChange = function(mode) {
+	$('body').removeClass('light-theme dark-theme sepia-theme');
+  switch (mode) {
+    case 2:
+      $('body').addClass("sepia-theme");
+      break;
+    case 1:
+      $('body').addClass("dark-theme");
+      break;
+    default:
+      $('body').addClass("light-theme");
+      break;
+  }
+};`
+</code></pre>
+This code allows the possibility to add or remove as many theme as you'd like, as long as you keep a minimum of 2 (one <code>case</code> and <code>default</code>)
+<details><summary>Alternative code</summary>
+The option below assumes the light theme is the default - i.e. in the targetted element (<code>button</code>), not coded inside a separate class (<code>button.class</code>).
+<pre><code>
+`window.settingThemeChange = function(mode) {
+	$('body').removeClass('dark-theme sepia-theme');
+  switch (mode) {
+    case 2:
+      $('body').addClass("sepia-theme");
+      break;
+    case 1:
+      $('body').addClass("dark-theme");
+      break;
+  }
+};`
+</code></pre>
+</details>
+
+Finally, we will set up an interactive element so the player can pick the theme they want to use. This can be done in multiple fashion, but we will use the combination of a dropdown and "confirmation button" for this example.
+
+{
+  Choose Theme: 
+  (dropdown: 2bind $chosenTheme, "Bright Theme", "Dark Theme", "Sepia Theme")
+  (link-repeat: "Confirm")[
+    (if: $chosenTheme is "Sepia Theme")[
+      <script>settingThemeChange(2)</script>
+    ](elseif: $chosenTheme is "Dark Theme")[
+      <script>settingThemeChange(1)</script>
+    ](else:)[
+      <script>settingThemeChange(0)</script>
+    ]
+  ]
+}
+<details><summary>Check out the code</summary>
+
+<pre><code>
+`{
+  Choose Theme: 
+  (dropdown: 2bind $chosenTheme, "Bright Theme", "Dark Theme", "Sepia Theme")
+  (link-repeat: "Confirm")[
+    (if: $chosenTheme is "Sepia Theme")[
+      <script>settingThemeChange(2)</script>
+    ](elseif: $chosenTheme is "Dark Theme")[
+      <script>settingThemeChange(1)</script>
+    ](else:)[
+      <script>settingThemeChange(0)</script>
+    ]
+  ]
+}`
+</code></pre>
+</details>
+* [[Return to Settings Menu|Settings]]
+
+
+:: Start [no-return] {"position":"700,200","size":"100,100"}
+(align:"=><=")[<h2>Saves and Settings in Harlowe</h2>]
+This template was created to help Harlowe game creators incorporate Accessibility Settings and more compehensive Save systems in their project. It also includes a mini-guide, explaining how to create a Save System and add Settings, with examples.
+
+Since Harlowe does not have built-in Settings or easy-to-install Save systems, the guide section provides multiple ways of doing those, so anyone can pick-n-choose what they prefer or what works best for their project. 
+(text-indent:36)[The guide is organised into two blocks: [[Saves]] and [[Settings]]. For each code is provided directly on the screen, and the Harlowe or Twine manual is referrenced for "invisible" elements.]
+
+The actual template only includes one way for the Save System and the Settings, showcasing in real-time what both can do. It is not meant to be used as a visual template.
+(text-indent:36)[I recommend using only the aspects that make sense for your project, edit those to fit, and discarding the rest.]
+
+Please see the (link-repeat: "CREDITS")[<script>$("#popup-settings").addClass("open");</script>] for elements of this template taken from libraries, tutorials, and answers available on the net.
+
+If certain elements are missing, please let me know so I can include it in a future version.
+
+
+:: Variable startup [startup] {"position":"25,25","size":"100,100"}
+{ <!--This is limited to what the template needs.-->
+    (set: $namePC to "Jane Doe")
+    (set: $lastpassage to "Start")
+  <!-- For Settings Autoload -->
+    (set: $chosenTheme to "Bright Theme")
+    (set: $chosenFront to "Sans-Serif")
+    (set: $fontSize to 1.5)
+    (set: $setNamingSaves to "Autoname")
+  <!-- For the Saves Name -->
+    (set: $chapter to "Chapter 1")
+    (set: $savesName to $chapter + " - " + $namePC)
+}
