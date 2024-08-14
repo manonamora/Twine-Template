@@ -40,12 +40,7 @@ To Do:
 ~ Harlowe Templates ~
   - Iminate SugarCube and Chapbook
 Helpful code: <script>$('tw-sidebar').insertBefore('tw-passage');</script> in footer-tagged
-Find Hituro's code Chapook -> Harlowe 
-:: header
-<div class="passage_body">
-
-:: footer
-</div>
+Use Header/Footer to wrap div around passage
 
 tw-story {
   background: hsl(210, 16.7%, 97.6%);
