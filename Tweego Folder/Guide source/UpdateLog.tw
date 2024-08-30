@@ -1,0 +1,64 @@
+:: Update Log
+New update:
+- new formats 
+- update to 2.37.3
+
+[??-???] - Removed mention of MAC compiling, as it currently doesn't work. Maybe we can do it as a new chapter? (hopefully that works)
+[29-Aug] - Updated Starting page
+[29-Aug] - Added main formats available on Twine 
+[29-Aug] - Added Sugarcube 2.37.3 + removed other SugarCube formats
+ Nov 21, 2023 <- release
+
+
+Formats available:
+- 
+- SugarCube 2.36.1
+- SugarCube 2.37.3
+Other-> 
+- Harlowe 1.2.4
+- Harlowe 2.1.0
+- Harlowe 3.3.9
+Other -> Check Branch/Tags in 
+    https://twine2.neocities.org/#appendix_previous-harlowe-versions-and-manuals
+- Chapbook 1.2.3
+- Chapbook 2.2.0
+Other -> 
+- Snowman 1.4.0
+- Snowman 2.0.2
+(hopefull to add Twine 1)
+
+
+
+    ''Important documentation:''
+    <ul>
+        <li> [[The official SugarCube documentation|http://www.motoslave.net/sugarcube/2/docs/]]</li>
+        <li> [[The official Tweego documentation|http://www.motoslave.net/tweego/docs/]]</li>
+        <li> [[The Twinery Cookbook|http://twinery.org/cookbook/]] : Twine 2 Examples, SugarCube format for each entry (You can copy the Twee Code directly into your <nowiki> .tw </nowiki> file.)</li>
+    </ul>\
+    You can find more resources in the [[Credits]] page, including other guides.
+    
+:: Credits
+-> make like the Guide
+Guide created by manonamora ([[Tumblr|https://manonamora-if.tumblr.com/]]/[[Itch|https://manonamora.itch.io/]]) on Twine (v2.7.0)/Tweego with Sugarcube (v2.36.1).
+<hr>
+Tweego:
+* [[Documentation and Download|http://www.motoslave.net/tweego/]]
+* [[Story Formats|https://twinery.org]]
+* [[SjoerdHekking|https://github.com/SjoerdHekking]]
+<hr>
+Assets from:
+* [[Wikipedia|https://en.wikipedia.org/wiki/Main_Page]]
+<hr>
+Other:
+* [[Twinery.org|https://twinery.org/]]
+* [[SugarCube 2 Documentation|https://www.motoslave.net/sugarcube/2/docs/]]
+* [[SugarCube 2 Guide|https://manonamora.itch.io/twine-sugarcube-guide]]
+* [[Twine Resources List|https://www.tumblr.com/manonamora-if/700577877042888704/interactive-fiction-twine-resource-megalist]] -> change to the Forum
+* [[Intfiction.org Forum|https://intfiction.org/c/authoring/twine]]
+* [[Reddit r/twinegames|https://www.reddit.com/r/twinegames/]]
+* [[Twine Discord|https://discordapp.com/invite/n5dJvPp]]
+* [[W3 School|https://www.w3schools.com/]]
+<h5>You can find my other templates [[here|https://manonamora.itch.io/twine-sugarcube-templates]].</h5>
+
+:: Lexicon
+(Integrated Development Environment) IDE -> definition

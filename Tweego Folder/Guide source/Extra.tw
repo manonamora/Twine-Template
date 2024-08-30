@@ -1,0 +1,138 @@
+:: StoryBanner
+<<if tags().includes("front")>><img src="flower.png" style="width: 250px"><</if>>
+
+:: StorySubtitle
+<<if tags().includes("front")>>To Space we go!<<else>>Open, Code and Compile !<</if>>
+
+:: StoryAuthor
+by [[@manonamora|https://manonamora-if.tumblr.com/]]
+
+:: StoryCaption
+<<if tags().includes("front")>>Some more text can be added here
+or you can have some [[links]]<</if>>
+
+:: StoryMenu
+[[Credits]]
+<<if tags().includes("front")>>
+[[Styling]]
+[[Basic Macros]]
+[[Stats]]<</if>>
+
+:: PassageFooter
+<<if tags().includes("twine")>><hr>
+[[Tweego Menu|Tweego]]
+[[Start Page|Start]]<</if>>
+:: PassageHeader
+<<if tags().includes("tags")>>Here is the Header
+It will only appear with passages with the tag ''tags''
+<hr><</if>>
+
+:: StoryInit
+<!-- your starting variable -->
+<<set $name to "Harry">>
+
+
+:: Styling [twine]
+<h1>Heading 1</h1>\
+<h2>Heading 2</h2>\
+<h3>Heading 3</h3>\
+<h4>Heading 4</h4>\
+<h5>Heading 5</h5>\
+<h6>Heading 6</h6>\
+<hr>
+<center>Lists:</center>
+<ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+</ul>
+<hr>
+<center>Basic Table:</center>
+<table>
+<tr>
+    <th>Column 1</th>
+    <th>Column 2</th>
+    <th>Column 3</th>    
+</tr>
+<tr>
+    <td>Item 1</td>
+    <td>Item 2</td>
+    <td>Item 3</td>
+</tr>
+<tr>
+    <td>Item 1</td>
+    <td>Item 2</td>
+    <td>Item 3</td>
+</tr>
+</table>
+<hr>
+<center>''Links''</center>
+//Basic://
+[[Basic Macros]]
+//As a list://
+* [[Basic Macros]]
+//With Div://
+<div class="choice">[[Basic Macros]]</div>
+
+:: Basic Macros [twine]
+<h2>Textbox</h2>\
+<<textbox "_test" 2>>
+
+<h2>Text Area</h2>\
+<<textarea "_pieEssay" "">>
+
+<h2>Radio Buttons</h2>\
+What's your favorite pie?
+<<radiobutton "_pie" "blueberry" autocheck>> Choice 1
+<label><<radiobutton "_pie" "cherry" autocheck>> Choice 2 with a label </label>
+<<radiobutton "_pie" "coconut cream" autocheck>> Choice 3
+
+<h2>Number Box</h2>\
+<<numberbox "_wager" 100>>
+
+<h2>List Box</h2>\
+<<listbox "_answer" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+<</listbox>>
+
+<h2>Cycle</h2>\
+<<cycle "_answers" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+<</cycle>>
+
+<h2>Check Box</h2>\
+<<checkbox "_pieBlueberry" false true autocheck>> Option 1
+<label><<checkbox "_pieCherry" false true autocheck>> Option 2 with a label</label>
+<<checkbox "_pieCoconutCream" false true autocheck>> Option 3
+
+<h2>Button</h2>\
+<<button "I do not do anything">><</button>>
+
+:: Stats
+This is an empty passage.
+
+:: Widget [widget nobr]
+<<widget "code">>
+    /*
+        The code below should technically be in the StyleSheet instead of a Widget (but this way you can just delete this file instead of looking for CSS code to delete).
+        This code is meant to help showcase the displayed code better in the Guide passages.
+    */
+    <style>
+        pre, code {
+            background-color: #333;
+            padding: 0px 3px 2px 3px;
+            display: block;
+        }
+        .verbatim {
+            background-color: #333;
+            padding: 0px 3px 2px 3px;
+        }
+        pre > code {
+            padding: 0px;
+            background: transparent;
+        }
+    </style>
+<</widget>>

@@ -1,0 +1,202 @@
+:: Tweego
+<h1>
+
+
+    <center><h1>Table of Content for Tweego/SugarCube</h1></center>
+
+    There are little differences between the base SugarCube format in the Twine App and using VSCode with Tweego as compiler. The main ones is setting up some [[Base Passages|Base]] (automatically done by the Twine App) and creating new passages (with [[tags|Tags]]), which requires the [[Twee Notation|Passages]]. This guide also touches base on other Special Passages (also used in the Twine App) and Compiling.
+
+    <<link "Recommended Programs" "RecProg">><</link>>
+    <<link "Installation Tweego" "Instal">><</link>>
+    <<link "Minimal Base Code" "Base">><</link>>
+    <<link "Compiling your Project" "Compiling">><</link>>
+
+    <<link "Adding Passages to your Game" "Passages">><</link>>
+    <<link "Setting Variables at Startup" "Variable">><</link>>
+    <<link "Going further with the SideBar" "Menu">><</link>>
+    <<link "Using Tags" "Tags">><</link>>
+    <<link "Moving away from the Base UI" "Interface">><</link>>
+    <hr>
+    [[Start Page|Start]]
+
+
+:: Base [twine]
+    <<code>><center><h1>Minimal Base Code</h1></center>
+    For the file to compile properly, you need at minimum the code below in a Twee file (<nowiki>.tw</nowiki>):
+
+    <code>:: StoryTitle
+        The title of your game
+
+        :: StoryData
+        {
+        "ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1", 
+        "format": "SugarCube",
+        "format-version": "2.34.1",
+        "start": "Start"
+        }
+
+        :: Start
+        Your first passage [it can have whatever text/macro you want, this is just a place holder]</code>
+    <small>This is the same code you can find in the <nowiki> Base.tw </nowiki> file.</small>
+
+    The <nowiki>:: StoryTitle</nowiki> is the passage with the title of your project. It is the name you give to your Twine project in the Twine app.
+    The <nowiki>:: StoryData</nowiki> tells Tweego which format you are using (which format and version to compile). Make sure that the format and version you are using are included in the <nowiki>storyformat</nowiki> folder. 
+    You are also required to use an IFID (otherwise Tweego won't run) and having //Start// as the name of your first passage.
+
+    The code above is formatted in the [[Twee Notation|https://twinery.org/cookbook/terms/terms_twee.html]], which is necessary for Tweego for compile your project properly. More on how to use the Twee Notation [[in this passage|Passages]].
+
+    ''Note:'' The Twine App will not open two files with the same [[IFID|https://ifdb.org/help-ifid]]. You should generate a new one everytime you create a project. The easiest to do so is by going to [[this website|https://www.tads.org/ifidgen/ifidgen]]. 
+    It is also possible to get and IFID by creating a new Twine project in the Twine App, and coping the IFID from the ''Story Details'' in the project menu. 
+    The IFID above and in the <nowiki> Base.tw </nowiki> file is the same as the one in my [[Templates and Guides|https://manonamora.itch.io/twine-sugarcube-templates]]. So it is important you change it!
+
+:: Compiling [twine]
+    <<code>><center><h1>Compiling your Project</h1></center>
+    If you have all [[basic passages|Base]] ready in your file, you can already compile it into a useable HTML file. You will need to use the Command Prompt Terminal in VSCode. 
+    <h2>Compile in HTML</h2>\
+    <ul>
+        <li>Put all code files in the 'src' folder (.tw, .js, .css)</li>
+        <li>Open the terminal (CTRL + ~ or View->Terminal)</li>
+        <li>Make sure it is on the 'cmd'/Command prompt (click on the ''+'' icon in the terminal to change type of terminal*)</li>
+        <li>Copy/paste/enter: 
+            <code>call tweego -l -o export/index.html src</code>OR<code>build</code></li>
+        <li>The file will appear in the 'export' folder</li>
+    </ul>\
+    ''Note:'' If you are editing one of these file and want to recompile, make sure the edited file has been saved. Otherwise, Tweego will recompile the unedited version of that file.
+    \
+    <h2>Compile a Debug Version</h2>\
+    Debug Version is a great way to check if a code is working. This is the equivalent to the ''Test'' button in the Twine App.
+    <ul>
+        <li>Put all code files in the 'src' folder (.tw, .js, .css)</li>
+        <li>Open the terminal (CTRL + ~ or View->Terminal)</li>
+        <li>Make sure it is on the 'cmd' prompt (click on the ''+'' icon in the terminal to change type of terminal*)</li>
+        <li>Copy/paste/enter: 
+            <code>call tweego -t -l -o export/Debug.index.html src</code>OR<code>debug</code></li>
+        <li>The file will appear in the 'export' folder</li>
+    </ul>\
+    ''Note:'' all the above is included in the <nowiki> how to do.txt </nowiki> file in the Mother Folder. Instructions on how to Decompile a HTML file into a TW file is also included.
+
+    * Powershell is the default Terminal. You can change it to the 'cmd'/Command prompt as the default one in the menu of the ''+'' icon, by selecting the last option while the terminal is in Command prompt (see below):
+    <img src="screenshot.png">
+
+:: Passages [twine]
+    <<code>><center><h1>Adding Passages to your Game</h1></center>
+    When you have the [[base passages|Base]] ready, you can start adding more passages to your project. Tweego does not force you to only use a single <nowiki> .tw </nowiki> file with all your passages in it. You can have as many <nowiki> .tw </nowiki> file as you want (this file has 3 of them) and named however you want, and Tweego will compile them together into one HTML file.
+
+    In order to avoid non-working link (like [[this one]]), you should create a new passage for every new link you create with the <nowiki> <<link>> </nowiki> macro or the <nowiki> [[link]] </nowiki> markup. Unlike the Twine App, the new passage will not be created automatically when a link is created! 
+    
+    Like with the [[base passages|Base]], you will need to use the Twee Notation:
+    <ul>
+        <li>(Required) Sigil: two colons (":") followed by a space.</li>
+        <li>(Required) Passage Name</li>
+        <li>(Optional) [[Tags]]</li>
+        <li>(Optional) Metadata: position in the Twine Map and/or size</li>
+    </ul>\
+    When all included together, this can look like this:
+    <code>:: Ch1-Harry [harry chapter1] {"position":"600,400","size":"100,200"}
+    Passage Text</code>
+    And the minimum would look like this:
+    <code>:: Ch1-Harry
+    Passage Text</code>
+    ''IMPORTANT:'' Like in the Twine app, every passage should have a unique name. Tweego will not compile passages with the same name (you will be notified in the terminal).
+
+:: Menu [front twine]
+    <<code>><center><h1>Going further with the SideBar</h1></center>
+    Aside from the 3 passages in the <nowiki> Base.tw </nowiki> file, there are other Special Passages Name you can use. These are the same as the one found in the [[SugarCube documentation|http://www.motoslave.net/sugarcube/2/docs/#special-passages]]. Here I will only include the relevant ones regarding the Sidebar. The code can be found in the <nowiki> Extra.tw </nowiki> file.
+    <h2>StoryBanner</h2>\
+    The StoryBanner is mainly used to show a logo (here the NASA logo) of the game or an image relevant to the story (ex: a character portrait). Here is the base code you will need to include in your project:
+    <code>:: StoryBanner
+    <nowiki><img src="image.png"></nowiki></code>\
+    <h2>StorySubtitle</h2>\
+    Pretty self explanatory: it provides a subtitle to your Game's title (here: To Space we go!). For the base notation:
+    <code>:: StorySubtitle
+    Text here.</code>\
+    <h2>StoryAuthor</h2>\
+    Similarly, this would show the Author's name. For the base notation:
+    <code>:: StoryAuthor
+    Name here.</code>\
+    <h2>StoryCaption</h2>\
+    In StoryCaption, you can add extra text, links to other passages, images, or stats bar. Really, anything you want.
+    <code>:: StoryCaption
+    Text or code here.</code>\
+    <h2>StoryMenu</h2>\
+    StoryMenu is similarly formated as the menu for the Settings, Saves and Restart. You will only be able to add links in this passage.
+    <code>:: StoryMenu
+    Text or code here.</code>\
+    <h2>StoryDisplayTitle</h2>\
+    StoryDisplayTitle is the StoryTitle passage in the Twine App. If you use this passage, it will override the StoryTitle passage. While I consider this one is fairly unnecessary, it can be useful when wanting to change the title throughout the project.
+    <code>:: StoryDisplayTitle
+    Text or code here.</code>\
+    If you decide to add it and have a different text depending on certain condition, you should probably include the base Title in that code. Otherwise, nothing will appear aside from the passages meeting those condition.
+    <code>:: StoryDisplayTitle
+    <nowiki><<if hasVisited("Pasage X")>>Title Z<<else>>Title X<</if>></nowiki>. => will show a title 
+    :: StoryDisplayTitle
+    <nowiki><<if hasVisited("Pasage X")>>Title Z<</if>></nowiki>. => will only show a title if Passage X has been visited. </code>\
+
+    ''Note:'' This special menu only appears because I used a [[tag|Tags]] in this passage.
+    ''IMPORTANT:'' All these Special Passages should only be added once to the whole project. Otherwise Tweego won't compile.
+
+:: Tags [twine tags]
+    <<code>><center><h1>Using Tags</h1></center>
+    Tags can be really useful in showing certain information in specific passages, or when including special code in the file. It can also be used in combination with a JavaScript command or CSS code. There are a handful [[tags hardcoded|http://www.motoslave.net/sugarcube/2/docs/#special-tags]] in SugarCube but you can also use personalised ones. 
+    
+    You add the tag between brackets <nowiki> [ ] </nowiki> next to the [[Passage Name|Passages]]. If you want to add multiple tags, you need to separate them with a space. Example for this passage:
+    <code>[twine tags]</code>\
+
+    ''Note:'' Tags are case-sensitive!
+    <h2>Standard Tags</h2>\
+    <ul>
+        <li><nowiki> widget </nowiki>: a passage where [[Widgets|http://www.motoslave.net/sugarcube/2/docs/#macros-macro-widget]] are nested.</li>
+        <li><nowiki> nobr </nowiki>: removes all line breaks. Useful in widgets passages.</li>
+        <li><nowiki> script </nowiki>: a passage with only JavaScript code (Similar to the Story JavaScript page in the Twine App)*</li>
+        <li><nowiki> stylesheet </nowiki>: a passage with only CSS code (Similar to the Story StyleSheet page in the Twine App)*</li>
+    </ul>\
+    * I personally create a separate file for JavaScript and CSS instead of having a passage, like in this folder.
+    <h2>Some other custom tags in this file</h2>\
+    <ul>
+        <li><nowiki> twine </nowiki>: shows the Table of Content link at the bottom of each entry in the <nowiki>:: PassageFooter </nowiki>.</li>
+        <li><nowiki> tags </nowiki>: shows text in the <nowiki>:: PassageHeader </nowiki>.</li>
+        <li><nowiki> front </nowiki>: showed more customisation in the [[SideBar|Menu]]</li>
+    </ul>
+
+:: Interface [twine]
+    <<code>><center><h1>Moving away from the Base UI</h1></center>
+    When you start feeling confident about your coding and want to spice your project up a bit more, it is time to mess around with CSS and the base HTML of SugarCube. Part of it will happen in the CSS file (or <nowiki> [stylesheet] </nowiki> tagged passage) and the <nowiki> :: StoryInterface </nowiki> special passage.
+    <h2>StoryInterface</h2>\
+    Since Twine projects are HTML files, this passage only accept HTML code. You can do everything and anything with HTML, with the only limitation that one <nowiki> <div> </nowiki> element needs to include the following code:
+    <code><nowiki><div id="passages"></div></nowiki></code>\
+    Without that code, the file will not compile properly and not show the passages.
+
+    An exmaple from my [[Simple Book Template|https://manonamora.itch.io/twine-sugarcube-templates]]:
+    <code>:: StoryInterface
+    <nowiki><div id="parent"></nowiki>
+    <nowiki>_ _<div id="menu" data-passage="sidemenu"></div></nowiki>
+    <nowiki>_ _<div id="gametitle" data-passage="StoryDisplayTitle"></div></nowiki>
+    <nowiki>_ _ _ _<div id="cover"></nowiki>
+    <nowiki>_ _ _ _ _ _<div id= "inside"></nowiki>
+    <nowiki>_ _ _ _ _ _ _ _<div id="passages"></div></nowiki>
+    <nowiki>_ _ _ _ _ _</div></nowiki>
+    <nowiki>_ _ _ _</div></nowiki>
+    <nowiki>_ _<div id="navig" data-passage="navigation"></div></nowiki>
+    <nowiki></div></nowiki></code>\
+    ''Note:'' if you want to leave yourself some comments in that passage, you need to use the HTML comment notation <nowiki><!-- --></nowiki>!
+    /*
+        The code above is shown formatted this way as a visual explanatation.
+        If you want to use it in your project, just download the template directly.
+    */
+    You will also need to define all the elements you create in that passage in CSS in order for them to be visible. The HTML code will not be enough.
+
+    <h2>CSS Styling</h2>\
+    If you like how the Base UI is formatted but want to zhuzh it up, you can leave the <nowiki> :: StoryInterface </nowiki> passage alone and focus only on the CSS. 
+    
+    While the [[SugarCube documentation|http://www.motoslave.net/sugarcube/2/docs/#css-built-ins]] provides the CSS code for the Base UI (if you are interested), it is easier to find the relevant class you want to edit by inspecting your HTML file in your browser ( click-right ➡ Inspect Page ).
+
+    <h2>Getting Started with HTML and CSS:</h2>\
+    If you are not sure about your HTML or CSS knowledge, there are many places online with tutorials. One of the most beginner one is [[W3School|https://www.w3schools.com]], which provides examples and let you test stuff.
+
+:: Variable [twine]
+    <<code>><center><h1>Setting Variables at Startup</h1></center>
+    Another important [[Special Passage|http://www.motoslave.net/sugarcube/2/docs/#special-names]] to use when setting your project is <nowiki>:: StoryInit</nowiki> to set your important variables ahead of the game. It works just like StoryInit in the Twine App, only you need to use the Twee Notation:
+
+    <code>:: StoryInit
+    Variables set here.</code>
+    This passage can be added anywhere in your file(s), but should only be added once!

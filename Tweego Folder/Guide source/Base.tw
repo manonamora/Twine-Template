@@ -1,0 +1,49 @@
+:: StoryTitle
+Tweego Ready-to-Use Folder
+
+:: StoryData
+{
+	"ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1", 
+	"format": "SugarCube",
+	"format-version": "2.37.3",
+	"start": "Start"
+}
+
+:: Start [title]
+<h1>The Ready-to-Use Tweego Folder</h1>
+This folder contains all that you need to set up any Twine project with Tweego in the format of your choosing, without having to go through the Twine app. This includes being able to decompile an HTML Twine file, compile a Twine game, and create a Debug/Test mode.
+
+While the Guide was compiled in SugarCube, the provided information will work for any Twine format. However, it will assume you are working with [[VSCode|https://code.visualstudio.com/download]].
+<hr>
+<center>''In this Folder:''<center>
+* A Ready-to-Code Project (SugarCube 2.37.3)
+** The Minimal Base required to compile 
+** A JavaScript file for script code (empty)
+** A CSS file for the StyleSheet (empty)
+** A Twee file with extra Special Passage, basic HTML styling, and base macros 
+* The Tweego Guide, with explanation on how to install and use Tweego (Windows and Mac* TODO:)
+** in a compiled form (.html)
+** in a code form (.twee)
+* A compiled example of the HTML file and its debug version (SugarCube 2.37.3)
+* The relevant Tweego (2.1.1-Twee3) Files for any project 
+** Main Formats included in Twine (SugarCube, Harlowe, Chapbook, Snowman)
+** TODO: check if Twine 1 can be included too
+* An Easy-to-Use Compiler with cheatsheet
+<hr>
+<center>''Guide Table of Content:''<center>
+* [[About Tweego|About]]
+* [[Recommended Programs|RecProg]]
+* [[Setting up Tweego|SetUpTweego]]
+** [[Adding other Formats|TweegoFormats]]
+* [[Using Tweego/Twee|Tweego]]
+<hr>
+<center><small>Thanks to SjoerdHekking for setting me with Tweego.</small></center>
+
+<<include "StartPage">>/*
+
+This file includes the minimally required passages to compile for Twine 2 formats.
+
+The code of this passage is SugarCube 2.37.3, as defined in StoryData. You can remove it to add whatever you want instead (it's just to display the wanted text in the Guide so I don't have to compile different project).
+*/
+
+:: About
