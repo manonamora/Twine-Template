@@ -1,4 +1,26 @@
 :: Update Log
+
+Guide
+[30-Aug] - Move //What's in this folder?// to new passage
+[30-Aug] - Added //About Tweego//
+[30-Aug] - Added //List of all Tweego Commands
+[30-Aug] - Added //How to (De-)Compile// for MacOS and Twine 1 formats
+[30-Aug] - Rephrased some explanations for clarity and consistency
+[30-Aug] - Corrected erroneous information around the IFID with Twine and Tweego
+[29-Aug] - Reformatted content
+[29-Aug] -  Rephrased some explanations for clarity and consistency
+[29-Aug] - Added //How to add new formats// (Twine 1 & 2)
+[29-Aug] - Added //How to Install Tweego in MacOS//
+[29-Aug] - Started updating Guide
+
+Folder
+[29-Aug] - Added main Twine 1 formats
+[29-Aug] - Added main Twine 2 formats + selected version
+[29-Aug] - Added SugarCane 2.37.3
+[29-Aug] - Removed older SugarCube 2 formats
+
+
+
 New update:
 - new formats 
 - update to 2.37.3
@@ -62,3 +84,4 @@ Other:
 
 :: Lexicon
 (Integrated Development Environment) IDE -> definition
+other [[compilers available|https://intfiction.org/t/twine-resource-masterlist-wiki/65903#p-330199-other-compilers-10]] (not covered by this guide)

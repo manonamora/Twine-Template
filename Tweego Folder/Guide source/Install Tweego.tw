@@ -1,23 +1,20 @@
-:: RecProg [install]
+:: RecProg [install done]
 <h1>Recommended Programs</h1>
-To create a Twine project outside of Twine, you will need the format(s) wanted, and a compiler. While this guide will assume you are using ''Tweego'' (included in this folder), there are other [[compilers available|https://intfiction.org/t/twine-resource-masterlist-wiki/65903#p-330199-other-compilers-10]] (not covered by this guide).
-As for formats, you will need to download the relevant files and include them in the {{{storyformats}}} folder. A non-exhaustive list of formats can be found [[here|https://intfiction.org/t/twine-resource-masterlist-wiki/65903#p-330199-other-twine-formats-6]].
-This folder includes the following formats and versions:
-* //SugarCube//: 1.0.35, 2.36.1, 2.37.3 (most recent)
-** other versions of SugarCube 2 can be downloaded [[here|https://github.com/tmedwards/sugarcube-2/releases]]
-* //Harlowe//: 1.2.4, 2.1.0, 3.3.9 (most recent)
-** other version of Harlowe can be downloaded [[here|https://foss.heptapod.net/games/harlowe/-/tree/branch/default]] (click on the Branch/Tag button)
-* //Chapbook//: 1.2.3, 2.2.0 (most recent)
-** other versions of Chapbook can be downloaded [[here|https://github.com/klembot/chapbook/tree/develop/previous-versions]]
-* //Snowman//: 1.4.0, 2.0.2 (most recent)
-* //Twine 1//: Jonah, Responsive, SugarCane
-> ''Note:'' to install a new format or version, check [[this page|TweegoFormats]].
+While you technically only need Tweego, your computer Terminal to run its [[commands|Commands]], and the necessary format(s) for compiling, this Guide will assume you are using both this //Ready-to-Use Tweego Folder// and ''Visual Studio Code'' ([[VSCode|https://code.visualstudio.com/download]]) as your IDE (Integrated Development Environment, a.k.a. coding interface).
 
-While you can use any IDE you wish to code and compile your Twine project, this guide assumes you are using ''Visual Studio Code'' ([[VSCode|https://code.visualstudio.com/download]]), a free IDE that will let you both edit and compile in one window.
-> ''Note:'' this program is often preferred by Tweego creators because you can find useful extensions (such as proofreaders).
+VSCode is usually the most recommended IDE when working with Tweego, as it allows you to organise your files easily (side Folder Explorer), open and edit multiple coding files at once (Editor Groups), and compile (Terminal) all in one window. VSCode also comes with Syntax Highlighter for the most generic coding languages (like JavaScript and CSS), and an Extension Marketplace where you can find useful extensions (such as proofreaders).
 
-I also recommend the ''Twee 3 Language Tool'' [[extension|https://marketplace.visualstudio.com/items?itemName=cyrusfirheir.twee3-language-tools]], as it includes syntax highlighter for all main Twine 2 formats, HTML, CSS and JavaScript. For SugarCube specifically, it will also help with setting macros and check for basic set-up errors. It also includes a basic Visual Map, similar to the Twine App.
-A less intrusive version can be found with the ''Sugarcube2'' [[extension|https://marketplace.visualstudio.com/items?itemName=Cherrybomb67.sugarcube2]] (only highlighter for SugarCube).
+TODO: screenshot
+
+Regarding extensions, I recommend the ''Twee 3 Language Tool'' [[extension|https://marketplace.visualstudio.com/items?itemName=cyrusfirheir.twee3-language-tools]], since it includes a Syntax Highlighter for all main Twine 2 formats (i.e. Chapbook, Harlowe, Snowman, SugarCube) and will differentiate Twine code visually from HTML, CSS and JavaScript. It also includes a basic Visual Map, similar to the Twine App.
+For SugarCube specifically, it will also help with setting macros and check for basic set-up errors. If you find this too intrusive, the ''Sugarcube2'' [[extension|https://marketplace.visualstudio.com/items?itemName=Cherrybomb67.sugarcube2]] will only highlight for SugarCube code.
+
+Finally, while the //Ready-to-Use Tweego Folder// includes the main Twine 1 and Twine 2 [[formats|RtU-Tweego]], you can pick and choose which formats you would need or want, including [[adding new ones|TweegoFormats]]. 
+You can find a non-exhaustive list of known and available formats [[here|https://intfiction.org/t/twine-resource-masterlist-wiki/65903#p-330199-other-twine-formats-6]]. As for other versions of Twine 2 formats, you can find them:
+* in //SugarCube// 2's [[Repository releases|https://github.com/tmedwards/sugarcube-2/releases]]
+* in //Harlowe//'s  [[Repository branch/tag|https://foss.heptapod.net/games/harlowe/-/tree/branch/default]]
+* in //Chapbook//'s [[Repository folder|https://github.com/klembot/chapbook/tree/develop/previous-versions]]
+> ''Note:'' it is recommended to always use the last version of a format, as it is almost always the most stable version.
 
 :: SetUpTweego [install]
 <h1>Setting Up Tweego</h1>
@@ -62,6 +59,7 @@ This method is pretty much the same as the previous one, except that you will ne
 ** Ex: {{{echo "export PATH=/Users/account_name/Documents/Coding/tweego:\$PATH" >> ~/.bash_profile}}}
 * and finally, run this last line of code:
 ** {{{source ~/.bash_profile}}} or {{{source ~/.zshrc}}}
+*** From Catalina OS onward, you should pick {{{zshrc}}}
 
 If this didn't work, you should turn towards the larger [[Twine community|Credits]], and ask how it can be resolved.
 \
@@ -108,12 +106,30 @@ To add a Twine 1 format:
 <h3>Where to find the base Twine 1 build?</h3>\
 If you delete the 3 JavaScript files required for Twine 1 build, you can find them in your Twine 1 program folder (inside the {{{target}}} folder). If you do not have Twine 1 install, you can find them and download them on [[GitHub|https://github.com/tweecode/twine/tree/master/targets]].
 \
+<h3>Having both Twine 1 and Twine 2 formats</h3>\
+As this folder shows, you can have both Twine 1 and Twine 2 formats in the {{{storyformats}}} folder of Tweego. As long as the necessary files are not deleted or moved, you can have as many or as little formats as you'd like. The {{{storyformats}}} folder of this Ready-to-Use package is organised as follow:
+{{{
+ storyformats/
+    chapbook-2.2.0/
+        format.js
+        logo.svg
+    harlowe-3.3.9/
+        format.js 
+        icon.svg
+    jonah/ 
+        code.js
+        header.html
+    engine.js
+    jquery.js
+    modernizr.js
+}}}
+> ''Note:'' this doesn't include //all// formats, included - just enough to make the point.
+\
 <h2>Where to find Twine formats</h2>\
 If you are looking for other version of the main Twine 2 formats, you can find them at their respective repository:
 * //SugarCube//: [[Repository releases|https://github.com/tmedwards/sugarcube-2/releases]]
 * //Harlowe//: [[Repository branch/tag|https://foss.heptapod.net/games/harlowe/-/tree/branch/default]]
 * //Chapbook//: [[Repository folder|https://github.com/klembot/chapbook/tree/develop/previous-versions]]
 * //Snowman//: Don't bother. Keep the stable versions.
-
 
 If it is a custom format you need, you can find a non-exhaustive list [[here|https://intfiction.org/t/twine-resource-masterlist-wiki/65903#p-330199-other-twine-formats-6]].
