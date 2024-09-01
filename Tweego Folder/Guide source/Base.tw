@@ -9,13 +9,14 @@ Ready-to-Use Tweego Guide
 	"start": "Start"
 }
 
-:: Start [title]
+:: Start [title grey]
 <h1>Ready-to-Use Tweego Guide</h1>
 This Guide is a companion piece to the //Ready-to-Use Tweego Folder//, which will help you set up Tweego, start up with your project in the format of your choosing, cover the basic required commands (compiling), and go over all the functionalities of Tweego.
 
-> While the Guide was compiled in SugarCube, the provided information will word for any Twine format (Twine 1 and Twine 2), for both Windows and MacOS users.
+> While the Guide was compiled in SugarCube, the provided information will work for any Twine format (Twine 1 and Twine 2), for both Windows and MacOS users. 
 > ''However'', it will assume you are working [[VSCode|https://code.visualstudio.com/download]].
 
+> The following sections will include differences between Twine 1 and Twine 2 formats, as well between the Twine 2 formats (except Snowman).
 <hr>
 <center>''Guide Table of Content:''</center>
 * [[About Tweego|About]]
@@ -23,9 +24,22 @@ This Guide is a companion piece to the //Ready-to-Use Tweego Folder//, which wil
 * [[Recommended Programs and Files|RecProg]]
 * [[Setting up Tweego|SetUpTweego]]
 ** [[Adding other Formats|TweegoFormats]]
-* [[Using Tweego/Twee|Tweego]]
+* [[Coding in Twee|TweeCode]]
+** [[The Mandatory Passages|Base]]
+** [[Adding Tags to Passages|Tags]]
+** [[Extra Special Passage Names|SP-Formats]]
+** Chap-Weirdo
+* [[The Tweego Commands|Commands]]
+
+Ok-Files -> accepted files -> prep folder
 <hr>
 <center><small>Thanks to SjoerdHekking for setting me with Tweego.</small></center>
+<img src="flower.png">
+<img @src="Test">
+[img[Test]]
+[img[flower]]
+{embed image: [[flower]], alt:''}
+{embed image: 'flower', alt:''}
 
 :: About [side done?]
 <h1>About Tweego</h1>
@@ -33,16 +47,17 @@ This Guide is a companion piece to the //Ready-to-Use Tweego Folder//, which wil
 
 Tweego is most useful for creators preferring a different environment than Twine to create games, wishing to have more control over their gamedev experience (in organisation), or needing to collaborate with others. 
 
-The program allows creators to use the text editor of their choice to code in plain text files (as little or many files wanted, organised however they wish), using the [[Twee Notation|Passages]]. It only requires a few [[commands|Commands]] and [[Base Passages|Base]] to compile those files into an {{{.html}}} file.
+The program allows creators to use the text editor of their choice to code in plain text files - as little or many files wanted, organised however they wish - using the [[Twee Notation|Passages]]. It only requires a few [[commands|Commands]] and [[Base Passages|Base]] to compile those files into an {{{.html}}} file.
 
 You can download Tweego on its [[official page|https://www.motoslave.net/tweego/]], available for Windows, MacOS, and Linux. The downloads include the basic Twine 2 formats.
 > ''Note:'' Tweego has not needed an update since early 2020, meaning most of the included formats in that download point are not up-to-date. Those updates are included in this Ready-to-Use Tweego folder.
 
 Since it was created by TME, the creator of //SugarCube//, Tweego's default format to compile is {{{sugarcube-2}}}. However, it will still compile your project in any [["installed"|TweegoFormats]] Twine format, whether it be Chapbook, Harlowe, Snowman, Twine 1 formats (Jonah, Responsive, SugarCane), or even [[custom formats|https://intfiction.org/t/twine-resource-masterlist-wiki/65903#p-330199-other-twine-formats-6]]. This folder includes the base Twine 1 and Twine 2 formats, and defined SugarCube 2.37.3 as the version for {{{sugarcube-2}}}.
 
+TODO: supported files
 :: RtU-Tweego
 <h1>Included in this Folder</h1>
-Along with this Guide, the //Ready-to-Use Tweego Folder// includes many files and folders to help you create any Twine projects without using the Twine app.  
+Along with this Guide, the //Ready-to-Use Tweego Folder// includes many files to help you create any Twine project without using the Twine app.
 
 <center>''In this Folder:''</center>
 
@@ -51,13 +66,16 @@ Along with this Guide, the //Ready-to-Use Tweego Folder// includes many files an
 ** A JavaScript file for script code (empty)
 ** A CSS file for the StyleSheet (empty)
 ** A Twee file with extra Special Passage, basic HTML styling, and base macros 
+* A compiled example of the HTML file and its debug version (SugarCube 2.37.3)
+
 * The Tweego Guide, with explanation on how to install and use Tweego (Windows and Mac)
 ** in a compiled form (.html)
 ** in a code form (.twee)
-* A compiled example of the HTML file and its debug version (SugarCube 2.37.3)
+
 * The relevant Tweego (2.1.1-Twee3) Files for any project 
 ** Main Twine 2 formats (SugarCube, Harlowe, Chapbook, Snowman)
 ** Main Twine 1 formats (Jonah, Responsive, SugarCane)
+** the Tweego program (Except for //MacOS sans Tweego// variant)
 * An Easy-to-Use Compiler with cheatsheet
 
 This folder includes the following formats and versions:
