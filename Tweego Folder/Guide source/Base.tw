@@ -28,10 +28,13 @@ This Guide is a companion piece to the //Ready-to-Use Tweego Folder//, which wil
 ** [[The Mandatory Passages|Base]]
 ** [[Adding Tags to Passages|Tags]]
 ** [[Extra Special Passage Names|SP-Formats]]
-** Chap-Weirdo
+* [[Prepping your Source Folder|Ok-Files]]
 * [[The Tweego Commands|Commands]]
+** [[(De-)Compiling your Project|Compiling]]
 
-Ok-Files -> accepted files -> prep folder
+
+* [[Checklist Before Compilink|Checklist]]?
+
 <hr>
 <center><small>Thanks to SjoerdHekking for setting me with Tweego.</small></center>
 <img src="flower.png">
