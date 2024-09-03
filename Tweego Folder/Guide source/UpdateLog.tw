@@ -1,7 +1,12 @@
 :: Update Log
 
 Guide
-[1-Sep] - Did stuff
+More stuff
+[02-Sep] - Separated other Scripts from Compiling
+[02-Sep] - Added a //Terminal Set-up// and fixed a icon issue in the explanation
+[02-Sep] - Added a //Prepping your Source Folder//
+[01-Sep] - Rephrased some explanations for clarity and consistency 
+[01-Sep] - Listed //Supported Files by Tweego//
 [31-Aug] - Expanded the //Special Passages// for Twine 1 formats
 [31-Aug] - Expanded the //Special Tags// for all (relevant) formats
 [31-Aug] - Added the //Mandatory Passages// (to compile) for all formats

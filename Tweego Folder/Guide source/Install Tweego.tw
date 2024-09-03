@@ -16,6 +16,8 @@ You can find a non-exhaustive list of known and available formats [[here|https:/
 * in //Chapbook//'s [[Repository folder|https://github.com/klembot/chapbook/tree/develop/previous-versions]]
 > ''Note:'' it is recommended to always use the last version of a format, as it is almost always the most stable version.
 
+:: RecTwine [install]
+TODO:
 :: SetUpTweego [install done]
 <h1>Setting Up Tweego</h1>
 Because of differences between Operating Systems in permitting users to mess with directories, installing Tweego can come with little to some friction (especially with MacOS). So, while Windows allows you to unzip and code right away without an actual installation, MacOS will require it (and it is //a bit// obtuse).
@@ -26,8 +28,8 @@ Because Tweego is a basic executable, you don't need to much aside from unzippin
 * Download and extract the //Ready-to-Use Tweego Folder// (Windows)
 * Place the folder wherever you want
 * Open VSCode 
-** If you already have a project opened, create a new window ({{{File ➡ New Window}}})
-* Open the Ready-to-Use Folder in VSCode ({{{File ➡ Open Folder}}})
+** If you already have a project opened, create a new window ({{{File ➡ New Window}}} - {{{CTRL + SHIFT + N}}})
+* Open the Ready-to-Use Folder in VSCode ({{{File ➡ Open Folder}}} - {{{CTRL + K}}} then {{{CTRL + O}}})
 * You are ready to [[Code|TweeCode]]!
 * When you are done, it's time to [[compile|Compiling]]!
 \
@@ -83,8 +85,8 @@ From this point on, each step requires you to input a line of code in the Termin
 \
 <h3>... and set up your Project</h3>\
 * Open VSCode 
-** If you already have a project opened, create a new window ({{{File ➡ New Window}}})
-* Open the //Ready-to-Use// folder in VSCode ({{{File ➡ Open Folder}}})
+** If you already have a project opened, create a new window ({{{File ➡ New Window}}} - {{{⇧ + ⌘ + N}}})
+* Open the //Ready-to-Use// folder in VSCode ({{{File ➡ Open Folder}}} - {{{⌘ + K}}} then {{{⌘ + O}}})
 * You are ready to [[Code|TweeCode]]!
 * When you are done, it's time to [[compile|Compiling]]!
 
