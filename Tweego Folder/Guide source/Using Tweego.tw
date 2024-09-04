@@ -4,46 +4,56 @@ Because Tweego is not a program that you can simply click on to run, but a CLI (
 
 While you can open the Terminal application like you would any other program, it is also possible to do it through VSCode. If you have This is usually the preferred way, as you can both code your project and compile it in one window.
 
-TODO: screenshot
-> <small>A screenshot of VSCode with the //Ready-to-Use// folder loaded, two files of the Guide being edited, and the Terminal idled below.</small>
+[img[screenshot-recprog]]
+> <small>A screenshot of VSCode with the //Ready-to-Use// folder loaded, two files of the Guide being edited, and the Terminal idled below. (Windows)</small>
 \
 <h2>Open the Terminal on VSCode</h2>\
 By default, when you open VSCode, the Terminal won't appear in the Window. If you need to use it, you will need to open the Terminal:
 * Click on the {{{View}}} menu
 * Select {{{Terminal}}}
 \
-TODO: screenshot
-> <small>VSCode's View Menu, highlighted on Terminal</small>
+<div style="width: 350px;margin: auto">[img[screenshot-viewmenu]]</div>
+> <small>VSCode's View Menu, highlighted on Terminal (Windows)</small>
 It is also possible to use the keyboard shortcut {{{CTRL + `}}} to open the Terminal in less clicks.
 \
 <h2>Set-up the Terminal</h2>\
 Along with accessing the Terminal, VSCode also allows you to use multiple of its shells (if available). 
-TODO: screenshots
+
+[img[screenshot-shells]]
 > <small>A list of available shell for Windows (left) and MacOS (right).</small>
 \
 To run Tweego, you will need the command line shell, which is:
 * {{{cmd}}} (or Command prompt) for Windows
 * {{{bash}}} or {{{zsh}}} for MacOS
-** From [[Catalina OS|https://en.wikipedia.org/wiki/MacOS_version_history#Releases]] onward, {{{zsh}}} is preferred, but either should still work.
+** From [[Catalina OS|https://en.wikipedia.org/wiki/MacOS_version_history#Releases]] onward, choose {{{zsh}}}.
 \
 You can change the loaded shell by clicking on the downward arrow {{{˅}}} next to the {{{+}}} icon in the Terminal, then selecting the wanted shell.
-
-With your Terminal set up, you can start [[using Tweego|Commands]]!
+\
+<h4>MacOS: Giving permission to the scripts</h4>\
+The //Ready-to-Use Folder// comes with 3 scripts to compile, compile with Debug mode, and decompile Twine project. Because of MacOS, you will need to give permission for those scripts to run.
+So, in the terminal, input the following and press enter:
+{{{
+    chmod a+x build.sh debug.sh decompile.sh
+}}}
+> ''Note:'' if you run into permission issues down the line, just run this code again, that should fix it. 
 \
 <h2>Changing the Default Shell</h2>\
 If you want to avoid having to select the required shell every time you open the Terminal, you can set is as Default so it loads automatically in future uses. To do so, open the Terminal: 
 * click again on the downward arrow {{{˅}}} next to the {{{+}}} icon
 * select {{{Select Default Profile}}}
 * in the newly opened menu, select the wanted shell (e.g. {{{cmd}}})
-TODO: screenshot 
+\
+[img[screenshot-defaultshell]]
 > <small>Default Shell Profile Menu (Windows)</small>
+
+With your Terminal set up, you can start [[using Tweego|Commands]]!
 
 :: Commands [compile]
 <h1>The Tweego Commands</h1>
 While most use for Tweego is to simply [[compile|Compiling]] your code files into a single playable HTML file, it also include many types of commands to customise the output (and its location), decompile files, get information about Tweego, the installed formats, or even the compiling project. Being a CLI (command line interface) compiler, it will require a command line, with executable options, to be inputted in the [[Terminal]]: a.k.a. type or copy/paste the command line in the terminal then press enter.
 > ''Note:'' if Tweego runs into any issue, it will abort the command and notify you in the Terminal.
-TODO: screenshot 
-> <small>Terminal window, where a "fake" command line is being inputted (Windows).
+[img[fake-command]]
+> <small>Terminal window, where a "fake" command line is being inputted (Windows).</small>
 \
 A basic command line should be formatted as follow:
 {{{
@@ -53,16 +63,16 @@ A basic command line should be formatted as follow:
 \
 Though there are 21 types of commands defined in Tweego, the most useful one will be the [[compiling|Compiling]] one:
 {{{
-    tweego -o file.html src
- → compiles the files from the {src} folder into {file.html}
+    tweego -o file.html source
+ → compiles the files from the {source} folder into {file.html}
 }}}
-> ''Note:'' {{{src}}} is the folder the [[compiling scripts|Compiling]] use as a source to compile your project into HTML in this //Ready-to-Use// folder (see [[Prepping for Compiling|Ok-Files]]).
+> ''Note:'' {{{source}}} is the folder the [[compiling scripts|Compiling]] use as a source to compile your project into HTML in this //Ready-to-Use// folder (see [[Prepping for Compiling|Ok-Files]]).
 \
 If you are ever unsure about which command to use, you can always type {{{tweego -h}}} in the terminal for the full list of commands.
 \
 <h2>Most useful commands</h2>\
 Below you will find the commands most useful when working on a project with Tweego:
-* {{{-d}}} or {{{--decompile-twee3}}}: decompiles HTML Twine game into a Twee3 source code ({{{.tw}}} file, see [[Twee Notation|TweeCode]]).
+* {{{-d}}} or {{{--decompile-twee3}}}: [[decompiles|DebugDecomp]] HTML Twine game into a Twee3 source code ({{{.tw}}} file, see [[Twee Notation|TweeCode]]).
 * {{{-f NAME}}} or {{{--format=NAME}}}: ID of the story format, based on the name of the format folder 
 ** For Twine 2 formats, if omitted in {{{:: StoryData}}} (see [[here|Base]]), defaults to {{{sugarcube-2}}} (see [[here|About]])
 ** ''mandatory'' for Twine 1 formats
@@ -75,19 +85,19 @@ Below you will find the commands most useful when working on a project with Twee
 * {{{-o FILE}}} or {{{--output=FILE}}}: name of the output file, with the extension
 ** {{{-o index.html}}}
 ** you can include the location in the name file, like {{{export/index.html}}}
-* {{{-t}}} or {{{--test}}}: compile in test mode
+* {{{-t}}} or {{{--test}}}: compile in [[test mode|DebugDecomp]]
 * {{{-w}}} or {{{--watch}}}: enable Watch Mode
-** this will watch the input source for change, then recompile when necessary
+** this will watch the input source for change, then recompile automatically if necessary
 \
 <h2>Examples</h2>\
 {{{
-    tweego -w -o export/index.html src
+    tweego -w -o export/index.html source
  → will compile into HTML with Watch Mode enabled 
 
-    tweego -d test.html -o src/test.tw
+    tweego -d test.html -o source/test.tw
  → will decompile into Twee
 
-    tweego -l -f sugarcane -o export/index.html src
+    tweego -l -f sugarcane -o export/index.html source
  → will compile into HTML with the SugarCane format
 }}}
 \
@@ -116,25 +126,30 @@ Below you will find the commands most useful when working on a project with Twee
 This is the last step you will need to take before you can get the playable HTML file of your project: ''compiling'' with Tweego. You will need to have your [[Terminal]] ready to run the required command or script.
 
 If you have set your [[Mandatory Passages|Base]] correctly, there are no differences between any of the Twine 2 formats when it comes to compiling, which can be done by running the included script. However, Twine 1 requires a manual input of the compiling command.
-> ''Note'': you can change the code indicated in the script at any time, by opening the relevant file, edit the commands, and saving it. See [[this list|Commands]] for options.
+> ''Note'': you can change the commands set in the script at any time, by opening the relevant file, edit the options, and saving it. See [[this list|Commands]] for options.
 \
 <h2>Twine 2 formats</h2>\
 The //Ready-to-Use Folder// includes a special script file, the {{{build.bat}}} (Windows) and {{{build.sh}}} (MacOS), that will compile any file in [[your source folder|Ok-Files]] into an HTML file. Simply enter in the Terminal:
 {{{
     build
+
+ → Windows alternative:
+    build.bat
+ → MacOS alternative:
+    ./build.sh
 }}}
-TODO: Add screenshot
-> <small>STUFF</small>
+<div style="width: 550px;margin: auto">[img[screenshot-build]]</div>
+> <small>Screenshot of the {{{build}}} script run in the Terminal (Windows)</small>
 In more details, that script will run the following command:
 {{{
-    tweego -l -o export/index.html src
+    tweego -l -o export/index.html source
 }}}
-This base command will tell Tweego to take the files in the {{{src}}} folder, compile them into a file called {{{index.html}}}, and put that file in the {{{export}}} folder. It will also log the number of passages and wordcount (with {{{-l}}}).
+This base command will tell Tweego to take the files in the {{{source}}} folder, compile them into a file called {{{index.html}}}, and put that file in the {{{export}}} folder. It will also log the number of passages and wordcount (with {{{-l}}}).
 \
 <h2>Twine 1 formats</h2>\
 Because Twine 1 doesn't use the {{{:: StoryData}}} [[passage|Base]] to register information about the coding format, Tweego will require you to indicate that format in the compiling command. Such as:
 {{{
-    tweego -l -f sugarcane -o export/index.html src
+    tweego -l -f sugarcane -o export/index.html source
 }}}
 This command line will do the same as the {{{build}}} script, but compile the project with SugarCane.
 
@@ -149,14 +164,19 @@ If you have set your [[Mandatory Passages|Base]] correctly, there are no differe
 The //Ready-to-Use Folder// includes a special script file, the {{{debug.bat}}} (Windows) and {{{debug.sh}}} (MacOS), that will compile any file in [[your source folder|Ok-Files]] into an HTML file with Debug Mode enabled. Simply enter in the Terminal:
 {{{
     debug
+
+ → Windows alternative:
+    debug.bat
+ → MacOS alternative:
+    ./debug.sh
 }}}
-TODO: Add screenshot 
-> <small>STUFF</small>
+<div style="width: 550px;margin: auto">[img[screenshot-debug]]</div>
+> <small>Screenshot of the {{{debug}}} script run in the Terminal (Windows)</small>
 The {{{debug}}} script runs exactly like its {{{build}}} [[counterpart|Compiling]], except it will enable the Debug Mode by adding the {{{-t}}} section in the command line. In more details, this will look like:
 {{{
-    tweego -t -l -o export/Debug.index.html src
+    tweego -t -l -o export/Debug.index.html source
 }}}
-This base command will tell Tweego to take the files in the {{{src}}} folder, compile them into a file called {{{Debug.index.html}}}, with the Debug mode ({{{-t}}}), and put that file in the {{{export}}} folder. It will also log the number of passages and wordcount (with {{{-l}}}).
+This base command will tell Tweego to take the files in the {{{source}}} folder, compile them into a file called {{{Debug.index.html}}}, with the Debug mode ({{{-t}}}), and put that file in the {{{export}}} folder. It will also log the number of passages and wordcount (with {{{-l}}}).
 \
 <h2>Decompile into Twee</h2>\
 There may be instances where you need to turn compiled Twine projects ({{{.html}}}) into Twee files, like trying to merge multiple Twine projects into a single one or moving projects created in the Twine App to Tweego, you will need to have your [[Terminal]] ready to run the required command or script.
@@ -179,14 +199,19 @@ So, if you know Tweego will encounter duplicates, you should ensure the the file
 Finally, if you want to decompile your source into multiple organised files (which Tweego cannot do), you should check out Gwen's [[Splitting Tool|https://gwentastic.github.io/Twee-File-Splitter/]]. The program will let you decompile, organise your passages in any amount of wanted files, as well as discarding passages you may not want.
 \
 <h4>The Decompile Script</h4>\
-The //Ready-to-Use Folder// includes a special script file, the {{{decompile.bat}}} (Windows) and {{{decompile.sh}}} (MacOS), that will decompile any file in your {{{decomp}}} folder, into a single HTML file. Simply enter in the terminal:
+The //Ready-to-Use Folder// includes a special script file, the {{{decompile.bat}}} (Windows) and {{{decompile.sh}}} (MacOS), that will decompile any file in your {{{decompile}}} folder, into a single HTML file. Simply enter in the terminal:
 {{{
     decompile
+
+ → Windows alternative:
+    decompile.bat
+ → MacOS alternative:
+    ./decompile.sh
 }}}
-TODO: Add screenshot
-> <small>STUFF</small>
+<div style="width: 550px;margin: auto">[img[screenshot-decompile]]</div>
+> <small>Screenshot of the {{{decompile}}} script run in the Terminal (Windows)</small>
 In more details, that script will run the following command:
 {{{
-    tweego -d decomp -o src/decompiled.tw
+    tweego -d decompile -o source/decompiled.tw
 }}}
-This command will tell Tweego to take the files located in the {{{decomp}}} folder, decompile ({{{-d}}}) each of them and merge them into a file called {{{decompiled.tw}}}, and put that file in the {{{src}}} folder.
+This command will tell Tweego to take the files located in the {{{decompile}}} folder, decompile ({{{-d}}}) each of them and merge them into a file called {{{decompiled.tw}}}, and put that file in the {{{source}}} folder.

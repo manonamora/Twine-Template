@@ -12,8 +12,8 @@ So, to create a valid passage, you will need to input on a new ''empty'' line ''
 * {{{ :: }}}: the two colons sigil, followed by a space 
 ** these ''MUST BE'' the first characters on the line
 * {{{PassageName}}}: the name of the passage 
-** every passage ''MUST BE UNIQUE'', or Tweego will only keep last found one and override the earlier copies
-** special characters (excl. A → Z, 0 → 9, {{{_}}} or {{{-}}}) are accepted, but not recommended 
+** every passage ''MUST BE UNIQUE'', or Tweego will only keep last found one and override any other earlier copy
+** special characters (excl. {{{A → Z}}}, {{{0 → 9}}}, {{{_}}} or {{{-}}}) are accepted, but not recommended 
 * {{{[tags]}}} (optional): any needed [[tags|Tags]], inside brackets {{{ [] }}}
 * {{{ {metadata} }}} (optional): extra data about the passage, separated by a comma {{{ , }}}, used display the passage on a Twine map:
 ** {{{"position": "x, y"}}} (optional): the position of the passage
@@ -35,19 +35,19 @@ Since Tweego will [[compile|Compiling]] any [[accepted file|Ok-Files]] it finds 
 
 :: Base [coding] 
 <h1>The Mandatory Passages</h1>
-To compile properly, Tweego will require some special passage(s) to be included in one of the {{{.tw}}} files of your project. The mandatory passage(s) differ between Twine 1 and Twine 2 formats, but must be formatting in the [[Twee Notation|TweeCode]],
+To compile properly, Tweego will require some special passage(s) to be included in one of the {{{.tw}}} files of your project. The mandatory passage(s) differ between Twine 1 and Twine 2 formats, but must be formatted in the [[Twee Notation|TweeCode]],
 \
 <h2>Base Passages for Twine 2</h2>\
-For Twine 2 formats (like SugarCube or Harlowe), Tweego will require the three following passages:
+For [[Twine 2 formats|RtU-Tweego]], Tweego will require the three following passages:
 * {{{:: StoryTitle}}}: the title of your project
-** if you plan on importing your project to Twine, note that Twine will not keep two projects with the same {{{StoryTitle}}} in its library, and will force you to either abandon or override the older project.
+** <small>if you plan on importing your project to Twine 2, note that Twine will not keep two projects with the same {{{StoryTitle}}} in its library, and will force you to either abandon or override the older project.</small>
 * {{{:: StoryData}}}: JSon object with the required data about your project 
 ** {{{ifid}}}: the [[IFID|https://ifdb.org/help-ifid]] for your project 
 *** if forgotten, Tweego will abort compiling and provide you with an IFID to add to your project 
 ** {{{format}}}: the Twine format chosen 
-*** if forgotten, Tweego will use {{{sugarcube-2}}} (SugarCube 2.37.3 in this folder) by default (but really, don't forget it)
+*** if omitted, Tweego will use {{{sugarcube-2}}} (SugarCube 2.37.3 in this folder) by default (but really, don't forget to add it)
 ** {{{format-version}}}: the version of the Twine format
-*** if forgotten, Tweego will choose the latest version available
+*** if omitted, Tweego will choose the latest version available (always indicate the version if you have multiple versions of a format)
 ** {{{start}}} (optional): the starting passage of the project 
 *** if omitted, default is {{{Start}}}
 * {{{:: Start}}}: the starting passage
@@ -101,27 +101,27 @@ While you will could stop right there, I would recommend to still include:
 As a final an important point, I'll reiterate it again: generate a new IFID every time you start a project. While it might seem inconsequential, no two projects should ever have the same IFID (same with books, none have the same ISBN).
 There are multiple ways of generating a new IFID:
 * through Tweego when you compile without the {{{"ifid"}}} line
-** only applicable for Twine 2 formats
+** only applicable to Twine 2 formats
 * through the TADS [[website|https://www.tads.org/ifidgen/ifidgen]] (refresh for a new one)
 * through Twine 2 by creating a new project (the IFID can be found in //Story Details//)
 > ''Note:'' the IFID of this Guide, and in the {{{Base.tw}}} file, is the game one as coded in my other [[Templates and Guides|https://itch.io/c/2917452/twine-templates-guides-and-code]]. So, it is important you change it! 
 
 :: Tags [coding]
 <h1>Adding Tags to Passages</h1>
-Both Twine 1 and Twine 2 allow creator to add tags to their passages, to either trigger a special function for these passages or mark them as flag for external code. Tags should be located inside straight brackets {{{ [] }}}, and can contain any characters (though you may want to stick to a → z, 0 → 9, and {{{-}}}). You can add as many tags as you want for a single passage, separating them with a space:
+Both Twine 1 and Twine 2 allow creator to add tags to their passages, to either trigger a special function for these passages or mark them as flag for external code. Tags should be located inside straight brackets {{{ [] }}}, and can contain any characters (though you may want to stick to {{{a → z}}}, {{{0 → 9}}}, and {{{-}}}). You can add as many tags as you want for a single passage, separating them with a space:
 {{{
     :: Passage [tag-1 tag2 etc]
 }}}
 > ''Note:'' some special tags may not work if other special tags are included (ex: see next section).
 \
 While each format will have their own particular special tags, they do share two can be useful with Tweego.
-> ''Note:'' the follow tags //are case-sensitive//!
+> ''Note:'' the following tags //are case-sensitive//!
 \
 <h2>Special Tweego Tags</h2>\
 Along with [[Special Passages|Base]], Tweego will recognise two ''Special Tags'' during compiling: {{{script}}} and {{{stylesheet}}}. These tags will flag Tweego that the passages as containing respectively JavaScript or CSS code, and must be processed accordingly.
 > ''Note:'' Twine 1 formats will keep the tagged passages as separate, while Twine 2 formats will merge those passages into their respective section (JavaScript or StyleSheet) in the order Tweego find them.
 
-If you are using the [[T3LT extension|RecProg]], those tagged passages will automatically change syntax highlighting for their respective languages (only for those passages).
+If you are using the [[T3LT extension|RecProg]], those tagged passages will automatically change the syntax highlighting to their respective languages (only for those passages).
 \
 <h3>{{{script}}}</h3>\
 The {{{script}}} tag will flag that the passage's contents are coded in JavaScript.
@@ -141,7 +141,8 @@ The {{{stylesheet}}} tag will flag that the passage's contents are coded in CSS.
 Aside from {{{script}}} and {{{stylesheet}}}, Twine 1 will accept a multitude of special tags for their passages:
 * {{{annotation}}}: an annotation
 * {{{transition}}}: indicate that the passage defines a CSS transition 
-** must be included with the {{{stylesheet}}} to function 
+** must be included with the {{{stylesheet}}} tag to function 
+*** {{{[stylesheet transition]}}}
 * {{{bookmark}}}: passage will appear in SugarCane's Rewind menu 
 * {{{nobr}}}: will remove any line break in the coded passage.
 ** works like the {{{<<nobr>>}}} macro
@@ -159,7 +160,6 @@ SugarCube includes 3 general special tags, and 4 asset-specific tags:
 * {{{nobr}}}: will remove any line break in the coded passage.
 ** works like the {{{<<nobr>>}}} macro
 * {{{widget}}}: lets you defined {{{<<widgets>>}}} ("custom macros"), loaded at the start of the game
-Code Tags
 * {{{Twine.audio}}}, {{{Twine.image}}}, {{{Twine.video}}}, {{{Twine.vtt}}}: special passages supporting Base64-encoded media (audio, image, video, vtt)
 ** if you include one of [[these files|Ok-Files]] in the source folder, Tweego will compile them and encode them in Base64 and create their respective passage (based on the file's name).
 \
@@ -178,20 +178,20 @@ Harlowe includes 6 different incompatible special tags, which can be used on as 
 You can also turn any tag you add to a passage into a "special" tag. This is because a tag can be used at minimum in the StyleSheet, by creating specific styling rules to apply to a passage, and in the JavaScript, to apply specific code to the tagged passage(s). Some further use (like including a tag in a conditional statement) will be format specific and restricted by that format's rules (see that format's documentation).
 > ''Note:'' this section doesn't apply to Chapbook, since the format hard-codes styling with [[Configs|https://klembot.github.io/chapbook/guide/customization/index.html]].
 
-The tag will be both attached to the passage, and be added to a specific element (or multiple) as an attribute ({{{data-tag="TAG(s)"}}}), which is format dependent. For example, in the StyleSheet:
+The tag will be both attached to the passage, and be added to a specific element (or multiple) as an attribute ({{{data-tag="TAG"}}}), which is format dependent. For example, in the StyleSheet:
 {{{
  → Twine 1:
-    body[data-tags="TAG(s)"] {
+    body[data-tags="TAG"] {
         /* CSS rules */
     }
 
   → SugarCube
-    html[data-tags="TAG(s)"] {
+    html[data-tags="TAG"] {
         /* CSS rules */
     }
 
  → Harlowe
-    tw-story[data-tags="TAG(s)"] {
+    tw-story[data-tags="TAG"] {
         /* CSS rules */
     }
 }}}
@@ -214,12 +214,12 @@ The Twine 1 formats all share the same Special Passage Names, though they will d
 ** {{{ROT13}}}: obfuscate the HTML source, so players can't snoop and spoil themselves (off by default)
 ** {{{jQuery}}}: enables the jQuery library for scrips (off by default)
 ** {{{Modernizr}}}: enables the Modernizr library for custom scripts/stylesheet (off by default)
-** {{{:: StoryIncludes}}}: allows the import of passages from other {{{.twee}}}/{{{.tws}}} files, including from a web URL 
-*** Avoid using this Special Passage outside of Twine 1, Tweego will compile any [[supported files|Ok-Files]] you include in the Source folder.
+* {{{:: StoryIncludes}}}: allows the import of passages from other {{{.twee}}}/{{{.tws}}} files, including from a web URL 
+** Avoid using this Special Passage outside of Twine 1, Tweego can already compile any [[supported files|Ok-Files]] you include in the Source folder.
 \
 <h2>SugarCube Special Passage Names</h2>\
 SugarCube includes Special Passages that will fill in parts of the Interface (like the SideBar) or execute code at specific times (like at the start of the game) or both.
-* {{{:: PassageReady}}} and {{{:: PassageDone}}}: runs code respectively before and after the passage is loaded, useful for rendering or modifying variables 
+* {{{:: PassageReady}}} and {{{:: PassageDone}}}: runs code respectively before and after a passage is loaded on the page, useful for rendering or modifying variables 
 * {{{:: PassageHeader}}} and {{{:: PassageFooter}}}: lets you add a Header and a Footer to the passage, respectively rendered before and after the passage 
 ** these run after {{{PassageReady}}} but before {{{PassageDone}}}
 * SideBar specific Special Passages, ordered in the way they appear (top → bottom):
@@ -231,14 +231,14 @@ SugarCube includes Special Passages that will fill in parts of the Interface (li
 ** {{{StoryMenu}}}: to add extra links (only {{{<a>}}} elements)
 * {{{:: StoryInit}}}: to have code run once at the start of the game
 ** most useful for setting variables and cache audio
-* {{{StoryInterface}}}: to create a new interface (HTML/JavaScript only)
+* {{{:: StoryInterface}}}: to create a new interface (HTML/JavaScript only)
 ** the content of the passage will appear inside {{{<div id="story">}}}
 ** must include at least {{{<div id="passages">}}} to work
 
 :: Ok-Files [compile]
 <h1>Prepping your Source Folder</h1>
-Ideally, you would prep your source folder as you start creating your project. The earlier the files you want to use are organised, the easier it is down the line. In this //Ready-to-Use Tweego Folder//, you should place them in the {{{src}}} folder.
-> ''Note:'' you can put your files wherever, but the [[compiling scripts|Compiling]] included here will only check the {{{src}}} folder. You can always type of the compiling command manually.
+Ideally, you would prep your source folder as you start creating your project. The earlier the files you want to use are organised, the easier it is down the line. In this //Ready-to-Use Tweego Folder//, you should place them in the {{{source}}} folder.
+> ''Note:'' you can put your files wherever, but the [[compiling scripts|Compiling]] included here will only check the {{{source}}} folder. You can always type of the compiling command manually.
 
 At the minimum, you will need a Twee ({{{.tw}}}) file with all the [[Mandatory Passages|Base]] required by your format in that folder. A better set-up would be to have:
 * a {{{.tw}}} file those Mandatory Passages (and other [[Special Passages|SP-Formats]])
@@ -247,17 +247,17 @@ At the minimum, you will need a Twee ({{{.tw}}}) file with all the [[Mandatory P
 * a {{{.css}}} file for your CSS code (StyleSheet)
 \
 {{{
-    src/
+    source/
         base.tw
         passages.tw
         script.js 
         stylesheet.css
 }}}
-> ''Note: this is the set-up in this //Ready-to-Use Tweego Folder//''
+> ''Note:'' this is the set-up in this //Ready-to-Use Tweego Folder//
 \
-If your project includes many more files (~10+), I would recommend organising them with folders inside the {{{src}}} folder. This is especially useful if you have multiple {{{.css}}} or {{{.js}}} files, or want to categorise {{{.tw}}} files by section. Personally, for longer projects, I'll have one folder for the base of the game (incl. Mandatory Passages, the Interface, Widgets/Scripts, JavaScript and StyleSheet) and one or more folders for the story {{{.tw}}} files.
+If your project includes many more files (~10+), I would recommend organising them with folders inside the {{{source}}} folder. This is especially useful if you have multiple {{{.css}}} or {{{.js}}} files, or want to categorise {{{.tw}}} files by section. Personally, for longer projects, I'll have one folder for the base of the game (incl. Mandatory Passages, the Interface, Widgets/Scripts, JavaScript and StyleSheet) and one or more folders for the story {{{.tw}}} files.
 {{{
-    src/
+    source/
         base/
             base.tw
             interface.tw
@@ -273,34 +273,70 @@ If your project includes many more files (~10+), I would recommend organising th
 }}}
 \
 <h2>Some warnings about file placement and names</h2>\
-If you plan on using multiple {{{.css}}}/{{{.js}}} files or let Tweego encode assets, you should remember that Tweego will compile files AND folders in ''alphabetical order'', starting with the folders. As such, if you have elements that affects other bits of code and requires to be placed first (e.g. {{{@import}}} in the StyleSheet), you should be mindful of the names you give to your files and folders.
+If you plan on using multiple {{{.css}}}/{{{.js}}} files or let Tweego encode assets, you should remember that Tweego will go through the files AND folders in ''alphabetical order'', starting with the folders. 
 
-Similarly, if you are planning on merging {{{.html}}} Twine files into a single compiled file, you should remember that Tweego will discard any duplicate passages, and keep only the last one found. Since those already-compiled {{{.html}}} files all include their own [[Mandatory Passages|Base]], you should ensure that the {{{.html}}} file containing the passages with the correct content be placed last, through its filename.
-
-TODO:
-Tweego will decompile any found file(s) into ''a single'' {{{.tw}}} file, placing the passages in the order it found them. As such, if any of the files contain similarly named passages (like {{{:: StoryData}}} from having multiple {{{.html}}} files), Tweego will only keep the content of the last found iteration of that passage.
-For example, assuming that all {{{.html}}} files each include {{{:: StoryData}}}, {{{:: StoryTitle}}} and {{{:: Start}}}, each with different content:
+As such, if you have elements that affects other bits of code and requires to be placed first (e.g. {{{@import}}} in the StyleSheet) when [[compiled|Compiling]], you should be mindful of the names you give to your files and folders.
 {{{
-    decompile/
+    source/
+        css/
+            import.css 
+            interface.css
+            settings.css 
+}}}
+Similarly, if you are planning on either adding a compiled {{{.html}}} Twine file to your project, or looking to merge multiple {{{.html}}} files, you should understand that ''Tweego does not create copies duplicate passages''. If Tweego find two passages of the same name (which will happen with multiple {{{.html}}}, since they all come with [[Mandatory Passages|Base]] like {{{:: StoryData}}}), Tweego will only keep the content of the last found iteration of that passage (you also get a warning).
+
+[img[screenshot-duplicate]]
+> <small>Duplicate override warning during compiling</small>
+The placement of the files you want to merge is especially important. For example:
+{{{
+    source/
         twine-project-1.html
         twine-project-2.html
         twine-project-3.html
 }}}
-Tweego will merge any other single passages found in those three files, but will only keep the {{{:: StoryData}}}, {{{:: StoryTitle}}} and {{{:: Start}}} of the last file.
+Tweego will merge those three files into a single {{{.html}}} one, but will only keep content of {{{:: StoryData}}} from the last file.
+
+As such, you should ensure that the {{{.html}}} file containing the passages with the correct content be placed last, through its filename or location in folder.
+{{{
+ → Only HTML files
+    source/
+        chapter-1.html
+        chapter-2.html
+        chapter-3.html
+        chapter-4.html
+        script-styling-interface.html
+
+ → Twee (base) and HTML (merge)
+    source/
+        html/
+          chapter-1.html
+          chapter-2.html
+        twee/
+            base.tw  
+            chapter-3.tw 
+
+ → HTML (base) and Twee (merge)
+    source/
+        new-chapters/
+            chapter-3.tw
+            chapter-4.tw
+        the-rest-of-the-game.html
+}}}
+> ''Note:'' the same principle will apply if you are trying to [[decompile|DebugDecomp]] multiple {{{.html}}} files.
 
 \
 <h2>Supported Files</h2>\
 The following file extensions are supported by Tweego:
 * {{{.tw}}}/{{{.twee}}}: Twee files using the [[Twee Notation|TweeCode]]
 ** {{{.tw2}}}/{{{.twee2}}}: Twee2 Notation source file, require [[Twee2 compatibility|Commands]] (not recommended to use)
-* {{{.html}}}/{{{.html}}}: HTML files containing Twine passages (can be compiled or archives)
+* {{{.htm}}}/{{{.html}}}: HTML files containing Twine passages (can be compiled or archives)
 * {{{.css}}}: CSS files for the StyleSheet 
 * {{{.js}}}: JavaScript files for script code 
 * {{{.otf}}}/{{{.ttf}}}/{{{.woff}}}/{{{.woff2}}}: font files 
 ** the fonts will be compiled and added to the StyleSheet, using the filename as the font-family.
 *** {{{small-pixel.ttf}}} will become {{{font-family: "small-pixel"}}} 
 ** the fonts will be compiled in a Base64 format in the StyleSheet, in the order found by Tweego.
-*** since imports should be at the start of the StyleSheet, you need to ensure that the fonts are listed ''before'' any style passage or {{{.css}}} file
+*** since imports should be at the start of the StyleSheet, you need to ensure that the fonts are listed ''before'' any [[style|Tags]] passage or {{{.css}}} file
 * {{{.gif}}}/{{{.jpeg}}}/{{{.jpg}}}/{{{.png}}}/{{{.svg}}}/{{{.tif}}}/{{{.tiff}}}/{{{.webp}}}: image files
 ** Tweego will compile them into a Base64 format, with each file being its own passage, named after the filename, and tagged with {{{Twine.image}}}
 *** {{{flower.png}}} will become {{{{:: flower [Twine.image]}}}}

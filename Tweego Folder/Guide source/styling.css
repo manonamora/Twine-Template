@@ -1,0 +1,180 @@
+/*HTML*/
+.sc-docu body {
+    background-color:#fff;
+    color:#111;
+}
+    /*Headers*/
+h1 {
+    text-align: center;
+}
+#passages h1 {
+    background: #0b1f0b;
+    border-radius: 5px;
+    padding: 0.5em;
+}
+.sc-docu #passages h1 {
+    background-color: #ccc;
+}
+h3 {
+    margin-top: 2em;
+}
+h4 {
+    margin-left: 3em;
+    font-size: 115%;
+}
+    /* Blockcode */
+blockquote {
+    border-left: 4px #0b1f0b solid;
+    padding: 5px;
+}
+.sc-docu blockquote {
+    border-left-color: #88f;
+}
+    /* Code */
+code, pre {
+    font-family:monospace,monospace;
+    font-size:1em;
+    background: #03350369;
+    border-radius: 1em;
+    padding: 0.2em 0.5em;
+}
+.sc-docu code, .sc-docu pre {
+    background: #8888ff69;
+}
+pre {
+    overflow:auto;
+    white-space: pre-wrap;
+}
+code {
+    display: inline-block;
+}
+pre code {
+    background: transparent !important;
+    border-radius: 0;
+    padding: 0;
+}
+h4 code, h3 code {
+    background-color: #013c01;
+}
+.sc-docu h4 code, .sc-docu h3 code {
+    background: #89a6ff;
+}
+
+/*SideBar*/
+.sc-docu #ui-bar {
+    background: #f5f5f5;
+    border-right-color: purple;
+}
+
+.sc-docu #ui-bar-history [id|="history"], .sc-docu #ui-bar-toggle {
+    color: #1d005e;
+}
+.sc-docu #ui-bar-history [id|="history"]:disabled {
+    color: #80008036;
+}
+.sc-docu #ui-bar-history [id|="history"], .sc-docu #ui-bar-toggle {
+    border-color: purple;
+}
+
+.sc-docu #menu li a {
+    color: #111;
+}
+.sc-docu #menu li a:hover {
+    color: #eee;
+    background: #88f;
+}
+.sc-docu #menu ul {
+    border-color: purple;
+}
+.sc-docu #menu li:not(:first-child) {
+    border-color: purple;
+}
+.sc-docu #menu-core li[id|="menu-item"] a::before, .sc-docu #ui-bar-history [id|="history"], .sc-docu #ui-bar-toggle::before {
+    color: #1d005e;
+}
+
+/*Popups*/
+#ui-dialog {
+    max-width: 750px;
+}
+.sc-docu #ui-dialog-titlebar {
+    background: #ccc;
+}
+#ui-dialog-title {
+    padding: 0.2em;
+}
+#ui-dialog-close {
+    height: 100%;
+}
+.sc-docu #ui-dialog-close {
+    color: #4722cc;
+}
+.sc-docu #ui-dialog-body {
+    background-color:#fff;
+}
+#ui-dialog-body.settings div[id|="header-body"] {
+    margin: 1em 0 0 0;
+    text-align: center;
+}
+.sc-docu #ui-dialog-body.saves button.save::before {
+    color: purple;
+}
+.sc-docu #ui-dialog-body.saves > h2 {
+    background-color: unset;
+    padding: .2em .6em;
+    text-align: right;
+    color: purple;
+    text-shadow: 0 0 10px #e1a6f7;
+    font-size: 1.2em;
+}
+
+/*Settings Font*/
+html.serif {
+    font-family: serif;
+}
+html.mono {
+    font-family: monospace;
+}
+html.cursive {
+    font-family: cursive;
+}
+
+/*Macros + Triggered by Macros*/
+.sc-docu a {
+    color: #4722cc;
+}
+.sc-docu a:hover {
+    color: #8822cc;
+}
+.sc-docu #menu li a:hover {
+    color: #eee;
+    background: #88f;
+}
+.sc-docu button {
+    background: purple;
+    border-color: #b70bb7;
+}
+.sc-docu button:not([disabled]):hover {
+    background: #b70bb7;
+    border-color: purple;
+}
+.sc-docu button:disabled {
+    background-color: #444;
+    border: 1px solid #666;
+}
+
+.sc-docu select {
+    color: #111;
+}
+.sc-docu select:not(:disabled):focus, 
+.sc-docu select:not(:disabled):hover {
+    color: #eee;
+    background-color: #88f;
+}
+
+
+/*TODO: EDIT BECAUST NOT EVERYTHING FITS*/
+/*Added Changes:*/
+img {
+    width: 100%;
+  }
