@@ -1,0 +1,181 @@
+:: RecProg [install]
+<h1>Recommended Programs</h1>
+While you technically only need Tweego, your computer Terminal to run its [[commands|Commands]], and the necessary format(s) for compiling, this Guide will assume you are using both this //Ready-to-Use Tweego Folder// and ''Visual Studio Code'' ([[VSCode|https://code.visualstudio.com/download]]) as your IDE (Integrated Development Environment, a.k.a. coding interface).
+
+VSCode is usually the most recommended IDE when working with Tweego, as it allows you to organise your files easily (side Folder Explorer), open and edit multiple coding files at once (Editor Groups), and compile (Terminal) all in one window. VSCode also comes with Syntax Highlighter for the most generic coding languages (like JavaScript and CSS), and an Extension Marketplace where you can find useful extensions (such as proofreaders).
+
+[img[screenshot-recprog]]
+> <small>A screenshot of VSCode with the //Ready-to-Use// folder loaded, two files of the Guide being edited, and the Terminal idled below. (Windows)</small>
+
+Regarding extensions, I recommend the ''Twee 3 Language Tool'' [[extension|https://marketplace.visualstudio.com/items?itemName=cyrusfirheir.twee3-language-tools]], since it includes a Syntax Highlighter for all main Twine 2 formats (i.e. Chapbook, Harlowe, Snowman, SugarCube) and will differentiate Twine code visually from HTML, CSS and JavaScript. It also includes a basic Visual Map, similar to the Twine App.
+For SugarCube specifically, it will also help with setting macros and check for basic set-up errors. If you find this too intrusive, the ''Sugarcube2'' [[extension|https://marketplace.visualstudio.com/items?itemName=Cherrybomb67.sugarcube2]] will only highlight for SugarCube code.
+
+Finally, while the //Ready-to-Use Tweego Folder// includes the main Twine 1 and Twine 2 [[formats|RtU-Tweego]], you can pick and choose which formats you would need or want, including [[adding new ones|TweegoFormats]]. 
+You can find a non-exhaustive list of known and available formats [[here|https://intfiction.org/t/twine-resource-masterlist-wiki/65903#p-330199-other-twine-formats-6]]. As for other versions of Twine 2 formats, you can find them:
+* in //SugarCube// 2's [[Repository releases|https://github.com/tmedwards/sugarcube-2/releases]]
+* in //Harlowe//'s  [[Repository branch/tag|https://foss.heptapod.net/games/harlowe/-/tree/branch/default]]
+* in //Chapbook//'s [[Repository folder|https://github.com/klembot/chapbook/tree/develop/previous-versions]]
+> ''Note:'' it is recommended to always use the last version of a format, as it is almost always the most stable version.
+
+You can find more Twine resources on [[this page|RecTwine]], including other guides.
+
+:: RecTwine [install]
+<h1>Twine Resources</h1>
+Since this Guide doesn't delve into Twine itself or each of the available formats, you can find below relevant links to documentations, guide, and other resources. Aside from Twine 1 formats, who share code formatting, each format has its own documentation with macros, styling, and customisation.
+> ''Note:'' some customisations, such as [[Special Passages|SP-Formats]] and [[Tags]] are covered in this Guide, since they are Tweego-relevant.
+\
+<h2>Twine Formats</h2>\
+You can find below the documentation for :
+* [[Chapbook|https://klembot.github.io/chapbook/]]
+* [[Harlowe|https://twine2.neocities.org/]]
+* [[Snowman|https://videlais.github.io/snowman/]] 
+* [[SugarCube|http://www.motoslave.net/sugarcube/2/]]
+* [[Twine 1 formats|https://twinery.org/cookbook/twine1/terms/passages.html]] 
+Twine also has a general [[Cookbook|https://twinery.org/cookbook/index.html]], going over examples for the different Twine 2 formats, which you can download in compiled form ({{{.html}}}) or as source code ({{{.tw}}}). It should be noted that the formats have been updated since, so some examples may not be up-to-date.
+
+If you are using a custom format, you should refer to its specific documentation.
+\
+<h2>Twine Communities and Resources</h2>\
+You will find resources and help with Twine, Tweego, and Twine formats:
+* on the [[IntFiction Forum|https://intfiction.org/c/authoring/twine/46]]
+* on the [[Twine Subreddit|https://www.reddit.com/r/twinegames/]]
+* in the [[Twine Discord|https://discord.gg/n5dJvPp]]
+* in the now-closed [[old Forum|https://twinery.org/forum/discussions]] and [[Q&A|https://twinery.org/questions/]]
+
+Over the years, many Twine creators have put together tutorial and guides to create Twine projects (in general or for specific formats), as well as creating new Twine formats, custom macros, templates and more. These resources have been hosted all over the internet (though you will find most on GitHub and itch.io).
+I have tried to centralise those resources in this [[Masterlist|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]]. This list is non-exhaustive, so if you know of resources not listed, feel free to edit that page.
+
+:: SetUpTweego [install done]
+<h1>Setting Up Tweego</h1>
+Because of differences in permitting users to mess with directories between Operating Systems, installing Tweego can come with little to some friction (especially with MacOS). So, while Windows allows you to unzip and code right away without an actual installation, MacOS will require some extra steps (and it is //a bit// obtuse).
+For either case, the following instructions will assume VSCode has already been installed.
+\
+<h2>Set-up on Windows</h2>\
+Because Tweego is a basic executable, you don't need to much aside from unzipping the folder. There are no restrictions in the location of the folder, as long as [[its base content|RtU-Tweego]] are not moved.
+* Download and extract the //Ready-to-Use Tweego Folder// (Windows)
+* Place the folder wherever you want
+* Open VSCode 
+** If you already have a project opened, create a new window: ({{{File ➡ New Window}}} - {{{CTRL + SHIFT + N}}})
+* Open the Ready-to-Use Folder in VSCode: ({{{File ➡ Open Folder}}} - {{{CTRL + K}}} then {{{CTRL + O}}})
+* You are ready to [[Code|TweeCode]]!
+* When you are done, it's time to [[compile|Compiling]]!
+\
+> ''Note:'' this was is essentially a folder-specific set-up. If you want to "install" Tweego more globally on your device, Chapel's [[Installer|https://github.com/ChapelR/tweego-installer]] may be useful. However, I don't know if it is compatible with this folder.
+\
+<h2>Set-up on Mac</h2>\
+Because MacOS restrict scripts messing with directories, you will need to actually "install" Tweego on your device before using it. There are two ways of doing it:
+* through a script, which will install Tweego for you but force its location 
+* manually do each step of the script, but you can control where Tweego is from the start
+\
+After that, you are set for life (or until you get a //Tweego doesn't exist// type of error, like if Tweego is deleted by mistake from your computer).
+\
+<h3>Run the Script</h3>\
+Thanks to some really smart people, you can simply run one line of code ([[source|https://gist.github.com/jsoma/5ef3045b2004a610455f371479a6f0cf]]), which will download, unzip, and install Tweego for you. 
+* Open the //Terminal// [[window|https://support.apple.com/en-gb/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac]]
+* Copy-paste the following code and press Enter:
+{{{
+    /bin/bash -c "$(curl -fsSL https://gist.githubusercontent.com/jsoma/5ef3045b2004a610455f371479a6f0cf/raw/b6c9224faa18fd52f3e1bf7120af17eed6da8ec1/tweego.sh)"
+}}}
+You should now have a //tweego// folder in your Home directory.
+> If this didn't work, you will need to instal manually (see next section). Otherwise...
+* Download and extract the //Ready-to-Use Folder// (MacOS - sans Tweego)
+* Look for the installed //tweego// folder (in your Home directory) and open it
+* Delete the folder called {{{storyformats}}}
+* Transfer the {{{storyformats}}} folder from //Ready-to-Use// to the //tweego// folder
+** This will update the Twine formats to their latest versions
+\
+<h3>Install Manually</h3>\
+This method is essentially what the script in previous section does, but you will need to do each step yourself.
+* Download and extract the //Ready-to-Use Tweego Folder// (MacOS w/ Tweego)
+** You can also rename the extracted folder if you want (avoid whitespace)
+** Ex: //Tweego//
+* Place the folder in the wanted location 
+** You should not delete or move that folder, or it will mess with the installation. Better select a secure folder. 
+** Ex: //Tweego// is in ''Documents''.
+* Copy the [[filepath|https://support.apple.com/en-kg/guide/mac-help/mchlp1774/mac]] of the Tweego folder
+** Ex: {{{/Users/account_name/Documents/Coding/Tweego}}}
+* Open the //Terminal// [[window|https://support.apple.com/en-gb/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac]] 
+\
+From this point on, each step requires you to input a line of code in the Terminal and press enter to run it:
+* In the Terminal, get into the Tweego folder
+** Ex: {{{cd Documents/Coding/Tweego}}}
+* Turn Tweego into an executable with the code:
+** {{{chmod +x tweego}}}
+* Create the executable path (so you can call Tweego when compiling):
+** {{{echo "export PATH=[folder path]:\$PATH" >> ~/.bash_profile}}}
+** In place of {{{ [folder path] }}}, you should put the filepath copied earlier
+** Ex: {{{echo "export PATH=/Users/account_name/Documents/Coding/Tweego:\$PATH" >> ~/.bash_profile}}}
+* and finally, run this last line of code:
+** {{{source ~/.bash_profile}}} or {{{source ~/.zshrc}}}
+*** From [[Catalina OS|https://en.wikipedia.org/wiki/MacOS_version_history#Releases]] onward, you should pick {{{zshrc}}}
+
+> If neither method worked, you should ask [[Twine community|Credits]] for help. 
+\
+<h3>... and set up your Project</h3>\
+* Open VSCode 
+** If you already have a project opened, create a new window ({{{File ➡ New Window}}} - {{{⇧ + ⌘ + N}}})
+* Open the //Ready-to-Use// folder in VSCode ({{{File ➡ Open Folder}}} - {{{⌘ + K}}} then {{{⌘ + O}}})
+* You are ready to [[Code|TweeCode]]!
+* When you are done, it's time to [[compile|Compiling]]!
+
+:: TweegoFormats [install done]
+<h1>Adding other Formats</h1>
+While this folder already includes many formats (see [[here|RtU-Tweego]]), it only includes the formats ''and'' versions available with the latest Twine 1 or Twine 2 installation (as of Aug-24). This means that, if you need a different SugarCube version or a Custom format, you will need to download it and add it to Tweego yourself.
+
+The new format (or format version) must be added in the {{{storyformats}}} folder. There is a slight difference in formatting between formats made Twine 1 or Twine 2, due to how the different applications were built.
+\
+<h2>Adding a Twine 2 format</h2>\
+Formats created for Twine 2 come with at minimum a JavaScript file, containing the code of the format. Sometimes, they may come with an icon and/or a license, but the {{{.js}}} file is what will run your project.
+
+''To add a Twine 2 format:''
+* Download the wanted format 
+** if in a {{{.zip}}} folder, extract it 
+* in the {{{storyformats}}} folder of Tweego, create a new folder with the name of the format
+** if you include multiple version of one format, the name of the folder should include the version as well
+*** ex: {{{sugarcube-2.37.3}}}
+* in that newly created folder, transfer the downloaded format file(s)
+** ''do not rename'' those files
+\
+<h2>Adding a Twine 1 format</h2>\
+Every format for Twine 1 shares the same base build, which is included by default in the program: {{{engine.js}}}, {{{jquery.js}}} and {{{modernizr.js}}}. The Ready-to-Use Folder already includes the base build in the {{{storyformats}}} folder. 
+From this base, the format will have specific characteristics, found through an HTML file ({{{header.html}}}) and maybe an extra JavaScript file ({{{code.js}}}).
+
+''To add a Twine 1 format:''
+* Download the wanted format 
+** if in a {{{.zip}}} folder, extract it 
+* in the {{{storyformats}}} folder of Tweego, create a new folder with the name of the format
+** if you include multiple version of one format, the name of the folder should include the version as well
+*** ex: {{{sugarcane}}}
+* in that newly created folder, transfer the downloaded format file(s)
+** ''do not rename'' those files
+\
+<h3>Where to find the base Twine 1 build?</h3>\
+If you ever delete the 3 JavaScript files required for Twine 1 build, you can find them in your Twine 1 program folder (inside the {{{target}}} folder). If you do not have Twine 1 install, you can find them and download them on [[GitHub|https://github.com/tweecode/twine/tree/master/targets]].
+\
+<h3>Having both Twine 1 and Twine 2 formats</h3>\
+As the //Ready-to-Use Folder// shows, you can have both Twine 1 and Twine 2 formats in the {{{storyformats}}} folder of Tweego. As long as the necessary files are not deleted or moved, you can have as many or as little formats as you'd like. The {{{storyformats}}} folder of this Ready-to-Use package is organised as follow:
+{{{
+ storyformats/
+    chapbook-2.2.0/ ← Twine 2 format
+        format.js
+        logo.svg
+    harlowe-3.3.9/  ← Twine 2 format
+        format.js 
+        icon.svg
+    jonah/          ← Twine 1 format
+        code.js
+        header.html
+    engine.js       ← Twine 1 base
+    jquery.js       ← Twine 1 base
+    modernizr.js    ← Twine 1 base
+}}}
+> ''Note:'' this doesn't show //all// formats included - just enough to make the point.
+\
+<h2>Where to find Twine formats</h2>\
+If you are looking for older version of the main Twine 2 formats, you can find them at their respective repository:
+* //SugarCube//: [[Repository releases|https://github.com/tmedwards/sugarcube-2/releases]]
+* //Harlowe//: [[Repository branch/tag|https://foss.heptapod.net/games/harlowe/-/tree/branch/default]]
+* //Chapbook//: [[Repository folder|https://github.com/klembot/chapbook/tree/develop/previous-versions]]
+* //Snowman//: Don't bother. Keep the stable versions.
+\
+If it is a custom format you need, you can find a non-exhaustive list [[here|https://intfiction.org/t/twine-resource-masterlist-wiki/65903#p-330199-other-twine-formats-6]].

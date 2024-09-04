@@ -1,0 +1,154 @@
+:: StoryTitle
+Ready-to-Use Tweego Guide
+
+:: StoryData
+{
+	"ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1", 
+	"format": "SugarCube",
+	"format-version": "2.37.3",
+	"start": "Start"
+}
+
+:: Start [title grey]
+<h1>Ready-to-Use Tweego Guide</h1>
+This Guide is a companion piece to the //Ready-to-Use Tweego Folder//, which will help you set up Tweego, start up with your project in the format of your choosing, cover the basic required commands (compiling), and go over all the functionalities of Tweego.
+
+> While the Guide was compiled in SugarCube, the provided information will work for any Twine format (Twine 1 and Twine 2), for both Windows and MacOS users. 
+> ''However'', it will assume you are using [[VSCode|https://code.visualstudio.com/download]].
+<hr>
+<center>''Guide Table of Content:''</center>
+* [[About Tweego|About]]
+* [[Included in this Folder|RtU-Tweego]]
+** [[Credits]]
+* [[Recommended Programs and Files|RecProg]]
+** [[Twine Resources|RecTwine]]
+* [[Setting up Tweego|SetUpTweego]]
+** [[Adding other Formats|TweegoFormats]]
+* [[Prepping your Source Folder|Ok-Files]]
+* [[Coding in Twee|TweeCode]]
+** [[The Mandatory Passages|Base]]
+** [[Adding Tags to Passages|Tags]]
+** [[Extra Special Passage Names|SP-Formats]]
+* [[Setting up the Terminal to use Tweego|Terminal]]
+** [[The Tweego Commands|Commands]]
+** [[Compiling your Project|Compiling]]
+*** [[Decompiling and Debug Mode|DebugDecomp]]
+* [[Quick Run Tweego Script|Cheatsheet]]
+** [[Click-n-Go Scripts|ExecutableScript]]
+> The sections above explains differences between Twine 1 and Twine 2 formats, as well between the Twine 2 formats (except Snowman), when necessary.
+<hr><center><small>Thanks to SjoerdHekking for setting me with Tweego.
+[[Update Log]]</small></center>
+
+:: StorySubtitle
+Open, Code and Compile !
+
+:: StoryAuthor
+by [[@manonamora|https://manonamora-if.tumblr.com/]]
+
+:: StoryCaption
+Version 2.0.0 - 03-Sept-24
+
+:: PassageFooter
+<<if passage() isnot "Start">><hr>\
+<div id="link-menu">[[Back to the Start Menu|Start]]</div><</if>>
+
+:: About [side]
+<h1>About Tweego</h1>
+[[Tweego|https://www.motoslave.net/tweego/]] is a free (gratis and libre) CLI (command line interface) compiler for Twine/Twee projects, written in Go, created by TheMadExile/TME.
+
+Tweego is most useful for creators preferring a different environment than Twine to create games, wishing to have more control over their gamedev experience (in organisation), or needing to collaborate with others. 
+
+The program allows creators to use the text editor of their choice to code in plain text files - as little or many files wanted, organised however they wish - using the [[Twee Notation|TweeCode]]. It only requires a few [[commands|Commands]] and [[Base Passages|Base]] to compile those files into an {{{.html}}} file.
+
+Tweego is downloadable on its [[official page|https://www.motoslave.net/tweego/]], available for Windows, MacOS, and Linux. The downloads include the basic Twine 2 formats.
+> ''Note:'' the formats included there are ''not up-to-date'' (not since 2020). Their updated versions are [[included|RtU-Tweego]] in this //Ready-to-Use Tweego folder//.
+
+Since it was created by TME, the creator of //SugarCube//, Tweego's default format to compile is {{{sugarcube-2}}}. However, it will still compile your project in any [["installed"|TweegoFormats]] Twine format, whether it be Chapbook, Harlowe, Snowman, Twine 1 formats (Jonah, Responsive, SugarCane), or even [[custom formats|https://intfiction.org/t/twine-resource-masterlist-wiki/65903#p-330199-other-twine-formats-6]]. 
+> ''Note:'' this folder includes the base Twine 1 and Twine 2 formats, and defined SugarCube 2.37.3 as the version for {{{sugarcube-2}}}.
+
+To find the list of all supported files by Tweego, check [[this page|Ok-Files]].
+
+:: RtU-Tweego [side]
+<h1>Included in this Folder</h1>
+Along with this Guide, the //Ready-to-Use Tweego Folder// includes many files to help you create any Twine project without using the Twine app.
+
+<center>''In this Folder:''</center>
+> //Guide//:
+* The //Ready-to-Use Tweego Guide//, with extensive explanation to "install" and to use Tweego for both MacOS and Windows, examples and recommendations.
+** Source Code is available on [[GitHub|https://github.com/manonamora/Twine-Template/tree/main/Tweego%20Folder]]
+> //Tweego//:
+* Tweego (v2.1.1-Twee3) for MacOS or Windows incl. licenses 
+** unavailable in //Ready-to-Use Folder (MacOS - sans Tweego)// version 
+* Twine formats:
+** Twine 2 main formats: Chapbook, Harlowe, Snowman and SugarCane (see available versions below)
+** Twine 1 main formats: Jonah, Responsive, SugarCane
+* Editable Tweego scripts:
+** Windows: {{{build.bat}}}, {{{debug.bat}}}, {{{decompile.bat}}}
+** MacOS: {{{build.sh}}}, {{{debug.sh}}}, {{{decompile.sh}}}
+** with a Cheat-Sheet with basic instructions
+** with required folders: {{{source}}}, {{{export}}}, {{{decomp}}}
+> //Base New Project//:
+* A //Ready-to-Code// Project (SugarCube 2.37.3 - source folder):
+** The Minimal Base required to compile
+*** includes annotations on how to change the code to make it compatible with other Twine formats
+** A JavaScript file for script code (empty)
+** A CSS file for the StyleSheet (empty)
+* Compiled examples (SugarCube 2.37.3 - export folder)
+** Playable HTML file
+** Playable HTML file in Debug/Test Mode
+\
+<center>''Available Twine Formats and Versions''</center>
+This folder includes the following formats and versions:
+* //SugarCube//: 1.0.35, 2.36.1, 2.37.3 (most recent)
+* //Harlowe//: 1.2.4, 2.1.0, 3.3.9 (most recent)
+* //Chapbook//: 1.2.3, 2.2.0 (most recent)
+* //Snowman//: 1.4.0, 2.0.2 (most recent)
+* //Twine 1//: Jonah, Responsive, SugarCane
+
+You can find more Twine resources on [[this page|RecTwine]], including other guides.
+
+:: Credits
+<h1>Credits</h1>
+The //Ready-to-Use Tweego Guide// was created by ''manonamora'' on Tweego with SugarCube (2.37.3).
+It is based on the Tweego official documentation, created by Thomas M. Edwards, the developer of Tweego, explanations from the Twine Discord server, the old Twine Forums, the Twine Reddit, and this [[MacOS script|https://gist.github.com/jsoma/5ef3045b2004a610455f371479a6f0cf]].
+\
+<h3>manonamora</h3>\
+You can find:
+* my other templates on [[Itch|https://manonamora.itch.io/]], as well as my guides:
+** [[SugarCube Guide|https://manonamora.itch.io/twine-sugarcube-guide]]
+** [[ChoiceScript to SugarCube Guide|https://manonamora.itch.io/choicescript-sugarcube-tweego-folder]]
+* my games and IF experiments on [[Itch|https://manonamora.itch.io/]]
+* me, and ask me questions, over on [[Tumblr|https://manonamora-if.tumblr.com]] or [[my website|https://manonamora.neocities.org/]]
+* my Twine Resource Masterlist on the [[IntFiction Forum|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]] (a less updated version is rebloggable on [[Tumbr|https://manonamora-if.tumblr.com/post/700577877042888704/]]).
+\
+<h3>Tweego</h3>\
+[[About Tweego|About]]
+Tweego is downloadable on its [[official page|https://www.motoslave.net/tweego/]], available for Windows, MacOS, and Linux. The downloads include the basic Twine 2 formats (2020 versions). Thomas M. Edwards hosts the Documentation for Tweego on [[his website|https://www.motoslave.net/tweego/docs/]].
+\
+<h3>Twine and Formats</h3>\
+''Twine''® is an open-source tool for telling interactive, non-linear stories originally created by Chris Klimas. [[Twine|https://iftechfoundation.org/]] is also a registered trademark of the [[Interactive Fiction Technology Foundation|https://iftechfoundation.org/]].
+
+[[Chapbook|https://klembot.github.io/chapbook/]] is a free (MIT license) coding format for Twine/Twee created and maintained by Chris Klimas.
+
+[[Harlowe|https://twine2.neocities.org/]] is a free coding format for Twine/Twee created and maintained by Leon Arnott.
+
+[[Snowman|https://videlais.github.io/snowman/]] is a free (MIT license) coding format for Twine/Twee created by Chris Klimas and maintained by Dan Cox.
+
+[[SugarCube|http://www.motoslave.net/sugarcube/2/]] is a free (gratis and libre) coding format for Twine/Twee created and maintained by TME.
+
+All [[Twine 1 formats|https://github.com/tweecode/twine]] are free coding formats for Twine/Twee, but none are maintained. Emmanuel King Turner created Responsive. There are no indicated creator for Jonah and SugarCane.
+
+You can also find resources and help with Twine and SugarCube:
+* on the [[IntFiction Forum|https://intfiction.org/c/authoring/twine/46]]
+* on the [[Twine Subreddit|https://www.reddit.com/r/twinegames/]]
+* in the [[Twine Discord|https://discord.gg/n5dJvPp]]
+* and more listed in this [[Masterlist|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]]
+\
+<h3>A Special Thanks to...</h3>\
+* ''Chris Klimas'' for creating Twine, Chapbook and Snowman,
+* ''TheMadExile/TME'' for making the SugarCube format and the Tweego compiler.
+* ''Leon Arnott'', ''Dan Cox'' and ''Emmanuel King Turner'' for creating or maintaining Harlowe, Snowman and Responsive.
+* ''Cycy'' for making the Twee 3 Language Tool extension for VScode.
+* ''SjoerdHekking'' for setting me up with Tweego in the first place.
+* ''Sophia''.
+* The Twine Discord, for their help every time I had a question!

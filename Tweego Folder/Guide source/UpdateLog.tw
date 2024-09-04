@@ -1,0 +1,52 @@
+:: Update Log
+<h1>Update Log</h1>
+> ''Version 2.0.0'' - 03-Sep-24
+''Guide''
+[03-Sep] - Final read-through
+[03-Sep] - Cleaned up the styling
+[03-Sep] - Added some Settings (Theme/Fonts...)
+[03-Sep] - Cleaned up formatting 
+[03-Sep] - Added screenshots
+[03-Sep] - Re-wrote some explanations
+[03-Sep] - Removed the unnecessary passages
+[03-Sep] - Re-worked the //Credits//
+[03-Sep] - Listed the Recommended Resources for Twine and the formats
+[03-Sep] - Added the //Click-to-Run// page (executable for MacOS explanations)
+[03-Sep] - Included the //CheatSheet// in the Guide
+[02-Sep] - Added extra examples
+[02-Sep] - Added Keyboard Shortcuts
+[02-Sep] - Edited the //What's in the Folder//
+[02-Sep] - Moved the //What's in the Folder// to a new page
+[02-Sep] - Re-organised the pages/files
+[02-Sep] - Separated other Scripts from //Compiling//
+[02-Sep] - Added a //Terminal Set-up// and fixed a icon issue in the explanation
+[02-Sep] - Added a //Prepping your Source Folder//
+[01-Sep] - Rephrased some explanations for clarity and consistency 
+[01-Sep] - Listed //Supported Files by Tweego//
+[31-Aug] - Expanded the //Special Passages// for Twine 1 formats
+[31-Aug] - Expanded the //Special Tags// for all (relevant) formats
+[31-Aug] - Added the //Mandatory Passages// (to compile) for all formats
+[31-Aug] - Expanded explanation for the //Twee Notation// formatting
+[31-Aug] - Rephrased some explanations for clarity and consistency 
+[30-Aug] - Move //What's in this folder?// to new passage
+[30-Aug] - Added //About Tweego//
+[30-Aug] - Added //List of all Tweego Commands//
+[30-Aug] - Added //How to (De-)Compile// for MacOS and Twine 1 formats
+[30-Aug] - Rephrased some explanations for clarity and consistency
+[30-Aug] - Corrected erroneous information around the IFID with Twine and Tweego
+[29-Aug] - Reformatted content
+[29-Aug] -  Rephrased some explanations for clarity and consistency
+[29-Aug] - Added //How to add new formats// (Twine 1 & 2)
+[29-Aug] - Added //How to Install Tweego in MacOS//
+[29-Aug] - Started updating Guide
+~
+''Folder''
+[03-Sep] - Created the Folder Variations (Windows, MacOS (w/-sans Tweego))
+[29-Aug] - Added main Twine 1 formats
+[29-Aug] - Added main Twine 2 formats + selected version
+[29-Aug] - Added SugarCane 2.37.3
+[29-Aug] - Removed older SugarCube 2 formats
+
+<hr>
+> ''Version 1.0.0'' - 21-Nov-23
+[23-Nov] - Release of the //Ready-to-Use Tweego Folder//

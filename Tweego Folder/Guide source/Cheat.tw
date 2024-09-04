@@ -1,0 +1,70 @@
+:: Cheatsheet
+<h1>Quick Run Tweego Script</h1>
+This is a shorter no-explanation step-by-step use of the //Ready-to-Use Tweego// scripts, with keyboard shortcuts. The relevant detailed pages are linked in the section headers.
+> ''Note:'' this will assume that both [[Tweego|SetUpTweego]] and the [[Terminal]] are set up properly.
+\
+If something goes wrong during the script, Tweego will let you know in the Terminal.
+\
+<h2>[[Compile to HTML|Compiling]]</h2>\
+<h4>Twine 2 formats</h4>\
+* Put all your files in the {{{source}}} folder ({{{.tw}}}, {{{.js}}}, {{{.css}}}, [[more|Ok-Files]])
+* Open the [[Terminal]] ({{{CTRL + `}}})
+* Input {{{build}}}
+** or {{{build.bat}}} (Win)/{{{./build.sh}}} (MacOS)
+* Press {{{ENTER}}}
+* Find the {{{index.html}}} file in {{{export}}}
+<h4>Twine 1 formats</h4>\
+* Put all your files in the {{{source}}} folder ({{{.tw}}}, {{{.js}}}, {{{.css}}}, [[more|Ok-Files]])
+* Open the [[Terminal]] ({{{CTRL + `}}})
+* Input {{{call tweego -l -f FORMAT -o export/index.html source }}}
+** change {{{FORMAT}}} to Twine 1 format to use
+* Press {{{ENTER}}}
+* Find the {{{index.html}}} file in {{{export}}}
+\
+<h2>[[Compile to HTML (Debug)|DebugDecomp]]</h2>\
+> ''Note:'' this is not available for Twine 1 formats
+* Put all your files in the {{{source}}} folder ({{{.tw}}}, {{{.js}}}, {{{.css}}}, [[more|Ok-Files]])
+* Open the [[Terminal]] ({{{CTRL + `}}})
+* Input {{{debug}}}
+** or {{{debug.bat}}} (Win)/{{{./debug.sh}}} (MacOS)
+* Press {{{ENTER}}}
+* Find the {{{Debug.index.html}}} file in {{{export}}}
+\
+<h2>[[Decompile to Twee|DebugDecomp]]</h2>\
+* Put all your files in the {{{decompile}}} folder ({{{.html}}}, [[more|Ok-Files]])
+* Open the [[Terminal]] ({{{CTRL + `}}})
+* Input {{{decompile}}}
+** or {{{decompile.bat}}} (Win)/{{{./decompile.sh}}} (MacOS)
+* Press {{{ENTER}}}
+* Find the {{{decompiled.tw}}} file in {{{source}}}
+
+:: ExecutableScript
+<h1>Click-n-Go Scripts</h1>
+If you quickly want to (de)compile some files without having to open up VSCode and the terminal, you can simply click on the scripts to run them, right in the //Ready-to-Use// folder.
+
+''Warnings:'' 
+While this is an option, I would not recommend it, as you will have much less control and feedback when running the scripts. If Tweego runs into an error (duplicate passages, missing information, etc...), you will not be notified. So you ''must be certain'' your files are all good before you run those scripts!
+\
+<h2>{{{.bat}}} scripts (Windows)</h2>\
+By default, {{{.bat}}} files are executable, which means you can double-click on them, and it will run. The process is pretty quick, but you should see a Terminal window open when it starts running, and close automatically when it's done.
+So, you only need to double-click on the script you want to use, and it will do what the command coded in the file says.
+> ''Note:'' if you want to edit the command, you will need to open the file in VSCode or Notepad.
+\
+<h2>{{{.sh}}} scripts (MacOS)</h2>\
+By default, {{{.sh}}} files are simple code files that will open in TextEdit. If you want to make your script files executable, you will need need to: 
+* Open the //Terminal// [[window|https://support.apple.com/en-gb/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac]]
+* In the Terminal, get into the Tweego folder
+** Ex: {{{cd Documents/Coding/Tweego}}}
+* Run the following code:
+** {{{chmod a+x build.sh debug.sh decompile.sh}}}
+* Repeat the following instructions for each script file:
+** right-click on the script file
+** select the option //Open with...//
+** then //Other...//
+** then enable //All Applications//
+** and choose //Terminal//
+** make sure //Always Open With// ''is'' checked
+** click //OK//
+\
+After that, you will only need to double-click on the script you want to use, and it will do what the command coded in the file says. The process is pretty quick, but you should see a Terminal window open when it starts running, and close automatically when it's done.
+> ''Note:'' if you want to edit the command, you will need to open the file in VSCode or TextEdit.
