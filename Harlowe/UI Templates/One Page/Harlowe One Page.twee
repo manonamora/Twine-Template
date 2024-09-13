@@ -1,0 +1,64 @@
+:: StoryTitle
+Harlowe One Page
+
+
+:: StoryData
+{
+  "ifid": "B1ACA1EA-7274-4D36-853D-BDAE5C822EE7",
+  "format": "Harlowe",
+  "format-version": "3.3.9",
+  "start": "Start",
+  "zoom": 1
+}
+
+
+:: Closed-Footer [footer] {"position":"625,425","size":"100,100"}
+</div>
+
+
+:: Footer [footer] {"position":"750,425","size":"100,100"}
+<tw-footer>The Name of the Game</tw-footer>
+
+
+:: Open-Header [header] {"position":"875,300","size":"100,100"}
+<div class="passage">
+
+
+:: Start {"position":"750,300","size":"100,100"}
+(if: $var is 0)[(set: $var to 1)](else:)[(set:$var to $var + 1)]
+$var
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in massa vel massa vehicula fringilla. Donec id justo lorem. Praesent leo mi, pulvinar ut nibh sit amet, elementum posuere lectus. Fusce eget nisi non arcu elementum euismod. Integer pharetra egestas velit, et faucibus urna rhoncus at. Donec ut tempus risus. Sed interdum ex urna, at ullamcorper turpis euismod at.
+
+Morbi ipsum lorem, rhoncus id lorem ut, vulputate luctus erat. Maecenas posuere velit felis. Integer tempor fringilla luctus. Duis convallis risus dictum, volutpat tortor sit amet, dapibus odio. Nam id fringilla nulla, a porta turpis. Etiam efficitur sapien eget dolor rhoncus feugiat. Sed mollis placerat mi, a vehicula diam egestas efficitur. Curabitur ac blandit massa. Duis tellus lorem, ullamcorper sed vulputate sit amet, vestibulum nec arcu. Nunc eget ullamcorper orci, faucibus bibendum mauris. Morbi non odio ac lacus interdum ornare. Donec vestibulum massa dui, vel vestibulum nibh eleifend eu. Nulla sit amet varius dui, id interdum elit.
+
+Donec sed ante sed mauris consectetur imperdiet ut ac nulla. Morbi ac congue lacus. Sed gravida cursus neque, ut pulvinar lorem. Etiam aliquam rutrum erat nec sagittis. Nullam id porta leo, eu malesuada nulla. Vivamus sed imperdiet elit, in elementum lorem. Aliquam erat volutpat. In diam dolor, iaculis eu ornare ut, posuere eget justo. Vestibulum blandit tortor vitae ante ultricies euismod.
+
+Vivamus volutpat eros et sem convallis suscipit. Morbi rutrum erat non enim rhoncus ornare. Aliquam erat volutpat. Curabitur iaculis nunc sed scelerisque auctor. Nullam hendrerit magna turpis, vitae vehicula enim rutrum at. Morbi ex arcu, vehicula a neque consequat, laoreet tincidunt magna. Mauris at euismod quam. Vestibulum rutrum lacinia feugiat. Maecenas posuere tempor finibus. Curabitur mollis egestas justo sed tincidunt.
+
+Mauris maximus luctus massa sit amet malesuada. Nam gravida eros quis ex semper malesuada. Cras ex est, semper interdum rhoncus a, luctus a nisl. Quisque eget lobortis nibh. Nam a turpis cursus, viverra turpis at, interdum velit. Nullam at scelerisque mauris. Sed consectetur quis elit lacinia egestas. Vestibulum posuere dapibus ex at posuere. Nullam leo urna, sollicitudin id luctus nec, sollicitudin quis neque. Nam ultrices mi magna, id pretium quam cursus sit amet. Sed eu lacus sit amet nibh vestibulum aliquam quis et diam. Aenean nulla enim, porttitor at egestas eu, porttitor ut risus. 
+
+[[Start]] 
+
+
+:: StoryStylesheet [stylesheet]
+/*Clean-Up StyleSheet*/
+tw-sidebar {
+  display: none;
+}
+
+tw-story {
+  /* font: 100% Georgia,serif; */
+  /* background-color: #000; */
+  /* color: #fff; */
+  font: unset;
+  background-color: unset;
+  color: unset;
+}
+
+html {
+  	font: 16px/1 Helmet,Freesans,sans-serif;
+}
+body {
+  background: white;
+  color: black;
+}
