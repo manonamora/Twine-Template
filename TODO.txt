@@ -1,13 +1,6 @@
 // Check list //
 
-Tweego Folder:
-    - Add the last version of SugarCube 
-    - Add major SugarCube versions (2.36)
-    - Add Harlowe (major versions)
-    - Add Chapbook (major versions)
-    - Add Snowman
-  > Create build files for all of them (check if they can be put in a folder instead?)
-    - Find a way for the Mac OS version 
+NEED TO RECOMPILE THE ONE PAGE HARLOWE WITH THE CORRECT IFID
 
 ~ SugarCube Templates ~
 
