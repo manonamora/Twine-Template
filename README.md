@@ -6,6 +6,8 @@ The directory of this repository is organised as follow:
 * Harlowe
   * Code Templates
     * Save System and Settings (also a Guide)
+  * UI Template
+    * One Page (Chapbook-like)
 * SugarCube
   * Code Templates
     * Character Creator
@@ -29,7 +31,7 @@ Using those templates with any older or newer version of Harlowe may break the c
 
 The templates are organised in 2 categories:
 * Code Templates (saves, settings, etc...)
-* UI Temapltes (interface change) -> TBA
+* UI Temapltes (interface change)
 
 You can find a more comprehensive list of my Harlowe templates, along with their specs [here](Harlowe/DocsHarlowe.md).
 

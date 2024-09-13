@@ -1,0 +1,266 @@
+/*~ ~ ~ ~ ~ ~ ~  TABLE OF CONTENTS ~ ~ ~ ~ ~ ~ ~ 
+      I - Import Font
+     II - Root
+    III - Interface
+     IV - Macros
+      V - Text Styling
+     VI - Special Pages
+    VII - Mobile sizing
+*/
+/***************************
+    IMPORT FONTS
+***************************/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alice&display=swap');
+
+
+/***************************
+    ROOT
+***************************/
+:root {
+    --bg: hsl(210, 16.7%, 97.6%);
+    --bg2: #F8f8f8;
+    --text: #212121;
+    --shadow: hsla(0, 0%, 0%, 0.25);
+    --icon: #555353;
+    --grey: gray;
+    --light: #d8d4d4;
+}
+
+/***************************
+    INTERFACE
+***************************/
+html {
+    font: 16px/1 Montserrat,Freesans,sans-serif;
+}
+body {
+    background: var(--bg);
+    color: var(--text);
+    height: 97%;
+    font-size: 18px;
+}
+
+    /* Remove/Re-set Hard-Coded elements */
+tw-sidebar {
+    display: none;
+}
+tw-story {
+    font: unset;
+    background-color: unset;
+    color: unset;
+}
+tw-expression[name*="input"] {
+    border: unset !important;
+}
+tw-expression[name*="input"] input:focus, tw-expression[name*="input"] textarea:focus {
+    outline: none;
+}
+tw-story textarea {
+    resize: both;
+}
+
+    /* New Interface */
+tw-story {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--bg2);
+    color: var(--text);
+    box-shadow: 0 4px 8px var(--shadow);
+    width: calc(100vw - 14em);
+    max-width: 40em;
+    height: 100vh;
+    min-height: unset;
+    max-height: calc(100vh - 6em);
+    line-height: 150%;
+    margin: 1em auto;
+    padding: 2em 4em;
+    box-sizing: inherit;
+}
+
+tw-passage {
+    overflow: auto;
+    height: calc(100vh - 9em);
+    padding: 0 1em 0 0;
+    line-height: 1.75;
+}
+
+tw-footer {
+    border-top: 1px solid var(--text);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.5em 0 0;
+}
+#title {
+    /* Currently empty, but you could do whatever you want */
+}
+tw-icon {
+    margin: unset;
+    font-size:18px;
+}
+tw-icon[alt] {
+    opacity: 1;
+    color: var(--icon);
+}
+#menu {
+    /* Same as with #title, but you can style it if you want */
+}
+
+/***************************
+    MACROS
+***************************/
+    /* Links */
+    /*Note: #menu tw-link is for the restart link, but you can separate it if you want it styled differently.*/
+tw-passage tw-link, tw-passage tw-link:visited, #menu tw-link {
+    color: var(--text);
+    font-weight: bold;
+}
+tw-passage tw-link:hover, #menu tw-link:hover {
+    color: var(--grey);
+    text-decoration: underline;
+}
+tw-passage tw-link::after {
+    content: " ∽";
+}
+tw-passage tw-link::before {
+    content: "∼ ";
+}
+/* 
+    This stylesheet doesn't differenciate betwee regular and cycling links, but if you want to, you can do so by targetting these elements: 
+	> tw-expression[name="cycling-link"] tw-link
+	> tw-expression[name="seq-link"] tw-link
+*/
+    /* Input, Textarea, Dropdown */
+tw-story input[type="text"], tw-story textarea, tw-story select {
+  background-color: var(--bg);
+  color: var(--text);
+  border: 1px dashed var(--text);
+
+}
+tw-story textarea {
+  resize: both;
+}
+tw-story select {
+  	padding: .34em .4em;
+}
+tw-story input:hover, tw-story input:focus, tw-story textarea:hover, tw-story textarea:focus, tw-story select:hover, tw-story select:focus {
+  background: var(--light) !important;
+  border: 1px solid var(--text) !important;
+}
+
+/***************************
+    TEXT STYLING
+***************************/
+    /* Headings */
+    /* Note: these are examples of what can be done, you don't have to keep them. */
+h1, h2, h3, h4, h5, h6 {font-family: 'Alice', serif;}
+h1 {
+    text-align: center;
+    font-size: 200%;
+    text-transform: uppercase;
+}
+h2 {
+    text-align: right;
+    font-size: 150%;
+}
+h3 {
+    font-size: 125%;
+    font-weight: normal;
+    text-decoration: underline overline dotted 1px;
+    margin-left: 3em;
+}
+h4 {
+    text-decoration: underline;
+    font-weight: normal;
+    margin-left: 2em;
+}
+h5 {
+    font-size: 90%;
+    text-transform: lowercase;
+    margin-left: 1em;
+}
+h6 {
+    text-transform: lowercase;
+    text-shadow: 0px 0px 1px var(--grey);
+}
+
+    /* Lists */
+tw-passage ul {
+    list-style: none;
+    text-align: left;
+}
+tw-passage ul li::before {
+    content: "∼ ";
+    font-weight: bold;
+}
+tw-passage ul li tw-link::before {
+    content: none;
+}
+
+    /* Other Stuff */
+.choice {
+    background-color: rgb(246, 244, 248);
+    border: 1px dotted rgba(13, 9, 31, 0.805);
+    width: fit-content;
+    padding: 1em;
+    text-align: center;
+}
+
+.enchantment-button tw-link {
+    cursor: not-allowed;
+}
+
+
+/***************************
+    SPECIAL PAGES
+***************************/
+    /* Title and End Pages Formatting */
+tw-story[tags="title"] {
+    height: fit-content;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+[tags="title"] tw-passage {
+    display: block;
+    text-align: center;
+    height: auto;
+    padding: 0;
+    margin: auto;
+    text-transform: uppercase;
+}
+[tags="title"] tw-footer {
+    display: none;
+}
+
+    /* Credits Page */
+[tags="credits"] tw-passage tw-link::after, [tags="credits"] tw-passage tw-link::before {
+    content: unset;
+}
+
+/***************************
+    MOBILE SIZING
+***************************/
+@media screen and (max-width: 770px) {
+    tw-story {
+        width: calc(100vw - 4em);
+        margin: 1em auto;
+        padding: 2em 1em;
+    }
+}
+
+@media screen and (max-width: 435px) {
+    tw-story {
+        padding-bottom: 0.5em;
+        max-height: calc(100vh - 5em);
+    }
+    tw-footer {
+        flex-direction: column;
+        align-items: center;
+        padding: 0.2em 0 0 0;
+    }
+}

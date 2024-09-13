@@ -38,51 +38,9 @@ To Do:
     - À la Harlowe
 
 ~ Harlowe Templates ~
-  - Iminate SugarCube and Chapbook
+  - Iminate SugarCube 
 Helpful code: <script>$('tw-sidebar').insertBefore('tw-passage');</script> in footer-tagged
 Use Header/Footer to wrap div around passage
 
-Harlowe -> Chapbook
-   > Three ways?
-      - just like SugarCube (with the menu)
-      - just like Chapbook (bare: title + restart)
-      - with Harlowe rewind (could be hidden like with the SugarCube one)
-   
-   > Todo:
-      - header/footer wrapping the passage text to make it scroll
-      - tw-story same was #passages  
-      - footer has <tw-footer>
-      - <tw-sidebar> is hidden
-      -> (icon-redo:)/(icon-undo:)
-
-
 SugarCube would work better with the scrip above then
 
-
-
-tw-story {
-  background: hsl(210, 16.7%, 97.6%);
-}
-tw-passage {
-  background: white;
-  color: black;
-  box-shadow: 0 4px 8px hsla(0, 0%, 0%, 0.25);
-  font-family: "Iowan Old Style","Constantia","Georgia","serif";
-  font-size: 18px;
-  width: 40em;
-  min-height: calc(100vh - 2em);
-  max-width: calc(100vw - 2em);
-  line-height: 150%;
-  margin: 1em auto;
-  padding: 4em;
-}
-.passage_body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: calc(100vh - 10em);
-}
-
-tw-sidebar {
-  z-index: 100;
-}

@@ -1,0 +1,3 @@
+window.harlowe = {
+    'State': State
+}
