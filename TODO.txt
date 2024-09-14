@@ -1,6 +1,5 @@
 // Check list //
 
-NEED TO RECOMPILE THE ONE PAGE HARLOWE WITH THE CORRECT IFID
 
 ~ SugarCube Templates ~
 
@@ -31,7 +30,7 @@ To Do:
     - À la Harlowe
 
 ~ Harlowe Templates ~
-  - Iminate SugarCube 
+  - Imitate SugarCube 
 Helpful code: <script>$('tw-sidebar').insertBefore('tw-passage');</script> in footer-tagged
 Use Header/Footer to wrap div around passage
 
