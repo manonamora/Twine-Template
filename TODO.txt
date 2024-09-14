@@ -1,13 +1,5 @@
 // Check list //
 
-Tweego Folder:
-    - Add the last version of SugarCube 
-    - Add major SugarCube versions (2.36)
-    - Add Harlowe (major versions)
-    - Add Chapbook (major versions)
-    - Add Snowman
-  > Create build files for all of them (check if they can be put in a folder instead?)
-    - Find a way for the Mac OS version 
 
 ~ SugarCube Templates ~
 
@@ -38,32 +30,9 @@ To Do:
     - À la Harlowe
 
 ~ Harlowe Templates ~
-  - Iminate SugarCube and Chapbook
+  - Imitate SugarCube 
 Helpful code: <script>$('tw-sidebar').insertBefore('tw-passage');</script> in footer-tagged
 Use Header/Footer to wrap div around passage
 
-tw-story {
-  background: hsl(210, 16.7%, 97.6%);
-}
-tw-passage {
-  background: white;
-  color: black;
-  box-shadow: 0 4px 8px hsla(0, 0%, 0%, 0.25);
-  font-family: "Iowan Old Style","Constantia","Georgia","serif";
-  font-size: 18px;
-  width: 40em;
-  min-height: calc(100vh - 2em);
-  max-width: calc(100vw - 2em);
-  line-height: 150%;
-  margin: 1em auto;
-  padding: 4em;
-}
-.passage_body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: calc(100vh - 10em);
-}
-
-
 SugarCube would work better with the scrip above then
+

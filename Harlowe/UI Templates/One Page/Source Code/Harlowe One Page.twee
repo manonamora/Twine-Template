@@ -1,0 +1,136 @@
+:: StoryTitle
+Harlowe One Page
+
+
+:: StoryData
+{
+  "ifid": "37BFE9B3-93E0-4A2C-B74E-3FAEF445DBC3",
+  "format": "Harlowe",
+  "format-version": "3.3.9",
+  "start": "Start",
+  "tag-colors": {
+    "footer": "orange",
+    "header": "orange",
+    "foot-menu": "blue"
+  },
+  "zoom": 1
+}
+
+
+:: Credits [credits] {"position":"225,150","size":"100,100"}
+The ''One Page Template'' template was created by (link-repeat: "manonamora ⎘")[(open-url:"https://manonamora.itch.io/")] on Twine 2 with Harlowe (v3.3.9).
+<hr>
+''It was made possible thanks to:''
+* Chris Klimas, creator of (link-repeat: "Twine ⎘")[(open-url:"https://twinery.org/")]
+* Leon Arnott, creator and maintainer of the (link-repeat: "Harlowe ⎘")[(open-url:"https://twine2.neocities.org/")] format
+* Greyelf and Hituro's answers on Discord, as well as the old Twine Forums, and Reddit
+<hr>
+''Twine Resources:''
+* Download (link-repeat: "Twine ⎘")[(open-url:"https://twinery.org/")]
+* Check the (link-repeat: "Harlowe manual ⎘")[(open-url:"https://twine2.neocities.org/")]
+* Check the (link-repeat: "Twine Resource Masterlist ⎘")[(open-url:"https://intfiction.org/t/twine-resource-masterlist-wiki/65903")]
+* Community Help: (link-repeat: "IntFiction Forum ⎘")[(open-url:"https://intfiction.org/c/authoring/twine")], (link-repeat: "Reddit r/twinegames ⎘")[(open-url:"https://www.reddit.com/r/twinegames/")], (link-repeat: "Discord ⎘")[(open-url:"https://discordapp.com/invite/n5dJvPp")]
+<h5>You can find my other Twine templates and guides (link-repeat: "here ⎘")[(open-url:"https://itch.io/c/2917452/")]
+
+
+:: End [title] {"position":"600,150","size":"100,100"}
+# END
+
+<div id="end">(link-repeat:"RESTART")[(restart:)] | (link-repeat:"BACK")[(undo:)]</div>
+
+
+:: Footer [footer] {"position":"75,300","size":"100,100"}
+<tw-footer>(display:"Game Title")(display:"Navigation")(display:"Menu")</tw-footer><!--
+	If you don't want the players to have a undo/redo option, just remove the middle (display:)
+	The code below is so the Footer is actually separate from the tw-passage element. DO NOT REMOVE THIS SCRIPT!!!!!!
+--><script>$('tw-footer').insertAfter('tw-passage');</script>
+
+
+:: Game Title [foot-menu] {"position":"175,300","size":"100,100"}
+<div id="title">//One Page Template//</div>
+
+
+:: Interactive Macros {"position":"600,25","size":"100,100"}
+## Cycling Link
+(cycling-link: bind _head, "Option 1", "Option 2", "Option 3")
+## Sequence Link
+(seq-link: bind _candy, "First Click", "Second Click", "Final Text")
+## Text Input
+(input: bind _name, "Add stuff there")
+## Text Area
+(input-box: bind _code, "Add even more words there")
+## Checkbox
+(checkbox: bind _gore, "Check this Option") 
+## Dropdown
+(dropdown: bind _origin, "Option 1", "Option 2", "Option 3")
+## Button
+(button:)[[This Doesn't Go Anywhere]]
+
+[[End]]
+
+
+:: Lorem Ipsum {"position":"350,25","size":"100,100"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tellus lorem, porta a eleifend id, iaculis ac risus. Nullam justo nibh, sodales in velit cursus, posuere feugiat mauris. Cras elementum, mauris eu consequat congue, odio velit maximus erat, sit amet euismod nunc metus ut massa. Fusce eu est non orci bibendum vehicula nec vel tortor. Sed non venenatis est, quis scelerisque ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus aliquam tempor libero, a congue neque dapibus vel. Ut venenatis ultricies tortor sed ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+
+Nam tempor libero nibh, eu ornare ante consequat congue. Donec viverra urna id enim faucibus, eget accumsan est blandit. Maecenas vel nulla cursus, pulvinar eros gravida, vehicula massa. Vestibulum urna lectus, pretium at tristique at, accumsan a est. Nunc vel lacus nec nunc viverra condimentum. Donec ultricies dui eu aliquet luctus. In id egestas neque. Quisque eget metus sit amet orci porttitor iaculis quis consectetur neque. Duis eu ligula iaculis, tempus nunc id, eleifend neque. Mauris ac lorem ac mi condimentum consectetur a vitae arcu. Nulla in consequat lacus. Ut vitae diam sit amet leo elementum varius. 
+
+[[Styling]] 
+
+
+:: Menu [foot-menu] {"position":"375,300","size":"100,100"}
+<div id="menu">(link-repeat:"Restart")[(restart:)]</div><!--
+
+This is just an example, you could even create your own menu and add settings/saves and so on.
+Even have a <nav> menu, with multiple options.
+
+-->
+
+
+:: NavCheck [header] {"position":"75,200","size":"100,100"}
+{(set: _past to 0)
+(set: _future to 0)
+<script>
+    _past = harlowe.State.pastLength;
+    _future = harlowe.State.futureLength;
+</script>
+<!-- 
+	The Code above is check if the Navigation Forward arrow should be a link or not. 
+	If you are not using the Navigation passage, you can also delete this passage.
+-->
+}
+
+
+:: Navigation [foot-menu] {"position":"275,300","size":"100,100"}
+<div>&emsp;(if: (history:)'s length is 0)[⮘](else:)[(icon-undo:"⮘")]&emsp;|&emsp;(if: _future > 0)[(icon-redo:"⮚")](else:)[⮚]&emsp;</div>
+
+
+:: Start [title] {"position":"225,25","size":"100,100"}
+#One Page<br>Template
+
+[[Start|Lorem Ipsum]] 
+[[Credits]]
+<!-- If you want to add settions or save slots, check out this page https://manonamora.itch.io/twine-harlowe-templates for the relevant template-->
+
+
+:: Styling {"position":"475,25","size":"100,100"}
+#Header 1
+##Header 2
+###Header 3
+####Header 4
+#####Header 5
+######Header 6
+<hr>
+<center>''Unordered Lists''</center>
+* Item 1
+* Item 2
+<hr>
+<center>''Links''</center>
+//Basic://
+[[Interactive Macros]]
+//As a list://
+* [[Interactive Macros]]
+//With a Div//
+<div class="choice">[[Interactive Macros]]</div>
+
+
+:: This Doesn't Go Anywhere {"position":"750,75","size":"100,100"}
