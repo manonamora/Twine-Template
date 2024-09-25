@@ -1,3 +1,13 @@
+//Update Log//
+ Settings:
+   - Updated APIs to 2.37
+      - removed deprecated + broken elements
+      - used better and more correct ways
+   - Rephrased some explanations for clarity
+      - Extra substitutes in comments
+   - Fixed some typos
+   - Changed the Credits page
+
 // Check list //
 
 
@@ -36,3 +46,9 @@ Use Header/Footer to wrap div around passage
 
 SugarCube would work better with the scrip above then
 
+
+
+Canvas format for pics:
+- iPhone 12/13 Pro Max iOs 14.6
+- iPad iPadOS 14.7.1
+- Laptop with HiDPI screen
