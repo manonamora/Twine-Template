@@ -51,6 +51,8 @@ The ''One Page Template'' template was created by (link-repeat: "manonamora ⎘"
 
 
 :: Interactive Macros {"position":"600,25","size":"100,100"}
+## Dialog/Popup
+(link-repeat: "Click For Popup")[(dialog: [Beyond this point, things get serious. Grab a snack and buckle up.], "Sure.")]
 ## Cycling Link
 (cycling-link: bind _head, "Option 1", "Option 2", "Option 3")
 ## Sequence Link

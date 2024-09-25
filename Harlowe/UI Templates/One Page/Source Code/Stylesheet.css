@@ -106,25 +106,33 @@ tw-icon[alt] {
 #menu {
     /* Same as with #title, but you can style it if you want */
 }
+tw-dialog {
+    background: var(--bg2);
+    color: var(--text);
+    border: 1px solid #444;
+}
 
 /***************************
     MACROS
 ***************************/
     /* Links */
     /*Note: #menu tw-link is for the restart link, but you can separate it if you want it styled differently.*/
-tw-passage tw-link, tw-passage tw-link:visited, #menu tw-link {
+tw-passage tw-link, tw-passage tw-link:visited, #menu tw-link, tw-dialog-links tw-link {
     color: var(--text);
     font-weight: bold;
 }
-tw-passage tw-link:hover, #menu tw-link:hover {
+tw-passage tw-link:hover, #menu tw-link:hover, tw-dialog-links tw-link:hover {
     color: var(--grey);
     text-decoration: underline;
 }
-tw-passage tw-link::after {
+tw-passage tw-link::after, tw-dialog-links tw-link::after {
     content: " ∽";
 }
-tw-passage tw-link::before {
+tw-passage tw-link::before, tw-dialog-links tw-link::before {
     content: "∼ ";
+}
+tw-dialog-links tw-link {
+    border: unset;
 }
 /* 
     This stylesheet doesn't differenciate betwee regular and cycling links, but if you want to, you can do so by targetting these elements: 
