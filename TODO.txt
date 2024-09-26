@@ -1,12 +1,17 @@
 //Update Log//
- Settings:
+* Settings:
    - Updated APIs to 2.37
       - removed deprecated + broken elements
       - used better and more correct ways
    - Rephrased some explanations for clarity
       - Extra substitutes in comments
    - Fixed some typos
-   - Changed the Credits page
+   - Updated the Credits page
+* Title Page:
+   - Updated Dialog code to 2.37
+   - Updated the Credits page
+   - Rephrased some explanations for clarity
+   - Fixed some typos
 
 // Check list //
 
@@ -28,9 +33,6 @@
  UI Space Tech:
     - Update for 2.37
     - Relase code into .tw file copy 
- Title Page:
-    - Update for 2.37
-    - Relase code into .tw file copy
  VN-lite:
     - Update for 2.37
     - Relase code into .tw file copy

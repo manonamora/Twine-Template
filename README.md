@@ -1,5 +1,5 @@
 # ========* Twine Templates *========
-This Repo includes Twine and Twine related templates and code.
+This Repo includes Twine and Twine-related templates and code.
 
 The directory of this repository is organised as follow:
 * Chapbook (TBD)
@@ -33,7 +33,7 @@ The templates are organised in 2 categories:
 * Code Templates (saves, settings, etc...)
 * UI Temapltes (interface change)
 
-You can find a more comprehensive list of my Harlowe templates, along with their specs [here](Harlowe/DocsHarlowe.md).
+You can find a more comprehensive list of my Harlowe templates, along with their specs [here](Harlowe/README.md).
 
 ## SugarCube Templates 
 The templates in this folder are made for SugarCube 2.36.1. The HTML template file can be opened in any version Twine 2 that includes 2.36.1.\
@@ -44,7 +44,7 @@ The templates are organised in 2 categories:
 * Code Templates (settings, character creator)
 * UI Templates (interface change)
 
-You can find a more comprehensive list of my Harlowe templates, along with their specs [here](SugarCube/DocsSugarCube.md).
+You can find a more comprehensive list of my Harlowe templates, along with their specs [here](SugarCube/README.md).
 
 ## Ready-to-Use Tweego Folder
 This *Ready-to-Use Tweego* folder is not of the easiest (if not **the** easiest) install for Tweego.\
@@ -57,7 +57,7 @@ Just:
 
 The Folder also includes a Guide for use - based on a use with the VSCode editor. A "playable" version of the Guide is available [here](https://manonamora.itch.io/ready-to-use-tweego-folder).
 
-You can find a more comprehensive list of specs of this Folder [here](Tweego%20Folder/DocsTweego.md).
+You can find a more comprehensive list of specs of this Folder [here](Tweego%20Folder/README.md).
 
 ## Links
 You can also find these templates on my [itch.io page](https://manonamora.itch.io/), specifically:
