@@ -6,6 +6,7 @@
    - Rephrased some explanations for clarity
       - Extra substitutes in comments
    - Fixed some typos
+   - Removed Open Dyslexic font (replaced with Monospace)
    - Updated the Credits page
 * Title Page:
    - Updated Dialog code to 2.37
@@ -13,18 +14,25 @@
    - Rephrased some explanations for clarity
    - Fixed some typos
 * OnePage:
-   - TODO!!
+   - Updated Code + APIs to 2.37
+      - removed deprecated + broken elements 
+         - Updated Chapel's Popup macro
+      - used more correct code (inlc. HTML/CSS/JS)
+   - Rephrased some explanations for clarity
+   - Fixed some typos 
+   - Removed Open Dyslexic font (replaced with Monospace)
+   - Changed the Sepia Theme palette for lighter version
+   - Added stats bars
+   - Updated the Credits page 
+* VN-lite:
 
 // Check list //
-
+   -> Change min with to 320px
 
 ~ SugarCube Templates ~
 
  Character Creator:
     - Update for 2.37 <<do/redo>> formatting
-    - Relase code into .tw file copy
- UI One Page:
-    - Update for 2.37
     - Relase code into .tw file copy
  UI Simplet Book:
     - Update for 2.37 (<<do/redo>>)

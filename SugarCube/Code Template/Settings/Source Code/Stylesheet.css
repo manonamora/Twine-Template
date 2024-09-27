@@ -30,11 +30,15 @@
     IMPORTS
 ***************************/
     /*
-        This template only includes online fonts from Google, using the @import rule.
-        If you want to ensure the game is playable offline (downloaded or intermittent internet), you may want to download the fonts, and include those files in your game folder, and import them with @font-face.
+        This template only includes online fonts  Google, using the @import rule.
+        But it is recommended to only use local (downloaded) fonts, as online fonts are dependent on the hosting server (i.e. Google could always pull the font, or change the API). Local import also ensures the project is playable offline (downloaded or intermittent internet).
+        To do that, download the fonts, include those files in your game folder, and import them with @font-face.
     */
+ /* Sans-serif: Montserrat */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+ /* Serif: Tinos */
 @import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+ /* Monospace: Roboto Mono  */
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
 /* 

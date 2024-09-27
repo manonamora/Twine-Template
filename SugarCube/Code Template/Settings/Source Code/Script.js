@@ -376,14 +376,12 @@ Setting.addToggle("autosave", {
 
         If you plan on using the name of a passage, you will need to include [passage()].
             > Note: you should be sure the name of passages are meaningful, like "Entrance to Manor" instead of "Ch10-2"
-        
-        Another way would be to use The Config.saves.descriptions API.
     */
-//Save.onSave.add( function (save, details) {
+
 Config.saves.descriptions = function (saveType) {
     switch (saveType) {
       //This checks what type of save we're dealing with (auto or manual)
-        case 'autosave': {
+        case Save.Type.Auto: {
             return "Autosave: " + (State.getVar("$FirstName") ? State.getVar("$FirstName") : '???') + " - " + State.getVar("$chapter");
             // the second section (after +) will check if $FirstName is defined, before either printing the value (defined) or ??? (not defined)
             // An alternative:

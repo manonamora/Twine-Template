@@ -136,11 +136,15 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
     IMPORTS
 ***************************/
     /*
-        This template only includes online fonts from Google, using the @import rule.
-        If you want to ensure the game is playable offline (downloaded or intermittent internet), you may want to download the fonts, and include those files in your game folder, and import them with @font-face.
+        This template only includes online fonts  Google, using the @import rule.
+        But it is recommended to only use local (downloaded) fonts, as online fonts are dependent on the hosting server (i.e. Google could always pull the font, or change the API). Local import also ensures the project is playable offline (downloaded or intermittent internet).
+        To do that, download the fonts, include those files in your game folder, and import them with @font-face.
     */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+ /* Sans-serif: Montserrat */
+ @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+ /* Serif: Tinos */
 @import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+ /* Monospace: Roboto Mono  */
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
 /* 
@@ -820,14 +824,11 @@ Setting.addToggle("autosave", {
 
         If you plan on using the name of a passage, you will need to include [passage()].
             > Note: you should be sure the name of passages are meaningful, like "Entrance to Manor" instead of "Ch10-2"
-        
-        Another way would be to use The Config.saves.descriptions API.
     */
-//Save.onSave.add( function (save, details) {
 Config.saves.descriptions = function (saveType) {
     switch (saveType) {
       //This checks what type of save we're dealing with (auto or manual)
-        case 'autosave': {
+        case Save.Type.Auto: {
             return "Autosave: " + (State.getVar("$FirstName") ? State.getVar("$FirstName") : '???') + " - " + State.getVar("$chapter");
             // the second section (after +) will check if $FirstName is defined, before either printing the value (defined) or ??? (not defined)
             // An alternative:
