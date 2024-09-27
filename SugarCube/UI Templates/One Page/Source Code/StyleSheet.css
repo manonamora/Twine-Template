@@ -1,0 +1,637 @@
+/*~ ~ ~ ~ ~ ~ ~  TABLE OF CONTENTS ~ ~ ~ ~ ~ ~ ~ 
+    I-      Import Fonts
+        a- Google Fonts
+        b- Local Fonts
+    II-     Root Variables
+    III-    Base CSS
+        a- Scrollbar
+        b- Body
+        c- Base
+        d- Parts
+        e- Scrollbar
+        f- Font Change
+    IV-     HTML CSS
+        a- Headers (h1, h2, etc...)
+        b- <label>
+        c- <hr>
+        d- Tables
+        e- Lists
+        f- <a>/Links
+            + Regular
+            + Choice Div
+    V-      Macros
+        a- Textbox, Textarea, Select
+        b- Buttons
+    VI-     UI Dialog
+        a- Base CSS
+        b- Settings Dialog
+        c- Saves Dialog
+    VII-    Menu
+    VIII-   Mobile
+    IX-     Title Page
+
+    Notes:            
+        CTRL/Cmd+F the Title to jump
+        Theme changes are located below each category affected (ex: .dm body{} will be below body{})
+        Don't like/care about the themes? you can delete any line with either .gn or .or below! (and the Theme Setting in the Javascript)
+*/
+
+/***************************
+    IMPORT FONTS
+***************************/
+
+    /*Text Fonts: Google*/
+    @import url('https://fonts.googleapis.com/css2?family=Alice&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+    
+        /* Text Fonts: Local*/
+    @font-face {
+        font-family: "Dyslexic";
+        src: url(fonts/OpenDyslexic-Regular.otf) format("opentype");
+        font-style: normal;
+        font-weight: 400;
+    }
+    @font-face {
+        font-family: "Dyslexic";
+        src: url(fonts/OpenDyslexic-Italic.otf) format("opentype");
+        font-style: italic;
+        font-weight: 400;
+    }
+    @font-face {
+        font-family: "Dyslexic";
+        src: url(fonts/OpenDyslexic-BoldItalic.otf) format("opentype");
+        font-style: italic;
+        font-weight: 700;
+    }
+    @font-face {
+        font-family: "Dyslexic";
+        src: url(fonts/OpenDyslexic-Bold.otf) format("opentype");
+        font-style: normal;
+        font-weight: 700;
+    }
+    
+    /***************************
+        ROOT VARIABLES
+    ***************************/
+    
+    :root {
+        --mainbg: hsl(210, 16.7%, 97.6%);
+        --white: #F8f8f8;
+        --black: #212121;
+        --shadow: hsla(0, 0%, 0%, 0.25);
+        --grey: grey;
+        --button: #d8d4d4;
+        --dk-mainbg: #181819;
+        --dk-white: #212121;
+        --dk-black: #F8f8f8;
+        --dk-shadow: hsla(0, 0%, 100%, 0.25);
+        --dk-grey: #d8d4d4;
+        --dk-button: grey;
+        --sp-mainbg: #0D0300;
+        --sp-white: #260801;
+        --sp-black: #BFA26B;
+        --sp-shadow: hsla(0, 0%, 100%, 0.25);
+        --sp-grey: #594225;
+        --sp-button: grey;
+        --sansserif: 'Montserrat', sans-serif;
+        --opendyslexic: "Dyslexic", serif;
+        --serif: 'Tinos', serif; 
+    }
+    
+    /***************************
+        BASE CSS
+    ***************************/
+        /* Scrollbar FFX - Chrome*/
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: inherit inherit;
+    }
+    
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    ::-webkit-scrollbar-track {background: inherit;}
+    ::-webkit-scrollbar-thumb {background: inherit;}
+    ::-webkit-scrollbar-thumb:hover {background: inherit;}
+    
+        /***************************
+            Body
+        ***************************/
+    body {
+        background: var(--mainbg);
+        font-size: 18px;
+    }
+    .dk body {background-color: var(--dk-mainbg);}
+    .sp body {background-color: var(--sp-mainbg);}
+        /***************************
+            Base
+        ***************************/
+    #parent {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: var(--white);
+        color: var(--black);
+        box-shadow: 0 4px 8px var(--shadow);
+        width: calc(100vw - 14em);
+        height: 100vh;
+        max-height: calc(100vh - 6em);
+        max-width: 40em;
+        line-height: 150%;
+        margin: 1em auto;
+        padding: 2em 4em;
+    }
+    .dk #parent {
+        background: var(--dk-white);
+        color: var(--dk-black);
+        box-shadow: 0 4px 8px var(--dk-shadow);
+    }
+    .sp #parent {
+        background: var(--sp-white);
+        color: var(--sp-black);
+        box-shadow: 0 4px 8px var(--sp-shadow);
+    }
+        /***************************
+            Parts
+        ***************************/
+    #menu {
+        border-top: 1px solid var(--black);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0.5em 0 0;
+    }
+    .dk #menu {border-top: 1px solid var(--dk-black);}
+    .sp #menu {border-top: 1px solid var(--sp-black);}
+    
+    .title {
+        font-style: italic;
+        font-family: 'Alice', serif;
+    }
+    
+    #passages {
+        overflow: auto;
+        height: calc(100vh - 9em);
+        padding: 0 1em 0 0;
+    }
+    
+        /***************************
+            Front Changes
+        ***************************/
+    .sansserif body {font-family: var(--sansserif);}
+    .opendyslexic body {font-family: var(--opendyslexic);}
+    .serif body {font-family: var(--serif);}
+    
+    /***************************
+        HTML CSS
+    ***************************/
+    
+        /***************************
+            Headers
+        ***************************/
+    h1, h2, h3, h4, h5, h6 {font-family: 'Alice', serif;}
+    h1 {
+        text-align: center;
+        font-size: 200%;
+        text-transform: uppercase;
+    }
+    h2 {
+        text-align: right;
+        font-size: 150%;
+    }
+    h3 {
+        font-size: 125%;
+        font-weight: normal;
+        text-decoration: underline overline dotted 1px;
+        margin-left: 3em;
+    }
+    h4 {
+        text-decoration: underline;
+        font-weight: normal;
+        margin-left: 2em;
+    }
+    h5 {
+        font-size: 90%;
+        text-transform: lowercase;
+        margin-left: 1em;
+    }
+    h6 {
+        text-transform: lowercase;
+        text-shadow: 0px 0px 1px var(--grey);
+    }
+    .dk h6 {text-shadow: 0px 0px 1px var(--dk-grey);}
+    .sp h6 {text-shadow: 0px 0px 1px var(--sp-grey);}
+    
+        /***************************
+            label
+        ***************************/
+    label {
+        font-weight: bold;
+    }
+        /***************************
+            hr
+        ***************************/
+    hr {border-top: 5px double var(--black);}
+    .dk hr {border-top: 5px double var(--dk-black);}
+    .sp hr {border-top: 5px double var(--sp-black);}
+        /***************************
+            Tables
+        ***************************/
+            /*Note: if you remove .passage, it will affect the Table in the Save UI. you can also have specific css for tables by adding the relvant divclass before table (ex: .test table will apply to all <table class="test">)*/
+    .passage table {
+        margin: auto;
+        width: 75%;
+        text-align: center;
+        color: var(--black);
+    }
+    .dk .passage table {color: var(--dk-black);}
+    .sp .passage table {color: var(--sp-black);}
+    
+    .passage table, .passage th, .passage td {border: 1px solid var(--black);}
+    .dk .passage table, .dk .passage th, .dk .passage td {border: 1px solid var(--dk-black);}
+    .sp .passage table, .sp .passage th, .sp .passage td {border: 1px solid var(--sp-black);}
+    
+    .passage th {font-size: 110%;}
+        /***************************
+            Lists
+        ***************************/
+    .passage ul {
+        list-style: none;
+        padding-left: 2em;
+        margin: auto;
+        text-align: left;
+    }
+    .passage ul li::before {
+        content: "∼ ";
+        font-weight: bold;
+    }
+    .passage ul li a::before {content: none;}
+        /***************************
+            Links
+        ***************************/
+            /***************************
+                Regular
+            ***************************/
+    .passage a {
+        color: var(--black);
+        font-weight: bold;
+    }  
+    .dk .passage a {color: var(--dk-black);}
+    .sp .passage a {color: var(--sp-black);}
+    
+    .passage a::before {content: "∼ ";}
+    .passage a::after {content: " ∽";}
+    
+    .passage a:hover, .passage a:focus {color: var(--grey);}
+    .dk .passage a:hover, .dk .passage a:focus {color: var(--dk-grey);}
+    .sp .passage a:hover, .sp .passage a:focus {color: var(--sp-grey);}
+            /***************************
+                Choice Div
+            ***************************/
+    .choice {
+        background-color: rgb(246, 244, 248);
+        border: 1px dotted rgba(13, 9, 31, 0.805);
+        width: fit-content;
+        padding: 1em;
+        text-align: center;
+    }
+    .dk .choice {
+        background-color: rgba(13, 9, 31, 0.805);
+        border: 1px dotted  rgb(246, 244, 248);
+    }
+    .sp .choice {
+        background-color: #401902;
+        border: 1px dotted  rgb(246, 244, 248);
+    }
+    
+    /***************************
+        MACROS
+    ***************************/
+    
+        /***************************
+            Textbox, Textarea,
+            Select
+        ***************************/
+            /*Note: input = textbox/numerbox, select = listbox*/
+    input, textarea, select {
+        background-color: var(--mainbg);
+        color: var(--black);
+        border: 1px var(--black);
+        border-style: dashed;
+    }
+    .dk input, .dk textarea, .dk select {
+        background-color: var(--dk-mainbg);
+        color: var(--dk-black);
+        border: 1px var(--dk-black);
+    }
+    .sp input, .sp textarea, .sp select {
+        background-color: var(--sp-mainbg);
+        color: var(--sp-black);
+        border: 1px var(--sp-black);
+    }
+    input:hover, input:focus, textarea:hover, textarea:focus, select:hover, select:focus  {
+        background: var(--button) !important;
+        border: 1px solid var(--black) !important;
+    }
+    .dk input:hover, .dk input:focus, .dk textarea:hover, .dk textarea:focus, .dk select:hover, .dk select:focus  {
+        background: var(--dk-white) !important;
+        border: 1px solid var(--dk-black) !important;
+    }
+    .sp input:hover, .sp input:focus, .sp textarea:hover, .sp textarea:focus, .sp select:hover, .sp select:focus  {
+        background: var(--sp-white) !important;
+        border: 1px solid var(--sp-black) !important;
+    }
+    /*TODO: update here because it should be :not(:disabled) */
+    
+    input[type="text"] {min-width: 9em;}
+    textarea {
+        min-width: 50%;
+        resize: both;
+    }
+        /***************************
+            Buttons
+        ***************************/
+    button {
+        color: var(--black);
+        background-color: var(--mainbg);
+        border: 1px solid var(--black);
+        font-weight: bold;
+        box-shadow: 1px 1px 1px var(--black);
+    }
+    .dk button {
+        color: var(--dk-black);
+        background-color: var(--dk-mainbg);
+        border: 1px solid var(--dk-black);
+        box-shadow: 1px 1px 1px var(--dk-black);
+    }  
+    .sp button {
+        color: var(--sp-black);
+        background-color: var(--sp-mainbg);
+        border: 1px solid var(--sp-black);
+        box-shadow: 1px 1px 1px var(--sp-black);
+    }
+    
+    button:hover {
+        background-color: var(--button);
+        border-color: var(--grey);
+    } 
+    .dk button:hover {
+        background-color: var(--dk-white);
+        border-color: var(--dk-grey);
+        box-shadow: none;
+    }
+    .sp button:hover {
+        background-color: var(--sp-white);
+        border-color: var(--sp-grey);
+        box-shadow: none;
+    }
+    
+    /***************************
+        UI DIALOG
+    ***************************/
+    
+        /***************************
+            Base CSS
+        ***************************/
+    #ui-dialog {
+        min-width: 30em;
+        margin-top: 10vh;
+    }
+    #ui-dialog-titlebar {
+        display: flex;
+        background-color: var(--mainbg);
+        color: var(--black);
+    }
+    .dk #ui-dialog-titlebar {
+        background-color: var(--dk-mainbg);
+        color: var(--dk-black);
+    }
+    .sp #ui-dialog-titlebar {
+        background-color: var(--sp-mainbg);
+        color: var(--sp-black);
+    }
+    #ui-dialog-title {
+        font-size: 200%;
+        padding: 1% 0;
+        margin: auto;
+    }
+    #ui-dialog-body {
+        max-height: calc(100% - 2.1em - 10vh);
+        background-color: var(--white);
+        color: var(--black);
+    }
+    .dk #ui-dialog-body {
+        background-color: var(--dk-white);
+        color: var(--dk-black);
+    }
+    .sp #ui-dialog-body {
+        background-color: var(--sp-white);
+        color: var(--sp-black);
+    }
+    #ui-dialog-close {
+        box-shadow: none;
+        height: 100%;
+    }
+    #ui-dialog-close:hover {color: var(--white);}
+    
+    ul.buttons {
+        display: flex;
+    }
+        /***************************
+            Settings Dialog
+        ***************************/
+    #ui-dialog h2 {text-align: center;}
+    
+    #ui-dialog-body.settings div[id|="header-body"]:not(:first-child) {border-top: 3px double var(--black);}
+    .dk #ui-dialog-body.settings div[id|="header-body"]:not(:first-child) {border-top: 3px double var(--dk-black);}
+    .sp #ui-dialog-body.settings div[id|="header-body"]:not(:first-child) {border-top: 3px double var(--sp-black);}
+    
+    #ui-dialog-body.settings button[id|="setting-control"] {
+        color: var(--black);
+        background-color: var(--white);
+    }
+    .dk #ui-dialog-body.settings button[id|="setting-control"] {
+        color: var(--dk-black);
+        background-color: var(--dk-white);
+        box-shadow: none;
+    }
+    .sp #ui-dialog-body.settings button[id|="setting-control"] {
+        color: var(--sp-black);
+        background-color: var(--sp-white);
+        box-shadow: none;
+    }
+    #ui-dialog-body.settings button[id|="setting-control"]:hover {
+        background-color: var(--button);
+        border-color: var(--grey);
+    }
+    .dk #ui-dialog-body.settings button[id|="setting-control"]:hover {
+        background-color: var(--dk-white);
+        border-color: var(--dk-grey);
+        box-shadow: 1px 1px 1px var(--dk-black);
+    }  
+    .sp #ui-dialog-body.settings button[id|="setting-control"]:hover {
+        background-color: var(--sp-white);
+        border-color: var(--sp-grey);
+        box-shadow: 1px 1px 1px var(--sp-black);
+    } 
+    #ui-dialog-body.settings button[id|="setting-control"].enabled {
+        background-color: var(--button);
+        border-color: var(--grey);
+    }
+    .dk #ui-dialog-body.settings button[id|="setting-control"].enabled {
+        background-color: var(--dk-white);
+        border-color: var(--dk-grey);
+        box-shadow: 1px 1px 1px var(--dk-black);
+    }  
+    .sp #ui-dialog-body.settings button[id|="setting-control"].enabled {
+        background-color: var(--sp-white);
+        border-color: var(--sp-grey);
+        box-shadow: 1px 1px 1px var(--sp-black);
+    } 
+    #ui-dialog-body.settings button[id|="setting-control"].enabled:hover {
+        background-color: var(--mainbg);
+        border-color: var(--black);
+    }
+    .dk #ui-dialog-body.settings button[id|="setting-control"].enabled:hover {
+        background-color: var(--dk-mainbg);
+        border-color: var(--dk-black);
+        box-shadow: none;
+    }
+    .sp #ui-dialog-body.settings button[id|="setting-control"].enabled:hover {
+        background-color: var(--sp-mainbg);
+        border-color: var(--sp-black);
+        box-shadow: none;
+    }
+        /***************************
+            Saves Dialog
+        ***************************/
+    #ui-dialog-body button:disabled {
+        background-color: var(--white);
+        border: 1px solid var(--grey);
+        box-shadow: none;
+        color: var(--grey);
+    }
+    .dk #ui-dialog-body button:disabled {
+        background-color: var(--dk-white);
+        border: 1px solid var(--dk-grey);
+        color: var(--dk-grey);
+    }
+    .sp #ui-dialog-body button:disabled {
+        background-color: var(--sp-white);
+        border: 1px solid var(--sp-grey);
+        color: var(--sp-grey);
+    }
+    
+    /***************************
+        MENU CSS
+    ***************************/
+    
+        /***************************
+            Dropdown Button
+        ***************************/
+    .dropbtn {
+        color: var(--black);
+        border: none;
+        cursor: pointer;
+    }
+    .dk .dropbtn {color: var(--dk-black);}
+    .sp .dropbtn {color: var(--sp-black);}
+        /***************************
+            Dropdown Button
+            Hover and Focus
+        ***************************/
+    .dropbtn:hover, .dropbtn:focus {
+        color: var(--grey);
+        text-decoration: none;
+    }
+    .dk .dropbtn:hover, .dk .dropbtn:focus {color: var(--dk-grey);} 
+    .sp .dropbtn:hover, .sp .dropbtn:focus {color: var(--sp-grey);} 
+        /***************************
+            Dropdown Container
+        ***************************/
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+        /***************************
+            Dropdown Content
+            (Hidden by Default)
+        ***************************/
+    .dropup-content {
+        display: none;
+        position: absolute;
+        bottom: 2em;
+        right: 0px;
+        text-align: right;
+        background-color: var(--white);
+        z-index: 1;
+    }
+    .dk .dropup-content {background-color: var(--dk-white); }
+    .sp .dropup-content {background-color: var(--sp-white); }
+        /***************************
+            Menu links
+        ***************************/
+    .dropup-content a {
+        color: var(--black);
+        padding: 0.3em 0 0.3em 1.5em;
+        text-decoration: none;
+        display: block;
+    }
+    .dk .dropup-content a {color: var(--dk-black);}
+    .sp .dropup-content a {color: var(--sp-black);}
+    .dropup-content a:not(:last-child) {border-bottom: 1px dotted var(--black);}
+    .dk .dropup-content a:not(:last-child) {border-bottom: 1px dotted var(--dk-black);}
+    .sp .dropup-content a:not(:last-child) {border-bottom: 1px dotted var(--sp-black);}
+        /***************************
+            Change colour of 
+            dropdown links on hover
+        ***************************/
+    .dropup-content a:hover {background-color: var(--button);}
+    .dk .dropup-content a:hover {
+        background-color: var(--dk-button);
+        color: var(--dk-white);
+    }
+    .sp .dropup-content a:hover {
+        background-color: var(--sp-button);
+        color: var(--sp-white);
+    }
+    .show {display:block;}
+    
+    /***************************
+        MOBILE CSS
+    ***************************/
+    
+    @media screen and (max-width: 768px) {
+        #parent {
+            width: calc(100vw - 4em);
+            margin: 1em auto;
+            padding: 2em 1em;
+        }
+        #ui-dialog {
+            min-width: 92vw;
+        }
+    }
+    
+    /***************************
+        TITLE PAGE
+    ***************************/
+    [data-tags~="cover"] #parent {
+        height: fit-content;
+        position: absolute;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    [data-tags~="cover"] #menu {display: none}
+    [data-tags~="cover"] #passages {
+        height: auto;
+        padding: 0;
+        margin: auto;
+        text-transform:uppercase;
+    }
+    [data-tags~="cover"] .passage { text-align: center;}
+    [data-tags~="cover"] .passage h1 {font-size: 250%;}

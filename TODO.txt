@@ -12,6 +12,8 @@
    - Updated the Credits page
    - Rephrased some explanations for clarity
    - Fixed some typos
+* OnePage:
+   - TODO!!
 
 // Check list //
 
@@ -20,9 +22,6 @@
 
  Character Creator:
     - Update for 2.37 <<do/redo>> formatting
-    - Relase code into .tw file copy
- Settings:
-    - Update for 2.37
     - Relase code into .tw file copy
  UI One Page:
     - Update for 2.37
@@ -46,7 +45,7 @@ To Do:
 Helpful code: <script>$('tw-sidebar').insertBefore('tw-passage');</script> in footer-tagged
 Use Header/Footer to wrap div around passage
 
-SugarCube would work better with the scrip above then
+SugarCube would work better with the script above than the wrapping
 
 
 
