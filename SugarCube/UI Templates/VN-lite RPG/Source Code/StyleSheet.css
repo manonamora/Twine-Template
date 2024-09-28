@@ -19,7 +19,7 @@
         b- Cycle
     V-      UI Dialog
         a- Base CSS
-        b- Settins Dialog
+        b- Settings Dialog
         c- Saves Dialog
     VI-     Media Sizing
     VII-    Title Page
@@ -39,8 +39,13 @@
 /***************************
     IMPORT FONTS
 ***************************/
-
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+/*
+    This template only includes online fonts  Google, using the @import rule.
+    But it is recommended to only use local (downloaded) fonts, as online fonts are dependent on the hosting server (i.e. Google could always pull the font, or change the API). Local import also ensures the project is playable offline (downloaded or intermittent internet).
+    To do that, download the fonts, include those files in your game folder, and import them with @font-face.
+        > This doesn't apply to Font-Awesome. See the Template Guide (https://manonamora.itch.io/twine-sugarcube-templates).
+*/
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100&display=swap');
 
 /***************************
@@ -109,12 +114,12 @@ body {
     margin: 1% 3% 80px auto;
     max-width: 720px;
 }
+
     /***************************
         Menu
         Title
         Footer
     ***************************/
-
 #header {
     height: 10%;
     width: 100%;
@@ -133,6 +138,7 @@ body {
     height: 80px;
     width: 100%;
 }
+
 #menu {
     max-height: 100px;
     aspect-ratio: 6/1;
@@ -157,6 +163,7 @@ body {
     color: orange;
     text-decoration: none;
 }
+
     /***************************
         Character Img
     ***************************/
@@ -220,6 +227,12 @@ body {
     border-color: white;
 }
 
+#ui-dialog-body a {
+    color:#00008b;
+    font-weight: bold;
+    text-decoration: underline dotted;
+}
+
     /***************************
         Buttons
     ***************************/
@@ -227,7 +240,6 @@ button {
     background-color: darkblue;
     border: 1px dashed orange;
 }
-    
 button:hover {
     background-color: #0004ff8c;
     border: 1px solid transparent;
@@ -235,6 +247,7 @@ button:hover {
 button:disabled {
     opacity: 0.4;
 }
+
     /***************************
         Headers
     ***************************/
@@ -242,12 +255,11 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Noto Sans', sans-serif;
     color: darkblue;
 }
- 
 h1 {
-    text-align: end;
+    text-align: right;
 }
 h2 {
-    text-align: end;
+    text-align: right;
     font-style: italic;
 }
 h3 {
@@ -264,7 +276,16 @@ h6 {
     /***************************
         Tables
     ***************************/
-        /*Note: if you remove .passage, it will affect the Table in the Save UI. you can also have specific css for tables by adding the relvant divclass before table (ex: .test table will apply to all <table class="test">)*/
+/*
+    Don't remove [.passage] here, or it will affect the <table> element in the Save pop-up.
+    If you want to style one specific table, you can add ID/class to target it:
+      -> one table
+        <table id="this-one">
+            -> table#this-one { CSS rules }
+      -> multiple tables (but not all of them)
+        <table class="special">
+            -> table.special { CSS rules }
+*/
 .passage table {
     width: 100%;
 }  
@@ -281,10 +302,12 @@ li::marker {
     content: "\f192\00a0";
     font-family: "Font Awesome 6 Free";
     color: darkblue;
-}  
+}
+
 hr {
     border-top: 2px dashed darkblue;
 }
+
 label {
     font-weight: bold;
 }
@@ -320,6 +343,7 @@ input[type="number"] {
     min-width: 1em;
     max-width: 10em;
 }
+
     /***************************
         Cycle
     ***************************/
@@ -329,14 +353,14 @@ a.macro-cycle {
     text-indent: unset;
 }
 a.macro-cycle:hover, a.macro-cycle:focus {
-    background-color: none;
-    border: none;
+    background-color: unset;
+    border-color: transparent;
     color: #0e0a67;
 }
   
 a.macro-cycle::before, a.macro-cycle::after {
     content: "\00a0\f192\00a0";
-    font-family: "Font Awesome 5 Free";
+    font-family: "Font Awesome 6 Free";
     font-weight: normal;
     transition-duration: .2s;
 }
@@ -381,6 +405,16 @@ a.macro-cycle:hover::before, a.macro-cycle:hover::after, a.macro-cycle:focus::be
     background-color: #803c00;
     border: unset;
 }
+
+ul.buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+ul.buttons button {
+    font-weight: normal;
+}
+
     /***************************
         Settings Dialog
     ***************************/
@@ -400,28 +434,62 @@ a.macro-cycle:hover::before, a.macro-cycle:hover::after, a.macro-cycle:focus::be
     background-color: #211ca6;
     border-color: darkblue;
 }
-    /***************************
-        Special Buttons
-    ***************************/
-ul.buttons {
-    display: flex;
-}
-#restart-cancel, #saves-clear, #settings-reset, button.delete {
+#restart-cancel, #settings-reset {
+    font-weight: normal;
     background-color: #4c0202;
     border: 1px solid #300000;
 }
-#restart-cancel:hover, #saves-clear:hover, #settings-reset:hover, .delete:hover {
+#restart-cancel:hover, #settings-reset:hover {
     background-color: darkred;
     border-color: #4c0202;
 }
-#ui-dialog-body a {
-    color:#00008b;
-    font-weight: bold;
-    text-decoration: underline dotted;
+
+    /***************************
+        Saves Dialog
+    ***************************/
+        /* Save and Load buttons */
+#ui-dialog-body.saves #saves-list button.load:not(:disabled), #ui-dialog-body.saves #saves-list button {
+    color: white;
+    background-color: darkblue;
+    border: 1px dashed orange;
+    font-weight: normal;
 }
+#ui-dialog-body.saves #saves-list button.load:not(:disabled):hover, #ui-dialog-body.saves #saves-list button:not(:disabled):hover {
+    background-color: #0004ff8c;
+    border: 1px solid transparent;
+}
+
+        /* Delete Save(s) buttons */
+#ui-dialog-body.saves #saves-list button.delete:not(:disabled), #ui-dialog-body.saves button[id="saves-clear"]:not(:disabled) {
+    font-weight: normal;
+    background-color: #4c0202;
+    border: 1px solid #300000;
+}
+#ui-dialog-body.saves #saves-list button.delete:not(:disabled):hover, #ui-dialog-body.saves button[id="saves-clear"]:not(:disabled):hover {
+    background-color: darkred;
+    border-color: #4c0202;
+}
+
+#ui-dialog-body.saves #saves-list button:disabled {
+    opacity: 0.4;
+    font-weight: normal;
+    background-color: #4c0202;
+    border: 1px solid #300000;
+}
+
+        /* Saves Headers */
+#ui-dialog-body.saves>h2 {
+    background-color: transparent;
+    text-indent: 1em;
+    direction: rtl;
+}
+
 /***************************
     Media Sizing
 ***************************/
+/*
+    This template was built for mobile first, then expanded for larger screen. Hence the use of min-width instead of max-width.
+*/
 @media screen and (min-width: 800px) {
     #perso {
         max-width: 210px;
@@ -435,8 +503,6 @@ ul.buttons {
 }
 @media screen and (min-width: 1280px) {
     #main {
-        /*max-width: 1280px;
-        max-height: 720px;*/
         display: block;
         margin: auto;
         position: absolute;
@@ -575,7 +641,6 @@ ul.buttons {
         font-size: 35px;
     }
 }
-
 @media screen and (min-width: 800px) and (max-width: 1280px) {
     [data-tags~="title"] #header {
         position: absolute;
@@ -609,4 +674,4 @@ ul.buttons {
         text-align: right;
         line-height: 2;
     }
-}  
+}

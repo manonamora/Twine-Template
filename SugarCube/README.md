@@ -10,10 +10,16 @@ The directory of this section is organised as follow:
     * Source Code
 * UI Templates
   * One Page (Chapbook-like)
+    * 2.36 Version
+    * Source Code
   * Simple Book
   * Space-Tech UI
   * Title Page (compatible with Base SugarCube UI!)
+    * 2.36 Version
+    * Source Code
   * VN-like RPG
+    * 2.36 Version
+    * Source Code
 * Unofficial Templates (Bits of Interface Code)
   * Phone Retro Mailbox
 

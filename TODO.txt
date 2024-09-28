@@ -25,24 +25,26 @@
    - Added stats bars
    - Updated the Credits page 
 * VN-lite:
+   - Updated Code + APIs to 2.37
+   - Rephrased some explanations for clarity
+   - Fixed typos
+   - Removed Chapel's Dialog macro (only used once)
+   - Updated Font Awesome version
+   - Updated the Credits page
 
 // Check list //
    -> Change min with to 320px
+   -> How to make your own UI mini guide on the page
+      -> Harlowe too?
 
 ~ SugarCube Templates ~
 
  Character Creator:
     - Update for 2.37 <<do/redo>> formatting
-    - Relase code into .tw file copy
  UI Simplet Book:
     - Update for 2.37 (<<do/redo>>)
-    - Relase code into .tw file copy
  UI Space Tech:
     - Update for 2.37
-    - Relase code into .tw file copy 
- VN-lite:
-    - Update for 2.37
-    - Relase code into .tw file copy
 
 To Do:
     - Phone Template
