@@ -31,6 +31,14 @@
    - Removed Chapel's Dialog macro (only used once)
    - Updated Font Awesome version
    - Updated the Credits page
+* Space/Tech UI:
+   - Updated Code + APIs to 2.37
+      - removed deprecated + broken elements 
+      - used more correct code (inlc. HTML/CSS/JS)
+   - Updated Font Awesome version 
+   - Removed Open Dyslexic font (replaced with Monospace)
+   - Changed the Interface to make stats bar optional on-screen
+      - renamed elements + passages
 
 // Check list //
    -> Change min with to 320px

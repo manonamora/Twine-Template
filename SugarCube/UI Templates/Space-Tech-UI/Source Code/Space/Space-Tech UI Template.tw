@@ -5,45 +5,48 @@ Space/Tech UI Template
 {
 	"ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1",
 	"format": "SugarCube",
-	"format-version": "2.36.1",
+	"format-version": "2.37.3",
 	"start": "Start"
 }
 
 :: StoryInterface {"position":"100,100","size":"100,100"}
-	<div id="container">
-		<div id="topcontainter">
-			<div id="menu" data-passage="menu"></div>
-			<div id="titleblock" data-passage="Title-Block"></div>
-			<div id="bars" data-passage="stats"></div>
-		</div>
-		<div id="mobile-bars" data-passage="stats-mobile"></div>
-		<div id="textbloc"><div id="passages"></div></div>
-		<div id="mobile-menu" data-passage="menu"></div>
+<div id="container">
+	<div id="topcontainter">
+		<div id="left-menu" data-passage="first-menu"><!--  not visible with small device --></div>
+		<div id="titleblock" data-passage="Title-Block"></div>
+		<div id="right-menu" data-passage="second-menu"><!--  not visible with small device --></div>
 	</div>
+	<div id="mobile-top-menu" data-passage="second-menu-mobile"><!--  not visible with large device --></div>
+	<div id="passages"><!-- DO NOT REMOVE-->></div>
+	<div id="mobile-btm-menu" data-passage="first-menu"><!--  not visible with large device --></div>
+</div>
+<!-- If you are not using stats bars in your interface, simply change [second-menu-mobile] for [second-menu] -->
 
-:: menu	{"position":"100,225","size":"100,100"}
-	<<link '©'>><<script>>
-		Dialog.setup("Credits");
-		Dialog.wiki(Story.get("Credits").processText());
-		Dialog.open();
-	<</script>><</link>>/*To have less code to open a dialog box, I recommend Chapel's Dialog API code*/
-    <<link '🖫'>><<script>>UI.saves();<</script>><</link>>
-	<<link '⛭'>><<script>>UI.settings();<</script>><</link>>
-	<<link '⟲'>><<script>>UI.restart();<</script>><</link>>
+:: first-menu {"position":"100,225","size":"100,100"}
+<<link '©'>><<run Dialog.create("Credits").wikiPassage("credits").open();>><</link>>
+<<link '🖫'>><<run UI.saves();>><</link>>
+<<link '⛭'>><<run UI.settings();>><</link>>
+<<link '⟲'>><<run UI.restart();>><</link>>
+/*
+	You can add/remove links here.
+	Though I don't recommend more than 5 links in this block (because of the menu size on the screen).
+*/
 
 :: Title-Block [nobr] {"position":"200,225","size":"100,100"}
 	<<if tags().includes("first")>>
 		<h1>NAME OF YOUR GAME</h1>
 	<<elseif tags().includes("codex")>>
 		<h1>Codex</h1>
-	<<else>><h1>$chapter</h1>
+	<<else>>
+		<h1>$chapter</h1>
 	<</if>>
 
-:: stats {"position":"300,225","size":"100,100"}
+:: second-menu {"position":"300,225","size":"100,100"}
+/* Here you have the option of links of stats TODO: */
 	<<statsformat "_web">>/*
 	To Edit The Stats Bar, check the StatWidget Passage*/
 
-:: stats-mobile {"position":"300,325","size":"100,100"}
+:: second-menu-mobile {"position":"300,325","size":"100,100"}
 	<<statsformat "_mobile">>/*
 	This is the stats format for mobile view
 	To Edit The Stats Bar, check the StatWidget Passage*/
@@ -71,6 +74,7 @@ Space/Tech UI Template
 	<</widget>>
 
 :: StoryInit {"position":"225,100","size":"100,100"}
+	/* Those three variables are for the Stats Bar. */
 <<set $fuel to 20, $oxygen to 50, $cargo to 100>>
 <<set $chapter to "Chapter 1">>
 
@@ -263,7 +267,7 @@ This is the last page.
 
 <<button "Restart">><<script>>UI.restart();<</script>><</button>>
 
-:: Credits {"position":"100,375","size":"100,100"}
+:: credits {"position":"100,375","size":"100,100"}
 The Space/Tech UI was created by manonamora ([[Tumblr|https://manonamora-if.tumblr.com/]]/[[Itch|https://manonamora.itch.io/]]) on Twine (v2.7.0)/Tweego with Sugarcube (v2.36.1)
 
 Assets:

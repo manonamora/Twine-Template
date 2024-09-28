@@ -15,10 +15,6 @@
 $(document).on(":passagedisplay", function() {
 	$("#passages").scrollTop(0);
 });
-    // ~ Dialog box
-$(document).on(':dialogopened', function (ev) {
-	$("#ui-dialog-body").scrollTop(0);
-});
 
 //~ ~ ~ ~ SETTINGS OPTIONS ~ ~ ~ ~
     /*
@@ -29,24 +25,25 @@ $(document).on(':dialogopened', function (ev) {
 Setting.addHeader("Text Display");
         
         //~ ~ Font Type ~ ~
-var settingFontFamily = ["Serif", "Sans Serif", "OpenDyslexic"];
+var settingFontFamily = ["Serif", "Sans Serif", "Monospace"];
 var fontFamily = function() {
-var $html = $("html"); 
-    $html.removeClass("serif sansserif opendyslexic");
-switch (settings.fontFamily) {
-    case "Serif":
-        $html.addClass("serif");
-        break;
-    case "Sans Serif":
-        $html.addClass("sansserif");
-        break;
-    case "OpenDyslexic":
-        $html.addClass("opendyslexic");
-        break;
-}};
+    var $html = $("html"); 
+    $html.removeClass("serif sansserif monospace");
+    switch (settings.fontFamily) {
+        case "Serif":
+            $html.addClass("serif");
+            break;
+        case "Sans Serif":
+            $html.addClass("sansserif");
+            break;
+        case "Monospace":
+            $html.addClass("monospace");
+            break;
+    }
+};
 Setting.addList("fontFamily", {
     label		: "Change font type",
-    desc        : "Choose between a Serif, Sans-serif, or the OpenDyslexic Font", 
+    desc        : "Choose between a Serif, Sans-serif, or Monospace", 
     list		: settingFontFamily,
     default     : "Serif", 
     onInit		: fontFamily,
@@ -56,21 +53,8 @@ Setting.addList("fontFamily", {
         //~ ~ Font Size ~ ~
 var settingFontSize = ["75%", "100%", "125%", "150%"];
 var resizeFont = function() {
-var size = document.getElementById("passages");
-switch (settings.fontSize) {
-    case "100%":
-        size.style.fontSize = "100%";
-        break;
-    case "75%":
-        size.style.fontSize = "75%";
-        break;
-    case "125%":
-        size.style.fontSize = "125%";
-        break;
-    case "150%":
-        size.style.fontSize = "150%";
-        break;
-}
+    var size = document.getElementById("passages");
+    size.style.fontSize = settings.fontSize;
 };
 Setting.addList("fontSize", {
     label		: "Change Font Size",
@@ -83,35 +67,53 @@ Setting.addList("fontSize", {
     //~ ~ ~ ~ SAVING (Auto/Name) ~ ~ ~ ~
 Setting.addHeader("Save Settings");
 
-Config.saves.isAllowed = function () {
-    if (tags().includes('noreturn')) { 
+Config.saves.isAllowed = function (saveType) {
+    if (saveType === Save.Type.Auto) {
+        // this section is just for the autosave
+        if (settings.autosave && !tags().includes('noreturn')){
+            // this checks that the player has enabled autosaves + isn't on a tagged passage
+            return true;
+        }
         return false;
     }
-    return true;
+    else {
+        if (tags().includes('noreturn')) {
+            //this checks that the player isn't on a tagged passage
+            return false;
+        }
+        return true;
+    }
 };
 
         //~ ~ Autosave Toggle ~ ~
-Config.saves.autosave = function () {
-    if (settings.autosave) {
-        return true 
-}};
+Config.saves.maxAutoSaves = 1;
 Setting.addToggle("autosave", {
     label       : "Autosaves",
     default     : false,
 });
 
         //~ ~ Autoname Toggle ~ ~
-Save.onSave.add( function (save, details) {
-    if (settings.autoname) {
-        save.title = (State.getVar("$FirstName") ? State.getVar("$FirstName") : '???');
-            //This is essentially asking if the variable is defined ? if yes show this - otherwise (:) show that
-    } else if (details.type == "autosave") {
-        //If Autoname is disabled but the autosave is enabled, this will be the name of the autosave
-        save.title = "Autosave";
-    } else {
-        //This will prompt the player to enter a name for the save file
-        save.title = prompt("Enter Save Name:", save.title);
-}});
+Config.saves.descriptions = function (saveType) {
+    switch (saveType) {
+      //This checks what type of save we're dealing with (auto or manual)
+        case Save.Type.Auto: {
+            return "Autosave: " + (State.getVar("$MCName") ? State.getVar("$MCName") : '#4ib3bhu5hkv') + " - " + State.getVar("$chapter");
+            // the second section (after +) will check if $FirstName is defined, before either printing the value (defined) or #4ib3bhu5hkv (not defined)
+            // An alternative:
+            // return "Autosave: " + passage();
+            break;
+        }
+        default: {
+            if (settings.autoname) {
+                return (State.getVar("$MCName") ? State.getVar("$MCName") : '#4ib3bhu5hkv') + " - " + State.getVar("$chapter");
+            }
+            else {
+                return prompt("Enter Save Name:", passage());
+                // I've included [passage()] here as the text inside the prompt box, but you can change it to whatever, like "" (empty) or "SAVE!" or State.getVar("$var")...
+            }
+        }
+    }
+};
 
 Setting.addToggle("autoname", {
     label       : "Autoname",

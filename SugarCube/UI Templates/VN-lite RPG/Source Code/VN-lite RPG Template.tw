@@ -37,7 +37,7 @@ Title Game/*
 <</if>>\
 <<link 'SAVES'>><<run UI.saves()>><</link>>
 <<link 'SETTINGS'>><<run UI.settings()>><</link>>
-<<link 'CREDITS'>><<run Dialog.create("credits").wikiPassage("CREDITS").open();>><</link>>
+<<link 'CREDITS'>><<run Dialog.create("CREDITS").wikiPassage("credits").open();>><</link>>
 /*
 	This being the Main Menu Page, you edit this list however you want.
 	But you might want to watch out for the number of links on the page (too many would mean scrolling).
