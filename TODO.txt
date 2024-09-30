@@ -37,8 +37,15 @@
       - used more correct code (inlc. HTML/CSS/JS)
    - Updated Font Awesome version 
    - Removed Open Dyslexic font (replaced with Monospace)
-   - Changed the Interface to make stats bar optional on-screen
+   - Changed the Interface (StoryInterface/CSS)
       - renamed elements + passages
+      - stats bars are now optional
+      - added an extra @mobile size
+   - Rephrased some explanations for clarity
+      - included explanation on how to only use the 'Space' or 'Tech' interface (i.e. remove/edit code)
+      - included explanation on how to display/hide/delete stats bars (i.e. remove/edit code)
+      - expanded explanation about use of the statsbars
+
 
 // Check list //
    -> Change min with to 320px
@@ -51,8 +58,6 @@
     - Update for 2.37 <<do/redo>> formatting
  UI Simplet Book:
     - Update for 2.37 (<<do/redo>>)
- UI Space Tech:
-    - Update for 2.37
 
 To Do:
     - Phone Template
