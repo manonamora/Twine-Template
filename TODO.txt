@@ -45,7 +45,8 @@
       - included explanation on how to only use the 'Space' or 'Tech' interface (i.e. remove/edit code)
       - included explanation on how to display/hide/delete stats bars (i.e. remove/edit code)
       - expanded explanation about use of the statsbars
-
+* Simple Book:
+   - Updated Code + API to 2.37
 
 // Check list //
    -> Change min with to 320px

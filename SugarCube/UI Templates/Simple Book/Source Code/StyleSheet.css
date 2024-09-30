@@ -1,0 +1,890 @@
+/*~ ~ ~ ~ ~ ~ ~  TABLE OF CONTENTS ~ ~ ~ ~ ~ ~ ~ 
+    I-      Import Fonts
+        a- Font Awesome (6.1.0)
+        b- Google Fonts
+        c- Local Fonts
+    II-     Root Variables
+    III-    Base CSS
+        a- Scrollbar    
+        b- Body
+        c- Grid Base
+        d- Grid Parts
+        e- Font Change
+    IV-     HTML CSS
+        a- Headers (h1, h2, etc...)
+        b- <label>
+        c- <hr>
+        d- Tables
+        e- Lists
+        f- <a>/Links
+            + Regular
+            + Menu Links
+            + Choice Div
+    V-      Macros
+        a- Cycle
+        b- Notify
+        c- Textbox, Textarea, Select
+        d- Buttons
+    VI-     UI Dialog
+        a- Base CSS
+        b- Settins Dialog
+        c- Saves Dialog
+    VII-    Mobile
+    VIII-   Title Page + End Page
+
+    Notes:            
+        CTRL/Cmd+F the Title to jump
+        Theme changes are located below each category affected (ex: .dm body{} will be below body{})
+        Don't like/care about the themes? you can delete any line with either .gn or .or below! (and the Theme Setting in the Javascript)
+*/
+
+/***************************
+    IMPORT FONTS
+***************************/
+
+    /* Font Awesome */
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css');
+    /* Text Fonts: Google */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+    /* Text Fonts: Local */
+@font-face {
+    font-family: "Dyslexic";
+    src: url(fonts/OpenDyslexic-Regular.otf) format("opentype");
+    font-style: normal;
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Dyslexic";
+    src: url(fonts/OpenDyslexic-Italic.otf) format("opentype");
+    font-style: italic;
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Dyslexic";
+    src: url(fonts/OpenDyslexic-BoldItalic.otf) format("opentype");
+    font-style: italic;
+    font-weight: 700;
+}
+@font-face {
+     font-family: "Dyslexic";
+     src: url(fonts/OpenDyslexic-Bold.otf) format("opentype");
+     font-style: normal;
+     font-weight: 700;
+}
+
+/***************************
+    ROOT VARIABLES
+***************************/
+
+:root {
+    --body: #231942;
+    --page: #F2DDE9;
+    --link: #231942;
+    --hover: #5E548E;
+    --navig: #5E548E;
+    --cover: #9F86C0;
+    --title: #E0B1CB;
+    --scrollfront: #BE95C4;
+    --scrollback: #5E548E;
+    --front: #413768;
+    --area: rgb(94,84,142,0.3);
+    --gn-body: #132A13;
+    --gn-page: #F9FADD; 
+    --gn-link: #132A13;
+    --gn-hover: #31572C;
+    --gn-navig: #31572C;
+    --gn-cover: #4F772D;
+    --gn-title: #ECF39E;
+    --gn-scrollfront: #90A955;
+    --gn-scrollback: #31572C;
+    --gn-front: #224120;
+    --gn-area: rgb(49,87,44,0.3);
+    --or-body: #661C00;
+    --or-page: #FFDACA;
+    --or-link: #661C00;
+    --or-hover: #B33100;
+    --or-navig: #B33100;
+    --or-cover: #E63F00;
+    --or-title: #FF9066;
+    --or-scrollfront: #FF6B33;
+    --or-scrollback: #B33100;
+    --or-front: #992A00;
+    --or-area: rgb(179,49,0,0.3);
+    --text: #111111;
+	--white: #F2F3F4;
+	--icon: "Font Awesome 6 Free";
+	--cursive: 'Dancing Script', cursive;
+    --sansserif: 'Montserrat', sans-serif;
+    --opendyslexic: "Dyslexic", serif;
+    --serif: 'Tinos', serif;   
+}
+
+/***************************
+    BASE CSS
+***************************/
+
+    /***************************
+        Scrollbar
+    ***************************/
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollfront) var(--scrollback);
+}
+.gn * {
+    scrollbar-color: var(--gn-scrollfront) var(--gn-scrollback);            
+}
+.or * {
+    scrollbar-color: var(--or-scrollfront) var(--or-scrollback);     
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--scrollback); 
+}
+.gn ::-webkit-scrollbar-track {
+    background: var(--gn-scrollback); 
+}
+.or ::-webkit-scrollbar-track {
+    background: var(--or-scrollback); 
+}
+::-webkit-scrollbar-thumb {
+    background: var(--scrollfront); 
+}
+.gn ::-webkit-scrollbar-thumb {
+    background: var(--gn-scrollfront); 
+}
+.or ::-webkit-scrollbar-thumb {
+    background: var(--or-scrollfront); 
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--area); 
+}
+.gn ::-webkit-scrollbar-thumb:hover {
+    background: var(--gn-area); 
+}
+.or ::-webkit-scrollbar-thumb:hover {
+    background: var(--or-area); 
+}
+
+    /***************************
+        Body
+    ***************************/
+body {
+    background-color: var(--body);
+}
+.gn body {
+    background-color: var(--gn-body);
+}
+.or body {
+    background-color: var(--or-body);
+}
+    /***************************
+        Grid Base
+    ***************************/
+#parent {
+    display: grid;
+    grid-template-columns: 1fr 0.1fr repeat(18, 1fr) 0.1fr 1fr;
+    grid-template-rows: 1fr 0.1fr repeat(9, 1fr) 0.1fr 1fr;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px; 
+    width: calc( 75vh * 1.33);
+    height: 75vh;
+    max-width: 1066px;
+    max-height: 800px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+    /***************************
+        Grid Parts
+    ***************************/
+#menu { 
+    grid-area: 3 / 1 / 12 / 2;
+    font-size: 150%;
+    text-align: center;
+    line-height: normal;
+    overflow: auto;
+    scrollbar-width: none;
+    display: block;
+    margin: auto;
+}
+#gametitle {
+    grid-area: 1 / 3 / 2 / 21; 
+    display: flex;
+}
+.title {
+    text-align: center;
+    font-family: var(--cursive);
+    font-size: 300%;
+    margin: auto;
+    padding-top: 1%;
+    color: var(--title);
+}
+.gn .title {
+    color: var(--gn-title);
+}
+.or .title {
+    color: var(--or-title);
+}
+
+#navig {
+    grid-area: 13 / 3 / 14 / 21; 
+    text-align: center;
+    font-size: x-large;
+    display: flex;
+    margin: auto;
+    letter-spacing: 1em;
+    color: var(--navig);
+}
+.gn #navig {
+    color: var(--gn-navig);
+}
+.or #navig {
+    color: var(--or-navig)
+}
+
+#cover {
+    grid-area:  3 / 3 / 12 / 21;
+    display: flex;
+    border-radius: 1%;
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.5),0 4px 20px 0 rgba(0,0,0,0.5);
+    background-color: var(--cover);
+}
+.gn #cover {
+    background-color: var(--gn-cover);
+}
+.or #cover {
+    background-color: var(--or-cover);
+}
+
+#inside {
+    overflow: auto;
+    height: 95%;
+    width: 95%;
+    margin: auto;
+    border-radius: 3px;
+    background-color: var(--page);
+    color: var(--text);
+}
+.gn #inside {
+    background-color: var(--gn-page);        
+}
+.or #inside {
+    background-color: var(--or-page);
+}
+#passages {
+    margin: 1em 2em;
+}
+.passage {
+    text-align: justify;
+}
+        
+    /***************************
+        Front Changes
+    ***************************/
+.sansserif .passage, .sansserif #ui-dialog-body {font-family: var(--sansserif);}
+.opendyslexic .passage, .opendyslexic #ui-dialog-body {font-family: var(--opendyslexic);}
+.serif .passage, .serif #ui-dialog-body {font-family: var(--serif);}
+
+/***************************
+    HTML CSS
+***************************/
+
+    /***************************
+        Headers
+    ***************************/
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--cursive);
+    font-weight: normal;
+}
+h1 {
+    font-size: 200%;
+    margin: 4% 0;
+    font-weight: bold;
+    color: var(--front);
+    text-align: center;
+}
+.gn h1 {
+    color: var(--gn-front);
+}
+.or h1 {
+    color: var(--or-front);
+}
+h2 {
+    text-align: right;
+    font-size: 150%;
+    margin: 2% 4%;
+    font-weight: bold;
+    font-style: italic;
+    color: var(--navig);
+}
+.gn h2 {
+    color: var(--gn-navig);
+}
+.or h2 {
+    color: var(--or-navig);
+}
+h3 {
+    font-size: 125%;
+    margin: 1.5% 3%;
+    text-decoration: underline overline dotted 1px;
+    color: var(--front);
+}
+.gn h3 {
+    color: var(--gn-front);
+}
+.or h3 {
+    color: var(--or-front);
+}
+h4 {
+    margin: 1% 2%;
+    text-decoration: underline;
+    color: var(--body);
+} 
+.gn h4 {
+    color: var(--gn-body);
+}
+.or h4 {
+    color: var(--or-body);
+}     
+h5 {
+    margin: 0.5% 1%;
+    font-size: 90%;
+    text-transform: lowercase;
+    color: var(--body);
+}
+.gn h5 {
+    color: var(--gn-body);
+}
+.or h5 {
+    color: var(--or-body);
+}  
+h6 {
+    margin: 0;
+    text-transform: lowercase;
+    color: var(--title);
+    text-shadow: 0px 0px 1px var(--body);
+}
+.gn h6 {
+    color: var(--gn-title);
+    text-shadow: 0px 0px 1px var(--gn-body);
+}
+.or h6 {
+    color: var(--or-title);
+    text-shadow: 0px 0px 1px var(--or-body);
+}
+
+    /***************************
+        label
+    ***************************/
+label {
+    font-weight: bold;
+}
+
+    /***************************
+        hr
+    ***************************/
+hr {
+    border-top: 5px dotted var(--cover);
+}
+.gn hr {
+    border-color: var(--gn-cover);
+}
+.or hr {
+    border-color: var(--or-cover);
+}
+
+    /***************************
+        Tables
+    ***************************/
+        /*Note: if you remove .passage, it will affect the Table in the Save UI. you can also have specific css for tables by adding the relvant divclass before table (ex: .test table will apply to all <table class="test">)*/
+.passage table {
+    margin: auto;
+    width: 75%;
+    text-align: center;
+    color: var(--front);
+}
+.gn .passage table {
+    color: var(--gn-front);
+}
+.or .passage table {
+    color: var(--or-front);
+}
+.passage table, .passage th, .passage td {
+    border: 1px solid var(--body);
+}
+.gn .passage table, .gn .passage th, .gn .passage td {
+    border-color: var(--gn-body);
+}
+.or .passage table, .or .passage th, .or .passage td {
+    border-color: var(--or-body);
+}
+.passage th {
+    font-size: 110%;
+}
+    /***************************
+        Lists
+    ***************************/
+#passages ul {
+    list-style: none;
+    padding-left: 2em;
+    margin: auto;
+    text-align: left;
+}
+#passages ul li::before {
+    content: "\203B\00a0";
+    color: var(--hover);
+} 
+.gn #passages ul li::before {
+    color: var(--gn-hover);
+}
+.or #passages ul li::before {
+    color: var(--or-hover);
+}
+
+    /***************************
+        Links
+    ***************************/
+        /***************************
+            Regular
+        ***************************/
+a {
+    color: var(--link);
+    font-weight: bold;
+}
+.gn a {
+    color: var(--gn-link);
+}
+.or a {
+    color: var(--or-link);
+}
+a:hover, a:focus {
+    color: var(--hover);
+    font-style: italic;
+    text-decoration: none;
+}
+.gn a:hover, a:focus {
+    color: var(--gn-hover);
+}
+.or a:hover, a:focus {
+    color: var(--or-hover);
+}
+        /***************************
+            Menu Links
+        ***************************/
+#menu a, #navig a {
+    color: var(--title);
+}
+.gn #menu a, .gn #navig a {
+    color: var(--gn-title);
+}
+.or #menu a, .or #navig a {
+    color: var(--or-title);
+}
+#menu a:hover, #navig a:hover, #menu a:focus, #navig a:focus {
+    color: var(--hover);
+    text-shadow: none;
+}
+.gn #menu a:hover, .gn #navig a:hover, .gn #menu a:focus, .gn #navig a:focus {
+    color: var(--gn-hover);
+}
+.or #menu a:hover, .or #navig a:hover, .or #menu a:focus, .or #navig a:focus {
+    color: var(--or-hover);
+}
+        /***************************
+            Choice Div
+        ***************************/
+.choice a {
+    color: var(--hover);
+}
+.gn .choice a {
+    color: var(--gn-hover);
+}
+.or .choice a {
+    color: var(--or-hover);
+}          
+.choice a:hover {
+    color: var(--body);
+    font-style: normal;
+    letter-spacing: 1em;
+}
+.gn .choice a:hover {
+    color: var(--gn-body);
+}
+.or .choice a:hover {
+    color: var(--or-body);          
+}
+.choice {
+    width: 90%;
+    text-align: center;
+    padding: 1%;
+    border: 2px dotted var(--body);
+    background-color: var(--area);
+    border-radius: 50px;
+}
+.gn .choice {
+    border-color: var(--gn-body);
+    background-color: var(--gn-area);
+}
+.or .choice {
+    border-color: var(--or-body);
+    background-color: var(--or-area);
+}
+
+/***************************
+    MACROS
+***************************/
+
+    /***************************
+        Cycle
+    ***************************/
+.macro-cycle::after {
+    content: "\00a0\204C";
+}
+.macro-cycle::before {
+    content: "\204D\00a0";
+}
+    /***************************
+        Notify
+    ***************************/
+        /*You may want to edit the size of this macro depending on your screen size*/
+#notify {
+    position : fixed;
+    display : block;
+    width : 18em;
+    right : -20em; 
+    top : 2em;
+    transition : right 0.3s;
+    padding: 0.3em 0 0.3em 0.6em;
+    font-family: var(--cursive);
+    font-size: 125%;
+    font-weight: bold;
+    color : var(--text);
+    background-color: var(--page);
+    border: 4px solid var(--cover);
+    border-right: none;
+}
+.gn #notify {
+    background-color: var(--gn-page);
+    border-color: var(--gn-cover);
+}
+.or #notify {
+    background-color: var(--or-page);
+    border-color: var(--or-cover);
+}
+#notify.open { right : 0; }
+html.nonotif #notify { display: none; }
+
+    /***************************
+        Textbox, Textarea,
+        Select
+    ***************************/
+        /*Note: input = textbox/numerbox, select = listbox*/
+input, textarea, select {
+    background-color: var(--area);
+    color: var(--link);
+    border: 1px dashed var(--text);
+}
+.gn input, .gn textarea, .gn select {
+    background-color: var(--gn-area);
+    color: var(--gn-link);
+}
+.or input, .or textarea, .or select {
+    background-color: var(--or-area);
+    color: var(--or-link);
+}
+input:not(:disabled):focus, input:not(:disabled):hover, select:not(:disabled):focus, select:not(:disabled):hover, textarea:not(:disabled):focus, textarea:not(:disabled):hover  {
+    background: var(--body);
+    border: 1px solid var(--white);
+    color: var(--white);
+}
+.gn input:not(:disabled):focus, .gn input:not(:disabled):hover, .gn select:not(:disabled):focus, .gn select:not(:disabled):hover, .gn textarea:not(:disabled):focus, .gn textarea:not(:disabled):hover  {
+    background: var(--gn-body);
+}
+.or input:not(:disabled):focus, .or input:not(:disabled):hover, .or select:not(:disabled):focus, .or select:not(:disabled):hover, .or textarea:not(:disabled):focus, .or textarea:not(:disabled):hover  {
+    background: var(--or-body);
+}
+
+input[type="text"] {
+    min-width: 9em;
+}
+textarea {
+    min-width: 50%;
+    resize: both;
+}
+
+    /***************************
+        Buttons
+    ***************************/  
+button {
+    background-color: var(--front);
+    border-color: var(--body);
+    border-radius: 50px;
+    padding: 5px 7px;
+    text-align: center;
+}
+.gn button {
+    background-color: var(--gn-front);
+    border-color: var(--gn-body);
+}
+.or button {
+    background-color: var(--or-front);
+    border-color: var(--or-body);
+}
+button:hover {
+    background-color: transparent;
+    border-color: var(--body);
+    color: var(--hover);
+}
+.gn button:hover {
+    border-color: var(--gn-body);
+    color: var(--gn-hover);
+}
+.or button:hover {
+    border-color: var(--or-body);
+    color: var(--or-hover);
+}
+button:disabled, button:disabled:hover {
+    background-color: #444;
+    border: 1px solid #666;
+    color: var(--white);
+}
+
+/***************************
+    UI DIALOG
+***************************/
+
+    /***************************
+        Base CSS
+    ***************************/
+#ui-dialog {
+    min-width: 30vw;
+    margin-top: 10vh;
+}
+#ui-dialog-titlebar {
+    display: flex;
+    background-repeat: repeat;
+    background-color: var(--body);
+    border: 7px solid var(--body);
+    border-radius: 10px 10px 0 0;
+    border-bottom: none;
+}
+.gn #ui-dialog-titlebar {
+    background-color: var(--gn-body);
+    border-color: var(--gn-body);
+}
+.or #ui-dialog-titlebar {
+    background-color: var(--or-body);
+    border-color: var(--or-body);
+}
+#ui-dialog-title {
+    font-family: var(--cursive);
+    text-transform: none;
+    font-size: 250%;
+    padding: 1% 0;
+    margin: auto;
+    text-shadow: 1px 1px 2px var(--hover);
+    color: var(--page);
+}
+.gn #ui-dialog-title {
+    text-shadow: 1px 1px 2px var(--gn-hover);
+    color: var(--gn-page);
+}
+.or #ui-dialog-title {
+    text-shadow: 1px 1px 2px var(--or-hover);
+    color: var(--or-page);
+}
+#ui-dialog-body {
+    max-height: calc(100% - 2.1em - 10vh);
+    background-color: var(--page);
+    color: var(--text);
+    border: 7px solid var(--body);
+    border-radius: 0 0 10px 10px;
+    border-top: none;
+}
+.gn #ui-dialog-body {
+    background-color: var(--gn-page);
+    border-color: var(--gn-body);
+}
+.or #ui-dialog-body {
+    background-color: var(--or-page);
+    border-color: var(--or-body);
+}
+#ui-dialog-close {
+    color: var(--white);
+    border-radius: 0 5px 0 0;
+    width: 40px;
+}
+    /***************************
+        Settings Dialog
+    ***************************/
+#ui-dialog-body.settings button[id|="setting-control"], button:disabled {
+    opacity: 0.5;
+}
+#ui-dialog-body.settings button[id|="setting-control"] {
+    background-color: var(--area);
+    color: var(--text);
+}
+.gn #ui-dialog-body.settings button[id|="setting-control"] {
+    background-color: var(--gn-area);
+}
+.or #ui-dialog-body.settings button[id|="setting-control"] {
+    background-color: var(--or-area);
+}
+#ui-dialog-body.settings button[id|="setting-control"]:hover {
+    background-color: var(--cover);
+    color: var(--white);
+    opacity: 1;
+}
+.gn #ui-dialog-body.settings button[id|="setting-control"]:hover {
+    background-color: var(--gn-cover);
+}
+.or #ui-dialog-body.settings button[id|="setting-control"]:hover {
+    background-color: var(--or-cover);
+}
+#ui-dialog-body.settings button[id|="setting-control"].enabled {
+    background-color: var(--body);
+    border-color: var(--title);
+    color: var(--white);
+    opacity: 1;
+}
+.gn #ui-dialog-body.settings button[id|="setting-control"].enabled {
+    background-color: var(--gn-body);
+    border-color: var(--gn-title);
+}
+.or #ui-dialog-body.settings button[id|="setting-control"].enabled {
+    background-color: var(--or-body);
+    border-color: var(--or-title);
+}
+#ui-dialog-body.settings button[id|="setting-control"].enabled:hover {
+    background-color: var(--cover);
+    border-color: var(--title);
+    opacity: 1;
+}
+.gn #ui-dialog-body.settings button[id|="setting-control"].enabled:hover {
+    background-color: var(--gn-cover);
+    border-color: var(--gn-title);
+}
+.or #ui-dialog-body.settings button[id|="setting-control"].enabled:hover {
+    background-color: var(--or-cover);
+    border-color: var(--or-title);
+}
+    /***************************
+        Saves Dialog
+    ***************************/
+#ui-dialog-body.saves button[id="saves-clear"]:hover {
+    background-color: #990000;
+    color: var(--white);
+}
+#ui-dialog-body.saves td:first-child {
+    min-width: 0.5em;
+}
+#ui-dialog-body.saves button[id="saves-clear"]::before {
+    font-family: var(--icon) !important;
+    font-weight: 900;
+    content: "\f12d\00a0";
+}
+
+/***************************
+    MOBILE CSS
+***************************/
+
+@media screen and (max-height: 700px) {
+	#parent {
+		width: calc(100vh * 1.33);
+		height: 100vh;
+	}
+    .title {
+        font-size: 250%;
+    }
+    #navig, #menu {
+        font-size: 150%;
+        }
+}
+@media screen and (max-height: 530px) {
+    .title {
+        font-size: 200%;
+    }
+    #navig, #menu {
+        font-size: 125%;
+        }
+}
+@media screen and (max-height: 420px) {
+    .title {
+        font-size: 150%;
+    }
+    #navig, #menu {
+        font-size: 100%;
+        }
+}
+
+/***************************
+    TITLE PAGE
+    END PAGE
+***************************/
+[data-tags~="cover-start"] #parent {
+	width: calc(75vh*1.33/2);
+	max-width: 533px;
+}
+[data-tags~="cover-start"] #menu,[data-tags~="cover-start"] #gametitle,[data-tags~="cover-start"] #navig,[data-tags~="cover-start"] #cover:after,[data-tags~="cover-start"] .passage a::before {display: none}
+[data-tags~="cover-start"] #cover {
+	border-radius: 2% 5% 5% 2%;
+	border: 3px solid var(--hover);
+}
+.gn [data-tags~="cover-start"] #cover {
+    border-color: var(--gn-hover);
+}
+.or [data-tags~="cover-start"]  #cover {
+	background-color: var(--or-scrollfront);
+	border-color: var(--or-hover);
+}
+[data-tags~="cover-start"] #inside {
+    background: none;
+	color: var(--white);
+    display: flex;
+}
+[data-tags~="cover-start"] #passages {
+    margin: auto;
+}
+[data-tags~="cover-start"] .passage a {
+	color: var(--body);
+}
+.gn [data-tags~="cover-start"] .passage a {
+	color: var(--gn-body);
+}
+.or [data-tags~="cover-start"] .passage a {
+	color: var(--or-body);
+}
+[data-tags~="cover-start"] .passage {
+    text-align: center;
+}
+[data-tags~="cover-start"] p {
+    line-height: 1;
+}
+[data-tags~="cover-start"] .passage h1 {
+    font-size: 250%;
+    margin: 0;
+    line-height: 1.25;
+}
+@media screen and (max-height: 700px) {
+    [data-tags~="cover-start"] #parent {
+		width: calc(100vh*1.33/2);
+		height: 100vh;
+	}
+}
+
+[data-tags~="cover-end"] #cover {
+    border-radius: 5% 2% 2% 5%;
+}
+[data-tags~="cover-end"] .passage {
+    line-height: 1;
+}
+
