@@ -807,7 +807,7 @@ button:disabled, button:disabled:hover {
     }
     #navig, #menu {
         font-size: 150%;
-        }
+    }
 }
 @media screen and (max-height: 530px) {
     .title {
@@ -815,7 +815,7 @@ button:disabled, button:disabled:hover {
     }
     #navig, #menu {
         font-size: 125%;
-        }
+    }
 }
 @media screen and (max-height: 420px) {
     .title {
@@ -823,7 +823,7 @@ button:disabled, button:disabled:hover {
     }
     #navig, #menu {
         font-size: 100%;
-        }
+    }
 }
 
 /***************************
@@ -888,3 +888,117 @@ button:disabled, button:disabled:hover {
     line-height: 1;
 }
 
+
+
+/* To organise somewhere */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+    --body: #231942;
+    --page: #F2DDE9;
+    --link: #231942;
+    --hover: #5E548E;
+    --navig: #5E548E;
+    --cover: #9F86C0;
+    --title: #E0B1CB;
+    --scrollfront: #BE95C4;
+    --scrollback: #5E548E;
+    --front: #413768;
+    --area: rgb(94,84,142,0.3);
+    --text: #111111;
+	--white: #F2F3F4;
+	--icon: "Font Awesome 6 Free";
+	--cursive: 'Dancing Script', cursive;
+}
+
+#notify {display: none;}
+
+#story {
+  height: 75vh;
+  max-width: 1066px;
+  max-height: 800px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 4/3;
+}
+#middle {
+  display: flex;
+}
+#title {
+  text-align: center;
+  font-family: var(--cursive);
+  font-size: 300%;
+  margin: auto;
+  padding-top: 1%;
+  color: var(--title);
+}
+#navig {
+  text-align: center;
+  font-size: x-large;
+  display: flex;
+  margin: auto;
+  letter-spacing: 1em;
+  color: var(--navig);
+}
+
+/*Addition:*/
+
+#cover {
+  border-radius: 10px;
+  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.5),0 4px 20px 0 rgba(0,0,0,0.5);
+  background-color: var(--cover);
+  display: flex;
+  margin: 5px 10px;
+}
+#passages {
+  overflow: auto;
+  height: 95%;
+  width: 95%;
+  margin: auto;
+  border-radius: 3px;
+  background-color: var(--page);
+  color: var(--text);
+}
+.passage {
+  margin: 1em 2em;
+}
+body {
+  background-color: var(--body);
+}
+#left-menu, #right-menu {
+  width: 30px;
+  min-width: 30px;
+  text-align: center;
+  font-size: 150%;
+  /*! margin: auto; */
+  /*! position: relative; */
+}
+a {
+    color: var(--link);
+    font-weight: bold;
+}
+a:hover, a:focus {
+    color: var(--hover);
+    font-style: italic;
+    text-decoration: none;
+}
+#left-menu a, #right-menu a, #navig a {
+    color: var(--title);
+}
+#left-menu a:hover, #right-menu a:hover, #navig a:hover, #left-menu a:focus, #right-menu a:focus, #navig a:focus {
+    color: var(--hover);
+    text-shadow: none;
+}
+p.toggle {
+  /*! position: absolute; */
+  /*! top: 0; */
+}

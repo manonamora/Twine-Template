@@ -47,6 +47,8 @@
       - expanded explanation about use of the statsbars
 * Simple Book:
    - Updated Code + API to 2.37
+   - Updated the Styling
+      - Changed grid into flex-box
 
 // Check list //
    -> Change min with to 320px
@@ -59,6 +61,7 @@
     - Update for 2.37 <<do/redo>> formatting
  UI Simplet Book:
     - Update for 2.37 (<<do/redo>>)
+ ALL -> redit the StoryInterface to have #story act as the parent/container FFS!!!!!!
 
 To Do:
     - Phone Template

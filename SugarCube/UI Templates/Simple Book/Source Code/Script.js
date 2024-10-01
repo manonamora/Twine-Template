@@ -19,12 +19,9 @@
 //~ ~ ~ ~ Passage Cleanup ~ ~ ~ ~ 
     // Reset Passage to top
     $(document).on(":passagedisplay", function() {
-        $("#inside").scrollTop(0);
+        $("#passages").scrollTop(0);
     });
-        // Reset dialog box to top
-    $(document).on(':dialogopened', function (ev) {
-        $("#ui-dialog-body").scrollTop(0);
-    });
+    
             //Note: #inside has overflow set in CSS. If you change the name of that class or move the overflow, don't forget to edit this part, or it won't reset properly 
     
     //~ ~ ~ ~ SETTINGS~ ~ ~ ~ 
@@ -59,10 +56,10 @@
     });
     
         //~ FONT TYPE~ 
-    var settingFontFamily = ["Serif", "Sans Serif", "OpenDyslexic"];
+    var settingFontFamily = ["Serif", "Sans Serif", "Monospace"];
     var fontFamily = function() {
         var $html = $("html");
-        $html.removeClass("sansserif serif opendyslexic");
+        $html.removeClass("sansserif serif monospace");
         switch (settings.fontFamily) {
             case "Serif":
                 $html.addClass("serif");
@@ -70,8 +67,8 @@
             case "Sans Serif":
                 $html.addClass("sansserif");
                 break;
-            case "OpenDyslexic":
-                $html.addClass("opendyslexic");
+            case "Monospace":
+                $html.addClass("monospace");
                 break;
         }
     };
@@ -165,61 +162,7 @@
     //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
     
     //~ ~ ~ ~ CUSTOM MACROS~ ~ ~ ~ 
-        // ~LIVEUPDATE~
-            //Note: Used for the Menu Toggle. Can update the passage without reload. See Credits for manual link (Cycy)
-    (function () {
-        "use strict";
-    
-        $(document).on(":liveupdate", function () {
-            $(".macro-live").trigger(":liveupdateinternal");
-        });
-    
-        Macro.add(['update', 'upd'], {
-            handler: function handler() {
-                $(document).trigger(":liveupdate");
-            }
-        });
-    
-        Macro.add(['live', 'l', 'lh'], {
-            skipArgs: true,
-            handler: function handler() {
-                if (this.args.full.length === 0) {
-                    return this.error('no expression specified');
-                }
-                try {
-                    var statement = this.args.full;
-                    var result = toStringOrDefault(Scripting.evalJavaScript(statement), null);
-                    if (result !== null) {
-                        var lh = this.name === "lh";
-                        var $el = $("<span></span>").addClass("macro-live").wiki(lh ? Util.escape(result) : result).appendTo(this.output);
-                        $el.on(":liveupdateinternal", this.createShadowWrapper(function (ev) {
-                            var out = toStringOrDefault(Scripting.evalJavaScript(statement), null);
-                            $el.empty().wiki(lh ? Util.escape(out) : out);
-                        }));
-                    }
-                } catch (ex) {
-                    return this.error("bad evaluation: " + (_typeof(ex) === 'object' ? ex.message : ex));
-                }
-            }
-        });
-    
-        Macro.add(['liveblock', 'lb'], {
-            tags: null,
-            handler: function handler() {
-                try {
-                    var content = this.payload[0].contents.trim();
-                    if (content) {
-                        var $el = $("<span></span>").addClass("macro-live macro-live-block").wiki(content).appendTo(this.output);
-                        $el.on(":liveupdateinternal", this.createShadowWrapper(function (ev) {
-                            $el.empty().wiki(content);
-                        }));
-                    }
-                } catch (ex) {
-                    return this.error("bad evaluation: " + (_typeof(ex) === 'object' ? ex.message : ex));
-                }
-            }
-        });
-    })();
+     
         //~ NOTIFY~
             //Note: See Credits for manual link (Chapel)
     ;!function(){var s=/\d+m?s$/;function e(s,e,t){"string"==typeof s&&("number"!=typeof e&&(e=!1),$(document).trigger({type:":notify",message:s,delay:e,class:t||""}))}$(document.body).append("<div id='notify'></div>"),$(document).on(":notify",(function(s){s.message&&"string"==typeof s.message&&(s.message.trim(),s.class?"string"==typeof s.class?s.class="open macro-notify "+s.class:Array.isArray(s.class)?s.class="open macro-notify "+s.class.join(" "):s.class="open macro-notify":s.class="open macro-notify",s.delay?("number"!=typeof s.delay&&(s.delay=Number(s.delay)),Number.isNaN(s.delay)&&(s.delay=2e3)):s.delay=2e3,$("#notify").empty().wiki(s.message).addClass(s.class),setTimeout((function(){$("#notify").removeClass()}),s.delay))})),Macro.add("notify",{tags:null,handler:function(){var t=this.payload[0].contents,a=!1,n=!1;if(this.args.length>0){var i=s.test(this.args[0]);"number"==typeof this.args[0]||i?(a=i?Util.fromCssTime(this.args[0]):this.args[0],n=this.args.length>1&&this.args.slice(1).flatten()):n=this.args.flatten().join(" ")}e(t,a,n)}}),setup.notify=e}();

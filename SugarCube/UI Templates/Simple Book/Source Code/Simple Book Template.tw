@@ -1,11 +1,11 @@
 :: StoryTitle
-Name of your Game 
+Simple Book Template
 
 :: StoryData
 {
 	"ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1",
 	"format": "SugarCube",
-	"format-version": "2.36.1",
+	"format-version": "2.37.3",
 	"start": "Start"
 }
 
@@ -14,68 +14,79 @@ Name of your Game
 <<set $menu to true>> /*This is for the menu, you can remove if you want it toggled off when you start the game*/
 
 :: StoryInterface [AVOID-EDIT] {"position":"100,100","size":"100,100"}
-<div id="parent"> <!--Main Grid-->
-	<div id="menu" data-passage="sidemenu">
-		<!--Side menu, editable in the sidemenu passage-->
-	</div>
-	<div id="gametitle" data-passage="StoryDisplayTitle">
-		<!--Title, editable in the StoryDisplayTitle passage-->
-	</div>
+<div id="parent">
+	<div id="title" data-passage="StoryDisplayTitle"></div>
+	<div id="left-menu" data-passage="LeftMenu"></div>
 	<div id="cover">
-		<!--Large Border, CSS editable only-->
-		<div id= "inside">
-			<!--background for passage, CSS editable only-->
-			<div id="passages"><!--DO NOT REMOVE, needed to show the passages--></div>
-		</div>
+		<div id="passages"><!--DO NOT REMOVE--></div>
 	</div>
-	<div id="navig" data-passage="navigation">
-		<!--Forward/Bacs menu at the bottom, editable in the navigation passage-->
-	</div>
+	<div id="right-menu" data-passage="RightMenu"></div>
+	<div id="navig" data-passage="Navigation"></div>
 </div>
 
+
 :: StoryDisplayTitle [EDIT] {"position":"225,225","size":"100,100"}
-/* Do not remove the div, Needed to make the title pretty 
-*/<div class="title">Name of your Game</div>
+Name of your Game
 
 :: Start [noreturn cover-start] {"position":"500,300","size":"100,100"}
 /*titlepage is the widget where you can edit the CSS just for this page*/
 <h1>Name of
 your game</h1>
-<p><<if Save.autosave.ok() and Save.autosave.has()>><<link "Resume Game">><<script>>Save.autosave.load()<</script>><</link>> | <</if>><<link "New Game" "Next">><</link>> <br>
-<<link "Load Game">><<run UI.saves()>><</link>> | <<link "Settings">><<run UI.settings()>><</link>></p>
+<p><<if Save.browser.size > 0>><<link "Resume Game">><<run Save.browser.continue();Engine.show();>><</link>> | <</if>><<link "New Game" "Next">><</link>> <br>
+<<link "Load Game">><<run UI.saves();>><</link>> | <<link "Settings">><<run UI.settings();>><</link>></p>
 /*You can also add whatever you want*/
 
-:: navigation [SOME] {"position":"225,350","size":"100,100"}
-<<link '<i class="fa-solid fa-backward"></i>'>><<run Engine.backward()>><</link>> | <<if State.length === State.size>><i class="fa-solid fa-forward"></i><<else>><<link '<i class="fa-solid fa-forward"></i>'>><<run Engine.forward()>><</link>><</if>>
+:: Navigation [SOME] {"position":"225,350","size":"100,100"}
+<<link '<i class="fa-solid fa-backward"></i>'>><<run Engine.backward();>><</link>> | <<if State.length === State.size>><i class="fa-solid fa-forward"></i><<else>><<link '<i class="fa-solid fa-forward"></i>'>><<run Engine.forward();>><</link>><</if>>
 /*You can also add whatever you want*/
 
-:: sidemenu [SOME] {"position":"100,350","size":"100,100"}
+:: LeftMenu [SOME] {"position":"100,350","size":"100,100"}
 /*<<liveblock>> updates the menu toggle
 <p title> will show the hovertip (name when you hover)
 you should keep the <p>'s around the links otherwise formating will be weird*/
-<p style="margin: 0;" title="Toggle Menu"><<liveblock>><<link '<<if $menu is true>><i class="fa-solid fa-caret-up"></i><<else>><i class="fa-solid fa-caret-down"></i><</if>>'>><<set $menu = !$menu>><<update>><</link>><</liveblock>></p>
-<<liveblock>><<if $menu is true>><p style="margin: 0;" title="Player Character"><<link '<i class="fa-solid fa-user"></i>'>>
-	<<popup "PlayerPage" "Player Character">>
+<p title="Toggle Menu"><<do>><<link '<<if $menu is true>><i class="fa-solid fa-caret-up"></i><<else>><i class="fa-solid fa-caret-down"></i><</if>>'>><<set $menu = !$menu>><<redo>><</link>><</do>></p>
+<<do>><<if $menu is true>><p title="Player Character"><<link '<i class="fa-solid fa-user"></i>'>>
+	<<popup "player" "Player Character">>
 <</link>></p>
-<p style="margin: 0;" title="Achievements"><<link '<i class="fa-solid fa-trophy"></i>'>>
-	<<popup "Achievements" "Achievements">>
+<p title="Achievements"><<link '<i class="fa-solid fa-trophy"></i>'>>
+	<<popup "achievements" "Achievements">>
 <</link>></p>
-<p style="margin: 0;" title="Credits"><<link '<i class="fa-solid fa-share-nodes"></i>'>>
-	<<popup "Credits" "Credits">>
+<p title="Credits"><<link '<i class="fa-solid fa-share-nodes"></i>'>>
+	<<popup "credits" "Credits">>
 <</link>></p>
-<p style="margin: 0;" title="Saves"><<link '<i class="fa-solid fa-floppy-disk"></i>'>><<script>>UI.saves();<</script>><</link>></p>
-<p style="margin: 0;" title="Settings"><<link '<i class="fa-solid fa-gears"></i>'>><<script>>UI.settings();<</script>><</link>></p>
-<p style="margin: 0;" title="Restart"><<link '<i class="fa-solid fa-rotate-left"></i>'>><<script>>UI.restart();<</script>><</link>></p><</if>><</liveblock>>
+<p title="Saves"><<link '<i class="fa-solid fa-floppy-disk"></i>'>><<run UI.saves();>><</link>></p>
+<p title="Settings"><<link '<i class="fa-solid fa-gears"></i>'>><<run UI.settings();>><</link>></p>
+<p title="Restart"><<link '<i class="fa-solid fa-rotate-left"></i>'>><<run UI.restart();>><</link>></p><</if>><</do>>
 /*You can also add whatever you want, it can also be links to passages rather than dialog boxes
 Note: you may need to edit the formatting of #menu if you add links, especially for smaller screen sizes (>300px)*/
 
-:: PlayerPage [CODEX] {"position":"100,475","size":"100,100"}
+:: RightMenu [SOME] {"position":"350,350","size":"100,100"}
+/*<<liveblock>> updates the menu toggle
+<p title> will show the hovertip (name when you hover)
+you should keep the <p>'s around the links otherwise formating will be weird*/
+<p title="Toggle Menu"><<do>><<link '<<if $menu is true>><i class="fa-solid fa-caret-up"></i><<else>><i class="fa-solid fa-caret-down"></i><</if>>'>><<set $menu = !$menu>><<redo>><</link>><</do>></p>
+<<do>><<if $menu is true>><p title="Player Character"><<link '<i class="fa-solid fa-user"></i>'>>
+	<<popup "player" "Player Character">>
+<</link>></p>
+<p title="Achievements"><<link '<i class="fa-solid fa-trophy"></i>'>>
+	<<popup "achievements" "Achievements">>
+<</link>></p>
+<p title="Credits"><<link '<i class="fa-solid fa-share-nodes"></i>'>>
+	<<popup "credits" "Credits">>
+<</link>></p>
+<p title="Saves"><<link '<i class="fa-solid fa-floppy-disk"></i>'>><<run UI.saves();>><</link>></p>
+<p title="Settings"><<link '<i class="fa-solid fa-gears"></i>'>><<run UI.settings();>><</link>></p>
+<p title="Restart"><<link '<i class="fa-solid fa-rotate-left"></i>'>><<run UI.restart();>><</link>></p><</if>><</do>>
+/*You can also add whatever you want, it can also be links to passages rather than dialog boxes
+Note: you may need to edit the formatting of #menu if you add links, especially for smaller screen sizes (>300px)*/
+
+:: player [CODEX] {"position":"100,475","size":"100,100"}
 Here you can put some info about the player
 
-:: Achievements [CODEX] {"position":"225,475","size":"100,100"}
-Here you can add some achivements
+:: achievements [CODEX] {"position":"225,475","size":"100,100"}
+Here you can add some achievements
 
-:: Credits [Credits] {"position":"350,475","size":"100,100"}
+:: credits [Credits] {"position":"350,475","size":"100,100"}
 Template created by manonamora ([[Tumblr|https://manonamora-if.tumblr.com/]]/[[Itch|https://manonamora.itch.io/]]) on Twine (v2.7.0)/Tweego with Sugarcube (v2.36.1)
 Macros:
 * [[Chapel: Notification|https://github.com/ChapelR/custom-macros-for-sugarcube-2/]]
