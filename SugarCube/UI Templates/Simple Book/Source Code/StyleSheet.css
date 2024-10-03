@@ -1,15 +1,15 @@
 /*~ ~ ~ ~ ~ ~ ~  TABLE OF CONTENTS ~ ~ ~ ~ ~ ~ ~ 
     I-      Import Fonts
-        a- Font Awesome (6.1.0)
+        a- Font Awesome (6.6.0)
         b- Google Fonts
-        c- Local Fonts
     II-     Root Variables
     III-    Base CSS
         a- Scrollbar    
         b- Body
-        c- Grid Base
-        d- Grid Parts
-        e- Font Change
+        c- Container Base
+        d- Main Blocs of UI: Title, Middle, Navigation
+        e- Secondary Blocks: Left/Right Menu, Cover/Passages
+        f- Font Change
     IV-     HTML CSS
         a- Headers (h1, h2, etc...)
         b- <label>
@@ -25,9 +25,10 @@
         b- Notify
         c- Textbox, Textarea, Select
         d- Buttons
+        e- Stats Bars
     VI-     UI Dialog
         a- Base CSS
-        b- Settins Dialog
+        b- Settings Dialog
         c- Saves Dialog
     VII-    Mobile
     VIII-   Title Page + End Page
@@ -41,38 +42,35 @@
 /***************************
     IMPORT FONTS
 ***************************/
+/*
+    This template only includes online fonts like Google, using the @import rule.
+    But it is recommended to only use local (downloaded) fonts, as online fonts are dependent on the hosting server (i.e. Google could always pull the font, or change the API). Local import also ensures the project is playable offline (downloaded or intermittent internet).
+    To do that, download the fonts, include those files in your game folder, and import them with @font-face.
+        > This doesn't apply to Font-Awesome. See the Template Guide (https://manonamora.itch.io/twine-sugarcube-templates).
+*/
 
-    /* Font Awesome */
-    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css');
-    /* Text Fonts: Google */
+ /* Icons: Font Awesome */
+ @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css');
+ /* Title: Dancing Script */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+ /* Sans-serif: Montserrat */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+ /* Serif: Tinos */
 @import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-    /* Text Fonts: Local */
+ /* Monospace: Roboto Mono  */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+/* 
+    Example of a local font import: 
+
 @font-face {
     font-family: "Dyslexic";
     src: url(fonts/OpenDyslexic-Regular.otf) format("opentype");
     font-style: normal;
     font-weight: 400;
-}
-@font-face {
-    font-family: "Dyslexic";
-    src: url(fonts/OpenDyslexic-Italic.otf) format("opentype");
-    font-style: italic;
-    font-weight: 400;
-}
-@font-face {
-    font-family: "Dyslexic";
-    src: url(fonts/OpenDyslexic-BoldItalic.otf) format("opentype");
-    font-style: italic;
-    font-weight: 700;
-}
-@font-face {
-     font-family: "Dyslexic";
-     src: url(fonts/OpenDyslexic-Bold.otf) format("opentype");
-     font-style: normal;
-     font-weight: 700;
-}
+} 
+    > Repeat for each font + style (normal/italics) + weight (regular/bold)
+*/
 
 /***************************
     ROOT VARIABLES
@@ -90,6 +88,7 @@
     --scrollback: #5E548E;
     --front: #413768;
     --area: rgb(94,84,142,0.3);
+
     --gn-body: #132A13;
     --gn-page: #F9FADD; 
     --gn-link: #132A13;
@@ -101,6 +100,7 @@
     --gn-scrollback: #31572C;
     --gn-front: #224120;
     --gn-area: rgb(49,87,44,0.3);
+
     --or-body: #661C00;
     --or-page: #FFDACA;
     --or-link: #661C00;
@@ -112,13 +112,12 @@
     --or-scrollback: #B33100;
     --or-front: #992A00;
     --or-area: rgb(179,49,0,0.3);
+
     --text: #111111;
 	--white: #F2F3F4;
-	--icon: "Font Awesome 6 Free";
+	
+    --icon: "Font Awesome 6 Free";
 	--cursive: 'Dancing Script', cursive;
-    --sansserif: 'Montserrat', sans-serif;
-    --opendyslexic: "Dyslexic", serif;
-    --serif: 'Tinos', serif;   
 }
 
 /***************************
@@ -126,7 +125,7 @@
 ***************************/
 
     /***************************
-        Scrollbar
+        Scrollbar FFX + Chromium
     ***************************/
 * {
     scrollbar-width: thin;
@@ -139,31 +138,31 @@
     scrollbar-color: var(--or-scrollfront) var(--or-scrollback);     
 }
 
-::-webkit-scrollbar {
+ ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
-}
-::-webkit-scrollbar-track {
+ }
+ ::-webkit-scrollbar-track {
     background: var(--scrollback); 
-}
+ }
 .gn ::-webkit-scrollbar-track {
     background: var(--gn-scrollback); 
 }
 .or ::-webkit-scrollbar-track {
     background: var(--or-scrollback); 
 }
-::-webkit-scrollbar-thumb {
+ ::-webkit-scrollbar-thumb {
     background: var(--scrollfront); 
-}
+ }
 .gn ::-webkit-scrollbar-thumb {
     background: var(--gn-scrollfront); 
 }
 .or ::-webkit-scrollbar-thumb {
     background: var(--or-scrollfront); 
 }
-::-webkit-scrollbar-thumb:hover {
+ ::-webkit-scrollbar-thumb:hover {
     background: var(--area); 
-}
+ }
 .gn ::-webkit-scrollbar-thumb:hover {
     background: var(--gn-area); 
 }
@@ -184,15 +183,9 @@ body {
     background-color: var(--or-body);
 }
     /***************************
-        Grid Base
+        Container Base
     ***************************/
-#parent {
-    display: grid;
-    grid-template-columns: 1fr 0.1fr repeat(18, 1fr) 0.1fr 1fr;
-    grid-template-rows: 1fr 0.1fr repeat(9, 1fr) 0.1fr 1fr;
-    grid-column-gap: 5px;
-    grid-row-gap: 5px; 
-    width: calc( 75vh * 1.33);
+#story {
     height: 75vh;
     max-width: 1066px;
     max-height: 800px;
@@ -202,41 +195,37 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 4/3;
 }
     /***************************
-        Grid Parts
+        Main Blocks of UI:
+            Title,
+            Middle,
+            Navigation
     ***************************/
-#menu { 
-    grid-area: 3 / 1 / 12 / 2;
-    font-size: 150%;
-    text-align: center;
-    line-height: normal;
-    overflow: auto;
-    scrollbar-width: none;
-    display: block;
-    margin: auto;
-}
-#gametitle {
-    grid-area: 1 / 3 / 2 / 21; 
-    display: flex;
-}
-.title {
+#title {
     text-align: center;
     font-family: var(--cursive);
     font-size: 300%;
     margin: auto;
-    padding-top: 1%;
     color: var(--title);
 }
-.gn .title {
+.gn #title {
     color: var(--gn-title);
 }
-.or .title {
+.or #title {
     color: var(--or-title);
 }
 
+#middle {
+    display: flex;
+    height: 82%;
+    margin: 10px 0;
+}
+
 #navig {
-    grid-area: 13 / 3 / 14 / 21; 
     text-align: center;
     font-size: x-large;
     display: flex;
@@ -250,13 +239,43 @@ body {
 .or #navig {
     color: var(--or-navig)
 }
+    /***************************
+        Secondary Blocks:
+            Left/Right Menu,
+            Cover/Passage
+    ***************************/
+#left-menu, #right-menu {
+    width: 30px;
+    min-width: 30px;
+    text-align: center;
+    font-size: 150%;
+    height: 75%;
+    margin: auto;
+}
+#left-toggle, #right-toggle {
+    transition: rotate 1s;
+    margin-top: 0;
+}
+#left-menu.show #left-toggle, #right-menu.show #right-toggle {
+    rotate: 180deg;
+}
+#left-menu p:not(#left-toggle), #right-menu p:not(#right-toggle) {
+    transition: opacity 2s;
+    opacity: 0;
+    pointer-events: none;
+}
+#left-menu.show p:not(#left-toggle), #right-menu.show p:not(#right-toggle) {
+    opacity: 1;
+    pointer-events: revert;
+}
 
 #cover {
-    grid-area:  3 / 3 / 12 / 21;
-    display: flex;
-    border-radius: 1%;
+    border-radius: 10px;
     box-shadow: 0 5px 10px 0 rgba(0,0,0,0.5),0 4px 20px 0 rgba(0,0,0,0.5);
     background-color: var(--cover);
+    display: flex;
+    margin: 5px 10px;
+    width: 100%
 }
 .gn #cover {
     background-color: var(--gn-cover);
@@ -265,7 +284,7 @@ body {
     background-color: var(--or-cover);
 }
 
-#inside {
+#passages {
     overflow: auto;
     height: 95%;
     width: 95%;
@@ -274,25 +293,24 @@ body {
     background-color: var(--page);
     color: var(--text);
 }
-.gn #inside {
+.gn #passages {
     background-color: var(--gn-page);        
 }
-.or #inside {
+.or #passages {
     background-color: var(--or-page);
 }
-#passages {
-    margin: 1em 2em;
-}
+
 .passage {
+    margin: 1em 2em;
     text-align: justify;
 }
         
     /***************************
-        Front Changes
+        Font Changes
     ***************************/
-.sansserif .passage, .sansserif #ui-dialog-body {font-family: var(--sansserif);}
-.opendyslexic .passage, .opendyslexic #ui-dialog-body {font-family: var(--opendyslexic);}
-.serif .passage, .serif #ui-dialog-body {font-family: var(--serif);}
+.sansserif .passage, .sansserif #ui-dialog-body {font-family: 'Montserrat', sans-serif;}
+.monospace .passage, .monospace #ui-dialog-body {font-family: "Roboto Mono", monospace}
+.serif .passage, .serif #ui-dialog-body {font-family: 'Tinos', serif;}
 
 /***************************
     HTML CSS
@@ -405,7 +423,6 @@ hr {
     /***************************
         Tables
     ***************************/
-        /*Note: if you remove .passage, it will affect the Table in the Save UI. you can also have specific css for tables by adding the relvant divclass before table (ex: .test table will apply to all <table class="test">)*/
 .passage table {
     margin: auto;
     width: 75%;
@@ -430,6 +447,7 @@ hr {
 .passage th {
     font-size: 110%;
 }
+
     /***************************
         Lists
     ***************************/
@@ -477,28 +495,30 @@ a:hover, a:focus {
 .or a:hover, a:focus {
     color: var(--or-hover);
 }
+
         /***************************
             Menu Links
         ***************************/
-#menu a, #navig a {
+#left-menu a, #right-menu a, #navig a {
     color: var(--title);
 }
-.gn #menu a, .gn #navig a {
+.gn #left-menu a, .gn #right-menu a, .gn #navig a {
     color: var(--gn-title);
 }
-.or #menu a, .or #navig a {
+.or #left-menu a, .or #right-menu a, .or #navig a {
     color: var(--or-title);
 }
-#menu a:hover, #navig a:hover, #menu a:focus, #navig a:focus {
+#left-menu a:hover, #left-menu a:focus, #right-menu a:hover, #right-menu a:focus, #navig a:hover, #navig a:focus {
     color: var(--hover);
     text-shadow: none;
 }
-.gn #menu a:hover, .gn #navig a:hover, .gn #menu a:focus, .gn #navig a:focus {
+.gn #left-menu a:hover, .gn #left-menu a:focus, .gn #right-menu a:hover, .gn #right-menu a:focus, .gn #navig a:hover, .gn #navig a:focus {
     color: var(--gn-hover);
 }
-.or #menu a:hover, .or #navig a:hover, .or #menu a:focus, .or #navig a:focus {
+.or #left-menu a:hover, .or #left-menu a:focus, .or #right-menu a:hover, .or #right-menu a:focus, .or #navig a:hover, .or #navig a:focus {
     color: var(--or-hover);
 }
+
         /***************************
             Choice Div
         ***************************/
@@ -552,6 +572,7 @@ a:hover, a:focus {
 .macro-cycle::before {
     content: "\204D\00a0";
 }
+
     /***************************
         Notify
     ***************************/
@@ -658,6 +679,75 @@ button:disabled, button:disabled:hover {
     color: var(--white);
 }
 
+    /***************************
+        Stats Bars
+    ***************************/ 
+.statBarContainer {
+    background: var(--body);
+    position: relative;
+    width: 100%;
+    height: 2em;
+    border: 1px solid var(--body);
+    border-radius: 5px;
+    text-indent: 10px;
+}
+.gn .statBarContainer {
+    background: var(--gn-body);
+    border: 1px solid var(--gn-body);
+}
+.or .statBarContainer {
+    background: var(--or-body);
+    border: 1px solid var(--or-body);
+}
+.statSingle {
+    border-radius: inherit;
+    height: inherit;
+    background: var(--cover);
+}
+.gn .statSingle {
+    background: var(--gn-cover);
+}
+.or .statSingle {
+    background: var(--or-cover);
+}
+.statFront {
+    background: var(--cover);
+    border-radius: inherit;
+    height: inherit;
+    position: absolute;
+}
+.gn .statFront {
+    background: var(--gn-cover);
+}
+.or .statFront {
+    background: var(--or-cover);
+}
+.statBack {
+    position: absolute;
+    width: inherit;
+    height: inherit;
+}
+.statText {
+    position: absolute;
+    display: flex;
+    height: inherit;
+    width: inherit;
+    justify-content: space-between;
+}
+.statText span {
+    align-content: center;
+}
+.statText span:not(:first-child) {
+    direction: rtl;
+    color: var(--page);
+}
+.gn .statText span:not(:first-child) {
+    color: var(--gn-page);
+}
+.or .statText span:not(:first-child) {
+    color: var(--or-page);
+}
+
 /***************************
     UI DIALOG
 ***************************/
@@ -723,6 +813,19 @@ button:disabled, button:disabled:hover {
     border-radius: 0 5px 0 0;
     width: 40px;
 }
+
+#ui-dialog-body ul.buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+#ui-dialog-body ul.buttons li {
+    padding: 0.5em 1em;
+}
+#ui-dialog-body ul.buttons > li + li > button {
+    margin-left: 0;
+}
+
     /***************************
         Settings Dialog
     ***************************/
@@ -777,52 +880,85 @@ button:disabled, button:disabled:hover {
     background-color: var(--or-cover);
     border-color: var(--or-title);
 }
+
     /***************************
         Saves Dialog
     ***************************/
-#ui-dialog-body.saves button[id="saves-clear"]:hover {
-    background-color: #990000;
-    color: var(--white);
+#ui-dialog-body.saves > :not(:first-child) {
+    border-top-color: transparent;
 }
+
+#ui-dialog-body.saves > h2 {
+    background: var(--area);
+    text-indent: 5%;
+    color: var(--front);
+    font-size: 125%;
+    text-align: left;
+}
+
 #ui-dialog-body.saves td:first-child {
     min-width: 0.5em;
 }
-#ui-dialog-body.saves button[id="saves-clear"]::before {
-    font-family: var(--icon) !important;
-    font-weight: 900;
-    content: "\f12d\00a0";
+
+#ui-dialog-body.saves #saves-list button.load:not(:disabled), #ui-dialog-body.saves #saves-list button {
+    font-weight: normal;
+    background-color: var(--front);
+    border-color: var(--body);
+}
+#ui-dialog-body.saves #saves-list button.load:not(:disabled):hover, #ui-dialog-body.saves #saves-list button:not(:disabled):hover {
+    background-color: transparent;
+    border-color: var(--body);
+    color: var(--hover);
+}
+
+#ui-dialog-body.saves #saves-list button.delete:not(:disabled), #ui-dialog-body.saves button[id="saves-clear"]:not(:disabled), #restart-cancel {
+    font-weight: normal;
+    background-color: #4a0c37;
+    border-color: #711116;
+}
+#ui-dialog-body.saves #saves-list button.delete:not(:disabled):hover, #ui-dialog-body.saves button[id="saves-clear"]:not(:disabled):hover, button#restart-cancel:hover {
+    background-color: #39092b;
+    border-color: #6c1050;
+}
+
+#ui-dialog-body.saves #saves-list button:disabled {
+    background-color: #444;
+    border: 1px solid #666;
+    color: var(--white);
 }
 
 /***************************
     MOBILE CSS
 ***************************/
-
 @media screen and (max-height: 700px) {
-	#parent {
-		width: calc(100vh * 1.33);
-		height: 100vh;
+	#story {
+		height: 98vh;
+        width: 98vw; 
 	}
-    .title {
+    #title {
         font-size: 250%;
     }
-    #navig, #menu {
+    #navig, #left-menu, #right-menu {
         font-size: 150%;
     }
 }
 @media screen and (max-height: 530px) {
-    .title {
+    #title {
         font-size: 200%;
     }
-    #navig, #menu {
+    #navig, #left-menu, #right-menu {
         font-size: 125%;
     }
 }
 @media screen and (max-height: 420px) {
-    .title {
+    #title {
         font-size: 150%;
     }
-    #navig, #menu {
+    #navig, #left-menu, #right-menu {
         font-size: 100%;
+    }
+    #middle {
+        margin: 0;
     }
 }
 
@@ -830,11 +966,15 @@ button:disabled, button:disabled:hover {
     TITLE PAGE
     END PAGE
 ***************************/
-[data-tags~="cover-start"] #parent {
+[data-tags~="cover-start"] #story {
 	width: calc(75vh*1.33/2);
 	max-width: 533px;
 }
-[data-tags~="cover-start"] #menu,[data-tags~="cover-start"] #gametitle,[data-tags~="cover-start"] #navig,[data-tags~="cover-start"] #cover:after,[data-tags~="cover-start"] .passage a::before {display: none}
+[data-tags~="cover-start"] #left-menu,[data-tags~="cover-start"] #right-menu,[data-tags~="cover-start"] #title,[data-tags~="cover-start"] #navig {
+  opacity: 0;
+  pointer-events: none;
+}
+[data-tags~="cover-start"] .passage a::before {display: none}
 [data-tags~="cover-start"] #cover {
 	border-radius: 2% 5% 5% 2%;
 	border: 3px solid var(--hover);
@@ -846,13 +986,10 @@ button:disabled, button:disabled:hover {
 	background-color: var(--or-scrollfront);
 	border-color: var(--or-hover);
 }
-[data-tags~="cover-start"] #inside {
-    background: none;
-	color: var(--white);
-    display: flex;
-}
 [data-tags~="cover-start"] #passages {
-    margin: auto;
+    background: none;
+	  color: var(--white);
+    display: flex;
 }
 [data-tags~="cover-start"] .passage a {
 	color: var(--body);
@@ -865,6 +1002,7 @@ button:disabled, button:disabled:hover {
 }
 [data-tags~="cover-start"] .passage {
     text-align: center;
+    margin: auto;
 }
 [data-tags~="cover-start"] p {
     line-height: 1;
@@ -875,7 +1013,7 @@ button:disabled, button:disabled:hover {
     line-height: 1.25;
 }
 @media screen and (max-height: 700px) {
-    [data-tags~="cover-start"] #parent {
+    [data-tags~="cover-start"] #story {
 		width: calc(100vh*1.33/2);
 		height: 100vh;
 	}
@@ -888,117 +1026,4 @@ button:disabled, button:disabled:hover {
     line-height: 1;
 }
 
-
-
-/* To organise somewhere */
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css');
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
-:root {
-    --body: #231942;
-    --page: #F2DDE9;
-    --link: #231942;
-    --hover: #5E548E;
-    --navig: #5E548E;
-    --cover: #9F86C0;
-    --title: #E0B1CB;
-    --scrollfront: #BE95C4;
-    --scrollback: #5E548E;
-    --front: #413768;
-    --area: rgb(94,84,142,0.3);
-    --text: #111111;
-	--white: #F2F3F4;
-	--icon: "Font Awesome 6 Free";
-	--cursive: 'Dancing Script', cursive;
-}
-
-#notify {display: none;}
-
-#story {
-  height: 75vh;
-  max-width: 1066px;
-  max-height: 800px;
-  margin: auto;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  aspect-ratio: 4/3;
-}
-#middle {
-  display: flex;
-}
-#title {
-  text-align: center;
-  font-family: var(--cursive);
-  font-size: 300%;
-  margin: auto;
-  padding-top: 1%;
-  color: var(--title);
-}
-#navig {
-  text-align: center;
-  font-size: x-large;
-  display: flex;
-  margin: auto;
-  letter-spacing: 1em;
-  color: var(--navig);
-}
-
-/*Addition:*/
-
-#cover {
-  border-radius: 10px;
-  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.5),0 4px 20px 0 rgba(0,0,0,0.5);
-  background-color: var(--cover);
-  display: flex;
-  margin: 5px 10px;
-}
-#passages {
-  overflow: auto;
-  height: 95%;
-  width: 95%;
-  margin: auto;
-  border-radius: 3px;
-  background-color: var(--page);
-  color: var(--text);
-}
-.passage {
-  margin: 1em 2em;
-}
-body {
-  background-color: var(--body);
-}
-#left-menu, #right-menu {
-  width: 30px;
-  min-width: 30px;
-  text-align: center;
-  font-size: 150%;
-  /*! margin: auto; */
-  /*! position: relative; */
-}
-a {
-    color: var(--link);
-    font-weight: bold;
-}
-a:hover, a:focus {
-    color: var(--hover);
-    font-style: italic;
-    text-decoration: none;
-}
-#left-menu a, #right-menu a, #navig a {
-    color: var(--title);
-}
-#left-menu a:hover, #right-menu a:hover, #navig a:hover, #left-menu a:focus, #right-menu a:focus, #navig a:focus {
-    color: var(--hover);
-    text-shadow: none;
-}
-p.toggle {
-  /*! position: absolute; */
-  /*! top: 0; */
-}
+NEED TO FIX THE COVER

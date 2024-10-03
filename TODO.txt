@@ -45,10 +45,22 @@
       - included explanation on how to only use the 'Space' or 'Tech' interface (i.e. remove/edit code)
       - included explanation on how to display/hide/delete stats bars (i.e. remove/edit code)
       - expanded explanation about use of the statsbars
+   - Updated the Credits page
 * Simple Book:
    - Updated Code + API to 2.37
    - Updated the Styling
-      - Changed grid into flex-box
+      - Updated Font Awesome 
+      - Removed Open Dyslexic (replaced with Monospace)
+   - Changed Interface (StoryInterface/CSS)
+      - renamed elements + passages
+      - Changed the menu display/hiding
+      - Added an extra side menu (more balanced)
+      - fixed the mobile scaling
+   - Removed Liveupdate macro
+   - Added extra side pages, incl. Stats
+   - Rephrased some explanations for clarity
+   - Fixed typos
+   - Updated the Credits page
 
 // Check list //
    -> Change min with to 320px
