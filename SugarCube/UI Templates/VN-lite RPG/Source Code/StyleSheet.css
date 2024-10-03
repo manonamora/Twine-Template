@@ -40,7 +40,7 @@
     IMPORT FONTS
 ***************************/
 /*
-    This template only includes online fonts like Google, using the @import rule.
+    This template only includes online fonts  Google, using the @import rule.
     But it is recommended to only use local (downloaded) fonts, as online fonts are dependent on the hosting server (i.e. Google could always pull the font, or change the API). Local import also ensures the project is playable offline (downloaded or intermittent internet).
     To do that, download the fonts, include those files in your game folder, and import them with @font-face.
         > This doesn't apply to Font-Awesome. See the Template Guide (https://manonamora.itch.io/twine-sugarcube-templates).
@@ -87,7 +87,7 @@ body {
     background-position: right;
     color: black;
 }
-#main {
+#story {
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -502,7 +502,7 @@ ul.buttons button {
     }
 }
 @media screen and (min-width: 1280px) {
-    #main {
+    #story {
         display: block;
         margin: auto;
         position: absolute;

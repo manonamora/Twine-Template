@@ -11,7 +11,6 @@
         // ~ Notifications
         // ~ Theme Change
     //~ ~ MACROS ~ ~ 
-        // ~ Liveupdate
         // ~ Notify
         // ~ Dialog API
 

@@ -26,6 +26,7 @@ Setting.addHeader("Text Display");
         
         //~ ~ Font Type ~ ~
 var settingFontFamily = ["Serif", "Sans Serif", "Monospace"];
+    /* I would recommend adding multiple font options for each type (serif, sans-serif, and monospace) for accessibility. */
 var fontFamily = function() {
     var $html = $("html"); 
     $html.removeClass("serif sansserif monospace");
@@ -39,6 +40,9 @@ var fontFamily = function() {
         case "Monospace":
             $html.addClass("monospace");
             break;
+        /*
+            If you add a font or change the name of a class, don't forget to edit your StyleSheet as well!
+        */
     }
 };
 Setting.addList("fontFamily", {
@@ -67,6 +71,7 @@ Setting.addList("fontSize", {
     //~ ~ ~ ~ SAVING (Auto/Name) ~ ~ ~ ~
 Setting.addHeader("Save Settings");
 
+Config.saves.maxSlotSaves = 6;
 Config.saves.isAllowed = function (saveType) {
     if (saveType === Save.Type.Auto) {
         // this section is just for the autosave

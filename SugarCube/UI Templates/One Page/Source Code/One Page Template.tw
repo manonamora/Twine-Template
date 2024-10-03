@@ -11,12 +11,10 @@ One Page Template
 }
 
 
-:: StoryInterface [AVOID-EDIT] {"position":"100,100","size":"100,100"}
-<div id="parent">
-	<div id="passages"></div>
-	<div id="menu" data-passage="menu">
-		<!--Side menu, editable in the sidemenu passage-->
-	</div>
+:: StoryInterface [AVOID-EDIT] {"position":"100,225","size":"100,100"}
+<div id="passages"></div>
+<div id="menu" data-passage="menu">
+	<!--Side menu, editable in the sidemenu passage-->
 </div>
 <script>
 	/* Function to open/close the dropdown menu */
@@ -36,6 +34,7 @@ One Page Template
         }
     }
 </script>
+<!-- The container for everything is #story -->
 
 
 :: StoryDisplayTitle [EDIT] {"position":"225,225","size":"100,100"}

@@ -12,17 +12,16 @@ VN-lite RPG Template
 
 
 :: StoryInterface {"position":"100,100","size":"100,100"}
-<div id="main"><!--Main Container-->
-	<div id="header" data-passage="StoryDisplayTitle"></div><!--Title-->
-	<div id="container">
-		<div id="passages"></div><!--DO NOT REMOVE-->
-		<div id="perso" data-passage="ImgPerso"></div><!--Passage image-->
-	</div>
-	<div id="footer">
-		<div id="side-image" data-passage="SidePerso"></div><!--Party image-->
-		<div id="menu" data-passage="Menu"></div><!--Menu-->
-	</div>
+<div id="header" data-passage="StoryDisplayTitle"></div><!--Title-->
+<div id="container">
+	<div id="passages"></div><!--DO NOT REMOVE-->
+	<div id="perso" data-passage="ImgPerso"></div><!--Passage image-->
 </div>
+<div id="footer">
+	<div id="side-image" data-passage="SidePerso"></div><!--Party image-->
+	<div id="menu" data-passage="Menu"></div><!--Menu-->
+</div>
+<!-- The container for everything is #story -->
 
 
 :: StoryDisplayTitle {"position":"225,100","size":"100,100"}
@@ -42,6 +41,7 @@ Title Game/*
 	This being the Main Menu Page, you edit this list however you want.
 	But you might want to watch out for the number of links on the page (too many would mean scrolling).
 */
+
 
 :: Next {"position":"625,100","size":"100,100"}
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas scelerisque arcu malesuada dapibus faucibus. Aliquam sodales mauris commodo suscipit lobortis. Nam est dui, efficitur nec fermentum sit amet, feugiat at enim. Proin est turpis, porttitor eget scelerisque non, convallis a nunc. Praesent sed tempus odio. Morbi fringilla velit eu eros finibus, in ornare massa fermentum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
@@ -152,6 +152,7 @@ What's your favorite pie?
 	If a passage is tagged [side], they won't appear.
 */
 
+
 :: Menu [nobr] {"position":"100,225","size":"100,100"}
 <<link '<i class="fa-solid fa-backward-fast"></i>'>><<run UI.restart()>><</link>>
 <<link '<i class="fa-solid fa-gear"></i>'>><<run UI.settings()>><</link>>
@@ -168,20 +169,24 @@ What's your favorite pie?
 	The links send the players to new passaged, but you can change them to popups instead.
 */
 
+
 :: Inventory [noreturn side] {"position":"350,475","size":"100,100"}
 This page could show the player's inventory. Or you can change it to a stats page!
 Saving a playthrough will not work here.
 <<back>>
+
 
 :: Codex [noreturn side] {"position":"350,225","size":"100,100"}
 This page could be a landing page for Codex entries.
 Saving a playthrough will not work here.
 <<back>>
 
+
 :: Player [noreturn side] {"position":"350,350","size":"100,100"}
 This page could show the player's characteristics.
 Saving a playthrough will not work here.
 <<back>>
+
 
 :: credits {"position":"225,225","size":"100,100"}
 The ''VN-lite RPG Template'' was created by manonamora on Twine 2/Tweego with SugarCube 2.37.3. It was inspired by interfaces of games like Disco Elysium and games made with Narrat.
@@ -215,3 +220,4 @@ There are resources and help available with Twine and SugarCube:
 * and more listed in this [[Masterlist|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]]
 <hr>\
 <h5>You can find my other SugarCube templates [[here|https://manonamora.itch.io/twine-sugarcube-templates]].</h5>
+

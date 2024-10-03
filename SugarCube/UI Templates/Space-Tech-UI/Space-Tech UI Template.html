@@ -239,7 +239,7 @@ body {
         -> Left + Title + Right
         -> Passage Text
     ***************************/
-#container {
+#story {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -488,7 +488,7 @@ body[data-tags~="codex"] {
         -> Title + Menu
         -> Passage Text
     ***************************/
-[data-tags~="codex"] #container {
+[data-tags~="codex"] #story {
     outline-color: #101c0f;
     border-color: #001c03;
     box-shadow: inset hsl(0, 0%, 14.9%) 0 0px 0px 4px, inset hsla(0, 0%, 14.9%, 0.8) 0 -1px 5px 4px, inset hsla(0, 0%, 0%, .25) 0 -1px 0px 7px, inset hsla(0, 0%, 50%, .7) 0 2px 1px 7px, hsla(0, 0%, 50%, .15) 0 -5px 6px 4px, hsla(0, 0%, 0%, .5) 0 5px 6px 4px;
@@ -868,13 +868,13 @@ a:hover.macro-cycle::before {
     This template was built for larger screens first, then scaled down for mobile/smaller-width. 
 */
 @media all and (max-width: 820px) {
-    #container {
+    #story {
         width: 97%;
         max-height: 650px;
     }
 }
 @media all and (max-width: 700px) {
-    #container {
+    #story {
         max-width: 98%;
         max-height: 98%;
     }
@@ -979,6 +979,7 @@ Setting.addHeader("Text Display");
         
         //~ ~ Font Type ~ ~
 var settingFontFamily = ["Serif", "Sans Serif", "Monospace"];
+    /* I would recommend adding multiple font options for each type (serif, sans-serif, and monospace) for accessibility. */
 var fontFamily = function() {
     var $html = $("html"); 
     $html.removeClass("serif sansserif monospace");
@@ -992,6 +993,9 @@ var fontFamily = function() {
         case "Monospace":
             $html.addClass("monospace");
             break;
+        /*
+            If you add a font or change the name of a class, don't forget to edit your StyleSheet as well!
+        */
     }
 };
 Setting.addList("fontFamily", {
@@ -1076,16 +1080,14 @@ Setting.addToggle("autoname", {
 });
 
 //~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ 
-</script><tw-passagedata pid="1" name="StoryInterface" tags="" position="100,100" size="100,100">&lt;div id=&quot;container&quot;&gt;
-	&lt;div id=&quot;topcontainter&quot;&gt;
-		&lt;div id=&quot;left-menu&quot; data-passage=&quot;first-menu&quot;&gt;&lt;!--  not visible with small device --&gt;&lt;/div&gt;
-		&lt;div id=&quot;center-block&quot; data-passage=&quot;center-block&quot;&gt;&lt;/div&gt;
-		&lt;div id=&quot;right-menu&quot; data-passage=&quot;second-menu&quot;&gt;&lt;!--  not visible with small device --&gt;&lt;/div&gt;
-	&lt;/div&gt;
-	&lt;div id=&quot;mobile-top-menu&quot; data-passage=&quot;second-menu-mobile&quot;&gt;&lt;!--  not visible with large device --&gt;&lt;/div&gt;
-	&lt;div id=&quot;passages&quot;&gt;&lt;!-- DO NOT REMOVE--&gt;&gt;&lt;/div&gt;
-	&lt;div id=&quot;mobile-btm-menu&quot; data-passage=&quot;first-menu&quot;&gt;&lt;!--  not visible with large device --&gt;&lt;/div&gt;
+</script><tw-passagedata pid="1" name="StoryInterface" tags="" position="100,100" size="100,100">&lt;div id=&quot;topcontainter&quot;&gt;
+	&lt;div id=&quot;left-menu&quot; data-passage=&quot;first-menu&quot;&gt;&lt;!--  not visible with small device --&gt;&lt;/div&gt;
+	&lt;div id=&quot;center-block&quot; data-passage=&quot;center-block&quot;&gt;&lt;/div&gt;
+	&lt;div id=&quot;right-menu&quot; data-passage=&quot;second-menu&quot;&gt;&lt;!--  not visible with small device --&gt;&lt;/div&gt;
 &lt;/div&gt;
+&lt;div id=&quot;mobile-top-menu&quot; data-passage=&quot;second-menu-mobile&quot;&gt;&lt;!--  not visible with large device --&gt;&lt;/div&gt;
+&lt;div id=&quot;passages&quot;&gt;&lt;!-- DO NOT REMOVE--&gt;&gt;&lt;/div&gt;
+&lt;div id=&quot;mobile-btm-menu&quot; data-passage=&quot;first-menu&quot;&gt;&lt;!--  not visible with large device --&gt;&lt;/div&gt;
 &lt;!-- 
 	If you don&#39;t want visible stats bars in your main interface, simply change:
 		data-passage=&quot;second-menu-mobile&quot;
@@ -1093,6 +1095,8 @@ Setting.addToggle("autoname", {
 		data-passage=&quot;second-menu&quot;
 
 	And remove the conditional statement in the [second-menu] passage.
+
+	The container for everything is #story
 --&gt;</tw-passagedata><tw-passagedata pid="2" name="first-menu" tags="" position="100,225" size="100,100">&lt;&lt;link &#39;©&#39;&gt;&gt;&lt;&lt;run Dialog.create(&quot;Credits&quot;).wikiPassage(&quot;credits&quot;).open();&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link &#39;🖫&#39;&gt;&gt;&lt;&lt;run UI.saves();&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link &#39;⛭&#39;&gt;&gt;&lt;&lt;run UI.settings();&gt;&gt;&lt;&lt;/link&gt;&gt;
@@ -1145,7 +1149,7 @@ Setting.addToggle("autoname", {
 
 	Sidenote: I&#39;ve only used unicode characters for the menu, but you can use the FontAwesome (or other icon) font instead! Because it&#39;s only being used for the space-ship list button...
 
-*/</tw-passagedata><tw-passagedata pid="6" name="StatWidget" tags="widget nobr" position="400,275" size="100,100">/*Visible Stats Bars*/
+*/</tw-passagedata><tw-passagedata pid="6" name="StatWidget" tags="widget nobr" position="350,100" size="100,100">/*Visible Stats Bars*/
 &lt;&lt;widget &quot;statsformat&quot;&gt;&gt;
 	/*
 		Used in [second-menu] and [second-menu-mobile] + mobile compatible

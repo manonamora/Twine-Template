@@ -75,7 +75,9 @@
 /***************************
     ROOT VARIABLES
 ***************************/
-
+/*
+    Since colours are repeated in many spots, they've been merged here. You can edit the colours directly here, or manually change every 'var(--)' into the colour you want.
+*/
 :root {
     --body: #231942;
     --page: #F2DDE9;
@@ -1014,8 +1016,7 @@ button:disabled, button:disabled:hover {
 }
 @media screen and (max-height: 700px) {
     [data-tags~="cover-start"] #story {
-		width: calc(100vh*1.33/2);
-		height: 100vh;
+		width: calc(98vw*2);
 	}
 }
 
@@ -1025,5 +1026,3 @@ button:disabled, button:disabled:hover {
 [data-tags~="cover-end"] .passage {
     line-height: 1;
 }
-
-NEED TO FIX THE COVER

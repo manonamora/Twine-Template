@@ -133,7 +133,7 @@ body {
         -> Left + Title + Right
         -> Passage Text
     ***************************/
-#container {
+#story {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -382,7 +382,7 @@ body[data-tags~="codex"] {
         -> Title + Menu
         -> Passage Text
     ***************************/
-[data-tags~="codex"] #container {
+[data-tags~="codex"] #story {
     outline-color: #101c0f;
     border-color: #001c03;
     box-shadow: inset hsl(0, 0%, 14.9%) 0 0px 0px 4px, inset hsla(0, 0%, 14.9%, 0.8) 0 -1px 5px 4px, inset hsla(0, 0%, 0%, .25) 0 -1px 0px 7px, inset hsla(0, 0%, 50%, .7) 0 2px 1px 7px, hsla(0, 0%, 50%, .15) 0 -5px 6px 4px, hsla(0, 0%, 0%, .5) 0 5px 6px 4px;
@@ -762,13 +762,13 @@ a:hover.macro-cycle::before {
     This template was built for larger screens first, then scaled down for mobile/smaller-width. 
 */
 @media all and (max-width: 820px) {
-    #container {
+    #story {
         width: 97%;
         max-height: 650px;
     }
 }
 @media all and (max-width: 700px) {
-    #container {
+    #story {
         max-width: 98%;
         max-height: 98%;
     }

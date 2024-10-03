@@ -253,7 +253,7 @@ body {
     /***************************
         Base
     ***************************/
-#parent {
+#story {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -268,12 +268,12 @@ body {
     margin: 1em auto;
     padding: 2em 4em;
 }
-.dk #parent {
+.dk #story {
     background: var(--dk-white);
     color: var(--dk-black);
     box-shadow: 0 4px 8px var(--dk-shadow);
 }
-.sp #parent {
+.sp #story {
     background: var(--sp-white);
     color: var(--sp-black);
     box-shadow: 0 4px 8px var(--sp-shadow);
@@ -933,7 +933,7 @@ ul.buttons button {
 ***************************/
 
 @media screen and (max-width: 768px) {
-	#parent {
+	#story {
         width: calc(100vw - 4em);
         margin: 1em auto;
         padding: 2em 1em;
@@ -948,7 +948,7 @@ ul.buttons button {
         flex-direction: column;
         align-items: center;
     }
-    #parent {
+    #story {
         padding-bottom: 1em;
         max-height: calc(100vh - 5em);
     }
@@ -966,7 +966,7 @@ ul.buttons button {
 /***************************
     TITLE/END PAGE
 ***************************/
-[data-tags~="cover"] #parent {
+[data-tags~="cover"] #story {
     height: fit-content;
     position: absolute;
     margin: auto;
@@ -1094,7 +1094,7 @@ Setting.addToggle("autosave", {
 Config.saves.descriptions = function (saveType) {
     switch (saveType) {
       //Checks the type of save (auto or manual)
-        case 'autosave': {
+        case Save.Type.Auto: {
             // Autoname is forced for Autosaves, otherwise players have to enter a name with every passage
             return "Autosave: " + (State.getVar("$Name") ? State.getVar("$Name") : '???');
             // the second section (after +) checks if $Name is defined, before either printing the value (defined) or ??? (not defined)
@@ -1156,11 +1156,9 @@ Setting.addList("theme", {
 ;Macro.add("dialog",{tags:["onopen","onclose"],handler:function(){var t="",s=null,n=null,o=this.args.length>0?this.args[0]:"",e=this.args.length>1?this.args.slice(1).flatten():[];this.payload.forEach((function(o,e){0===e?t=o.contents:"onopen"===o.name?s=s?s+o.contents:o.contents:n=n?n+o.contents:o.contents})),e.push("macro-"+this.name),Dialog.create(o,e.join(" ")),Dialog.wiki(t),s&&"string"==typeof s&&s.trim()&&$(document).one(":dialogopened",(function(){$.wiki(s)})),n&&"string"==typeof n&&n.trim()&&$(document).one(":dialogclosed",(function(){$.wiki(n)})),Dialog.open()}}),Macro.add("popup",{handler:function(){if(this.args.length<1)return this.error("need at least one argument; the passage to display");if(!Story.has(this.args[0]))return this.error("the passage "+this.args[0]+"does not exist");var t=this.args[0],s=this.args.length>1?this.args[1]:"",n=this.args.length>2?this.args.slice(2).flatten():[];n.push("macro-"+this.name),Dialog.create(s,n.join(" ")),Dialog.wikiPassage(t),Dialog.open()}}),Macro.add("dialogclose",{skipArgs:!0,handler:function(){Dialog.close()}});
 // end dialog-api-macro-set.min.js
 
-//~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ </script><tw-passagedata pid="1" name="StoryInterface" tags="AVOID-EDIT" position="100,100" size="100,100">&lt;div id=&quot;parent&quot;&gt;
-	&lt;div id=&quot;passages&quot;&gt;&lt;/div&gt;
-	&lt;div id=&quot;menu&quot; data-passage=&quot;menu&quot;&gt;
-		&lt;!--Side menu, editable in the sidemenu passage--&gt;
-	&lt;/div&gt;
+//~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ </script><tw-passagedata pid="1" name="StoryInterface" tags="AVOID-EDIT" position="100,225" size="100,100">&lt;div id=&quot;passages&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;menu&quot; data-passage=&quot;menu&quot;&gt;
+	&lt;!--Side menu, editable in the sidemenu passage--&gt;
 &lt;/div&gt;
 &lt;script&gt;
 	/* Function to open/close the dropdown menu */
@@ -1179,7 +1177,8 @@ Setting.addList("theme", {
             }
         }
     }
-&lt;/script&gt;</tw-passagedata><tw-passagedata pid="2" name="StoryDisplayTitle" tags="EDIT" position="225,225" size="100,100">One Page Template</tw-passagedata><tw-passagedata pid="3" name="Start" tags="noreturn cover" position="500,300" size="100,100">&lt;h1&gt;One Page
+&lt;/script&gt;
+&lt;!-- The container for everything is #story --&gt;</tw-passagedata><tw-passagedata pid="2" name="StoryDisplayTitle" tags="EDIT" position="225,225" size="100,100">One Page Template</tw-passagedata><tw-passagedata pid="3" name="Start" tags="noreturn cover" position="500,300" size="100,100">&lt;h1&gt;One Page
 Template&lt;/h1&gt;\
 &lt;p&gt;&lt;&lt;if Save.browser.size &gt; 0&gt;&gt;&lt;&lt;link &quot;Resume Game&quot;&gt;&gt;&lt;&lt;run Save.browser.continue();Engine.show();&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;link &quot;New Game&quot; &quot;Next&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;

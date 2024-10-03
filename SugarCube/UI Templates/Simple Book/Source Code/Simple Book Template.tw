@@ -32,8 +32,7 @@ Name of your Game
 <h1>Name of
 your game</h1>
 <p><<if Save.browser.size > 0>><<link "Resume Game">><<run Save.browser.continue();Engine.show();>><</link>> | <</if>><<link "New Game" "Next">><</link>><br>
-<<link "Load Game">><<run UI.saves();>><</link>> | <<link "Settings">><<run UI.settings();>><</link>></p>
-/*
+<<link "Load Game">><<run UI.saves();>><</link>> | <<link "Settings">><<run UI.settings();>><</link>></p>/*
 	This is a simple option for a title page.
 
 	also the tag [cover-start] is necessary to make it look like the front cover of a book.

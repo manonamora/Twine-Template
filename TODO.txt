@@ -18,6 +18,7 @@
       - removed deprecated + broken elements 
          - Updated Chapel's Popup macro
       - used more correct code (inlc. HTML/CSS/JS)
+         - renamed elements + passages
    - Rephrased some explanations for clarity
    - Fixed some typos 
    - Removed Open Dyslexic font (replaced with Monospace)
@@ -61,6 +62,12 @@
    - Rephrased some explanations for clarity
    - Fixed typos
    - Updated the Credits page
+* Character Creator:
+   - Updated Code + API to 2.37
+   - Rephrased some explanations for clarity
+   - Fixed typos
+   - Updated the Credits page
+
 
 // Check list //
    -> Change min with to 320px
@@ -71,9 +78,6 @@
 
  Character Creator:
     - Update for 2.37 <<do/redo>> formatting
- UI Simplet Book:
-    - Update for 2.37 (<<do/redo>>)
- ALL -> redit the StoryInterface to have #story act as the parent/container FFS!!!!!!
 
 To Do:
     - Phone Template

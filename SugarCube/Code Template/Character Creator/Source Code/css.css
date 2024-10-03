@@ -1,0 +1,49 @@
+h1, h2, h3 {
+    text-align: center;
+}
+
+#choose-class, .index-flex {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+#choose-class div, .index-flex div {
+    text-align: center;
+    flex: 1 0 33%;
+    margin: 10px 0;
+}
+
+
+button.link-broken {
+    color: peachpuff;
+    background: darkred;
+    border-color: darkred;
+}
+
+.hair, .wigq, .hairdye, .wig, .wigdye, .cover {
+    display: none;
+}
+.visible {
+    display: block;
+}
+
+.green button {
+    background-color: darkgreen;
+}
+
+input#slidetest {
+    margin: 0 1em;
+}
+
+.passage table {width: 100%;}
+
+
+.passage th {
+    text-align: end;
+    padding-right: 10px;
+}
+
+.passage td:first-of-type {
+    text-align: center;
+    padding-bottom: 10px;
+}

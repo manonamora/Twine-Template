@@ -32,14 +32,14 @@
     Notes:            
         CTRL/Cmd+F the Title to jump
         Theme changes are located below each category affected (ex: .dm body{} will be below body{})
-        Don't like/care about the themes? you can delete/edit any line with either .dk or .sp below! (and the Theme Setting in the Javascript)
+        Don't like/care about the themes? you can delete any line with either .gn or .or below! (and the Theme Setting in the Javascript)
 */
 
 /***************************
     IMPORT FONTS
 ***************************/
 /*
-    This template only includes online fonts like Google, using the @import rule.
+    This template only includes online fonts  Google, using the @import rule.
     But it is recommended to only use local (downloaded) fonts, as online fonts are dependent on the hosting server (i.e. Google could always pull the font, or change the API). Local import also ensures the project is playable offline (downloaded or intermittent internet).
     To do that, download the fonts, include those files in your game folder, and import them with @font-face.
 */
@@ -147,7 +147,7 @@ body {
     /***************************
         Base
     ***************************/
-#parent {
+#story {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -162,12 +162,12 @@ body {
     margin: 1em auto;
     padding: 2em 4em;
 }
-.dk #parent {
+.dk #story {
     background: var(--dk-white);
     color: var(--dk-black);
     box-shadow: 0 4px 8px var(--dk-shadow);
 }
-.sp #parent {
+.sp #story {
     background: var(--sp-white);
     color: var(--sp-black);
     box-shadow: 0 4px 8px var(--sp-shadow);
@@ -827,7 +827,7 @@ ul.buttons button {
 ***************************/
 
 @media screen and (max-width: 768px) {
-	#parent {
+	#story {
         width: calc(100vw - 4em);
         margin: 1em auto;
         padding: 2em 1em;
@@ -842,7 +842,7 @@ ul.buttons button {
         flex-direction: column;
         align-items: center;
     }
-    #parent {
+    #story {
         padding-bottom: 1em;
         max-height: calc(100vh - 5em);
     }
@@ -860,7 +860,7 @@ ul.buttons button {
 /***************************
     TITLE/END PAGE
 ***************************/
-[data-tags~="cover"] #parent {
+[data-tags~="cover"] #story {
     height: fit-content;
     position: absolute;
     margin: auto;

@@ -193,7 +193,7 @@ body {
     background-position: right;
     color: black;
 }
-#main {
+#story {
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -608,7 +608,7 @@ ul.buttons button {
     }
 }
 @media screen and (min-width: 1280px) {
-    #main {
+    #story {
         display: block;
         margin: auto;
         position: absolute;
@@ -823,17 +823,16 @@ Setting.addToggle("autosave", {
     desc: 'When toggled, the game will autosave when moving to a new page.',
     default  : false,
 });
-//~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ </script><tw-passagedata pid="1" name="StoryInterface" tags="" position="100,100" size="100,100">&lt;div id=&quot;main&quot;&gt;&lt;!--Main Container--&gt;
-	&lt;div id=&quot;header&quot; data-passage=&quot;StoryDisplayTitle&quot;&gt;&lt;/div&gt;&lt;!--Title--&gt;
-	&lt;div id=&quot;container&quot;&gt;
-		&lt;div id=&quot;passages&quot;&gt;&lt;/div&gt;&lt;!--DO NOT REMOVE--&gt;
-		&lt;div id=&quot;perso&quot; data-passage=&quot;ImgPerso&quot;&gt;&lt;/div&gt;&lt;!--Passage image--&gt;
-	&lt;/div&gt;
-	&lt;div id=&quot;footer&quot;&gt;
-		&lt;div id=&quot;side-image&quot; data-passage=&quot;SidePerso&quot;&gt;&lt;/div&gt;&lt;!--Party image--&gt;
-		&lt;div id=&quot;menu&quot; data-passage=&quot;Menu&quot;&gt;&lt;/div&gt;&lt;!--Menu--&gt;
-	&lt;/div&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="2" name="StoryDisplayTitle" tags="" position="225,100" size="100,100">Title Game/*  
+//~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ </script><tw-passagedata pid="1" name="StoryInterface" tags="" position="100,100" size="100,100">&lt;div id=&quot;header&quot; data-passage=&quot;StoryDisplayTitle&quot;&gt;&lt;/div&gt;&lt;!--Title--&gt;
+&lt;div id=&quot;container&quot;&gt;
+	&lt;div id=&quot;passages&quot;&gt;&lt;/div&gt;&lt;!--DO NOT REMOVE--&gt;
+	&lt;div id=&quot;perso&quot; data-passage=&quot;ImgPerso&quot;&gt;&lt;/div&gt;&lt;!--Passage image--&gt;
+&lt;/div&gt;
+&lt;div id=&quot;footer&quot;&gt;
+	&lt;div id=&quot;side-image&quot; data-passage=&quot;SidePerso&quot;&gt;&lt;/div&gt;&lt;!--Party image--&gt;
+	&lt;div id=&quot;menu&quot; data-passage=&quot;Menu&quot;&gt;&lt;/div&gt;&lt;!--Menu--&gt;
+&lt;/div&gt;
+&lt;!-- The container for everything is #story --&gt;</tw-passagedata><tw-passagedata pid="2" name="StoryDisplayTitle" tags="" position="225,100" size="100,100">Title Game/*  
 	For long titles, you will probably need to edit the StyleSheet to make sure it fits properly on the page.
 */</tw-passagedata><tw-passagedata pid="3" name="Start" tags="title noreturn" position="500,100" size="100,100">[[NEW GAME|Next]]
 &lt;&lt;if Save.browser.size &gt; 0&gt;&gt;&lt;&lt;link &quot;RESUME GAME&quot;&gt;&gt;&lt;&lt;run Save.browser.continue();Engine.show();&gt;&gt;&lt;&lt;/link&gt;&gt;

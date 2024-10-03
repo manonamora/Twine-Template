@@ -12,16 +12,14 @@ Space/Tech UI Template
 
 
 :: StoryInterface {"position":"100,100","size":"100,100"}
-<div id="container">
-	<div id="topcontainter">
-		<div id="left-menu" data-passage="first-menu"><!--  not visible with small device --></div>
-		<div id="center-block" data-passage="center-block"></div>
-		<div id="right-menu" data-passage="second-menu"><!--  not visible with small device --></div>
-	</div>
-	<div id="mobile-top-menu" data-passage="second-menu-mobile"><!--  not visible with large device --></div>
-	<div id="passages"><!-- DO NOT REMOVE-->></div>
-	<div id="mobile-btm-menu" data-passage="first-menu"><!--  not visible with large device --></div>
+<div id="topcontainter">
+	<div id="left-menu" data-passage="first-menu"><!--  not visible with small device --></div>
+	<div id="center-block" data-passage="center-block"></div>
+	<div id="right-menu" data-passage="second-menu"><!--  not visible with small device --></div>
 </div>
+<div id="mobile-top-menu" data-passage="second-menu-mobile"><!--  not visible with large device --></div>
+<div id="passages"><!-- DO NOT REMOVE-->></div>
+<div id="mobile-btm-menu" data-passage="first-menu"><!--  not visible with large device --></div>
 <!-- 
 	If you don't want visible stats bars in your main interface, simply change:
 		data-passage="second-menu-mobile"
@@ -29,6 +27,8 @@ Space/Tech UI Template
 		data-passage="second-menu"
 
 	And remove the conditional statement in the [second-menu] passage.
+
+	The container for everything is #story
 -->
 
 
@@ -100,7 +100,7 @@ Space/Tech UI Template
 */
 
 
-:: StatWidget [widget nobr] {"position":"400,275","size":"100,100"}
+:: StatWidget [widget nobr] {"position":"350,100","size":"100,100"}
 	/*Visible Stats Bars*/
 <<widget "statsformat">>
 	/*
