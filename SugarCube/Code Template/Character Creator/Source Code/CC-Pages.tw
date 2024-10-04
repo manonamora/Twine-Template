@@ -1,7 +1,7 @@
-:: CC-Name [creation-page]
+:: CC-Name [creation-page] {"position":"550,100","size":"100,100"}
 <h1>Choose your Name</h1>\
-This trait is pretty much one of the most essential item for IF projects, if the PC is named during the game and does not have preset uncustomisable identitifcation. 
-Depending on the project, you may want to provide a list of potential names for the PC or leave them the option to choose a different name altogether. The example below includes both options.
+This is the quintessential train for any IF project: the PC's name — assuming you are making it customisable.
+There are different ways to let the player customise their name: provide them with a list of option or let them fill the name in a textbox. The following example includes a combination of both options.
 
 //What is your name?//
 * <<linkappend "I have a feminine name">>:
@@ -22,10 +22,11 @@ Depending on the project, you may want to provide a list of potential names for 
 * <<linkappend "I want to input my own name">>: <span id="error">Try //Manon// if you dare...</span>
 > First Name: <<textbox "$mc.name" "" autofocus>> <<button "Confirm">>
     <<if $mc.name is "Manon">> 
-        /* This is an example of restricting options to input, giving the player an error message */
+        /* This is an example of restricting options on the input, giving the player an error message if they indicate Manon (here). Pretty helpful if you want to ensure the player doesn't pick a name of an ROs or important NPC. */
         <<replace "#error" t8n>>Yeah, can't use that one, buddy!<</replace>>
     <<else>>
         <<if !$mc.name>>
+            /* This example allows the player to include nothing in the textbox (and even empty space only). */
             <<set $mc.name to "No-Name">>
         <</if>>
         <<goto "Index-CC">>
@@ -34,48 +35,50 @@ Depending on the project, you may want to provide a list of potential names for 
 <</linkappend>>
 
 Once you are set on a name (by clicking one of the listed names or confirming the input), you will be sent back to the menu of traits.
-
 /* 
-Notes:
-    There is no reason for me to add this as the main text, but my to-go option for setting names has always been just a simple text-box. Or just not include this at all (unamed PC or preset PC).
+ ~ Notes:
+    There is no reason for me to add this as the main text, but my to-go option for setting names has always been just a simple text-box. Or just not include this at all (unnamed PC or preset PC).
 
-    The textbox allowing for more complex names (multiple first names or hyphenated names), messing with the formating of names (toLowerCase() or toUpperFirst() or toUpperCase()) can have weird consequences... 
+    The textbox allowing for more complex names (multiple first names or hyphenated names), messing with the formatting of names (toLowerCase() or toUpperFirst() or toUpperCase()) can have weird consequences... 
 */
 
-:: CC-Nickname [creation-page]
-<h1>Choose your Nickname</h1>\
-This traint might not be very common, though I'd imagine it would be used by the PC's family, friends, or ROs (or as a derogaroty way to refer to the PC). If set, you may want to ensure it is included in the story in some form (in specific scenes or at random).
-/* 
-Notes:
-    You could even set up different nicknames depending on the person saying it.
 
-    You can use it at random with a widget which could include the following code:
-    <<if $NicknameVariable>> <-checks if it is defined
+:: CC-Nickname [creation-page] {"position":"675,100","size":"100,100"}
+<h1>Choose your Nickname</h1>\
+This trait is not particularly common, though you could see it being used by the PC's relatives, friends, and/or ROs (or in a condescending manner by the PC's nemesis). If set, you may want to ensure it is included in the story in some fashion (specific scenes or at random).
+/* 
+ ~ Notes:
+    You could even set up different nicknames for the player, dependent on the NPC saying it.
+
+    You can use a nickname at random with something like the following code:
+    <<if $NicknameVariable>> <-checks if defined
         <<print either($NameVariable, $NicknameVariable)>>
     <</if>>
+    It could even be in a widget for convenience.
 */
-There are multiple ways to set a nickname, from a list of pre-determined options or a simple textbox. The example below will give the player the options whether to have an nickname.
+There are multiple ways to set a nickname, from a list of pre-determined options to a simple textbox. The example below will give the player the options whether to have an nickname.
 
 //Do you go by a nickname?//
 * <<linkappend "Yes, I do!">>:
-> First Name: <<textbox "$mc.nickname" "" autofocus>> <<button "Confirm" "Index-CC">><</button>>
+> First Name: <<textbox "$mc.nickname" "" autofocus>> <<button [[Confirm|Index-CC]]>><</button>>
 <</linkappend>>
 * [[No|Index-CC][$mc.nickname to "{/}"]]
 
-Once you are set on a name (by clicking one of the listed options or confirming the input), you will be sent back to the menu of traits.
+Once you are set on a name (by following one of the listed options and), you will be sent back to the menu of traits.
 /*  
-    I'm only setting the nickname to a "fake thing" for the >No< option for the sake of the menu and the checking page.
-    You may want to ensure the variable is unset before the game starts if the player chose not to have a nickname or leave the textbox empty.
+    I'm only setting the nickname to a "fake thing" for the >No< option for the sake of the trait menu and the checking page.
+    You may want to ensure the variable is unset before the game starts if the player chose no nickname or left the textbox empty.
 */
 
-:: CC-Surname [creation-page]
+
+:: CC-Surname [creation-page] {"position":"800,100","size":"100,100"}
 <h1>Choose your Surname</h1>\
-Like with First names, this trait can be an extra way to add customisation to the PC. Thought, for many IF projects, this would be completely irrelevant, as the PC's backstory tend to be pre-set. Still, there are many scenarios where the PC may need a/another surname.
+Similar to given names, this trait can be an way to add extra customisation to the PC. Thought, for many IF projects, this would be completely irrelevant, as the PC's backstory tend to be pre-set, which will include a surname. Still, there are many scenarios where the PC may need a/another surname.
 /* 
-Notes:
+ ~ Notes:
     Examples of scenarios: going undercover (spy), giving someone a fake name to enter a place you shouldn't enter, starting a new life...
 
-    Another thing that could be tied to the name would be a background for the PC, and potentially special traits, bonuses, or other. See the Background passage.
+    Another thing that could be tied to the name would be a background for the PC, and potentially special traits, bonuses, or other. See the [CC-Background] passage.
 */
 The example below only includes pre-selected options for the player to choose.
 
@@ -85,12 +88,13 @@ The example below only includes pre-selected options for the player to choose.
 * [[Silva|Index-CC][$mc.surname to "Silva"]]
 
 Once you are set on a name (by clicking one of the listed options), you will be sent back to the menu of traits.
-
 /* 
-    Of course, you are not bound to a list of options. A textbox is also possible, letting the player choose for themselves (like with the name/nickname). Or the options could be formatted inside a listbox or with ratiobutton. 
+    Of course, you are not bound to a list of options. A textbox is also possible, letting the player choose for themselves (like with the name/nickname). 
+    Or the available options could be formatted inside a listbox or with ratiobutton. 
 */
 
-:: CC-Gender [creation-page]
+
+:: CC-Gender [creation-page] {"position":"925,100","size":"100,100"}
 <h1>Set your Gender Identity</h1>\
 Setting a gender for a PC can be as simple as a ternary list of options (woman/man/nb person), or more complex with the separation of different aspects of the gender identity (identity vs noun/title to refer to someone). Below is an example of the second kind:
 /* 
