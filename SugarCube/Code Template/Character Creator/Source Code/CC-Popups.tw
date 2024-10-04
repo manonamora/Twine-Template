@@ -160,7 +160,7 @@ Notes:
     So if it's not filled, the PC is gender neutral for all elements.
 */
 
-:: GenderAddOn [popup]
+:: GenderAddOn [popup] {"position":"925,225","size":"100,100"}
 Please fill all available textboxes below.
 <<if $mc.gender is "custom">>//What term do you use to describe your gender?//
     <<textbox _gender "">>
@@ -173,16 +173,19 @@ Please fill all available textboxes below.
 <</if>>
 
 <<button [[Confirm|Index-CC]]>>
+  /* Gender Textbox check */
     <<if $mc.gender is "custom" && _gender is "">>
         <<set $mc.gender to "nonbinary">>
     <<elseif $mc.gender is "custom">>
         <<set _gender to $mc.gender.toLowerCase()>>
     <</if>>
+  /* Person Textbox check */
     <<if $mc.person is "custom" && _person is "">>
         <<set $mc.person to "person">>
     <<elseif $mc.person is "custom">>
         <<set _person to $mc.person.toLowerCase()>>
     <</if>>
+  /* Title Textbox check */
     <<if $mc.title is "custom" && _title is "">>
         <<set $mc.title to "liege">>
     <<elseif $mc.title is "custom">>
@@ -190,11 +193,12 @@ Please fill all available textboxes below.
     <</if>>
     <<run Dialog.close()>>
 <</button>>
-
 /*
-    I haven't included a warning note, forcing the player to fill in the textboxes (leaving the popup open until they are all filled), because I am lazy. There are a bunch of ways to customise this interactive elements.
-    So if it's not filled, the PC is gender neutral for all elements.
+    For this popup, I have not include any warning messages to force the player to fill all available textboxes.
+    Mainly because I am pretty lazy, and there's already an example of this with the [CC-Name] passage.
+    So if left empty, this popup will default to gender neutral for all the listed elements.
 */
+
 
 :: Popup-Pronouns [popup]
 <<IfPronounsIsCustom>>\
@@ -213,11 +217,7 @@ Your current set of pronouns is $mc.pronouns. If you want to change your pronoun
     <<set $pages.pronouns to true>>
     <<if $mc.pronouns is "custom">>
         <<set $proset.custom to true>>
-        <<script>>
-            Dialog.setup("Custom Pronouns");
-            Dialog.wiki(Story.get("PronounAddOn").processText());
-            Dialog.open();
-        <</script>>
+        <<run Dialog.create("Custom Pronouns").wikiPassage("PronounAddOn").open();>>
     <<else>>
         <<set $proset.custom to false>>
         <<PronounsCustomSet>>
@@ -228,7 +228,7 @@ Your current set of pronouns is $mc.pronouns. If you want to change your pronoun
 
 You can choose the //Custom// option if you would like to customise a specific pronoun, even if your main ones are already listed above.
 
-:: PronounAddOn [popup]
+:: PronounAddOn [popup] {"position":"1050,225","size":"100,100"}
 Please fill all the textboxes below if your preferred pronouns.
 <center>
 ''Subject:'' //I wished to know what ''they'' wanted.//
@@ -254,16 +254,20 @@ Please fill all the textboxes below if your preferred pronouns.
         $proset.their to $their.toLowerCase(), 
         $proset.theirs to $theirs.toLowerCase(), 
         $proset.themselves to $themself.toLowerCase(),
-        $mc.pronouns to $they.toLowerCase() + "/" $them.toLowerCase()
+        $mc.pronouns to $they.toLowerCase() + "/" + $them.toLowerCase()
     >>
     <<unset $they, $them, $their, $theirs, $themself>>
     <<run Dialog.close()>>
     <<goto "Index-CC">>
 <</button>></center>
-
 /*
+ ~ Notes:
     I've ensured the pronouns as all in lowercases by default. For Capitalised or Uppercase version, you can create either a widget or set a new variable for each pronoun.
+
+    You should make sure you are suing all pronouns defined (they, them, their, theirs, themselves). If you are not, you might as well not define the ones left unused.
+
 */
+
 
 :: Popup-PronounAddOn [popup]
 <<if $proset.plural is true>><<set _plural to true>><<else>><<set _plural to false>><</if>>
@@ -292,16 +296,20 @@ Please fill all the textboxes below if your preferred pronouns.
         $proset.their to _their.toLowerCase(), 
         $proset.theirs to _theirs.toLowerCase(), 
         $proset.themselves to _themself.toLowerCase(),
-        $mc.pronouns to _they.toLowerCase() + "/" _them.toLowerCase(),
+        $mc.pronouns to _they.toLowerCase() + "/" + _them.toLowerCase(),
         $proset.plural to _plural
     >>
     <<replace "#mc-pro">>$mc.pronouns<</replace>>
     <<run Dialog.close()>>
 <</button>></center>
-
 /*
+ ~ Notes:
     I've ensured the pronouns as all in lowercases by default. For Capitalised or Uppercase version, you can create either a widget or set a new variable for each pronoun.
+
+    You should make sure you are suing all pronouns defined (they, them, their, theirs, themselves). If you are not, you might as well not define the ones left unused.
+
 */
+
 
 :: Popup-Age [popup]
 Your current age is $mc.age.

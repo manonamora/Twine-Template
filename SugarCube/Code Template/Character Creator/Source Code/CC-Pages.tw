@@ -96,18 +96,18 @@ Once you are set on a name (by clicking one of the listed options), you will be 
 
 :: CC-Gender [creation-page] {"position":"925,100","size":"100,100"}
 <h1>Set your Gender Identity</h1>\
-Setting a gender for a PC can be as simple as a ternary list of options (woman/man/nb person), or more complex with the separation of different aspects of the gender identity (identity vs noun/title to refer to someone). Below is an example of the second kind:
+Setting the gender fo the PC can be as simple as a ternary list of options (woman/man/nb person), or as complex as the separation of different aspects of the gender identity (identity vs noun/title to refer to someone). Below is an example of the latter:
 /* 
-Notes:
-    Of course, the elements below are not exhaustive in the definition of one's gender or what is relevant for the PC's gender identity.
+ ~ Notes:
+    Of course, these elements and the available options are not exhaustive, when defining one's gender or what is relevant for the PC's gender identity.
     
-    This template also separates gender identity and gender presentation (see options in the Build passage).
+    This template also separates gender identity and gender presentation (see options in the [CC-Build] passage).
 */
 //What term do you use to describe your gender?//
 * <label><<radiobutton "$mc.gender" "female" checked>> Female</label>
 * <label><<radiobutton "$mc.gender" "male">> Male</label>
 * <label><<radiobutton "$mc.gender" "nonbinary">> Nonbinary</label>
-* <label><<radiobutton "$mc.gender" "custom">> Sometime else</label>
+* <label><<radiobutton "$mc.gender" "custom">> Something else</label>
 
 //Are you trans?//
 * <label><<radiobutton "$mc.trans" "transgender">> Yes</label>
@@ -118,13 +118,13 @@ Notes:
 * <label><<radiobutton "$mc.person" "woman" checked>> a woman.</label>
 * <label><<radiobutton "$mc.person" "man">> a man.</label>
 * <label><<radiobutton "$mc.person" "person">> a person.</label>
-* <label><<radiobutton "$mc.person" "custom">> sometime else.</label>
+* <label><<radiobutton "$mc.person" "custom">> something else.</label>
 
 //Due to your title, people refer to you as...//
 * <label><<radiobutton "$mc.title" "lady" checked>> Lady $mc.name.</label>
 * <label><<radiobutton "$mc.title" "lord">> Lord $mc.name.</label>
 * <label><<radiobutton "$mc.title" "liege">> Liege $mc.name.</label>
-* <label><<radiobutton "$mc.title" "custom">> sometime else.</label>
+* <label><<radiobutton "$mc.title" "custom">> something else.</label>
 
 //What do you identify as?//
 * <label><<radiobutton "$mc.sexu" "Heterosexual" checked>> Heterosexual</label>
@@ -137,28 +137,24 @@ Notes:
     <<set $pages.gender to true>>
     <<if $mc.trans is "NR">><<run delete $mc.trans>><</if>>
     <<if $mc.person is "custom" or $mc.gender is "custom" or $mc.title is "custom">>
-        <<script>>
-            Dialog.setup("Custom Answers");
-            Dialog.wiki(Story.get("GenderAddOn").processText());
-            Dialog.open();
-        <</script>>
+        <<run Dialog.create("Custom Answers").wikiPassage("GenderAddOn").open();>>
     <<else>>
         <<goto "Index-CC">>
     <</if>>
 <</button>>
-
 /*
-Notes: 
-    The radio button macro restrict the player to choose from a limited pool of options. I have included an example on how to add customisation with a popup.
+ ~ Notes: 
+    The radio button macro restrict the player to choose from a limited pool of options. I have included an example on how to add manual customisation with a popup.
 
-    Also, the first and second question could be merged.
+    You could also choose to merge the first and second questions.
 
-    And, there are more genders and sexuality identities than the ones listed here. You may choose instead of those terms to let the player pick which gender they are attracted to.
+    And, there are more gender and sexuality identities than the ones listed here. For the PC's sexuality, rather than choosing a term to define it, you could let the player pick which gender the PC is attracted to.
 */
 
-:: CC-Pronouns [creation-page]
+
+:: CC-Pronouns [creation-page] {"position":"1050,100","size":"100,100"}
 <h1>Choose your Pronouns Set</h1>\
-Another important aspect of gender identity is pronouns. The most common sets are {she/her}, {he/him}, and {they/them}. The example below has expanded that list to a couple neopronouns sets, as well as adding a //Custom// option, for which the player can fill their preferences.
+Another important element to define is pronouns. Part of defining the PC's gender identity, having set pronouns will allow you to have NPCs refer to the PC in the third person. The most common sets are {{{she/her}}}, {{{he/him}}}, and {{{they/them}}}. The example below has expanded that list to a couple neopronoun sets, as well as adding a //Custom// option, for which the player can fill their preferences.
 
 //What pronoun set are you most comfortable with?//
 * <label><<radiobutton "$mc.pronouns" "She/Her" checked>>She/Her</label>
@@ -173,11 +169,7 @@ Another important aspect of gender identity is pronouns. The most common sets ar
     <<set $pages.pronouns to true>>
     <<if $mc.pronouns is "custom">>
         <<set $proset.custom to true>>
-        <<script>>
-            Dialog.setup("Custom Pronouns");
-            Dialog.wiki(Story.get("PronounAddOn").processText());
-            Dialog.open();
-        <</script>>
+        <<run Dialog.create("Custom Pronouns").wikiPassage("PronounAddOn").open();>>
     <<else>>
         <<set $proset.custom to false>>
         <<PronounsSet>>
@@ -186,16 +178,18 @@ Another important aspect of gender identity is pronouns. The most common sets ar
 <</button>>
 
 You can choose the //Custom// option if you would like to customise a specific pronoun, even if your main ones are already listed above.
-
 /* 
-    If the PC is never referred by the 3rd person during the story (e.g. another person talking about the PC), this section would not be particularly relevant.
-    If still included, you may not need the macro setting the actual pronouns into specific variables. 
+    If the PC is *never* referred to by the 3rd person throughout the game (e.g. an NPC talking about the PC), this whole section would be completely useless, and as such unneeded.
+
+    If you //still// want to include it, there would be no need to set all the separate pronouns variables (they, them, their, theirs, themselves).
+
 */
 
-:: CC-Age [creation-page]
+
+:: CC-Age [creation-page] {"position":"1175,100","size":"100,100"}
 <<set _agerange to ["Early 20s", "Mid 20s", "Late 20s", "Early 30s", "Mid 30s", "Late 30s", "Early 40s", "Mid 40s", "Late 40s", "Early 50s", "Mid 50s", "Late 50s", "Technically dead..."]>>\
 <h1>Indicate your Age</h1>\
-This trait is unlikely to be used in many IF projects, as many have a specific setting/story for the PC. Still, age is another aspect to a character. 
+This trait might be one of the most unlikely one to be used in IF projects, namely because the settings/story will often force a specific age/range for the PC ahead of the writing. However, for more open stories (or ones where age actually affect the story), age can be another defining aspect of a PC.
 Below is an example that would give the player different ways to input their PC's age (if they wished to).
 
 //What is your age?//
@@ -208,37 +202,66 @@ Below is an example that would give the player different ways to input their PC'
 * [[I'd rather not share my age|Index-CC][$mc.age to "{/}"]]
 
 /* 
-Notes:
-    Thought I've included different ways to choose an age, I DO NOT RECOMMEND THE CODE ABOVE! Mainly because it would become a headache down the line, with having too many ranges of ages (brackets and specific numbers) to account for in the variation.
+ ~ Notes:
+    While I've included different ways to choose an age, I DO NOT RECOMMEND THE CODE ABOVE! Mainly because it would become a headache down the line, with having too many ranges of ages (brackets and specific numbers) to account for in the variation.
+        Unless you transform the number into a range for conditional variation.
 
     You'd be better off with using a list of options (listbox/radiobutton/links) or numbers (numberbox), for simplicity sake. 
+        Side-note: you can't have a minimum/maximum number with this macro, but you can use the (<<numberpool>>) custom macro instead (downloadable on the SugarCube website).
     
-    DO NOT USE TEXTBOXES to enter a number age, or you'd end up with a string variable instead of a number. Making increasing the PC's age {<<set $age ++>>} break the code.
+    DO NOT USE TEXTBOXES to enter a number age, or you'd end up with a string variable instead of a number -  increasing the PC's age {<<set $age ++>>} will break the code.
     
     Even better yet, don't include an age variable :P
     Less headaches...
 */
 
-:: CC-Eyes [creation-page]
+:: CC-Eyes [creation-page] {"position":"1400,100","size":"100,100"}
 <<set _eyecolours = ["white", "grey", "golden", "green", "blue", "maroon", "brown", "black", "red", "pink", "purple", "lime", "seafoam", "cream"]>>/*
-    The above is because I am too lazy to code each option as one line in the macro. You could even use an object instead to attach a value to each option, but again...
+    The above is because I am too lazy to code each option as one line in the macro (<<option>>). You could even use an object instead to attach a value to each option, but again...
     Lazy :P
     And unnecessary in this project.
 */\
 <h1>Choose your Eye Colour(s)</h1>\
 They say eyes are the window to the soul... so it's not unusual to have this trait included in games, with colours ranging from the usual blue/green/brown/black to more uncommon colours (e.g. pink, white, red, lime, etc...), or a combination of two eye colours (heterochromia).
 
-Do your eyes have <<link "the same colour">><<EyesSame>><</link>> or <<link "different colours">><<EyesDiff>><</link>>?
+Do your eyes have <<link "the same colour">><<set $heterochromia to false>><<redo>><</link>> or <<link "different colours">><<set $heterochromia to true>><<redo>><</link>>?
 
-<span id="eye"></span>
+<<do>>\
+    <<if $heterochromia is false>>\
+        Eye Colours: <<cycle "$mc.eyes">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>>
+        //Cycle through the options until you find the colour you want.//
+        <<button [[Confirm|Index-CC]]>><</button>>
+    <<elseif $heterochromia is true>>\
+        Left: <<cycle "_eyesleft">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>>
+        Right: <<cycle "_eyesright">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>>
+        //Cycle through the options until you find the colours you want.//
+        <<button [[Confirm|Index-CC]]>>
+            <<set $mc.eyes to _eyesleft + " and " + _eyesright>>
+            /* 
+                If eye colours matters in the story (creates variation, not just to be in the PC's page), you will ether want to use:
+                - the [.includes("colour")] function
+                - a variable for each eye
+                to help to so.. 
+            */
+        <</button>>
+    <</if>>\
+<</do>>
 /* 
 Notes:
-    This example accounts for Heterochromia, but you could add here other eye disorders. [I included the use of glasses and contacts in the Prothesis passage, but it could be included here instead]
+    This example accounts for Heterochromia only, but you could add here other eye disorders. 
+        I included the use of glasses and contacts in the Prothesis [CC-PROS] passage, but it could be included here instead.
 
-    Instead of cycles macros (inside the EyesSame and EyesDiff widgets), you could use a listbox macro or a list of colours (radiobutton/links).
+    Instead of cycles macros, you could use a listbox macro or a list of colours (radiobutton/links).
 */
 
-:: CC-Hair  [creation-page]
+
+:: CC-Hair  [creation-page TODO:]
 <<HairOptions>><h1>Let's Talk Hair</h1>\
 Hair might be one of the most customisable characteristic there is for IF projects. Whether it is type/texture, density, length, colour, hairdo or accessories, the options are wide and varied.
 
@@ -439,7 +462,7 @@ This is honestly the last passage I am coding, and I ran out of introductions. S
     <<optionsfrom _piercing>>
 <</listbox>>
 
-//Do you have any other face modification?//
+//Do you have any other face modification? If so, which one(s)?//
 <<textbox "$face.mods" "">>
 
 <<button [[Confirm|Index-CC]]>>

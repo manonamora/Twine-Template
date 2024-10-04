@@ -64,6 +64,8 @@
    - Updated the Credits page
 * Character Creator:
    - Updated Code + API to 2.37
+   - Fixed some errors in the code
+   - Reformated some code to make things simpler
    - Rephrased some explanations for clarity
    - Fixed typos
    - Updated the Credits page
