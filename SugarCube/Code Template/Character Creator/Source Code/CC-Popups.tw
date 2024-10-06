@@ -90,7 +90,7 @@ If you want to change any trait, please select one of the options below:
 
 <<button "Confirm">>
     <<if _trans is "NR">>
-        <<run delete $mc.trans>>
+        <<unset $mc.trans>>
     <</if>>
     <<if _gender isnot "custom">>
         <<set $mc.gender to _gender>>
@@ -501,7 +501,7 @@ If you want to edit this trait, please interact with the elements below!
 <<button "Confirm">>
     <<if _wig is false>>
         <<unset $wig, $wigdye>>
-        <<run delete $cover>>
+        <<unset $cover>>
     <<elseif _wig is "cover">>
         <<unset $wig, $wigdye>>
         <<set $cover to _cover>>
@@ -597,13 +597,13 @@ You <<if !$face.piercing>>do not have any piercing<<else>>have a $face.piercing 
 
 <<button "Confirm">>
     <<if $face.tattoo is "No">>
-        <<run delete $face.tattoo>>
+        <<unset $face.tattoo>>
     <</if>>
     <<if $face.piercing is "No">>
-        <<run delete $face.piercing>>
+        <<unset $face.piercing>>
     <</if>>
     <<if $face.mods is "">>
-        <<run delete $face.mods>>
+        <<unset $face.mods>>
     <</if>>
     <<replace "#mc-ffacc">>You <<if !$face.tattoo>>do not have any tattoo<<else>>have a tattoe $face.tattoo<</if>>.
         You <<if !$face.piercing>>do not have any piercing<<else>>have a $face.piercing piercing<</if>>.
@@ -781,13 +781,13 @@ You <<if !$body.piercing>>do not have any piercing<<else>>have a $body.piercing 
 
 <<button "Confirm">>
     <<if $body.tattoo is "No">>
-        <<run delete $body.tattoo>>
+        <<unset $body.tattoo>>
     <</if>>
     <<if $body.piercing is "No">>
-        <<run delete $body.piercing>>
+        <<unset $body.piercing>>
     <</if>>
     <<if $body.mods is "">>
-        <<run delete $body.mods>>
+        <<unset $body.mods>>
     <</if>>
     <<replace "#mc-ffacc">>You <<if !$body.tattoo>>do not have any tattoo<<else>>have a tattoe $body.tattoo<</if>>.
         You <<if !$body.piercing>>do not have any piercing<<else>>have a $body.piercing piercing<</if>>.
@@ -824,7 +824,7 @@ Interact with the elements below to change this trait.
         <</replace>>
     <</button>>
      | 
-    <<button "No, I don't wear makeup.">><<run delete $skin.makup>><<replace "#makeupplus">><</replace>><</button>>
+    <<button "No, I don't wear makeup.">><<unset $skin.makup>><<replace "#makeupplus">><</replace>><</button>>
 <</nobr>>
 
 <span id="makeupplus"></span>
@@ -845,7 +845,7 @@ Interact with the elements below to change this trait.
         <</replace>>
     <</button>>
      | 
-    <<button "No, my nails are natural.">><<run delete $body.nails>><<replace "#naisplus">><</replace>><</button>>
+    <<button "No, my nails are natural.">><<unset $body.nails>><<replace "#naisplus">><</replace>><</button>>
 <</nobr>>
 
 <span id="naisplus"></span>
@@ -859,7 +859,7 @@ Interact with the elements below to change this trait.
         <</replace>>
     <</button>>
      | 
-    <<button "No, I don't wear any perfume.">><<run delete $skin.perfume>><<replace "#perfumeplus">><</replace>><</button>>
+    <<button "No, I don't wear any perfume.">><<unset $skin.perfume>><<replace "#perfumeplus">><</replace>><</button>>
 <</nobr>>
 
 <span id="perfumeplus"></span>
@@ -1100,7 +1100,7 @@ If you want to change any element, please click on the options below:
     <<if _preggo>>
         <<set $mc.pregnant to "I am pregnant">>
     <<else>>
-        <<run delete $mc.pregnant>>
+        <<unset $mc.pregnant>>
     <</if>>
     <<replace "mc-fam">>$family.parents
         $family.siblings sibling(s)
@@ -1121,7 +1121,7 @@ If you would like to change this trait, please use the interactive element below
     <<if _pet isnot "--">>
         <<set $mc.pet to _pet>>
     <<else>>
-        <<run delete $mc.pet>>
+        <<unset $mc.pet>>
     <</if>>
     <<replace "mc-pet">>$mc.pet<</replace>>
 <</button>>

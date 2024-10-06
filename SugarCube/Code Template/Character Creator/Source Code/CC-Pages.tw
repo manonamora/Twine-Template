@@ -135,7 +135,7 @@ Setting the gender fo the PC can be as simple as a ternary list of options (woma
 
 <<button "Confirm">>
     <<set $pages.gender to true>>
-    <<if $mc.trans is "NR">><<run delete $mc.trans>><</if>>
+    <<if $mc.trans is "NR">><<unset $mc.trans>><</if>>
     <<if $mc.person is "custom" or $mc.gender is "custom" or $mc.title is "custom">>
         <<run Dialog.create("Custom Answers").wikiPassage("GenderAddOn").open();>>
     <<else>>
@@ -467,13 +467,13 @@ This is honestly the last passage I am coding, and I ran out of introductions. S
 
 <<button [[Confirm|Index-CC]]>>
     <<if $face.tattoo is "No">>
-        <<run delete $face.tattoo>>
+        <<unset $face.tattoo>>
     <</if>>
     <<if $face.piercing is "No">>
-        <<run delete $face.piercing>>
+        <<unset $face.piercing>>
     <</if>>
     <<if $face.mods is "">>
-        <<run delete $face.mods>>
+        <<unset $face.mods>>
     <</if>>
     <<set $pages.faceacc to true>>
 <</button>>
@@ -650,13 +650,13 @@ Similar to the Face Features, you can have many options to make the body even mo
 
 <<button [[Confirm|Index-CC]]>>
     <<if $body.tattoo is "No">>
-        <<run delete $body.tattoo>>
+        <<unset $body.tattoo>>
     <</if>>
     <<if $body.piercing is "No">>
-        <<run delete $body.piercing>>
+        <<unset $body.piercing>>
     <</if>>
     <<if $body.mods is "">>
-        <<run delete $body.mods>>
+        <<unset $body.mods>>
     <</if>>
     <<set $pages.bodymod to true>>
 <</button>>
@@ -682,7 +682,7 @@ Obviously, the options proposed below would be highly dependent on the kind of I
         <</replace>>
     <</button>>
      | 
-    <<button "No, I don't wear makeup.">><<run delete $skin.makup>><<replace "#makeupplus">><</replace>><</button>>
+    <<button "No, I don't wear makeup.">><<unset $skin.makup>><<replace "#makeupplus">><</replace>><</button>>
 <</nobr>>
 
 <span id="makeupplus"></span>
@@ -703,7 +703,7 @@ Obviously, the options proposed below would be highly dependent on the kind of I
         <</replace>>
     <</button>>
      | 
-    <<button "No, my nails are natural.">><<run delete $body.nails>><<replace "#naisplus">><</replace>><</button>>
+    <<button "No, my nails are natural.">><<unset $body.nails>><<replace "#naisplus">><</replace>><</button>>
 <</nobr>>
 
 <span id="naisplus"></span>
@@ -717,7 +717,7 @@ Obviously, the options proposed below would be highly dependent on the kind of I
         <</replace>>
     <</button>>
      | 
-    <<button "No, I don't wear any perfume.">><<run delete $skin.perfume>><<replace "#perfumeplus">><</replace>><</button>>
+    <<button "No, I don't wear any perfume.">><<unset $skin.perfume>><<replace "#perfumeplus">><</replace>><</button>>
 <</nobr>>
 
 <span id="perfumeplus"></span>
@@ -899,11 +899,9 @@ Notes:
 */
 
 
-:: CC-Family [creation-page]
+:: CC-Family [creation-page] {"position":"2125,400","size":"100,100"}
 <h1>Check-In with the Family</h1>\
-I'm running our of explanations... Especially for traits that are often story related and would usually be pre-set. But on the off-chance this could be used:
-
-Here are a bunch of optional questions about the PC's family:
+This isn't really a common trait to explore, considering family situations are usually pre-set by the story. However, if different family settings are meant to be explored in the game, or if it is unconsequential but could bring variation, here are a couple of optional questions about a potential family for the PC.
 
 //Do you have parents?//
 * <label><<radiobutton "$family.parents" "Mother + Father">>Two parents: a mother and a father</label>
@@ -911,8 +909,8 @@ Here are a bunch of optional questions about the PC's family:
 * <label><<radiobutton "$family.parents" "Father">>One parent: a father</label>
 * <label><<radiobutton "$family.parents" "Two Fathers">>Two parents: two fathers</label>
 * <label><<radiobutton "$family.parents" "Two Mothers">>Two parents: two mothers</label>
-* <label><<radiobutton "$family.parents" "Nuclear Family">>More than two parents: a nuclear Family</label>
-* <label><<radiobutton "$family.parents" "No Parents">>No Parents</label>
+* <label><<radiobutton "$family.parents" "Nuclear Family">>More than two parents: a nuclear family</label>
+* <label><<radiobutton "$family.parents" "No Parents">>No parents</label>
 
 //How many siblings do you have?// <<numberbox "$family.siblings" 0>>
 
@@ -924,24 +922,23 @@ Here are a bunch of optional questions about the PC's family:
     <<if _preggo>>
         <<set $mc.pregnant to "I am pregnant">>
     <<else>>
-        <<run delete $mc.pregnant>>
+        <<unset $mc.pregnant>>
     <</if>>
 <</button>>
 /* 
-Notes:
-    This could also be part of the set background of the player (with the Background passage), rather than separately.
+ ~ Notes:
+    Rather than letting the player choose, you could make it all part of the PC's background (see [CC-Background]), like a rich noble orphan or a nuclear warrior family, etc...
 
-    There are way more options than the ones listed above obviously. Like other non-traditional family structures, the PC's placement among the siblings...
+    Of course, there could be wayyyyy more options than the questions listed above, like other non-traditional family structures, whether the PC is the eldest/youngest, the names/physique/psyche/etc of the family members...
 
     The Numberbox macro does not have a minimum or maximum, though a custom macro restricting the range of number can be found here: http://www.motoslave.net/sugarcube/2/
-    
 */
 
 
-:: CC-Pets [creation-page]
+:: CC-Pets [creation-page] {"position":"2250,400","size":"100,100"}
 <<set _animal to ["--", "a turtle", "a dog", "a cat", "a bird", "a rodent", "a snake", "a tiger", "a dragon", "a robot", "a horse", "a spider", "a moon", "a cow", "a pig"]>>\
 <h1>Choosing a Pet</h1>\
-There are plenty of reasons to why you should include a pet option in a projet, the main being because they are super cute! From a singular companion to a menagerie, there are many ways to let players choose their pets. Below is an example of the former option.
+While you need none, there are plenty of reasons as to why you should include a pet/companion to your project - with the main one being because they are super cute! Whether the player must choose a singular companion or fill their menagerie, there are, as always, plenty of ways to include a pet option. Below is one example:
 
 //What pet do you have?// <<listbox "_pet">>
     <<optionsfrom _animal>>
@@ -951,17 +948,17 @@ There are plenty of reasons to why you should include a pet option in a projet, 
     <<if _pet isnot "--">>
         <<set $mc.pet to _pet>>
     <<else>>
-        <<run delete $mc.pet>>
+        <<unset $mc.pet>>
     <</if>>
 <</button>>
 
 Choose the option wanted from the list, and click the button to return to the menu.
-
 /* 
-Notes:
-    I've mixed up genres here with the options. But it can be edited at will.
+ ~ Notes:
+    With the options, here, I've mixed multiple genres, just for fun. Those should, of course, be edited to fit your project.
 
-    Some further customisation for the pet could include: the name, the race/specie (depending on the animal), the colour of the fur/scales/coat/etc, a specific trait...
+    Further customisation for a pet could include: its name, race/specie (animal dependent), colour(s) of its fur/scales/coat/etc, specific traits...
 
     For a menagerie of pets: checkboxes.
 */
+

@@ -1,4 +1,4 @@
-:: Wigets [widget nobr]
+:: Widgets [widget nobr]
 /*************************** 
     SET PRONOUNS WIDGET
 ***************************/
@@ -849,7 +849,7 @@ Also Chapel's << popup >> macro from this Dialog API set would remove the use of
         _preggo to either(true, false, false, false),
         $mc.pet to either("a turtle", "a dog", "a cat", "a bird", "a rodent", "a snake", "a tiger", "a dragon", "a robot", "a horse", "a spider", "a moon", "a cow", "a pig")
     >>
-    <<if $mc.trans is "NR">><<run delete $mc.trans>><</if>>
+    <<if $mc.trans is "NR">><<unset $mc.trans>><</if>>
     <<PronounsSet>>
     <<if $heterochromia>>
             <<set $mc.eyes to either("white", "grey", "golden", "green", "blue", "maroon", "brown", "black", "red", "pink", "purple", "lime", "seafoam", "cream")>>
@@ -900,10 +900,10 @@ Also Chapel's << popup >> macro from this Dialog API set would remove the use of
                 >>
             <</if>>
     <</if>>
-    <<if $face.tattoo is "No">><<run delete $face.tattoo>><</if>>
-    <<if $face.piercing is "No">><<run delete $face.piercing>><</if>>
-    <<if $body.tattoo is "No">><<run delete $body.tattoo>><</if>>
-    <<if $body.piercing is "No">><<run delete $body.piercing>><</if>>
+    <<if $face.tattoo is "No">><<unset $face.tattoo>><</if>>
+    <<if $face.piercing is "No">><<unset $face.piercing>><</if>>
+    <<if $body.tattoo is "No">><<unset $body.tattoo>><</if>>
+    <<if $body.piercing is "No">><<unset $body.piercing>><</if>>
     <<if _makeup>>
         <<set $skin.makup to either("A Bold Lip", "Smokey Eyes", "Clown Makeup", "Winged Liner", "Smokey Eye", "Disco Ball", "Vamp/Goth Makeup", "RenFair Makeup", "Drunk Makeup", "SFX Makeup", "E-Girl Makeup", "'Natural' Makeup", "Full Face", "Grunge Core", "Hippie Core", "MUA Comp Face")>><</if>>
     <<if _nail>>
