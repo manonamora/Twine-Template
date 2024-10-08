@@ -246,7 +246,7 @@
         _makeup to ["A Bold Lip", "Smokey Eyes", "Clown Makeup", "Winged Liner", "Smokey Eye", "Disco Ball", "Vamp/Goth Makeup", "RenFair Makeup", "Drunk Makeup", "SFX Makeup", "E-Girl Makeup", "'Natural' Makeup", "Full Face", "Grunge Core", "Hippie Core", "MUA Comp Face"],
         _naillength to ["Short Nails", "Mid Nails", "Long Nails", "Fake Nails", "Sharp Nails", "Claws", "Hoofs"],
         _nailart to ["Single Swap", "French Manicure", "Onbré Nails", "Flora Design", "Dot Design", "Line Art", "Celestial Style", "Marble Design", "Printed Design", "Glitter Bomb"],
-        _nailcolour to ["Transparant Shine", "White", "Black", "Blue", "Green", "Red", "Yellow", "Orange", "Purple", "Pink", "Maroon", "Lime", "Silver", "Gold"],
+        _nailcolour to ["Transparent Shine", "White", "Black", "Blue", "Green", "Red", "Yellow", "Orange", "Purple", "Pink", "Maroon", "Lime", "Silver", "Gold"],
         _perfume to ["Floral", "Woody", "Gourmand", "Fruity", "Oriental", "Green", "Oceanic", "Citrus", "Spicy"]
     >>
 <</widget>>
@@ -284,7 +284,7 @@
 ***************************/
 <<widget "BodyBuild">>
     <<set 
-        _height to ["Very Short {below 5’1”/155cm}", "Short {5’1”–5’7”/155-170cm}", "Average {5’7”–6’/170-185cm}", "Tall {6’–6’5”/185-195cm }", "Very Tall {above 6’5”/195cm}"],
+        _height to ["Very Short {below 5’1”/155cm}", "Short {5’1”–5’7”/155-170cm}", "Average {5’7”–6’/170-185cm}", "Tall {6’–6’5”/185-195cm}", "Very Tall {above 6’5”/195cm}"],
         _type to ["Thin", "Slender", "Average", "Curvy", "Chubby", "Fat"],
         _muscle to ["Ripped", "Muscular", "Athletic", "Toned", "Lean", "Soft"]
     >>
@@ -294,6 +294,7 @@
     SCARS WIDGETS 
 ***************************/
 <<widget "AllThisInAnArrayButItsScars">>
+    <<set $scars to []>>
     <<if _browscar>><<run $scars.push("cutting the brow")>><</if>>
     <<if _eyescar>><<run $scars.push("crossing the eye")>><</if>> 
     <<if _nosescar>><<run $scars.push("across the nose")>><</if>> 
@@ -404,35 +405,20 @@ Notes:
 */
 <<widget "PopupWarrior">>
     <<set _explanation to "warrior">>
-    <<script>>
-        Dialog.setup("The Warrior Class");
-        Dialog.wiki(Story.get("ClassExplanations").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("The Warrior Class").wikiPassage("ClassExplanations").open();>>
 <</widget>>
 <<widget "PopupMage">>
     <<set _explanation to "mage">>
-    <<script>>
-        Dialog.setup("The Mage Class");
-        Dialog.wiki(Story.get("ClassExplanations").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("The Mage Class").wikiPassage("ClassExplanations").open();>>
+
 <</widget>>
 <<widget "PopupRogue">>
     <<set _explanation to "rogue">>
-    <<script>>
-        Dialog.setup("The Rogue Class");
-        Dialog.wiki(Story.get("ClassExplanations").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("The Rogue Class").wikiPassage("ClassExplanations").open();>>
 <</widget>>
 <<widget "PopupExtraPoints">>
     <<set _explanation to "points">>
-    <<script>>
-        Dialog.setup("A Gift from the Gods!");
-        Dialog.wiki(Story.get("ClassExplanations").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("A Gift from the Gods!").wikiPassage("ClassExplanations").open();>>
 <</widget>>
 
 /*************************** 
@@ -459,246 +445,129 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "RemoveSTR">>
-    <span id="str-minus">
-        <<if $stat.strength is _statlocked.strength>>
-            ←
-        <<else>>
-            <<link "←">>
-                <<set $stat.strength --, $availablepts ++>>
-                <<replace "#strength">>$stat.strength<</replace>>
-                <<replace "#leftover">>$availablepts<</replace>>
-                <<if $stat.strength is _statlocked.strength>>
-                    <<replace "#str-minus">><<RemoveSTR>><</replace>>
-                <</if>>
-                <<if $availablepts gt 0 >>
-                    <<UpdateAddPoints>>
-                <</if>>
-            <</link>>
-        <</if>>
-    </span>
+    <<if $stat.strength is _statlocked.strength>>
+        ←
+    <<else>>
+        <<link "←">>
+            <<set $stat.strength --, $availablepts ++>>
+            <<redo>>
+        <</link>>
+    <</if>>
 <</widget>>
 <<widget "AddSTR">>
-        <span id="str-plus">
-        <<if $availablepts is 0 >>
-            →
-        <<else>>
-            <<link "→">>
-                <<set $stat.strength ++, $availablepts -->>
-                <<replace "#strength">>$stat.strength<</replace>>
-                <<replace "#leftover">>$availablepts<</replace>>
-                <<if $availablepts is 0 >>
-                    <<UpdateAddPoints>>
-                <</if>>
-                <<if $stat.strength gt _statlocked.strength>>
-                    <<replace "#str-minus">><<RemoveSTR>><</replace>>
-                <</if>>
-            <</link>>
-        <</if>>
-    </span>
+    <<if $availablepts is 0 >>
+        →
+    <<else>>
+        <<link "→">>
+            <<set $stat.strength ++, $availablepts -->>
+            <<redo>>
+        <</link>>
+    <</if>>
 <</widget>>
 
 <<widget "RemoveDEX">>
-    <span id="dex-minus">
-        <<if $stat.dexterity is _statlocked.dexterity>>
-            ←
-        <<else>>
-            <<link "←">>
-                <<set $stat.dexterity --, $availablepts ++>>
-                <<replace "#dexterity">>$stat.dexterity<</replace>>
-                <<replace "#leftover">>$availablepts<</replace>>
-                <<if $stat.dexterity is _statlocked.dexterity>>
-                    <<replace "#dex-minus">><<RemoveDEX>><</replace>>
-                <</if>>
-                <<if $availablepts gt 0 >>
-                    <<UpdateAddPoints>>
-                <</if>>
-            <</link>>
-        <</if>>
-    </span>
+    <<if $stat.dexterity is _statlocked.dexterity>>
+        ←
+    <<else>>
+        <<link "←">>
+            <<set $stat.dexterity --, $availablepts ++>>
+            <<redo>>
+        <</link>>
+    <</if>>
 <</widget>>
 <<widget "AddDEX">>
-        <span id="dex-plus">
-        <<if $availablepts is 0 >>
-            →
-        <<else>>
-            <<link "→">>
-                <<set $stat.dexterity ++, $availablepts -->>
-                <<replace "#dexterity">>$stat.dexterity<</replace>>
-                <<replace "#leftover">>$availablepts<</replace>>
-                <<if $availablepts is 0 >>
-                    <<UpdateAddPoints>>
-                <</if>>
-                <<if $stat.dexterity gt _statlocked.dexterity>>
-                    <<replace "#dex-minus">><<RemoveDEX>><</replace>>
-                <</if>>
-            <</link>>
-        <</if>>
-    </span>
+    <<if $availablepts is 0 >>
+        →
+    <<else>>
+        <<link "→">>
+            <<set $stat.dexterity ++, $availablepts -->>
+            <<redo>>
+        <</link>>
+    <</if>>
 <</widget>>
 
 <<widget "RemoveWIL">>
-    <span id="wil-minus">
-        <<if $stat.willpower is _statlocked.willpower>>
-            ←
-        <<else>>
-            <<link "←">>
-                <<set $stat.willpower --, $availablepts ++>>
-                <<replace "#dexterity">>$stat.willpower<</replace>>
-                <<replace "#leftover">>$availablepts<</replace>>
-                <<if $stat.willpower is _statlocked.willpower>>
-                    <<replace "#wil-minus">><<RemoveWIL>><</replace>>
-                <</if>>
-                <<if $availablepts gt 0 >>
-                    <<UpdateAddPoints>>
-                <</if>>
-            <</link>>
-        <</if>>
-    </span>
+    <<if $stat.willpower is _statlocked.willpower>>
+        ←
+    <<else>>
+        <<link "←">>
+            <<set $stat.willpower --, $availablepts ++>>
+            <<redo>>
+        <</link>>
+    <</if>>
 <</widget>>
 <<widget "AddWIL">>
-        <span id="wil-plus">
-        <<if $availablepts is 0 >>
-            →
-        <<else>>
-            <<link "→">>
-                <<set $stat.willpower ++, $availablepts -->>
-                <<replace "#willpower">>$stat.willpower<</replace>>
-                <<replace "#leftover">>$availablepts<</replace>>
-                <<if $availablepts is 0 >>
-                    <<UpdateAddPoints>>
-                <</if>>
-                <<if $stat.willpower gt _statlocked.willpower>>
-                    <<replace "#wil-minus">><<RemoveWIL>><</replace>>
-                <</if>>
-            <</link>>
-        <</if>>
-    </span>
+    <<if $availablepts is 0 >>
+        →
+    <<else>>
+        <<link "→">>
+            <<set $stat.willpower ++, $availablepts -->>
+            <<redo>>
+        <</link>>
+    <</if>>
 <</widget>>
 
 <<widget "RemoveMAG">>
-    <span id="mag-minus">
-        <<if $stat.magic is _statlocked.magic>>
-            ←
-        <<else>>
-            <<link "←">>
-                <<set $stat.magic --, $availablepts ++>>
-                <<replace "#magic">>$stat.magic<</replace>>
-                <<replace "#leftover">>$availablepts<</replace>>
-                <<if $stat.magic is _statlocked.magic>>
-                    <<replace "#mag-minus">><<RemoveMAG>><</replace>>
-                <</if>>
-                <<if $availablepts gt 0 >>
-                    <<UpdateAddPoints>>
-                <</if>>
-            <</link>>
-        <</if>>
-    </span>
+    <<if $stat.magic is _statlocked.magic>>
+        ←
+    <<else>>
+        <<link "←">>
+            <<set $stat.magic --, $availablepts ++>>
+            <<redo>>
+        <</link>>
+    <</if>>
 <</widget>>
 <<widget "AddMAG">>
-        <span id="mag-plus">
-        <<if $availablepts is 0 >>
-            →
-        <<else>>
-            <<link "→">>
-                <<set $stat.magic ++, $availablepts -->>
-                <<replace "#magic">>$stat.magic<</replace>>
-                <<replace "#leftover">>$availablepts<</replace>>
-                <<if $availablepts is 0 >>
-                    <<UpdateAddPoints>>
-                <</if>>
-                <<if $stat.magic gt _statlocked.magic>>
-                    <<replace "#mag-minus">><<RemoveMAG>><</replace>>
-                <</if>>
-            <</link>>
-        <</if>>
-    </span>
+    <<if $availablepts is 0 >>
+        →
+    <<else>>
+        <<link "→">>
+            <<set $stat.magic ++, $availablepts -->>
+            <<redo>>
+        <</link>>
+    <</if>>
 <</widget>>
 
 <<widget "RemoveCUN">>
-    <span id="cun-minus">
-        <<if $stat.cunning is _statlocked.cunning>>
-            ←
-        <<else>>
-            <<link "←">>
-                <<set $stat.cunning --, $availablepts ++>>
-                <<replace "#cunning">>$stat.cunning<</replace>>
-                <<replace "#leftover">>$availablepts<</replace>>
-                <<if $stat.cunning is _statlocked.cunning>>
-                    <<replace "#cun-minus">><<RemoveCUN>><</replace>>
-                <</if>>
-                <<if $availablepts gt 0 >>
-                    <<UpdateAddPoints>>
-                <</if>>
-            <</link>>
-        <</if>>
-    </span>
+    <<if $stat.cunning is _statlocked.cunning>>
+        ←
+    <<else>>
+        <<link "←">>
+            <<set $stat.cunning --, $availablepts ++>>
+            <<redo>>
+        <</link>>
+    <</if>>
 <</widget>>
 <<widget "AddCUN">>
-        <span id="cun-plus">
-        <<if $availablepts is 0 >>
-            →
-        <<else>>
-            <<link "→">>
-                <<set $stat.cunning ++, $availablepts -->>
-                <<replace "#cunning">>$stat.cunning<</replace>>
-                <<replace "#leftover">>$availablepts<</replace>>
-                <<if $availablepts is 0 >>
-                    <<UpdateAddPoints>>
-                <</if>>
-                <<if $stat.cunning gt _statlocked.cunning>>
-                    <<replace "#cun-minus">><<RemoveCUN>><</replace>>
-                <</if>>
-            <</link>>
-        <</if>>
-    </span>
+    <<if $availablepts is 0 >>
+        →
+    <<else>>
+        <<link "→">>
+            <<set $stat.cunning ++, $availablepts -->>
+            <<redo>>
+        <</link>>
+    <</if>>
 <</widget>>
 
 <<widget "RemoveCON">>
-    <span id="con-minus">
-        <<if $stat.constitution is _statlocked.constitution>>
-            ←
-        <<else>>
-            <<link "←">>
-                <<set $stat.constitution --, $availablepts ++>>
-                <<replace "#constitution">>$stat.constitution<</replace>>
-                <<replace "#leftover">>$availablepts<</replace>>
-                <<if $stat.constitution is _statlocked.constitution>>
-                    <<replace "#con-minus">><<RemoveCON>><</replace>>
-                <</if>>
-                <<if $availablepts gt 0 >>
-                    <<UpdateAddPoints>>
-                <</if>>
-            <</link>>
-        <</if>>
-    </span>
+    <<if $stat.constitution is _statlocked.constitution>>
+        ←
+    <<else>>
+        <<link "←">>
+            <<set $stat.constitution --, $availablepts ++>>
+            <<redo>>
+        <</link>>
+    <</if>>
 <</widget>>
 <<widget "AddCON">>
-        <span id="con-plus">
-        <<if $availablepts is 0 >>
-            →
-        <<else>>
-            <<link "→">>
-                <<set $stat.constitution ++, $availablepts -->>
-                <<replace "#constitution">>$stat.constitution<</replace>>
-                <<replace "#leftover">>$availablepts<</replace>>
-                <<if $availablepts is 0 >>
-                    <<UpdateAddPoints>>
-                <</if>>
-                <<if $stat.constitution gt _statlocked.constitution>>
-                    <<replace "#con-minus">><<RemoveCON>><</replace>>
-                <</if>>
-            <</link>>
-        <</if>>
-    </span>
-<</widget>>
-
-<<widget "UpdateAddPoints">>
-    <<replace "#str-plus">><<AddSTR>><</replace>>
-    <<replace "#dex-plus">><<AddDEX>><</replace>>
-    <<replace "#wil-plus">><<AddWIL>><</replace>>
-    <<replace "#mag-plus">><<AddMAG>><</replace>>
-    <<replace "#cun-plus">><<AddCUN>><</replace>>
-    <<replace "#con-plus">><<AddCON>><</replace>>
+    <<if $availablepts is 0 >>
+        →
+    <<else>>
+        <<link "→">>
+            <<set $stat.constitution ++, $availablepts -->>
+            <<redo>>
+        <</link>>
+    <</if>>
 <</widget>>
 
 /********************************
@@ -725,8 +594,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
             commoner : 10,
             merchant : 50,
             difficulty : "medium"
-        },
-        $availablepts = 10
+        }
     >>
 <</widget>>
 <<widget "NobleStartingStats">>
@@ -741,32 +609,21 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
         }
     >>
 <</widget>>
-/* PopupNote: I'm just lazy, so I merged related popups together, instead of have a passage for each 
-Also Chapel's << popup >> macro from this Dialog API set would remove the use of those widgets...
+
+/* 
+    PopupNote: I'm just lazy, so I merged related popups together, instead of have a passage for each 
 */
 <<widget "PopupCommoner">>
     <<set _explanation to "commoner">>
-    <<script>>
-        Dialog.setup("The Commoner");
-        Dialog.wiki(Story.get("StatusExplanations").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("The Commoner").wikiPassage("StatusExplanations").open();>>
 <</widget>>
 <<widget "PopupBourgeois">>
     <<set _explanation to "bourgeois">>
-    <<script>>
-        Dialog.setup("The Bourgeois");
-        Dialog.wiki(Story.get("StatusExplanations").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("The Bourgeois").wikiPassage("StatusExplanations").open();>>
 <</widget>>
 <<widget "PopupNoble">>
     <<set _explanation to "noble">>
-    <<script>>
-        Dialog.setup("The Noble");
-        Dialog.wiki(Story.get("StatusExplanations").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("The Noble").wikiPassage("StatusExplanations").open();>>
 <</widget>>
 
 /********************************
@@ -905,7 +762,7 @@ Also Chapel's << popup >> macro from this Dialog API set would remove the use of
     <<if $body.tattoo is "No">><<unset $body.tattoo>><</if>>
     <<if $body.piercing is "No">><<unset $body.piercing>><</if>>
     <<if _makeup>>
-        <<set $skin.makup to either("A Bold Lip", "Smokey Eyes", "Clown Makeup", "Winged Liner", "Smokey Eye", "Disco Ball", "Vamp/Goth Makeup", "RenFair Makeup", "Drunk Makeup", "SFX Makeup", "E-Girl Makeup", "'Natural' Makeup", "Full Face", "Grunge Core", "Hippie Core", "MUA Comp Face")>><</if>>
+        <<set $skin.makeup to either("A Bold Lip", "Smokey Eyes", "Clown Makeup", "Winged Liner", "Smokey Eye", "Disco Ball", "Vamp/Goth Makeup", "RenFair Makeup", "Drunk Makeup", "SFX Makeup", "E-Girl Makeup", "'Natural' Makeup", "Full Face", "Grunge Core", "Hippie Core", "MUA Comp Face")>><</if>>
     <<if _nail>>
         <<set
             $body.nails to either("Single Swap", "French Manicure", "Onbré Nails", "Flora Design", "Dot Design", "Line Art", "Celestial Style", "Marble Design", "Printed Design", "Glitter Bomb"),
@@ -960,7 +817,7 @@ Also Chapel's << popup >> macro from this Dialog API set would remove the use of
         $aid.aid to ["Cane"],
         $body.tattoo to "Calf",
         $body.piercing to "Nipple",
-        $skin.makup to "Smokey Eyes",
+        $skin.makeup to "Smokey Eyes",
         $body.naislength to "Claws",
         $body.nails to "Printed Design",
         $body.nailscolour to "Yellow",

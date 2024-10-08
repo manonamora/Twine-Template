@@ -230,7 +230,7 @@ Please review the character page below and confirm the traits chosen are correct
     </tr>
     <tr id="makeup">
         <th>Cosmetic Use</th>
-        <td id="mc-makup"><<if !$skin.makup>>You don't wear any makeup.<<else>>Your make up is $skin.makup.<</if>>
+        <td id="mc-makup"><<if !$skin.makeup>>You don't wear any makeup.<<else>>Your make up is $skin.makeup.<</if>>
         Your nails are $body.naislength<<if $body.nails>>, and are painted $body.nailscolour in $body.nails<</if>>.
         You <<if !$skin.perfume>>don't wear any perfume<<else>>wear a $skin.perfume scent<</if>>.</td>
         <td><<button "Change Cosmetic Use">><<PopupMakeupChange>><</button>></td>

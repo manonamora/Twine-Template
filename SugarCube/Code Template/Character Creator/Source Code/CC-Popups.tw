@@ -707,7 +707,6 @@ If you want to change this trait, please click the relevant options below.
 
 <<button "Confirm">>
     <<set $pages.scars to true>>
-    <<set $scars to []>>
     <<AllThisInAnArrayButItsScars>>
     <<replace "#mc-scar">>$scars<</replace>>
     <<run Dialog.close()>>
@@ -809,7 +808,7 @@ You <<if !$body.piercing>>do not have any piercing<<else>>have a $body.piercing 
 
 
 :: Popup-Makeup [popup]
-<<if !$skin.makup>>You don't wear any makeup.<<else>>Your make up is $skin.makup.<</if>>
+<<if !$skin.makeup>>You don't wear any makeup.<<else>>Your make up is $skin.makeup.<</if>>
 Your nails are $body.naislength<<if $body.nails>>, and are painted $body.nailscolour in $body.nails<</if>>.
 You <<if !$skin.perfume>>don't wear any perfume<<else>>wear a $skin.perfume scent<</if>>.
 
@@ -818,13 +817,13 @@ Interact with the elements below to change this trait.
 //Do you wear any make up?//
 <<nobr>>
     <<button "Yes, I wear makeup.">>
-        <<replace "#makeupplus">>//What kind of makeup are you wearing?// <<listbox "$skin.makup">>
+        <<replace "#makeupplus">>//What kind of makeup are you wearing?// <<listbox "$skin.makeup">>
                 <<optionsfrom _makeup>>
             <</listbox>>
         <</replace>>
     <</button>>
      | 
-    <<button "No, I don't wear makeup.">><<unset $skin.makup>><<replace "#makeupplus">><</replace>><</button>>
+    <<button "No, I don't wear makeup.">><<unset $skin.makeup>><<replace "#makeupplus">><</replace>><</button>>
 <</nobr>>
 
 <span id="makeupplus"></span>
@@ -865,7 +864,7 @@ Interact with the elements below to change this trait.
 <span id="perfumeplus"></span>
 
 <<button "Confirm">>
-    <<replace "#mc-makup">><<if !$skin.makup>>You don't wear any makeup.<<else>>Your make up is $skin.makup.<</if>>
+    <<replace "#mc-makup">><<if !$skin.makeup>>You don't wear any makeup.<<else>>Your make up is $skin.makeup.<</if>>
     Your nails are $body.naislength<<if $body.nails>>, and are painted $body.nailscolour in $body.nails<</if>>.
     You <<if !$skin.perfume>>don't wear any perfume<<else>>wear a $skin.perfume scent<</if>>.<</replace>>
     <<run Dialog.close()>>
@@ -919,7 +918,7 @@ If you would like to edit this trait, choose one of the options below:
     Though, it is important to stay as consistent as possible between the main passage setters and the check changes!
 */
 
-:: ClassExplanations [popup]
+:: ClassExplanations [popup] {"position":"1775,700","size":"100,100"} 
 <<if _explanation is "warrior">>\
     Warriors find themselves on the front line, dealing damage in close combat. Their high levels in streght and dexterity help ward off enemies. Their high constitution also makes them good tanks.
 
@@ -956,12 +955,13 @@ If you would like to edit this trait, choose one of the options below:
     <center>10 extra SP!</center>
 <</if>>
 /* 
-Notes:
-    I'm incredibly lazy, so I merged the class popups together, instead of creating a passage for each.
+ ~ Notes:
+    Was lazy, so I merged the class popups together, instead of creating a passage for each.
     There is no good or bad ways of doing this, honestly.
 
     The descriptions are highly generic. I def pulled them out of my ass.
 */
+
 
 :: Popup-Back [popup]
 You are currently a $background.
@@ -988,7 +988,7 @@ If you would like to edit this trait, choose one of the options below:
     I do recomend however a line or two, especially if the trait is important for the story!
 */
 
-:: StatusExplanations [popup]
+:: StatusExplanations [popup] {"position":"1775,825","size":"100,100"}
 <<if _explanation is "commoner">>\
     The commoner has a hard life with little funds to sustain their wellbeing. Though they have some support from other commoners, and are potentially able to sway some weak merchants, no member of the court will ever receive them.
 
@@ -1014,6 +1014,7 @@ If you would like to edit this trait, choose one of the options below:
 * favours with merchants : 40
 * difficulty : "easy"
 <</if>>
+
 
 :: Popup-ROGender [popup]
 The ROs are currently: $Camille, $Fran, and $Alex.
@@ -1110,7 +1111,7 @@ If you want to change any element, please click on the options below:
 
 :: Popup-Pets [popup]
 <<set _animal to ["--", "a turtle", "a dog", "a cat", "a bird", "a rodent", "a snake", "a tiger", "a dragon", "a robot", "a horse", "a spider", "a moon", "a cow", "a pig"]>>\
-You current pet is $mc.pet.
+You current pet is $mc.pet.s
 If you would like to change this trait, please use the interactive element below:
 
 //What pet do you have?// <<listbox "_pet">>

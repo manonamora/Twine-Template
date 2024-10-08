@@ -487,15 +487,15 @@ This is honestly the last passage I am coding, and I ran out of introductions. S
 */
 
 
-:: CC-Skin [creation-page]
+:: CC-Skin [creation-page] {"position":"550,700","size":"100,100"}
 <h1>Choose your Skin Characteristics</h1>\
-This page is probably one of the most common one included in IF projects (that include character creators). The range and type of options will depend on the type of game: a canonically [insert ethnicity] PC may be given a more limited range of tones, while a Fantasy or Sci-Fi setting where the PC can be of a different specie may have more unconventional skin colours (e.g. blue, green).
+This page includes probably one of the most common trait seen in IF projects (with a customisable PC). The range and type of options will depend on the type of game: a canonically [insert ethnicity] PC may be given a more limited range of tones, while a Fantasy or Sci-Fi setting where the PC can be of a different specie may have more unconventional skin colours (e.g. blue, green).
 /* 
-    The options available should fit the project. A pre-set PC may not even be able to change this trait.
+    The skin options available to the player should fit the project. A pre-set PC may not even be able to change this trait.
 */
 The example below shows a more detailed way to set this trait:
 /* 
-    All the options from the three widgets could be combined in one (probably long) list. Or you may want to use other words to refer to skin tones. 
+    All the options from the three widgets could be combined in one (probably long) list. You may want to use other words to refer to skin tones. 
 */
 Your skin colour is <<SkinColourCycle>>, with a <<SkinSatMutCycle>> <<SkinToneCycle>> undertone.
 
@@ -520,7 +520,8 @@ Your skin colour is <<SkinColourCycle>>, with a <<SkinSatMutCycle>> <<SkinToneCy
     <<if _albinism>><<run $skin.features.push("Albinism")>><</if>>
 <</button>>
 
-:: CC-Build [creation-page]
+
+:: CC-Build [creation-page] {"position":"675,700","size":"100,100"}
 <<BodyBuild>>\
 <h1>Set up the frame of the body</h1>\
 Tall, short, wide, thin... there are many ways to define how a body is framed. Below are examples of setting the PC's height, type, and musculature.
@@ -539,18 +540,18 @@ Notes:
     Different kinds of builds don't just open the door for additional variation depending on the situation (needs to crouch to pass a low door, can't win a fight because no muscles...), you could even add bonuses on stats (+1 strength if muscular)!
 */
 
-:: CC-Scars  [creation-page]
+
+:: CC-Scars  [creation-page] {"position":"800,700","size":"100,100"}
 <h1>Pick your <s>FIGHTER</s> Scars</h1>\
 /*Sorry, I was watching TEKKEN when I wrote this part...*/\
-\
-To show off the PC's badassery, or their very tragic backstory, or their stupid need to run into danger, there is a trait for that: ''scars''. Long, short, deep, just a graze, maybe colour changing... you can go as in detail as you want.
+To show off the PC's badassery, their very tragic backstory, or their stupid need to run into danger, one trait comes to mind: ''scars''. Long, short, deep, just a graze, maybe colour changing... you can go as in detail as you want.
 Below, however, shows only a list of locations for potential scars. 
 /* 
 Notes:
-    You could seperate this list and include the face scars into the Face Feature passage instead.
+    You could seperate this list and include the face scars into the [CC-FacialFeatures] passage instead.
 
-    You could also choose to customise each scar even deeper: discoloration, healed/crusty, type of scarring...
-    Though I would recommend this to be done if only one or maybe to scars at most are chosen.
+    You could also choose to customise each scar with: discoloration, healed/crusty, type of scarring...
+    Though I would recommend this to be done if only one or maybe two scars at most are chosen. Further than that and it would become tedious.
 */
 //Do you have any scar on your body?//
 * <label><<checkbox "_browscar" false true>> cutting the brow</label>
@@ -577,17 +578,17 @@ Notes:
     <<set $pages.scars to true>>
     <<AllThisInAnArrayButItsScars>>
 <</button>>
-
 /* 
 Notes:
-    I was reading a vampire book when I made this passage... 
+    I was in the middle of a vampire book when I was working on this passage... 
 
-    The list does not include where the scar is located aside from the general spot. you could include a left/right, top/middle/bottom, front/side/back options if you want to add more details.
+    The list does not include where the scar is located aside from the general spot. You could include a left/right, top/middle/bottom, front/side/back options if you want to add more details.
 */
 
-:: CC-PROS [creation-page]
+
+:: CC-PROS [creation-page] {"position":"925,700","size":"100,100"}
 <h1>Indicate Procedures and Prothesis</h1>\
-I've been trying to think of a good introduction here for days, but nothing is coming out right. So here are some options to include more trans/nb and disability representation for the PC.
+If you are looking to be more inclusive with trans/nb and/or disability representations for the PC, you can find below potential options to do so. These will range from surgical procedures to worn prothesis.
 
 //Have you undergone any of the following Procedures?//
 * <label><<checkbox "_hrt" false true>> HRT</label> (Hormone Replacement Therapy)
@@ -608,11 +609,10 @@ I've been trying to think of a good introduction here for days, but nothing is c
 * <label><<checkbox "_prosfoot" false true>> Prosthesis</label> (Foot)
 * <label><<checkbox "_prosleg" false true>> Prosthesis</label> (Leg)
 /* 
-Notes:
-    Though I did not make separate options, you could add an option to determine whether the prothesis is on the right or left side of the body, or go even more in details for the fingers and toes and indicate the concerned limb.
+ ~ Notes:
+    While not included here, you could add an option to determine on which side of the body a prosthesis is located, and go into even more details (which finger/toe).
 
-    A similar thing could be applied to the aid section below.
-    For example: the prescription for Glasses and Contacts, or the type of Hearing Aid. 
+    This can similarly be applied to the aid section below: the prescription for Glasses and Contacts, or the type of Hearing Aid. 
 */
 //Do you use any of the following aid?//
 * <label><<checkbox "_cane" false true>> Cane</label>
@@ -629,7 +629,8 @@ Notes:
     <<ArraysForPros>>
 <</button>>
 
-:: CC-BodyFeatures [creation-page]
+
+:: CC-BodyFeatures [creation-page] {"position":"1050,700","size":"100,100"}
 <<set 
     _tattoo to ["No", "Half-Sleeve", "Full Sleeve", "Neck", "Chest", "Belly", "Leg", "Calf", "Foot", "Covered"],
     _piercing to ["No", "Belly Button", "Nipple", "Surface (Chest)", "Surface (Arm)", "Surface (Back)", "Surface (Leg)", "Surface (Private)"]
@@ -660,32 +661,33 @@ Similar to the Face Features, you can have many options to make the body even mo
     <</if>>
     <<set $pages.bodymod to true>>
 <</button>>
-
 /* 
-    Like with the Face Mods, this passage would work better if you use checkboxes rather than a list (to give the player more options). And there are probably more locations for mods as well as better names for them.
+    Like with the Face Mods [CC-FaceAccessories], you may want to use checkboxes instead of listboxes (to give the player more options). And there are probably more spots on a body for mods, as well as better names for them.
 
-    You could also distinguish between the left and right side of the body.  
+    You could also distinguish between the left and right side of the body.
 */
 
-:: CC-Cosmetics [creation-page]
+
+:: CC-Cosmetics [creation-page] {"position":"1175,700","size":"100,100"}
 <<CosmeticOptions>>
 <h1>Options for Cosmetic Use</h1>\
-A face can be a blank canvas on which you can paint many faces. Makeup truly changes how a person can look.
-Obviously, the options proposed below would be highly dependent on the kind of IF project at hand. Different genre/settings would require different options. It might not even be relevant to the story itself (e.g. due to the PC's age or wealth).
+Whether it is just a pop of colour or full-coverage, cosmetics can drastically change how a PC looks (even creating a disguise). 
+Obviously, the options proposed below would be highly dependent on the kind of IF project at hand. Different genre/settings would require different options. It might not even be relevant to the story itself (e.g. PC's age/wealth or just because).
 
-//Do you wear any make up?//
+//Do you wear any make-up?//
 <<nobr>>
-    <<button "Yes, I wear makeup.">>
-        <<replace "#makeupplus">>//What kind of makeup are you wearing?// <<listbox "$skin.makup">>
-                <<optionsfrom _makeup>>
-            <</listbox>>
-        <</replace>>
-    <</button>>
+    <<button "Yes, I wear make-up.">><<set $skin.makeup to true>><<redo "makeupplus">><</button>>
      | 
-    <<button "No, I don't wear makeup.">><<unset $skin.makup>><<replace "#makeupplus">><</replace>><</button>>
+    <<button "No, I don't wear make-up.">><<unset $skin.makeup>><<redo "makeupplus">><</button>>
 <</nobr>>
 
-<span id="makeupplus"></span>
+<<do tag "makeupplus">><<nobr>>
+    <<if $skin.makeup>> 
+        //What kind of make-up are you wearing?// <<listbox "$skin.makeup">>
+                <<optionsfrom _makeup>>
+        <</listbox>>
+    <</if>>
+<</nobr>><</do>>
 
 //How do your nails look like?// <<listbox "$body.naislength">>
     <<optionsfrom _naillength>>    
@@ -693,50 +695,52 @@ Obviously, the options proposed below would be highly dependent on the kind of I
 
 //Are your nails painted?// 
 <<nobr>>
-    <<button "Yes, my nails are painted.">>
-        <<replace "#naisplus">>//In what style are your nails painted?// <<listbox "$body.nails">>
-                <<optionsfrom _nailart>>
-            <</listbox>><br>
-            //What colour are your nails painted?// <<listbox "$body.nailscolour">>
-                <<optionsfrom _nailcolour>>
-            <</listbox>>
-        <</replace>>
-    <</button>>
+    <<button "Yes, my nails are painted.">><<set $body.nails to true>><<redo "naisplus">><</button>>
      | 
-    <<button "No, my nails are natural.">><<unset $body.nails>><<replace "#naisplus">><</replace>><</button>>
+    <<button "No, my nails are natural.">><<unset $body.nails>><redo "naisplus">><</button>>
 <</nobr>>
 
-<span id="naisplus"></span>
+<<do tag "naisplus">><<nobr>>
+    <<if $body.nails>>
+        //In what style are your nails painted?// <<listbox "$body.nails">>
+            <<optionsfrom _nailart>>
+        <</listbox>><br>
+        //What colour are your nails painted?// <<listbox "$body.nailscolour">>
+            <<optionsfrom _nailcolour>>
+        <</listbox>>
+    <</if>>
+<</nobr>><</do>>
 
 //Do you wear any perfume?//
 <<nobr>>
-    <<button "Yes, I wear perfume.">>
-        <<replace "#perfumeplus">>//What kind of perfume are you wearing?// <<listbox "$skin.perfume">>
-                <<optionsfrom _perfume>>
-            <</listbox>>
-        <</replace>>
-    <</button>>
+    <<button "Yes, I wear perfume.">><<set $skin.perfume to true>><<redo "perfumeplus">><</button>>
      | 
-    <<button "No, I don't wear any perfume.">><<unset $skin.perfume>><<replace "#perfumeplus">><</replace>><</button>>
+    <<button "No, I don't wear any perfume.">><<unset $skin.perfume>><<redo "perfumeplus">><</button>>
 <</nobr>>
 
-<span id="perfumeplus"></span>
+<<do tag "perfumeplus">><<nobr>>
+    <<if $skin.perfume>>
+        //What kind of perfume are you wearing?// <<listbox "$skin.perfume">>
+            <<optionsfrom _perfume>>
+        <</listbox>>
+    <</if>>
+<</nobr>><</do>>
 
 <<button [[Confirm|Index-CC]]>>
     <<set $pages.makeup to true>>
 <</button>>
 
 /*
-Notes:
-    You could just... merge the yes/no with the type, by adding "No/Nothing" as an option in the listboxes. 
+ ~ Notes:
+    While most questions separate the [NO/Nothing] from the options in the listboxes, theses could also be merged for convenience's sake.
 
-    I have not added explanations for the options, but you may want to add a clickable popup to defined what those mean to players who do not know what "Full Face" might mean...
+    I have also not included any explanations for the different options (like types of make-up), which you may want to include (popup?). Defined elements can help the player be on the same page as you (not everyone characterise what a "Full Face" of make-up the same way).
 */
 
 
-:: CC-Personality [creation-page]
+:: CC-Personality [creation-page] {"position":"1400,700","size":"100,100"}
 <h1>Choose your Personality</h1>\
-While this would probably work better for the player if this trait is calculated through a series of choices, it is still possible to ask the player to choose the PC's personality ahead of the story. Doing it so could give the PC advantages for the story (e.g. outgoing PC might be more persuasive).
+While this trait can be tracked through a series of choices throughout a section (adding/removing points), you could ask the player to set a personality ahead of the story, which could give extra advantage to the PC (i.e. the PC being more outgoing, making them more charismatic). This way of setting personality can be useful for a Cheat Mode.
 
 //Are you more Introverted or Extroverted?//
 <center>\
@@ -752,30 +756,37 @@ Cold <input type="range" id="slidetest" name="slidetest" min="1" max="100" value
     <<set $pages.perso to true>>
 <</button>>
 /*
-Notes:
+ ~ Notes:
     Ok, so I kind of lied. The template has //some// custom code. Some JavaScript and jquery that affect an HTML slider. See the JavaScript passage.
-    Unless {:passagerender} or {State.setVar} change with new updates (UNLIKELY), this won't ever break. 
+    Unless {:passagerender} or {State.setVar} change with new updates (VERY UNLIKELY), this shouldn't ever break. 
 */
 
-:: CC-StatClass [creation-page]
-<h1>Choose your Class</h1>\
-This sections will obviously be very specific, applying only to IF projects where the PC is involved in some sort of Combat mechanism or RPG system (with/out dice check). 
 
-The example below would work more with a Fantasy setting, but it can be edited to showcase options for a class (or even pre-set).The code includes setting variables for different attributes/skils.
+:: CC-StatClass [creation-page] {"position":"1525,700","size":"100,100"}
+<h1>Choose your Class</h1>\
+This section will obviously be pretty specific, applying only to IF projects where the PC is involved in some sort of Combat mechanism or RPG system (with/out dice-check). This can be as general as a combat class (see below), or more specific, like a specialisation (e.g. Engineering or Navigator). If you want an example for a socio-economical type of class, see [[this page|CC-Background]]. 
+
+The basic example below would work more for a Fantasy setting, but it can be made more complex by including further options (e.g. type of mage/rogue/warrior). The code includes setting variables for different attributes/skills.
 
 //What class have you chosen for yourself?//
 <div id="choose-class">\
-    <div><<link "Warrior">><<PopupWarrior>><</link>>
+    <div>
+        <icon>&#xf0e7;</icon>
+        <<link "Warrior">><<PopupWarrior>><</link>>
         <<button [[Choose|CS2]]>>
             <<WarriorStartingStats>>
         <</button>>\
     </div>\
-    <div><<link "Mage">><<PopupMage>><</link>>
+    <div>
+        <icon>&#xf0d0;</icon>
+        <<link "Mage">><<PopupMage>><</link>>
         <<button [[Choose|CS2]]>>
             <<MageStartingStats>>
         <</button>>\
     </div>\
-    <div><<link "Rogue">><<PopupRogue>><</link>>
+    <div>
+        <icon>&#xf070;</icon>
+        <<link "Rogue">><<PopupRogue>><</link>>
         <<button [[Choose|CS2]]>>
             <<RogueStartingStats>>
         <</button>>\
@@ -783,63 +794,71 @@ The example below would work more with a Fantasy setting, but it can be edited t
 </div>\
 
 You can click on the Class's moniker to learn more about it and see its attribute levels.
-Click on the //Choose// button to select the wanted class.
+Click on the //Choose// button to select the wanted class and move to the next step.
 /*
-Notes:
-    Because I wanted to only have an HTML file, this page doesn't include illustrations to showcase each class. Just add an <img> above the link, and you'd be more or less set :P
+ ~ Notes:
+    Because //lazy//, this page only has a basic SG icon as "illustration" for each class. I would recommend, however, to include a more fitting icon/image instead for your own project.
 
     While there are only three class in this example, you could expand it to as many as you want.
 
-    Please ensure you've tested this for mobile, if you add any element to the page. Since the options are in a flex box, they should appear one below the other if the screen width decreases.
+    Please ensure you've tested this for mobile, if you add any element to the page. Since the options are in a flex box, they should appear one below the other if the screen width decreases. Adding [flex-wrap: wrap;] in the StyleSheet for the [#choose-class] element should do the trick.
 */
 
-:: CS2 [creation-page]
+
+:: CS2 [creation-page] {"position":"1525,825","size":"100,100"}
 <<PopupExtraPoints>><<LockedPoints>>\
 <h1>Spend your Points</h1>\
 Following the more RPG types of games, with level ups, you may want to award points to the players so they can improve their abilities. Here's one way of doing it below:
 
 //To upgrade your skills, and make future adventures easier, increase the level of your abilities!//
-<center>
-    strength : <<RemoveSTR>><span id="strength">$stat.strength</span><<AddSTR>>
-    dexterity : <<RemoveDEX>><span id="dexterity">$stat.dexterity</span><<AddDEX>>
-    willpower : <<RemoveWIL>><span id="willpower">$stat.willpower</span><<AddWIL>>
-    magic : <<RemoveMAG>><span id="magic">$stat.magic</span><<AddMAG>>
-    cunning : <<RemoveCUN>><span id="cunning">$stat.cunning</span><<AddCUN>>
-    constitution : <<RemoveCON>><span id="constitution">$stat.constitution</span><<AddCON>>
+<center><<do>>
+    strength : <<RemoveSTR>> $stat.strength <<AddSTR>>
+    dexterity : <<RemoveDEX>> $stat.dexterity <<AddDEX>>
+    willpower : <<RemoveWIL>> $stat.willpower <<AddWIL>>
+    magic : <<RemoveMAG>> $stat.magic <<AddMAG>>
+    cunning : <<RemoveCUN>> $stat.cunning <<AddCUN>>
+    constitution : <<RemoveCON>> $stat.constitution <<AddCON>>
 
-    points left: <span id="leftover">$availablepts</span>
-</center>
+    points left: $availablepts
+<</do>></center>
 <<button [[Confirm|Index-CC]]>><</button>>
 /* 
-So Many Notes:
-    It is partially mentioned in the Widget passage, but this is not the simplest way of updating the variable on the page. This is an example for SugarCube without custom macro. 
-    
-    Using Cycy's LiveUpdate Custom macro would reduce the amount of code needed by at least half (maybe 2/3).
-    If you wrap the whole attributes block with the << liveblock >> macro, and use the << update >> one inside the arrow links, you won't need to set special <span>s to target and update manually.
-    See the code example I've posted here: https://intfiction.org/t/stat-distribution-system-using-numerical-variables-help/65679/2
+ ~ Notes:
+    This used to be a lot more complex, but the <<do>>/<<redo>> macro combo of 2.37 simplified a lot of stuff, especially in the widgets.
 
-    If you wanted to go even deeper, you could have the player click on the name of the ability to get more information about it (similar to what was done with the Class or Background passage).
+    If you wanted to go even deeper, you could have:
+    - the player click on the name of the ability to get more information about it (similar to what was done with the [CC-StatClass] or [CC-Background] passage)
+    - add a limit to the amount of points that could be added to a skill (like can't be more than 10 strength if the PC's overall level is below 10)
+    - unlock special sub-skills after a certain level, which can also be upgraded
+    - etc...
 */
 
-:: CC-Background [creation-page]
+
+:: CC-Background [creation-page] {"position":"1650,700","size":"100,100"}
 <h1>Choose a Background</h1>\
-If the story doesn't require a specific background for the PC, you could let the player pick one, with a potential that it may (or not) affect the story, or other characteristics of the player (e.g. wealth) and/or how other NPCs may perceive the PC. 
+If the story doesn't give the PC a specific background/status, you could consider letting the player pick one. This could affect, in turn, the story as a whole (e.g. paths locked/background), characteristics of the PC (e.g. wealth), and/or NPCs could interact/perceive with the PC.
 
 The example below takes a more general socio-economical class approach, but you could go into more details withing one class (e.g. different noble status, reputation of the family, etc..).
 
 //What is your background?//
 <div id="choose-class">\
-    <div><<link "Commoner">><<PopupCommoner>><</link>>
+    <div>
+        <icon>&#xf188;</icon>
+        <<link "Commoner">><<PopupCommoner>><</link>>
         <<button [[Choose|Index-CC]]>>
             <<CommonerStartingStats>>
         <</button>>\
     </div>\
-    <div><<link "Bourgeois">><<PopupBourgeois>><</link>>
+    <div>
+        <icon>&#xf015;</icon>
+        <<link "Bourgeois">><<PopupBourgeois>><</link>>
         <<button [[Choose|Index-CC]]>>
             <<BourgeoisStartingStats>>
         <</button>>\
     </div>\
-    <div><<link "Noble">><<PopupNoble>><</link>>
+    <div>
+        <icon>&#xf185;</icon>
+        <<link "Noble">><<PopupNoble>><</link>>
         <<button [[Choose|Index-CC]]>>
             <<NobleStartingStats>>
         <</button>>\
@@ -847,27 +866,27 @@ The example below takes a more general socio-economical class approach, but you 
 </div>
 You can click on the Class's moniker to learn more about it and see its attribute levels.
 Click on the //Choose// button to select the wanted class.
-
 /*
-Also a bunch of notes:
-    Is this the same code as the //CC-Class// passage? Absolutely. It is was built on the same principle (general class + attribute).
-    Essentially, any non-physical traits that may require explanation (e.g. class, backstory, status...) can be formatted like this.
+ ~ Notes:
+    Is this the same code as the [CC-StatClass] passage? Absolutely!
+        The same principle applies between the two: general glass/title + attributes/stats. Essentially, any non-physical/input trait that may require further explanation (e.g. class, backstory, status, general build) can be formatted this way.
 
-    Like with the class trait, you could add graphics to make the page POP!
-    I didn't because didn't feel like making a ZIP....
+    If you want to go all fancy, you could consider adding graphics to make the page POP!
+        I didn't because I didn't feel like it, so there are some barely-related icons instead. 
 
     OOOORRRRR you can just make it a list of links. That works too :P
 */
-:: CC-ROGender [creation-page]
-<h1>Choose the Gender of ROs</h1>\
-It is not uncommon now to see IF projects where some (or even all) ROs do not have a set gender, allowing the player to choose the gender (and for some the pronouns) of the potential romantic options. There are many ways to do this, from letting the player manually chose the gender of the ROs, or tie it to the sexuality of the PC. 
-Some projects even let the player choose the pronouns of the RO, separate to their gender.
 
-The example below gives the player the option to set all genders at once, or one for each RO.
+
+:: CC-ROGender [creation-page] {"position":"2000,400","size":"100,100"}
+<h1>Choose the Gender of ROs</h1>\
+In many IF projects, you will find some (or all) ROs without a set gender, allowing instead the player to choose either/both gender and/or pronouns for these NPCs. There are multiple paths to consider, from having a manual choice for the player or link it to the sexuality of the PC (more dating-sim-like).
+
+The basic example below gives the player the option to set all genders at once, or separately for each RO.
 
 > During this story you will meet: 
 > ~ Camille Renaud (She/He/They)
-> ~ Frances/Frank  Wallace (She/He/They)
+> ~ Frances/Frank Wallace (She/He/They)
 > ~ Alexander/Alexandra/Alex Curtis (She/He/They)
 
 //Do you want to set the gender of the ROs?//
@@ -883,19 +902,18 @@ The example below gives the player the option to set all genders at once, or one
         <<set $Camille to _camille, $Fran to _fran, $Alex to _alex, $pages.rogen to true>>
     <</button>>
 <</linkappend>>
-* [[Set the gender when each RO is introduced|Index-CC][$pages.rogen to true, $Camille to "N/C", $Fran to "N/C", $Alex to "N/C"]]
+* [[Set the gender of the ROs when introduced|Index-CC][$pages.rogen to true, $Camille to "N/C", $Fran to "N/C", $Alex to "N/C"]]
 
 Please choose one of the options above. You will be sent back to the main menu.
-
 /* 
-Notes:
-    There are, of course, many more pronoun sets than the one listed above, as well as including custom ones. But for simplicity's sake with template, I just showcased the interactivity.
+ ~ Notes:
+    There are, of course, many more pronouns than the one listed here, without mentioning custom ones. But for simplicity's sake with template, I just showcased the interactivity.
 
-    Not all ROs should be gender selectable. Not all Gender selectable ROs should have the same options. I've just used the same options out of laziness.
+    Not all ROs should be gender selectable. Not all gender-selectable ROs should have the same options (gender/pronoun). I've just used the same options here out of laziness.
 
-    Also the randomisation here is not a true one. I've picked the genders at random before coding them.
+    Also the randomisation here is not a true one. I've picked the genders at random before coding them. You can use the function [either()] to have proper randomisation.
 
-    I did not set the actual pronouns of the ROs, but it would work the same way as the << PronounsSet >> widget
+    I did not set the actual pronouns of the ROs (because there's no story here), but it would work the same way as the [<<PronounsSet>>] widget
 */
 
 
