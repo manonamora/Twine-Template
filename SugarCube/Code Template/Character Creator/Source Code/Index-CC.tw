@@ -1,4 +1,4 @@
-:: Index-CC
+:: Index-CC  {"position":"325,350","size":"100,100"}
 <h1>List of Traits</h1>\
 <center><<button [[Use the Randomiser|CC-Check]]>><<Randomiser>><</button>> | <<button [[Use the Pre-Set|CC-Check]]>><<PreSet>><</button>></center>
 <h2>Basic Info</h2>\
@@ -93,7 +93,6 @@
         <<button [[Choose|CC-Background]]>><</button>>\
     </div>\
 </div>\
-
 <h2>Non-MC Options</h2>\
 <div class="index-flex">
     <div id="rogender">\
@@ -110,24 +109,23 @@
     </div>\
 </div>
 <<button [[Review Choices|CC-Check]]>><</button>>
-<<CheckifDone>>
-
+<<CheckIfDone>>
 /* 
-Notes:
-    CheckifDone essentially looks if a certain variable has been chosen, or a certain page has been cleared, to change the colour of the button to green.
+ ~ Notes:
+    This is essentially an overview of each trait (sub)category for PC/NPC customisation. Each button sends you to a different page to select respective options. Coming back to that page will trigger the [<<CheckIfDone>>] widget, which will change the section's button's colour to green.
 
-    I build the code of each of the setting pages as if the player could not to back and forth between pages to set their PC (so going from name to nickname to surname to... etc). As such, it does not track previously made choices, unlike the //Review Choices/CC-Check// passage.
+    This whole section was coded as if it was an in-game character customisation (can't go back and change stuff), meaning it does not track previous choices if you return to a section (the [CC-] passages). This isn't the case with the [CC-Check] section, who does take it into account (in the [Popup-] passages).
 
-    If you are looking to include a Character Creator with a menu such as the one above, I would recommend the code of the //Popup-// passages rather than the //CC-// ones, as they track previously made choices, while the //CC-// ones do not.
+    The page also includes a semi-random Randomiser, with the [<<Randomiser>>] widget, and a Pre-Set function, with the [<<PreSet>>] widget. It has some caveats:
+        - [<<Randomiser>>] does not include all traits, specifically textbox inputs outside of names and checkboxes (features, scars, others). Mainly because the widget is already over 100 lines of code. 
+        - [<<PreSet>>] was chosen ahead of time by me (granted, randomly), for one possible PC option. If you are looking to include Pre-Set characters, you could consider having multiple preset PC options.
 
-    The Randomiser is not completely random, as I didn't fill in any options requiring a text input (textboxes), custom options, or checkboxes traits (features, scars, and other). It is possible to still randomise it, but the widget is over 100 lines long already...
-
-    The Pre-Set option only includes ONE PC (whose option I chose at random), but you could include more than one if you wanted.
 */
+
 
 :: CC-Check
 <h1>Is this Correct?</h1>\
-Please review the character page below and confirm the traits chosen are correct. If you would like to change an option, please click the button //Change option//
+Please review the character page below and confirm the traits chosen are correct. If you would like to change an option, please click the button //Change option//.
 
 <h2>Basic Info</h2>\
 <table>
@@ -149,7 +147,7 @@ Please review the character page below and confirm the traits chosen are correct
     <tr id="gender">
         <th>Gender Identity</th>
         <td id="mc-idenity">Gender: <<if $mc.trans>>$mc.trans <</if>>$mc.gender
-        Refered as a: $mc.person
+        Referred as a: $mc.person
         Title: $mc.title 
         Sexuality: $mc.sexu</td>
         <td><<button "Change Gender">><<PopupGenderChange>><</button>></td>
@@ -174,8 +172,8 @@ Please review the character page below and confirm the traits chosen are correct
             <td><<button "Change Eye Colour(s)">><<PopupEyesChange>><</button>></td>
         </tr>
         <tr id="hair">
-            <th>Hair</th>/*This is one of the most annoying one to summarise because of all the different elements. The sentences definitely doesn't work completely well with all the options*/
-            <td><span id="mc-hairnat"><<if $hair is "bald">>You are $hair.<<else>>You have $hair.length $hair.texture $hair.colour hair <<if $hair.uniform isnot "Yes">>($hair.uniform)<</if>>
+            <th>Hair</th>/*This is one of the most annoying one to summarise because of all the different elements. The sentences definitely doesn't work completely well with all the different options. */
+            <td><span id="mc-hairnat"><<if $hair is "bald">>You are $hair.<<else>>You have $hair.length $hair.texture $hair.colour hair <<if $hair.uniform isnot "Yes">>($hair.uniform)<</if>>.
                 Your hair is <<if ndef $dye>>not dyed<<else>>dyed $dye.colour in a $dye.pattern pattern<</if>>. <<if $hair.bangs isnot "No">>You have $hair.bangs. <</if>><<if $hair.shave isnot "No">>Your hair is shaved $hair.shave. <</if>> Your hair is styled in a $hair.do way.<</if>></span>
             <span id="mc-haircover"><<if $wig>>You are wearing a wig, with $wig.length $wig.colour $wig.texture hair. <<if $wigdye>>The wig is dyed $wigdye.colour in a $wigdye.pattern pattern. <</if>><<if $wig.bangs isnot "No">>Your wig has $hair.bangs. <</if>> Your wig is styled in a $wig.do way.<<elseif $cover>>You are wearing a $cover.<<else>>Your hair is not covered.<</if>></span></td>
             <td><<button "Change Your Natural Hair">><<PopupHairChange>><</button>>
@@ -195,47 +193,47 @@ Please review the character page below and confirm the traits chosen are correct
         </tr>
     </table>
     <h3>Body</h3>\
-<table>
-    <tr id="skin-colour">
-        <th>Skin</th>
-        <td id="mc-skin">$skin.satmut $skin.undertone $skin.color
-        $skin.features</td>
-        <td><<button "Change Skin Colour">><<PopupSkinColourChange>><</button>></td>
-    </tr>
-    <tr id="body-build">
-        <th>Build</th>
-        <td id="mc-build">Height: $body.height
-        Type: $body.weight
-        Musculature: $body.musc</td>
-        <td><<button "Change Build">><<PopupBuildChange>><</button>></td>
-    </tr>
-    <tr id="scars">
-        <th>Scars</th>
-        <td id="mc-scar">$scars</td>
-        <td><<button "Change Scar(s)">><<PopupScarChange>><</button>></td>
-    </tr>
-    <tr id="pross">
-        <th>Prothesis and Procedures</th>
-        <td id="mc-pros">Procedures: $aid.proc
-        Prothesis: $aid.pros
-        Aid: $aid.aid</td>
-        <td><<button "Change Prosthetics and/or Procedures">><<PopupProsChange>><</button>></td>
-    </tr>
-    <tr>
-        <th>Various Body Features</th>
-        <td id="mc-bodymod">You <<if !$body.tattoo>>do not have any tattoo<<else>>have a tattoe $body.tattoo<</if>>.
-            You <<if !$body.piercing>>do not have any piercing<<else>>have a $body.piercing piercing<</if>>.
-            <<if $body.mods>>You also have the following body mod: $body.mods<</if>></td>
-        <td><<button "Change Body Mods">><<PopupBodyModChange>><</button>></td>
-    </tr>
-    <tr id="makeup">
-        <th>Cosmetic Use</th>
-        <td id="mc-makup"><<if !$skin.makeup>>You don't wear any makeup.<<else>>Your make up is $skin.makeup.<</if>>
-        Your nails are $body.naislength<<if $body.nails>>, and are painted $body.nailscolour in $body.nails<</if>>.
-        You <<if !$skin.perfume>>don't wear any perfume<<else>>wear a $skin.perfume scent<</if>>.</td>
-        <td><<button "Change Cosmetic Use">><<PopupMakeupChange>><</button>></td>
-    </tr>
-</table>
+    <table>
+        <tr id="skin-colour">
+            <th>Skin</th>
+            <td id="mc-skin">$skin.satmut $skin.undertone $skin.color
+            $skin.features</td>
+            <td><<button "Change Skin Colour">><<PopupSkinColourChange>><</button>></td>
+        </tr>
+        <tr id="body-build">
+            <th>Build</th>
+            <td id="mc-build">Height: $body.height
+            Type: $body.weight
+            Musculature: $body.musc</td>
+            <td><<button "Change Build">><<PopupBuildChange>><</button>></td>
+        </tr>
+        <tr id="scars">
+            <th>Scars</th>
+            <td id="mc-scar">$scars</td>
+            <td><<button "Change Scar(s)">><<PopupScarChange>><</button>></td>
+        </tr>
+        <tr id="pross">
+            <th>Prothesis and Procedures</th>
+            <td id="mc-pros">Procedures: $aid.proc
+            Prothesis: $aid.pros
+            Aid: $aid.aid</td>
+            <td><<button "Change Prosthetics and/or Procedures">><<PopupProsChange>><</button>></td>
+        </tr>
+        <tr>
+            <th>Various Body Features</th>
+            <td id="mc-bodymod">You <<if !$body.tattoo>>do not have any tattoo<<else>>have a tattoo $body.tattoo<</if>>.
+                You <<if !$body.piercing>>do not have any piercing<<else>>have a $body.piercing piercing<</if>>.
+                <<if $body.mods>>You also have the following body mod: $body.mods<</if>></td>
+            <td><<button "Change Body Mods">><<PopupBodyModChange>><</button>></td>
+        </tr>
+        <tr id="makeup">
+            <th>Cosmetic Use</th>
+            <td id="mc-makup"><<if !$skin.makeup>>You don't wear any makeup.<<else>>Your make up is $skin.makeup.<</if>>
+            Your nails are $body.naislength<<if $body.nails>>, and are painted $body.nailscolour in $body.nails<</if>>.
+            You <<if !$skin.perfume>>don't wear any perfume<<else>>wear a $skin.perfume scent<</if>>.</td>
+            <td><<button "Change Cosmetic Use">><<PopupMakeupChange>><</button>></td>
+        </tr>
+    </table>
 <h2>Personality, Class and Background</h2>\
 <table>
     <tr id="perso">
@@ -280,17 +278,18 @@ Please review the character page below and confirm the traits chosen are correct
 <<button [[YES!|CC-Confirm]]>><</button>>
 
 /*
-Notes:
-    I've used multiple tables to organise this page, but you use flexboxes, or a grid, of something completely different. I'm sure this is not even the best way of doing this, but it works soooo....
+ ~ Notes:
+    I've gone with a table for format the content of this passage, but you can use flex-boxes (like [Index-CC]), grids, or something completely different instead. Honestly, I'm pretty sure this isn't even the best way of doing this. But it works, sooooo.....
 
-    You don't need the ids on the <tr>, this was for me to organise/fold lines when coding.
+    You don't need IDs on each <tr> element, this was for me to organise/fold lines when coding.
 
-    For some elements, I've copied the same code for the popup from the main //CC-// passages. For others, I've chosen other macros.
+    For some traits, the code between the [CC-] passage and its [Popup-] counterpart is the same. For others, I've picked different macros.
 
-    Popups might not be the most accessible option for users. You may want to use separate pages, like done with the main menu.
+    Popups might not be the most accessible option for users. You may want to use separate pages instead (same format as [Index-CC]).
 */
 
-:: CC-Confirm 
+
+:: CC-Confirm {"position":"325,600","size":"100,100"}
 <h1>Hi $mc.name!</h1>\
 <h2>You're adventure is about to start...</h2>
 
@@ -300,3 +299,4 @@ Notes:
 /* 
     I'm re-setting the template here. 
 */
+

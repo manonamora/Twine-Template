@@ -1,4 +1,4 @@
-:: Popup-Name [popup]
+:: Popup-Name [popup] {"position":"550,350","size":"100,100"}
 Your name is currently $mc.name.
 If you want to change your name, please indicate it in the textbox below:
 
@@ -12,16 +12,17 @@ If you want to change your name, please indicate it in the textbox below:
     <<run Dialog.close()>>
 <</button>>
 /*
-    If you are using Cycy's liveupdate, change the <<replace>> macro for <<update>>. [Ensure the Check Traits page is wrapped in a <<liveblock>> first]
+    Instead of [<<replace>>], you could use the <<do>>/<<redo>> macro combo (with <<do>> wrapping at least the table).
 */
 
-:: Popup-NickName [popup]
-<<if $mc.nickname>>Your nickanme is currently $mc.nickname.
+
+:: Popup-NickName [popup] {"position":"675,350","size":"100,100"}
+<<if $mc.nickname>>Your nickname is currently $mc.nickname.
     If you want to change your name, please indicate it in the textbox below:
-<<else>>You currently do not have a nickanme.
+<<else>>You currently do not have a nickname.
     If you want to indicate one, please fill the textbox below:
 <</if>>
-
+\
 <<textbox "_nickname" `$mc.nickname` autofocus>> 
 
 <<button "Confirm">>
@@ -32,7 +33,8 @@ If you want to change your name, please indicate it in the textbox below:
     <<run Dialog.close()>>
 <</button>>
 
-:: Popup-SurName [popup]
+
+:: Popup-SurName [popup] {"position":"800,350","size":"100,100"}
 Your surname is currently $mc.surname.
 If you want to change it, please select one of the options below:
 
@@ -52,9 +54,10 @@ If you want to change it, please select one of the options below:
     <<run Dialog.close()>>
 <</link>>
 
-:: Popup-Gender [popup]
+
+:: Popup-Gender [popup] {"position":"925,350","size":"100,100"}
 <<IfGenderIsCustom>>\
-You currently describe yourself as a <<if $mc.trans>>$mc.trans <</if>>$mc.gender, refered by others as a(n) $mc.person, and a(n) $mc.title 
+You currently describe yourself as a <<if $mc.trans>>$mc.trans <</if>>$mc.gender, referred by others as a(n) $mc.person, and a(n) $mc.title 
 
 If you want to change any trait, please select one of the options below:
 
@@ -102,21 +105,18 @@ If you want to change any trait, please select one of the options below:
         <<set $mc.gender to _title>>
     <</if>>
     <<if _person is "custom" or _gender is "custom" or _title is "custom">>
-        <<script>>
-            Dialog.setup("Custom Answers");
-            Dialog.wiki(Story.get("Popup-GenderAddOn").processText());
-            Dialog.open();
-        <</script>>
+        <<run Dialog.create("Custom Answers").wikiPassage("Popup-GenderAddOn").open();>>
     <<else>>
         <<unset _person, _gender, _title>>
         <<replace "#mc-surb">>Gender: <<if $mc.trans>>$mc.trans <</if>>$mc.gender
-        Refered as a: $mc.person
+        Referred as a: $mc.person
         Title: $mc.title <</replace>>
         <<run Dialog.close()>>
     <</if>>
 <</button>>
 
-:: Popup-GenderAddOn [popup]
+
+:: Popup-GenderAddOn [popup] {"position":"925,475","size":"100,100"}
 Please fill all available textboxes below.
 
 <<if _gender is "custom">>//What term do you use to describe your gender?//
@@ -147,18 +147,19 @@ Please fill all available textboxes below.
     <</if>>
     <<unset _gender, _genderbox, _person, _personbox, _title, _titlebox>>
     <<replace "#mc-surb">>Gender: <<if $mc.trans>>$mc.trans <</if>>$mc.gender
-        Refered as a: $mc.person
+        Referred as a: $mc.person
         Title: $mc.title <</replace>>
     <<run Dialog.close()>>
 <</button>>
-
 /*
 Notes:
-    Unsetting the temporary variables is only because I'm forcing the player to stay on the same page. But if you make the player go to a different page (or reload this one), it's unnecessary.
+    <<unset>> the temporary variables is normally not needed, I'm only using it here because I'm forcing the player to stay on the same page and want to avoid value issues.
 
-    I haven't included a warning note, forcing the player to fill in the textboxes (leaving the popup open until they are all filled), because I am lazy. There are a bunch of ways to customise this interactive elements.
-    So if it's not filled, the PC is gender neutral for all elements.
+    For this popup, I have not include any warning messages to force the player to fill all available textboxes.
+    Mainly because I am pretty lazy, and there's already an example of this with the [CC-Name] passage.
+    So if left empty, this popup will default to gender neutral for all the listed elements.
 */
+
 
 :: GenderAddOn [popup] {"position":"925,225","size":"100,100"}
 Please fill all available textboxes below.
@@ -200,7 +201,7 @@ Please fill all available textboxes below.
 */
 
 
-:: Popup-Pronouns [popup]
+:: Popup-Pronouns [popup] {"position":"1050,350","size":"100,100"}
 <<IfPronounsIsCustom>>\
 Your current set of pronouns is $mc.pronouns. If you want to change your pronouns, please pick one of the options below:
 
@@ -227,6 +228,7 @@ Your current set of pronouns is $mc.pronouns. If you want to change your pronoun
 <</button>>
 
 You can choose the //Custom// option if you would like to customise a specific pronoun, even if your main ones are already listed above.
+
 
 :: PronounAddOn [popup] {"position":"1050,225","size":"100,100"}
 Please fill all the textboxes below if your preferred pronouns.
@@ -264,13 +266,13 @@ Please fill all the textboxes below if your preferred pronouns.
  ~ Notes:
     I've ensured the pronouns as all in lowercases by default. For Capitalised or Uppercase version, you can create either a widget or set a new variable for each pronoun.
 
-    You should make sure you are suing all pronouns defined (they, them, their, theirs, themselves). If you are not, you might as well not define the ones left unused.
+    You should make sure you are using all pronouns defined (they, them, their, theirs, themselves). If you are not, you might as well not define the ones left unused.
 
 */
 
 
-:: Popup-PronounAddOn [popup]
-<<if $proset.plural is true>><<set _plural to true>><<else>><<set _plural to false>><</if>>
+:: Popup-PronounAddOn [popup] {"position":"1050,475","size":"100,100"}
+<<if $proset.plural is true>><<set _plural to true>><<else>><<set _plural to false>><</if>>\
 Please fill all the textboxes below if your preferred pronouns.
 <center>
 ''Subject:'' //I wished to know what ''they'' wanted.//
@@ -306,12 +308,12 @@ Please fill all the textboxes below if your preferred pronouns.
  ~ Notes:
     I've ensured the pronouns as all in lowercases by default. For Capitalised or Uppercase version, you can create either a widget or set a new variable for each pronoun.
 
-    You should make sure you are suing all pronouns defined (they, them, their, theirs, themselves). If you are not, you might as well not define the ones left unused.
-
+    You should make sure you are using all pronouns defined (they, them, their, theirs, themselves). If you are not, you might as well not define the ones left unused.
 */
 
 
-:: Popup-Age [popup]
+:: Popup-Age [popup] {"position":"1175,350","size":"100,100"}
+<<set _agerange to ["Early 20s", "Mid 20s", "Late 20s", "Early 30s", "Mid 30s", "Late 30s", "Early 40s", "Mid 40s", "Late 40s", "Early 50s", "Mid 50s", "Late 50s", "Technically dead..."]>>\
 Your current age is $mc.age.
 If you want to change it, please choose one of the options below:
 
@@ -335,26 +337,49 @@ If you want to change it, please choose one of the options below:
     <<replace "#mc-age">>$mc.age<</replace>>
     <<run Dialog.close()>>
 <</link>>
-
 /* 
     Yup, I just reused the same code as the main trait setter :P
     The same comments from the other passage apply here as well! 
 */
 
-:: Popup-Eye [popup]
+
+:: Popup-Eye [popup] {"position":"1400,225","size":"100,100"}
 Your eyes are currently $mc.eyes. 
 If you would like to change their colours, please click on the links below:
 
-Do your eyes have <<link "the same colour">><<EyesSame>><</link>> or <<link "different colours">><<EyesDiff>><</link>>?
+Do your eyes have <<link "the same colour">><<set _heterochromia to false>><<redo "eyesc">><</link>> or <<link "different colours">><<set _heterochromia to true>><<redo "eyesc">><</link>>?
 
-<span id="eye"></span>
-
-/*
-    The actual code of this passage can be found in the Widget passage!
+<<do tag "eyesc">>\
+    <<if _heterochromia is false>>\
+        Eye Colours: <<cycle "$mc.eyes">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>>
+        //Cycle through the options until you find the colour you want.//
+        <<button "Confirm">>
+            <<replace "#mc-eyes">>$mc.eyes<</replace>>
+            <<run Dialog.close()>>
+        <</button>>
+    <<elseif _heterochromia is true>>\
+        Left: <<cycle "_eyesleft">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>>
+        Right: <<cycle "_eyesright">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>>
+        //Cycle through the options until you find the colours you want.//
+        <<button "Confirm">>
+            <<set $mc.eyes to _eyesleft + " and " + _eyesright>>
+            <<replace "#mc-eyes">>$mc.eyes<</replace>>
+            <<run Dialog.close()>>
+        <</button>>
+    <</if>>\
+<</do>>
+/* 
+    This is the same code as with the [CC-Eyes] passage, except with the [<<replace>>] macro.
 */
 
-:: Popup-Hair [popup]
-<<if $hair is "bald">>You are $hair.<<else>>You have $hair.length $hair.texture $hair.colour hair <<if $hair.uniform isnot "Yes">>($hair.uniform)<</if>>
+:: Popup-Hair [popup] {"position":"1525,225","size":"100,100"}
+<<HairOptions>><<if $hair is "bald">>You are $hair.<<else>>You have $hair.length $hair.texture $hair.colour hair <<if $hair.uniform isnot "Yes">>($hair.uniform)<</if>>.
 Your hair is <<if ndef $dye>>not dyed<<else>>dyed $dye.colour in a $dye.pattern pattern<</if>>. <<if $hair.bangs isnot "No">>You have $hair.bangs. <</if>><<if $hair.shave isnot "No">>Your hair is shaved $hair.shave. <</if>> Your hair is styled in a $hair.do way.<</if>>
 
 If you want to edit this trait, please interact with the elements below!
@@ -384,19 +409,22 @@ Is your natural hair colour uniform? <<listbox "_uniform">>
 
 //Is your hair dyed?//
 <<nobr>>
-    <<button "Yes.">><<addclass ".hairdye" "visible">><<set _dye to true>><</button>>
+    <<button "Yes.">>
+        <<<replace "#hairdye">>
+            //How is the hair dyed?// <<listbox "_dyepattern">>
+                <<optionsfrom _hairdyied>>
+            <</listbox>><br>
+            <br>
+            //What colour is the dye? //<<listbox "_dyecoloured">>
+                <<optionsfrom _dyecolour>>
+            <</listbox>>
+        <</replace>>
+        <<set _dye to true>>
+    <</button>>
      | 
-    <<button "No.">><<removeclass ".hairdye" "visible">><<set _dye to false>><</button>>
+    <<button "No.">><<replace "#hairdye">><</replace>><<set _dye to false>><</button>>
 <</nobr>>
-<span class="hairdye">
-//How is the hair dyed?// <<listbox "_dyepattern">>
-    <<optionsfrom _hairdyied>>
-<</listbox>>
-//
-What colour is the dye? //<<listbox "_dyecolour">>
-    <<optionsfrom _dyecolour>>
-<</listbox>>
-</span>\
+<span id="hairdye"></span>\
 
 //Do you have bangs?// <<listbox "_bangs">>
     <<optionsfrom _bangs>>
@@ -429,28 +457,37 @@ What colour is the dye? //<<listbox "_dyecolour">>
         <<else>>
             <<set $dye to {},
                 $dye.pattern to _dyepattern,
-                $dye.colour to _dyecolour
+                $dye.colour to _dyecoloured
             >>
         <</if>>
     <</if>>
-    <<replace "#mc-hairnat">><<if $hair is "bald">>You are $hair.<<else>>You have $hair.length $hair.texture $hair.colour hair <<if $hair.uniform isnot "Yes">>($hair.uniform)<</if>>
+    <<replace "#mc-hairnat">><<if $hair is "bald">>You are $hair.<<else>>You have $hair.length $hair.texture $hair.colour hair <<if $hair.uniform isnot "Yes">>($hair.uniform)<</if>>.
     Your hair is <<if ndef $dye>>not dyed<<else>>dyed $dye.colour in a $dye.pattern pattern<</if>>. <<if $hair.bangs isnot "No">>You have $hair.bangs. <</if>><<if $hair.shave isnot "No">>Your hair is shaved $hair.shave. <</if>> Your hair is styled in a $hair.do way.<</if>><</replace>>
     <<run Dialog.close()>>
 <</button>>
 
-:: Popup-Hair-Wig [popup]
-<<if $wig>>You are wearing a wig, with $wig.length $wig.colour $wig.texture hair. <<if $wigdye>>The wig is dyed $wigdye.colour in a $wigdye.pattern pattern. <</if>><<if $wig.bangs isnot "No">>Your wig has $hair.bangs. <</if>> Your wig is styled in a $wig.do way.<<elseif $cover>>You are wearing a $cover.<<else>>Your hair is not covered.<</if>>
+
+:: Popup-Hair-Wig [popup] {"position":"1525,350","size":"100,100"}
+<<HairOptions>><<if $wig>>You are wearing a wig, with $wig.length $wig.colour $wig.texture hair. <<if $wigdye>>The wig is dyed $wigdye.colour in a $wigdye.pattern pattern. <</if>><<if $wig.bangs isnot "No">>Your wig has $hair.bangs. <</if>> Your wig is styled in a $wig.do way.<<elseif $cover>>You are wearing a $cover.<<else>>Your hair is not covered.<</if>>
 
 If you want to edit this trait, please interact with the elements below!
 
 <span class="wigq">\
 //Do you wear a wig?//
 <<nobr>>
-    <<button "Yes, I wear a wig.">><<addclass ".wig" "visible">><<removeclass ".cover" "visible">><<set _wig to true>><</button>>
+    <<button "Yes, I wear a wig.">><<addclass ".wig" "visible">><<replace "#cover">><</replace>><<set _wig to true>><</button>>
      | 
-    <<button "No, but I wear something else.">><<addclass ".cover" "visible">><<removeclass ".wig" "visible">><<set _wig to "cover">><</button>>
+    <<button "No, but I wear something else.">>
+        <<replace "#cover">>
+            //What are you wearing on your head?// <<listbox "_cover">>
+                <<optionsfrom _hairaccess>>
+            <</listbox>> 
+        <</replace>>>
+        <<removeclass ".wig" "visible">>
+        <<set _wig to "cover">>
+    <</button>>
      | 
-    <<button "No, I only have my hair.">><<removeclass ".wig" "visible">><<removeclass ".cover" "visible">><<set _wig to false>><</button>>
+    <<button "No, I only have my hair.">><<removeclass ".wig" "visible">><<replace "#cover">><</replace>><<set _wig to false>><</button>>
 <</nobr>>
 </span>\
 \
@@ -492,11 +529,7 @@ If you want to edit this trait, please interact with the elements below!
 <</listbox>>
 </span>\
 \
-<span class="cover">
-//What are you wearing on your head?// <<listbox "_cover">>
-    <<optionsfrom _hairaccess>>
-<</listbox>> 
-</span>
+<span id="cover"></span>
 
 <<button "Confirm">>
     <<if _wig is false>>
@@ -526,7 +559,8 @@ If you want to edit this trait, please interact with the elements below!
     <<run Dialog.close()>>
 <</button>>
 
-:: Popup-FaceFeat [popup]
+
+:: Popup-FaceFeat [popup] {"position":"1650,225","size":"100,100"}
 <<FacialFeaturesPicked>>\
 You currently have the following features: $facefeatures.
 If you want to edit this trait, please check or uncheck the relevant options below:
@@ -575,7 +609,8 @@ If you want to edit this trait, please check or uncheck the relevant options bel
     <<run Dialog.close()>>
 <</button>>
 
-:: Popup-FaceAcc [popup]
+
+:: Popup-FaceAcc [popup] {"position":"1775,225","size":"100,100"}
 <<if !$face.mods>><<set $face.mods to "">><</if>><<set 
     _tattoo to ["No", "Covering the Face", "On the Forehead", "Under the Eye", "On the Cheeks", "Under the Chin", "Covering the Eyebrows", "Lining the lips"],
     _piercing to ["No", "Eyebrow", "Cheek", "Nose", "Septum", "Ear", "Lip", "Tongue"]
@@ -611,10 +646,10 @@ You <<if !$face.piercing>>do not have any piercing<<else>>have a $face.piercing 
     <</replace>>
     <<run Dialog.close()>>
 <</button>>
-
 /* 
     Could this be coded better? probably... But it //seems// to work :P
 */
+
 
 :: Popup-Skin [popup]
 <<PopupSkinChecker>>Your skin is currently $skin.satmut $skin.undertone $skin.color, with $skin.features.

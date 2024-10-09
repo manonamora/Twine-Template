@@ -261,13 +261,18 @@ Notes:
 */
 
 
-:: CC-Hair  [creation-page TODO:]
-<<HairOptions>><h1>Let's Talk Hair</h1>\
-Hair might be one of the most customisable characteristic there is for IF projects. Whether it is type/texture, density, length, colour, hairdo or accessories, the options are wide and varied.
+:: CC-Hair  [creation-page] {"position":"1525,100","size":"100,100"}
+<<HairOptions>><h1>Let's Talk Hair!</h1>\
+Hair might be one of the most customisable characteristic there is in IF projects. Whether it is type/texture, density, length, colour, hairdo or accessories, the options are wide and varied.
 
 And I may have gone a bit overboard with this one...
-/* 
-    Frankly, I recommend using multiple passages for this (or something like Cycy's liveupdate macro). The example below is barely passable, and does not even take into account options that would be dependent on previous choices (like a hairdo specific to certain hair type).
+/*
+ ~ Notes:
+    While I merged everything about this trait in one single passage, to show how multiple macros are being used, I would recommend either:
+    - using the <<do>>/<<redo>> macro, see [CC-Cosmetics]
+    - having multiple passages for the different sub-traits
+
+    As well, this page doesn't really take into account that certain hair options are dependent on previous choices (specific hairdos for certain hair type).
 */\
 \
 //Does hair grow on your head?//
@@ -295,19 +300,21 @@ Is your natural hair colour uniform? <<listbox "$hair.uniform">>
 
 //Is your hair dyed?//
 <<nobr>>
-    <<button "Yes.">><<addclass ".hairdye" "visible">><<set $dye to {}>><</button>>
+    <<button "Yes.">><<set $dye to {}>>
+        <<replace "#hairdye">>
+            //How is the hair dyed?// <<listbox "$dye.pattern">>
+                <<optionsfrom _hairdyied>>
+            <</listbox>><br>
+            <br>
+            //What colour is the dye? //<<listbox "$dye.colour">>
+                <<optionsfrom _dyecolour>>
+            <</listbox>>
+        <</replace>>
+    <</button>>
      | 
-    <<button "No.">><<removeclass ".hairdye" "visible">><<unset $dye>><</button>>
+    <<button "No.">><<replace "#hairdye">><</replace>><<unset $dye>><</button>>
 <</nobr>>
-<span class="hairdye">
-//How is the hair dyed?// <<listbox "$dye.pattern">>
-    <<optionsfrom _hairdyied>>
-<</listbox>>
-//
-What colour is the dye? //<<listbox "$dye.colour">>
-    <<optionsfrom _dyecolour>>
-<</listbox>>
-</span>\
+<span id="hairdye"></span>\
 
 //Do you have bangs?// <<listbox "$hair.bangs">>
     <<optionsfrom _bangs>>
@@ -324,11 +331,27 @@ What colour is the dye? //<<listbox "$dye.colour">>
 <span class="wigq">\
 //Do you wear a wig?//
 <<nobr>>
-    <<button "Yes, I wear a wig.">><<addclass ".wig" "visible">><<removeclass ".cover" "visible">><<set $wig to {}>><</button>>
+    <<button "Yes, I wear a wig.">>
+        <<addclass ".wig" "visible">>
+        <<replace "#cover">><</replace>>
+        <<set $wig to {}>>
+    <</button>>
      | 
-    <<button "No, but I wear something else.">><<addclass ".cover" "visible">><<removeclass ".wig" "visible">><<unset $wig>><</button>>
+    <<button "No, but I wear something else.">>
+        <<replace "#cover">>
+            //What are you wearing on your head?// <<listbox "$cover">>
+                <<optionsfrom _hairaccess>>
+            <</listbox>> 
+        <</replace>>
+        <<removeclass ".wig" "visible">>
+        <<unset $wig>>
+    <</button>>
      | 
-    <<button "No, I only have my hair.">><<removeclass ".wig" "visible">><<removeclass ".cover" "visible">><<unset $wig>><</button>>
+    <<button "No, I only have my hair.">>
+        <<removeclass ".wig" "visible">>
+        <<replace "#cover">><</replace>>
+        <<unset $wig>>
+    <</button>>
 <</nobr>>
 </span>\
 \
@@ -370,44 +393,40 @@ What colour is the dye? //<<listbox "$dye.colour">>
 <</listbox>>
 </span>\
 \
-<span class="cover">
-//What are you wearing on your head?// <<listbox "$cover">>
-    <<optionsfrom _hairaccess>>
-<</listbox>> 
-</span>
+<span id="cover"></span>
 
 <<button [[Confirm|Index-CC]]>><<set $pages.hair to true>><</button>>
 
-Please answer the question below as they appear on the screen. If you would like to reset this page, <<link [[Click Here|CC-Hair]]>><<unset $hair, $wig>><</link>>. Click the button when you are done.
+Please answer the question below as they appear on the screen. If you would like to reset this page, <<link [[Click Here|CC-Hair]]>><<set $hair to {}, $wig>><</link>>. Click the button when you are done.
 
 /* 
-Further notes:
-    Instead of << removeclass >>, you could use << replace >> or Cycy's liveupdate macro. I just wanted to mess around with a different DOM macro.... and maybe I shouldn't have.
+ ~ Notes:
+    Instead of <<add/removeclass>> and <<replace>>, you could use the <<do>>/<<redo>> macro. I just added this example so the template has a complete range of macro use, especially with the DOM macros.
 
-    Though I gave options for the hair colour (which have been kept relatively simple), a textbox could work as well there. Same for the wig colour, and the dye.
+    Though I gave options for the hair colour (which have been kept relatively simple), a textbox input could work as well there. Same for the wig colour, and the dye.
 
-    For hair dies, you could give the options to enter more than one colour (either through textboxes or if you use another passage, a repeat of the same macro for the number of colours chosen by the player).
+    For hair dyes, you could have the options of indicating more than one colour (either through textboxes, or another passage repeating the same macro for the number of colours chosen by the player).
 
     When it comes to hairdos (natural hair or wig), it is possible to take into account the hair texture or the length of the hair. But you would need to structure the page differently and/or use special custom macro.
 
-    For the hair accessories, you could consider using a checkbox list instead (and have the accesories piling up on the PC's head). It is also possible to customise the accessories further (colour, texture, length...). But I've done enough here...
+    For the hair accessories, you could consider using a checkbox list instead (and have the accessories piling up on the PC's head). It is also possible to customise the accessories further (colour, texture, length, position...). But I've done enough here...
 */
 
 
-:: CC-FacialFeatures [creation-page]
+:: CC-FacialFeatures [creation-page] {"position":"1650,100","size":"100,100"}
 <h1>Options for Facial Features</h1>\
-There are many things that can make a face memorable, litte noticeable features on one's face. Like a fance moustache, or a methodically placed beauty mark, or a scarred eyebrow. For a character creator, you can force players to pick that //one// think that sets their PC appart...
+Many elements can make a face memorable, little noticeable features on one's face that make it special. Like a fancy moustache, a methodically placed beauty mark, or a scarred eyebrow. For a character creator, you can force players to pick that //one// think that sets their PC apart...
 ... or give them a whole list of options so they can pick however many they want. Like below!
 /* 
+ ~ Notes:
     Are all those options compatible? Absolutely not! :#
-    Unless you maybe have multiple faces....
+    Unless you maybe have multiple faces...
     
-    Anyway, it might be bettwe if these below were separated by categories, with some using a radiobutton macro instead, to avoid impossible combinations.
-    BUT! ¯\_(ツ)_/¯
-    I hadn't used this specific macro before in this file... 
-    Good luck figuring out a better way :P
+    Anyway, it might be between if these below were separated by categories, with some using a radiobutton macro instead, to avoid impossible combinations.
+      BUT! ¯\_(ツ)_/¯
+        I hadn't used this specific macro before in this file... 
 */
-//What facial features are applicable to you?//
+//What facial feature(s) is(are) applicable to you?//
 * <label><<checkbox "_fullmoustache" false true>> a full moustache</label>
 * <label><<checkbox "_thinmoustache" false true>> a thin moustache</label>
 * <label><<checkbox "_goatee" false true>> a goatee</label>
@@ -446,13 +465,14 @@ There are many things that can make a face memorable, litte noticeable features 
 
 <<button [[Confirm|Index-CC]]>><<AllThisInAnArray>><<set $pages.facefeat to true>><</button>>
 
-:: CC-FaceAccessories [creation-page]
+
+:: CC-FaceAccessories [creation-page] {"position":"1775,100","size":"100,100"}
 <<set 
     _tattoo to ["No", "Covering the Face", "On the Forehead", "Under the Eye", "On the Cheeks", "Under the Chin", "Covering the Eyebrows", "Lining the lips"],
     _piercing to ["No", "Eyebrow", "Cheek", "Nose", "Septum", "Ear", "Lip", "Tongue"]
 >>\
 <h1>Pick your Face Accessories</h1>\
-This is honestly the last passage I am coding, and I ran out of introductions. So here's a list of face mods:
+Along with facial features, you can decide to add accessories to a PC's face, such as tattoes, piercings, or other modifications. If you are looking for cosmetics, see [[this page|CC-Cosmetics]].
 
 //Do you have any tattoes?// <<listbox "$face.tattoo">>
     <<optionsfrom _tattoo>>
@@ -477,13 +497,11 @@ This is honestly the last passage I am coding, and I ran out of introductions. S
     <</if>>
     <<set $pages.faceacc to true>>
 <</button>>
-
 /* 
-    For this page, you may be better off with checkboxes rather than listboxes, as you could have more than one tattoo/piercing/mod. But I didn't want to create another checker widget, because they are so long....;-; 
+ ~ Notes:
+    While I used listboxes here, you may want to replace it with checkboxes, if you intend on letting players pick multiple options for tattoes/piercings/mods...
 
-    There are also other placements where you could have a tattoo/piercing/mod. 
-
-    Facial accessories can go further than body modification (e.g. temporary tattoes, clip earings, extensions...)
+    You could also consider other placement for those elements (more specific/side of the face/etc...) or go into more details (e.g. temporary tattoes, clip earings, extensions...).
 */
 
 

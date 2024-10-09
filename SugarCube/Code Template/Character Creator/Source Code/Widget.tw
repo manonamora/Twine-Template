@@ -1,4 +1,4 @@
-:: Widgets [widget nobr]
+:: Widgets [widget nobr] {"position":"400,25","size":"100,100"}
 /*************************** 
     SET PRONOUNS WIDGET
 ***************************/
@@ -124,69 +124,18 @@
 <</widget>>
 
 /*************************** 
-    EYE COLOURS WIDGETS 
-***************************/
-/* 
-    The widgets below have been merged to be used for both the main trait page and the change popup :P
-*/
-<<widget "EyesSame">>
-    <<set $heterochromia to false>>
-    <<replace "#eye">>
-        Eye Colours: <<cycle "_eyes">>
-            <<optionsfrom _eyecolours>>
-        <</cycle>><br>
-        Cycle through the options until you find the colour you want.<br>
-        <br>
-        <<button "Confirm">>
-            <<set $mc.eyes to _eyes>>
-            <<if passage() is "CC-Check">>
-                <<replace "#mc-eyes">>$mc.eyes<</replace>>
-                <<run Dialog.close()>>
-            <<else>>
-                <<goto "Index-CC">>
-            <</if>>
-        <</button>>
-    <</replace>>
-<</widget>>
-<<widget "EyesDiff">>
-    <<set $heterochromia to true>>
-    <<replace "#eye">>
-        Left: <<cycle "_eyesleft">>
-            <<optionsfrom _eyecolours>>
-        <</cycle>><br>
-        Right: <<cycle "_eyesright">>
-            <<optionsfrom _eyecolours>>
-        <</cycle>><br>
-        Cycle through the options until you find the colours you want.<br>
-        <br>
-        <<button "Confirm">>
-            <<set $mc.eyes to _eyesleft + " and " + _eyesright>>
-            /* 
-                If eye colours matters in the story more than just being printed on the page, this setting method won't be the best one. You may be better using a different way (like a variable for each eye). 
-            */
-            <<if passage() is "CC-Check">>
-                <<replace "#mc-eyes">>$mc.eyes<</replace>>
-                <<run Dialog.close()>>
-            <<else>>
-                <<goto "Index-CC">>
-            <</if>>
-        <</button>>
-    <</replace>>
-<</widget>>
-
-/*************************** 
     HAIR WIDGETS
 ***************************/
 <<widget "HairOptions">>
     <<set 
         _hairtexture to ["--", "Straight", "Wavy", "Curly (loose)", "Curly (tight)", "Coily"],
-        _hairlength to ["--", "Buzzcut", "Short", "Ear-Length", "Chin-Length", "Shoulder-Lentgh", "Long", "Waist-Length", "Hip-Length", "Knee-Length", "Floor-Length"],
+        _hairlength to ["--", "Buzzcut", "Short", "Ear-Length", "Chin-Length", "Shoulder-Length", "Long", "Waist-Length", "Hip-Length", "Knee-Length", "Floor-Length"],
         _haircolour to ["--", "Black", "Brown", "Auburn", "Red", "Blond", "White"],
         _hairuniform to ["Yes", "Graying", "White Streaks"],
         _hairdyied to ["Uniform Dye", "Half-n-Half", "Streaks", "Roots", "Ends", "In-to-Out"],
         _dyecolour to ["Pink", "Blue", "Green", "Purple", "Platinum", "Silver", "Seafoam"],
         _shavedhair to ["No", "Completely", "Undercut", "Shaved Left Side", "Shaved Right Side", "Mohawk"],
-        _bangs to ["No", "Curtain Bangs", "Bottleneck Bangs", "Blunt Bangs", "Curly Bangs", "Side-Swept Bangs", "Layered Bangs", "Choppy Bangs", "Braided Bangs", "Wispy Bangs", "Wavy Bangs", "Micro Bangs", "Shaggy Bangs", "Picey Bangs", "Clip-In Bangs"],
+        _bangs to ["No", "Curtain Bangs", "Bottleneck Bangs", "Blunt Bangs", "Curly Bangs", "Side-Swept Bangs", "Layered Bangs", "Choppy Bangs", "Braided Bangs", "Wispy Bangs", "Wavy Bangs", "Micro Bangs", "Shaggy Bangs", "Piecey Bangs", "Clip-In Bangs"],
         _hairdo to ["Natural", "Covered", "Up do", "Braided", "Ponytail", "Buns", "Unstyled"],
         _hairaccess to ["Headwrap", "Cap", "Clips", "Extensions", "Hairband", "Barrette", "Pins"]
     >>
@@ -201,6 +150,7 @@
     Depending on how your organise features, you may end up with multiple variables (regular variables and/or other arrays).
 */
 <<widget "AllThisInAnArray">>
+    <<set $facefeatures to []>>
     <<if _fullmoustache>><<run $facefeatures.push("a full moustache")>><</if>>
     <<if _thinmoustache>><<run $facefeatures.push("a thin moustache")>><</if>>
     <<if _goatee>><<run $facefeatures.push("a goatee")>><</if>>
@@ -850,7 +800,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
         $mc.pet to "a horse"
     >>
 <</widget>>
-<<widget "CheckifDone">>
+<<widget "CheckIfDone">>
     <<done>>
         <<if $mc.name>>
             <<addclass "#name" "green">>
@@ -931,38 +881,25 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
     But this template is base SugarCube only.
 */
 <<widget "PopupNameChange">>
-    <<script>>
-        Dialog.setup("Change Your Name");
-        Dialog.wiki(Story.get("Popup-Name").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Name").wikiPassage("Popup-Name").open();>>
 <</widget>>
 
 <<widget "PopupNickNameChange">>
-    <<script>>
-        Dialog.setup("Change Your Nickname");
-        Dialog.wiki(Story.get("Popup-NickName").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Nickname").wikiPassage("Popup-NickName").open();>>
 <</widget>>
 
 <<widget "PopupSurNameChange">>
-    <<script>>
-        Dialog.setup("Change Your Surname");
-        Dialog.wiki(Story.get("Popup-SurName").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Surname").wikiPassage("Popup-SurName").open();>>
 <</widget>>
 
 <<widget "PopupGenderChange">>
-    <<script>>
-        Dialog.setup("Change Your Gender");
-        Dialog.wiki(Story.get("Popup-Gender").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Gender").wikiPassage("Popup-Gender").open();>>
 <</widget>>
 <<widget "IfGenderIsCustom">>
-    /*This is to check whether a trait was custom, because the dialog box edits temporary variables instead of the main one (in case the player closes the popup by mistake) */
+    /*
+        This is to check which option was selected, especially if it was custom, and autocheck the relevant radiobutton.
+        All of this use temporary variables so it doesn't override the actual variable if the dialog box is closed without actually confirming the change. 
+    */
     <<if $mc.gender is "female">>
         <<set _gender to "female">>
     <<elseif $mc.gender is "male">>
@@ -1000,14 +937,13 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupPronounChange">>
-    <<script>>
-        Dialog.setup("Change Your Pronouns");
-        Dialog.wiki(Story.get("Popup-Pronouns").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Pronouns").wikiPassage("Popup-Pronouns").open();>>
 <</widget>>
 <<widget "IfPronounsIsCustom">>
-    /*This is to check whether the pronouns were custom, because the dialog box edits temporary variables instead of the main one (in case the player closes the popup by mistake) */
+    /*
+        This is to check which option was selected, especially if it was custom, and autocheck the relevant radiobutton.
+        All of this use temporary variables so it doesn't override the actual variable if the dialog box is closed without actually confirming the change. 
+    */
     <<if !$proset.custom>>
         <<if $mc.pronouns is "She/Her">>
             <<set _pronouns to "She/Her">>
@@ -1028,42 +964,22 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupAgeChange">>
-    <<script>>
-        Dialog.setup("Change Your Age");
-        Dialog.wiki(Story.get("Popup-Age").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Age").wikiPassage("Popup-Age").open();>>
 <</widget>>
 
 <<widget "PopupEyesChange">>
-    <<script>>
-        Dialog.setup("Change Your Eye");
-        Dialog.wiki(Story.get("Popup-Eye").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Eye").wikiPassage("Popup-Eye").open();>>
 <</widget>>
 
 <<widget "PopupHairChange">>
-    <<script>>
-        Dialog.setup("Change Your Hair");
-        Dialog.wiki(Story.get("Popup-Hair").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Hair").wikiPassage("Popup-Hair").open();>>
 <</widget>>
 <<widget "PopupWigChange">>
-    <<script>>
-        Dialog.setup("Change Your Wig/Cover");
-        Dialog.wiki(Story.get("Popup-Hair-Wig").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Wig/Cover").wikiPassage("Popup-Hair-Wig").open();>>
 <</widget>>
 
 <<widget "PopupFaceFeatChange">>
-    <<script>>
-        Dialog.setup("Change Your Features");
-        Dialog.wiki(Story.get("Popup-FaceFeat").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Features").wikiPassage("Popup-FaceFeat").open();>>
 <</widget>>
 <<widget "FacialFeaturesPicked">>
     <<if $facefeatures.includes("a full moustache")>><<set _fullmoustache to true>><</if>>
@@ -1084,7 +1000,6 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
     <<if $facefeatures.includes("small ears")>><<set _smallears to true>><</if>>
     <<if $facefeatures.includes("large ears")>><<set _largeears to true>><</if>>
     <<if $facefeatures.includes("a Button nose")>><<set _buttonnose to true>><</if>>
-
     <<if $facefeatures.includes("a Roman nose")>><<set _romannose to true>><</if>>
     <<if $facefeatures.includes("a Crooked nose")>><<set _crooked to true>><</if>>
     <<if $facefeatures.includes("a Wide nose")>><<set _widenose to true>><</if>>
@@ -1105,14 +1020,11 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupFaceAccChange">>
-    <<script>>
-        Dialog.setup("Change Your Facial Accessories");
-        Dialog.wiki(Story.get("Popup-FaceAcc").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Facial Accessories").wikiPassage("Popup-FaceAcc").open();>>
 <</widget>>
 
 <<widget "PopupSkinColourChange">>
+    <<run Dialog.create("").wikiPassage("").open();>>
     <<script>>
         Dialog.setup("Change Your Skin Colour");
         Dialog.wiki(Story.get("Popup-Skin").processText());
@@ -1133,6 +1045,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupBuildChange">>
+    <<run Dialog.create("").wikiPassage("").open();>>
     <<script>>
         Dialog.setup("Change Your Build");
         Dialog.wiki(Story.get("Popup-Build").processText());
@@ -1148,6 +1061,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupScarChange">>
+    <<run Dialog.create("").wikiPassage("").open();>>
     <<script>>
         Dialog.setup("Change Your Scar(s)");
         Dialog.wiki(Story.get("Popup-Scar").processText());
@@ -1177,6 +1091,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupProsChange">>
+    <<run Dialog.create("").wikiPassage("").open();>>
     <<script>>
         Dialog.setup("Change Your Prosthesis and Procedures");
         Dialog.wiki(Story.get("Popup-Pros").processText());
@@ -1212,6 +1127,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupBodyModChange">>
+    <<run Dialog.create("").wikiPassage("").open();>>
     <<script>>
         Dialog.setup("Change Your Body Modification");
         Dialog.wiki(Story.get("Popup-BodyMod").processText());
@@ -1221,6 +1137,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 
 
 <<widget "PopupMakeupChange">>
+    <<run Dialog.create("").wikiPassage("").open();>>
     <<script>>
         Dialog.setup("Change Your Cosmetics");
         Dialog.wiki(Story.get("Popup-Makeup").processText());
@@ -1229,6 +1146,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupPersoChange">>
+    <<run Dialog.create("").wikiPassage("").open();>>
     <<script>>
         Dialog.setup("Change Your Personality");
         Dialog.wiki(Story.get("Popup-Perso").processText());
@@ -1243,6 +1161,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupClassChange">>
+    <<run Dialog.create("").wikiPassage("").open();>>
     <<script>>
         Dialog.setup("Change Your Class");
         Dialog.wiki(Story.get("Popup-Class").processText());
@@ -1251,6 +1170,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupBackgroundChange">>
+    <<run Dialog.create("").wikiPassage("").open();>>
     <<script>>
         Dialog.setup("Change Your Background");
         Dialog.wiki(Story.get("Popup-Back").processText());
@@ -1260,6 +1180,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 /* Maybe a wealthbar? */
 
 <<widget "PopupROGenderChange">>
+    <<run Dialog.create("").wikiPassage("").open();>>
     <<script>>
         Dialog.setup("Change Your ROs' Gender");
         Dialog.wiki(Story.get("Popup-ROGender").processText());
@@ -1268,6 +1189,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupFamilyChange">>
+    <<run Dialog.create("").wikiPassage("").open();>>
     <<script>>
         Dialog.setup("Change Your Family");
         Dialog.wiki(Story.get("Popup-Family").processText());
@@ -1286,6 +1208,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupPetsChange">>
+    <<run Dialog.create("").wikiPassage("").open();>>
     <<script>>
         Dialog.setup("Change Your Pets");
         Dialog.wiki(Story.get("Popup-Pets").processText());
@@ -1294,6 +1217,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupLexicon">>
+    <<run Dialog.create("").wikiPassage("").open();>>
     <<script>>
         Dialog.setup("Lexicon");
         Dialog.wiki(Story.get("Lexicon").processText());
@@ -1301,6 +1225,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
     <</script>>
 <</widget>>
 <<widget "PopupStats">>
+    <<run Dialog.create("").wikiPassage("").open();>>
     <<script>>
         Dialog.setup("Statistics");
         Dialog.wiki(Story.get("Statistics").processText());

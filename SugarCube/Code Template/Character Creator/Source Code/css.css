@@ -20,11 +20,13 @@ button.link-broken {
     border-color: darkred;
 }
 
-.hair, .wigq, .hairdye, .wig, .wigdye, .cover {
+.hair, .wigq, .wig, .wigdye {
     display: none;
+    visibility: hidden;
 }
 .visible {
     display: block;
+    visibility: visible;
 }
 
 .green button {
