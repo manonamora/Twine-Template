@@ -1101,6 +1101,9 @@
 <<widget "PopupLexicon">>
     <<run Dialog.create("Lexicon").wikiPassage("Lexicon").open();>>
 <</widget>>
+<<widget "PopupCredits">>
+    <<run Dialog.create("Credits").wikiPassage("Credits").open();>>
+<</widget>>
 <<widget "PopupStats">>
     <<run Dialog.create("Statistics").wikiPassage("Statistics").open();>>
 <</widget>>

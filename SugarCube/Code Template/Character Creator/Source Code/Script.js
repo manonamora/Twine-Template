@@ -1,6 +1,6 @@
 // ~ ~ ~ SLIDER TO VARIABLE ~ ~ ~
 /* The code below was taken from HiEv's Sample Code:
-    https://hiev-heavy-ind.com/Sample_Code
+    https://hiev-heavy-ind.com/Sample_Code/Sample_Code.html
 
     It will try to find any <input> code on the page that wants to save the value into a variable.
         <input type="range" min="0" max="100" value="50"

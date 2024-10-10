@@ -55,6 +55,7 @@ Character Creator Template
 
 :: StoryCaption {"position":"25,150","size":"100,100"}
 <<button "Lexicon">><<PopupLexicon>><</button>>
+<<button "Credits">><<PopupCredits>><</button>>
 <<if passage() is "CC-Check">><<button "Statistics">><<PopupStats>><</button>><</if>>
 
 
@@ -136,3 +137,36 @@ $Alex: <progress value="50" max="100"></progress>
 
 	You could also turn the names into popups for more information about each RO. Same with Personality traits or other Background info.
 */
+
+:: Credits {"position":"150,550","size":"100,100"}
+The ''Character Creator Template'' was created by manonamora on Twine 2/Tweego with SugarCube (2.37.3).
+\
+<h3>The Character Creator Template</h3>\
+This template was made possible thanks to the assets and resources below:
+> //Code, APIs and Macros://
+* the [[SugarCube documentation|https://www.motoslave.net/sugarcube/2/docs/]]
+* various posts from the [[Intfiction.org Forum|https://intfiction.org/c/authoring/twine]] and [[Reddit r/twinegames|https://www.reddit.com/r/twinegames/]]
+* HiEv's [[Sample Code|https://hiev-heavy-ind.com/Sample_Code/Sample_Code.html]]
+\
+<h3>manonamora</h3>\
+You can find:
+* my other templates on [[Itch|https://manonamora.itch.io/]], as well as my guides:
+** [[SugarCube Guide|https://manonamora.itch.io/twine-sugarcube-guide]]
+** [[Ready-to-Use Tweego and Guide|https://manonamora.itch.io/ready-to-use-tweego-folder]]
+** [[ChoiceScript to SugarCube Guide|https://manonamora.itch.io/choicescript-sugarcube-guide]]
+* my games and IF experiments on [[Itch|https://manonamora.itch.io/]]
+* me, and ask me questions, over on [[Tumblr|https://manonamora-if.tumblr.com]] or [[my website|https://manonamora.neocities.org/]]
+* my Twine Resource Masterlist on the [[IntFiction Forum|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]] (an out-of-date version is rebloggable on [[Tumbr|https://manonamora-if.tumblr.com/post/700577877042888704/]]).
+\
+<h3>Twine and SugarCube</h3>\
+You can download Twine over on the [[Twinery.org|https://twinery.org/]] website, which includes the SugarCube format.
+Thomas M. Edwards hosts the Documentation for the SugarCube format over on [[his website|https://www.motoslave.net/sugarcube/2/docs/]].
+
+There are resources and help available with Twine and SugarCube:
+* on the [[IntFiction Forum|https://intfiction.org/c/authoring/twine/46]]
+* on the [[Twine Subreddit|https://www.reddit.com/r/twinegames/]]
+* in the [[Twine Discord|https://discord.gg/n5dJvPp]]
+* and more listed in this [[Masterlist|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]]
+<hr>\
+<h5>You can find my other SugarCube templates [[here|https://manonamora.itch.io/twine-sugarcube-templates]].</h5>
+

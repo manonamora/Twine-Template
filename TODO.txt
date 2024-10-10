@@ -68,20 +68,18 @@
    - Reformated some code to make things simpler
    - Rephrased some explanations for clarity
    - Fixed typos
-   - Updated the Credits page
+   - Updated the About page
+   - Added the Credits page
    - Extra options in the notes
 
 
 // Check list //
    -> Change min with to 320px
-   -> How to make your own UI mini guide on the page
-      -> Harlowe too?
+   -> Screenshots of Character Creator Guide
 
 ~ SugarCube Templates ~
-
- Character Creator:
-    - Update for 2.37 <<do/redo>> formatting
-
+   -> How to make your own UI mini guide on the page
+      -> Harlowe too?
 To Do:
     - Phone Template
     - À la Harlowe
