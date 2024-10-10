@@ -1,81 +1,4 @@
-//Update Log//
-* Settings:
-   - Updated APIs to 2.37
-      - removed deprecated + broken elements
-      - used better and more correct ways
-   - Rephrased some explanations for clarity
-      - Extra substitutes in comments
-   - Fixed some typos
-   - Removed Open Dyslexic font (replaced with Monospace)
-   - Updated the Credits page
-* Title Page:
-   - Updated Dialog code to 2.37
-   - Updated the Credits page
-   - Rephrased some explanations for clarity
-   - Fixed some typos
-* OnePage:
-   - Updated Code + APIs to 2.37
-      - removed deprecated + broken elements 
-         - Updated Chapel's Popup macro
-      - used more correct code (inlc. HTML/CSS/JS)
-         - renamed elements + passages
-   - Rephrased some explanations for clarity
-   - Fixed some typos 
-   - Removed Open Dyslexic font (replaced with Monospace)
-   - Changed the Sepia Theme palette for lighter version
-   - Added stats bars
-   - Updated the Credits page 
-* VN-lite:
-   - Updated Code + APIs to 2.37
-   - Rephrased some explanations for clarity
-   - Fixed typos
-   - Removed Chapel's Dialog macro (only used once)
-   - Updated Font Awesome version
-   - Updated the Credits page
-* Space/Tech UI:
-   - Updated Code + APIs to 2.37
-      - removed deprecated + broken elements 
-      - used more correct code (inlc. HTML/CSS/JS)
-   - Updated Font Awesome version 
-   - Removed Open Dyslexic font (replaced with Monospace)
-   - Changed the Interface (StoryInterface/CSS)
-      - renamed elements + passages
-      - stats bars are now optional
-      - added an extra @mobile size
-   - Rephrased some explanations for clarity
-      - included explanation on how to only use the 'Space' or 'Tech' interface (i.e. remove/edit code)
-      - included explanation on how to display/hide/delete stats bars (i.e. remove/edit code)
-      - expanded explanation about use of the statsbars
-   - Updated the Credits page
-* Simple Book:
-   - Updated Code + API to 2.37
-   - Updated the Styling
-      - Updated Font Awesome 
-      - Removed Open Dyslexic (replaced with Monospace)
-   - Changed Interface (StoryInterface/CSS)
-      - renamed elements + passages
-      - Changed the menu display/hiding
-      - Added an extra side menu (more balanced)
-      - fixed the mobile scaling
-   - Removed Liveupdate macro
-   - Added extra side pages, incl. Stats
-   - Rephrased some explanations for clarity
-   - Fixed typos
-   - Updated the Credits page
-* Character Creator:
-   - Updated Code + API to 2.37
-   - Fixed some errors in the code (wrong variables/macro or missing required element)
-   - Reformated some code to make things simpler
-   - Rephrased some explanations for clarity
-   - Fixed typos
-   - Updated the About page
-   - Added the Credits page
-   - Extra options in the notes
-
-
 // Check list //
-   -> Change min with to 320px
-   -> Screenshots of Character Creator Guide
 
 ~ SugarCube Templates ~
    -> How to make your own UI mini guide on the page
@@ -89,8 +12,7 @@ To Do:
 Helpful code: <script>$('tw-sidebar').insertBefore('tw-passage');</script> in footer-tagged
 Use Header/Footer to wrap div around passage
 
-SugarCube would work better with the script above than the wrapping
-
+SugarCube version would work better with the script above than the wrapping
 
 
 Canvas format for pics:

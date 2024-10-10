@@ -5,6 +5,8 @@ For most templates in this section, they were originally created in SugarCube 2.
 The directory of this section is organised as follow:
 * Code Templates
   * Character Creator
+    * 2.36 Version
+    * Source Code
   * Settings (Accessiblity)
     * 2.36 Version
     * Source Code
@@ -13,7 +15,11 @@ The directory of this section is organised as follow:
     * 2.36 Version
     * Source Code
   * Simple Book
+    * 2.36 Version
+    * Source Code
   * Space-Tech UI
+    * 2.36 Version
+    * Source Code
   * Title Page (compatible with Base SugarCube UI!)
     * 2.36 Version
     * Source Code
