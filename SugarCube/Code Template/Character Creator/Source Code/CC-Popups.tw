@@ -651,7 +651,7 @@ You <<if !$face.piercing>>do not have any piercing<<else>>have a $face.piercing 
 */
 
 
-:: Popup-Skin [popup]
+:: Popup-Skin [popup] {"position":"550,825","size":"100,100"}
 <<PopupSkinChecker>>Your skin is currently $skin.satmut $skin.undertone $skin.color, with $skin.features.
 To change this trait, interact with the elements below: 
 
@@ -684,7 +684,8 @@ Your skin colour is <<SkinColourCycle>>, with a <<SkinSatMutCycle>> <<SkinToneCy
     You could make the checkbox autochecked here, as well as have the cycles start at the first chosen value if wanted.
 */
 
-:: Popup-Build [popup]
+
+:: Popup-Build [popup] {"position":"675,825","size":"100,100"}
 <<PopupBodyBuild>>\
 You are currently $body.height, with a $body.weight a $body.musc body.
 
@@ -712,9 +713,8 @@ To change this trait, please interact with the elements below. If you'd like to 
     <<run Dialog.close()>>
 <</button>>
 
-/* There was something I wanted to add here but I forgot... */
 
-:: Popup-Scar [popup]
+:: Popup-Scar [popup] {"position":"800,825","size":"100,100"}
 <<ScarsPicked>>\
 You currently have the following scars on your body: $scars.
 If you want to change this trait, please click the relevant options below.
@@ -747,7 +747,8 @@ If you want to change this trait, please click the relevant options below.
     <<run Dialog.close()>>
 <</button>>
 
-:: Popup-Pros [popup]
+
+:: Popup-Pros [popup] {"position":"925,825","size":"100,100"}
 <<ProsCheck>>You current have the following traits:
 > Procedures: $aid.proc
 > Prothesis: $aid.pros
@@ -793,7 +794,8 @@ If you would like to change them, please interact with the options below:
     <<run Dialog.close()>>
 <</button>>
 
-:: Popup-BodyMod [popup]
+
+:: Popup-BodyMod [popup] {"position":"1050,825","size":"100,100"}
 <<if !$face.mods>><<set $face.mods to "">><</if>><<set 
     _tattoo to ["No", "Half-Sleeve", "Full Sleeve", "Neck", "Chest", "Belly", "Leg", "Calf", "Foot", "Covered"],
     _piercing to ["No", "Belly Button", "Nipple", "Surface (Chest)", "Surface (Arm)", "Surface (Back)", "Surface (Leg)", "Surface (Private)"]
@@ -831,18 +833,8 @@ You <<if !$body.piercing>>do not have any piercing<<else>>have a $body.piercing 
 <</button>>
 
 
-
-
-
-
-
-
-
-
-
-
-
-:: Popup-Makeup [popup]
+:: Popup-Makeup [popup] {"position":"1175,825","size":"100,100"}
+<<CosmeticOptions>>\
 <<if !$skin.makeup>>You don't wear any makeup.<<else>>Your make up is $skin.makeup.<</if>>
 Your nails are $body.naislength<<if $body.nails>>, and are painted $body.nailscolour in $body.nails<</if>>.
 You <<if !$skin.perfume>>don't wear any perfume<<else>>wear a $skin.perfume scent<</if>>.
@@ -851,17 +843,18 @@ Interact with the elements below to change this trait.
 
 //Do you wear any make up?//
 <<nobr>>
-    <<button "Yes, I wear makeup.">>
-        <<replace "#makeupplus">>//What kind of makeup are you wearing?// <<listbox "$skin.makeup">>
-                <<optionsfrom _makeup>>
-            <</listbox>>
-        <</replace>>
-    <</button>>
+    <<button "Yes, I wear make-up.">><<set $skin.makeup to true>><<redo "makeupplus">><</button>>
      | 
-    <<button "No, I don't wear makeup.">><<unset $skin.makeup>><<replace "#makeupplus">><</replace>><</button>>
+    <<button "No, I don't wear make-up.">><<unset $skin.makeup>><<redo "makeupplus">><</button>>
 <</nobr>>
 
-<span id="makeupplus"></span>
+<<do tag "makeupplus">><<nobr>>
+    <<if $skin.makeup>> 
+        //What kind of make-up are you wearing?// <<listbox "$skin.makeup">>
+                <<optionsfrom _makeup>>
+        <</listbox>>
+    <</if>>
+<</nobr>><</do>>
 
 //How do your nails look like?// <<listbox "$body.naislength">>
     <<optionsfrom _naillength>>    
@@ -869,34 +862,36 @@ Interact with the elements below to change this trait.
 
 //Are your nails painted?// 
 <<nobr>>
-    <<button "Yes, my nails are painted.">>
-        <<replace "#naisplus">>//In what style are your nails painted?// <<listbox "$body.nails">>
-                <<optionsfrom _nailart>>
-            <</listbox>>
-            //What colour are your nails painted?// <<listbox "$body.nailscolour">>
-                <<optionsfrom _nailcolour>>
-            <</listbox>>
-        <</replace>>
-    <</button>>
+    <<button "Yes, my nails are painted.">><<set $body.nails to true>><<redo "naisplus">><</button>>
      | 
-    <<button "No, my nails are natural.">><<unset $body.nails>><<replace "#naisplus">><</replace>><</button>>
+    <<button "No, my nails are natural.">><<unset $body.nails>><redo "naisplus">><</button>>
 <</nobr>>
 
-<span id="naisplus"></span>
+<<do tag "naisplus">><<nobr>>
+    <<if $body.nails>>
+        //In what style are your nails painted?// <<listbox "$body.nails">>
+            <<optionsfrom _nailart>>
+        <</listbox>><br>
+        //What colour are your nails painted?// <<listbox "$body.nailscolour">>
+            <<optionsfrom _nailcolour>>
+        <</listbox>>
+    <</if>>
+<</nobr>><</do>>
 
 //Do you wear any perfume?//
 <<nobr>>
-    <<button "Yes, I wear perfume.">>
-        <<replace "#perfumeplus">>//What kind of perfume are you wearing?// <<listbox "$skin.perfume">>
-                <<optionsfrom _perfume>>
-            <</listbox>>
-        <</replace>>
-    <</button>>
+    <<button "Yes, I wear perfume.">><<set $skin.perfume to true>><<redo "perfumeplus">><</button>>
      | 
-    <<button "No, I don't wear any perfume.">><<unset $skin.perfume>><<replace "#perfumeplus">><</replace>><</button>>
+    <<button "No, I don't wear any perfume.">><<unset $skin.perfume>><<redo "perfumeplus">><</button>>
 <</nobr>>
 
-<span id="perfumeplus"></span>
+<<do tag "perfumeplus">><<nobr>>
+    <<if $skin.perfume>>
+        //What kind of perfume are you wearing?// <<listbox "$skin.perfume">>
+            <<optionsfrom _perfume>>
+        <</listbox>>
+    <</if>>
+<</nobr>><</do>>
 
 <<button "Confirm">>
     <<replace "#mc-makup">><<if !$skin.makeup>>You don't wear any makeup.<<else>>Your make up is $skin.makeup.<</if>>
@@ -905,7 +900,8 @@ Interact with the elements below to change this trait.
     <<run Dialog.close()>>
 <</button>>
 
-:: Popup-Perso [popup]
+
+:: Popup-Perso [popup] {"position":"1400,950","size":"100,100"}
 Your current personality is set as followed:
 <<PersoBars>>
 
@@ -928,7 +924,8 @@ Cold <input type="range" id="slidetest" name="slidetest" min="1" max="100" @valu
     <<run Dialog.close()>>
 <</button>>
 
-:: Popup-Class [popup]
+
+:: Popup-Class [popup] {"position":"1525,950","size":"100,100"}
 You are currently a $class.
 If you would like to edit this trait, choose one of the options below:
 
@@ -947,11 +944,14 @@ If you would like to edit this trait, choose one of the options below:
     <<replace "#mc-class">>$class<</replace>>
     <<run Dialog.close()>>
 <</button>>
-
 /*
+ ~ Notes:
     Unlike the main passage, this one will not offer additional points. Mainly because I didn't feel like doing it again...
     Though, it is important to stay as consistent as possible between the main passage setters and the check changes!
+
+    Also... not exlanation about the traits, because you can't stack popups. Though you could create an explanation popup with a button re-opening this one again...
 */
+
 
 :: ClassExplanations [popup] {"position":"1775,700","size":"100,100"} 
 <<if _explanation is "warrior">>\
@@ -998,7 +998,7 @@ If you would like to edit this trait, choose one of the options below:
 */
 
 
-:: Popup-Back [popup]
+:: Popup-Back [popup] {"position":"1650,950","size":"100,100"}
 You are currently a $background.
 If you would like to edit this trait, choose one of the options below:
 
@@ -1017,11 +1017,11 @@ If you would like to edit this trait, choose one of the options below:
     <<replace "#mc-backg">>$background<</replace>>
     <<run Dialog.close()>>
 <</button>>
-
 /*
     Like with changing the class, this popup does not offer additional information about each class.
     I do recomend however a line or two, especially if the trait is important for the story!
 */
+
 
 :: StatusExplanations [popup] {"position":"1775,825","size":"100,100"}
 <<if _explanation is "commoner">>\
@@ -1051,7 +1051,7 @@ If you would like to edit this trait, choose one of the options below:
 <</if>>
 
 
-:: Popup-ROGender [popup]
+:: Popup-ROGender [popup] {"position":"2000,525","size":"100,100"}
 The ROs are currently: $Camille, $Fran, and $Alex.
 If you would like to change their genders, please interact with the elements below:
 
@@ -1104,7 +1104,8 @@ If you would like to change their genders, please interact with the elements bel
     <<run Dialog.close()>>
 <</link>>
 
-:: Popup-Family [popup]
+
+:: Popup-Family [popup] {"position":"2125,525","size":"100,100"}
 <<CheckFam>>\
 This is your current familial situation: 
 * $family.parents
@@ -1144,7 +1145,8 @@ If you want to change any element, please click on the options below:
     <<run Dialog.close()>>
 <</button>>
 
-:: Popup-Pets [popup]
+
+:: Popup-Pets [popup] {"position":"2250,525","size":"100,100"}
 <<set _animal to ["--", "a turtle", "a dog", "a cat", "a bird", "a rodent", "a snake", "a tiger", "a dragon", "a robot", "a horse", "a spider", "a moon", "a cow", "a pig"]>>\
 You current pet is $mc.pet.s
 If you would like to change this trait, please use the interactive element below:
@@ -1161,3 +1163,4 @@ If you would like to change this trait, please use the interactive element below
     <</if>>
     <<replace "mc-pet">>$mc.pet<</replace>>
 <</button>>
+

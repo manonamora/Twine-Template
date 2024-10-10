@@ -63,11 +63,7 @@ Character Creator Template
 <h3 style="font-weight: normal;">This Template/Guide is meant to showcase what //could// be done with a character creator, displaying different characteristics and types of interactivity.
 Check the [[General Guidance and Notes|About]] before diving into the code.</h3>\
 
-<center><<button [[See the List of Traits|Index-CC]]>><</button>>
-	or
-<<button [[Play through the "game"|TODO: here]]>><</button>>
-<small>This section isn't ready yet, because I can't think of a good "storyline" to make someone to through all of this... -> only one option every time</small>
-</center>
+<center><<button [[See the List of Traits|Index-CC]]>><</button>></center>
 
 
 :: About {"position":"150,425","size":"100,100"}
@@ -135,5 +131,8 @@ $Camille: <progress value="70" max="100"></progress>
 $Fran: <progress value="30" max="100"></progress>
 $Alex: <progress value="50" max="100"></progress>
 
-/* The stats for the ROs are obviously not variable dependent here, I've just chosen them at random.  */
-TODO: should I just make the names popups? to open RO pages?
+/* 
+	The stats for the ROs are obviously not variable dependent here, I've just chosen them at random.
+
+	You could also turn the names into popups for more information about each RO. Same with Personality traits or other Background info.
+*/

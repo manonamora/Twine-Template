@@ -1,6 +1,6 @@
 :: Widgets [widget nobr] {"position":"400,25","size":"100,100"}
 /*************************** 
-    SET PRONOUNS WIDGET
+    SET PRONOUNS WIDGETS
 ***************************/
 <<widget "PronounsSet">>
     <<if $mc.pronouns is "She/Her">>
@@ -61,70 +61,26 @@
 <</widget>>
 <<widget "PronounsCustomSet">>
     <<if _pronouns is "She/Her">>
-        <<set 
-            $mc.pronouns to "She/Her",
-            $proset.they to "she", 
-            $proset.them to "her", 
-            $proset.their to "her", 
-            $proset.theirs to "hers", 
-            $proset.themselves to "herself",
-            $proset.plural to false
-        >>
+        <<set $mc.pronouns to "She/Her">>
     <<elseif _pronouns is "He/Him">>
-        <<set 
-            $mc.pronouns to "He/Him",
-            $proset.they to "he", 
-            $proset.them to "him", 
-            $proset.their to "his", 
-            $proset.theirs to "his", 
-            $proset.themselves to "himself",
-            $proset.plural to false
-        >>
+        <<set $mc.pronouns to "He/Him">>
     <<elseif _pronouns is "They/Them (singular)">>
-        <<set 
-            $mc.pronouns to "They/Them (singular)",
-            $proset.they to "they", 
-            $proset.them to "them", 
-            $proset.their to "their", 
-            $proset.theirs to "theirs", 
-            $proset.themselves to "themself",
-            $proset.plural to false
-        >>
+        <<set $mc.pronouns to "They/Them (singular)">>
     <<elseif _pronouns is "They/Them (plural)">>
-        <<set 
-            $mc.pronouns to "They/Them (plural)",
-            $proset.they to "they", 
-            $proset.them to "them", 
-            $proset.their to "their", 
-            $proset.theirs to "theirs", 
-            $proset.themselves to "themselves",
-            $proset.plural to true
-        >>
+        <<set $mc.pronouns to "They/Them (plural)">>
     <<elseif _pronouns is "Ae/Aer">>
-        <<set 
-            $mc.pronouns to "Ae/Aer",
-            $proset.they to "ae", 
-            $proset.them to "aer", 
-            $proset.their to "aer", 
-            $proset.theirs to "aers", 
-            $proset.themselves to "aerself",
-            $proset.plural to false
-        >>
+        <<set $mc.pronouns to "Ae/Aer">>
     <<elseif _pronouns is "E/Em">>
-        <<set 
-            $mc.pronouns to "E/Em",
-            $proset.they to "e", 
-            $proset.them to "em", 
-            $proset.their to "eir", 
-            $proset.theirs to "eirs", 
-            $proset.themselves to "emself",
-            $proset.plural to false
-        >>
+        <<set $mc.pronouns to "E/Em">>
     <</if>>
+    <<PronounsSet>>
 <</widget>>
+/* 
+    The Second one is for the popup version.
+*/
 
 /*************************** 
-    HAIR WIDGETS
+    HAIR WIDGET
 ***************************/
 <<widget "HairOptions">>
     <<set 
@@ -143,7 +99,7 @@
 <</widget>>
 
 /*************************** 
-    FACE WIDGETS 
+    FACE WIDGET
 ***************************/
 /* 
     This widget pushed all options ticked into an array.
@@ -189,7 +145,7 @@
 <</widget>>
 
 /*************************** 
-    MAKEUP WIDGETS 
+    MAKEUP WIDGET
 ***************************/
 <<widget "CosmeticOptions">>
     <<set
@@ -200,6 +156,7 @@
         _perfume to ["Floral", "Woody", "Gourmand", "Fruity", "Oriental", "Green", "Oceanic", "Citrus", "Spicy"]
     >>
 <</widget>>
+
 /*************************** 
     SKIN COLOURS WIDGETS 
 ***************************/
@@ -230,7 +187,7 @@
 <</widget>>
 
 /*************************** 
-    BUILD WIDGETS 
+    BUILD WIDGET
 ***************************/
 <<widget "BodyBuild">>
     <<set 
@@ -241,7 +198,7 @@
 <</widget>>
 
 /*************************** 
-    SCARS WIDGETS 
+    SCARS WIDGET
 ***************************/
 <<widget "AllThisInAnArrayButItsScars">>
     <<set $scars to []>>
@@ -267,7 +224,7 @@
 <</widget>>
 
 /*********************************
-    PROSTHEICS/CEDURES WIDGETS 
+    PRO-STHEICS/CEDURES WIDGET 
 *********************************/
 <<widget "ArraysForPros">>
     <<set $aid.proc to [], $aid.pros to [], $aid.aid to []>>
@@ -298,7 +255,6 @@
     <<if _powerwheel>><<run $aid.aid.push("Wheelchair (Powered)")>><</if>>
     <<if _reader>><<run $aid.aid.push("Text Reader")>><</if>>
 <</widget>>
-
 
 /*************************** 
     CHOOSE CLASS WIDGETS 
@@ -346,12 +302,10 @@
     >>
 <</widget>>
 /* 
-Notes:
-    You could technically merge the popup widgets below into one, using an argument widget to set each option appart.
+ ~ Notes:
+    You could technically merge the popup widgets below into one, using an argument widget to set each option apart.
 
     I'm using the same passage to display inside the popup because I am lazy. See the ClassExplanations Passage.
-
-    Another easier way would be to use Chapel's Dialog API macro (especially the <<popup>> one). You wouldn't even need the widgets...
 */
 <<widget "PopupWarrior">>
     <<set _explanation to "warrior">>
@@ -360,7 +314,6 @@ Notes:
 <<widget "PopupMage">>
     <<set _explanation to "mage">>
     <<run Dialog.create("The Mage Class").wikiPassage("ClassExplanations").open();>>
-
 <</widget>>
 <<widget "PopupRogue">>
     <<set _explanation to "rogue">>
@@ -374,12 +327,7 @@ Notes:
 /*************************** 
     SPEND POINTS WIDGETS 
 ***************************/
-/* The following widgets are used to update the spending points passage. It can be made MUCH simpler with Cycy's Liveupdate macro (as in those widgets would be useless).
-Wrap the whole block of skill change in the main passage with a << liveblock >>, and use << update >> instead of the << replace >> macos. Like:
-        <<link "MORE">>
-            <<set $skill ++, $points -->> 
-            <<update>>
-        <</link>>
+/* The following widgets are used to update the spending points passage. It uses the new <<do>>/<<redo>> macros in a general way. But you could make it a bit more complex by tagging <<do>> sections (see the SugarCube Documentation).
 */
 <<widget "LockedPoints">>
     <<set 
@@ -560,9 +508,6 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
     >>
 <</widget>>
 
-/* 
-    PopupNote: I'm just lazy, so I merged related popups together, instead of have a passage for each 
-*/
 <<widget "PopupCommoner">>
     <<set _explanation to "commoner">>
     <<run Dialog.create("The Commoner").wikiPassage("StatusExplanations").open();>>
@@ -600,8 +545,6 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
         <<option "Alex (They/Them)">>
     <</cycle>>
 <</widget>>
-
-
 
 /********************************
     MAIN PAGE WIDGETS 
@@ -873,11 +816,12 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
         <</if>>
     <</done>>
 <</widget>>
+
 /********************************
     CHANGE POPUP WIDGETS 
 ********************************/
 /*
-    Of course, all the "Popup" widgets could be reduced to one line of code if you use Chapel's Dialog API Macro set.
+    You could simplify these widgets by using Chapel's  <<popup>> macro (Dialog API set), which will do the same as coded below, only simpler for the coder.
     But this template is base SugarCube only.
 */
 <<widget "PopupNameChange">>
@@ -1024,12 +968,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupSkinColourChange">>
-    <<run Dialog.create("").wikiPassage("").open();>>
-    <<script>>
-        Dialog.setup("Change Your Skin Colour");
-        Dialog.wiki(Story.get("Popup-Skin").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Skin Colour").wikiPassage("Popup-Skin").open();>>
 <</widget>>
 <<widget "PopupSkinChecker">>
     <<set 
@@ -1045,28 +984,18 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupBuildChange">>
-    <<run Dialog.create("").wikiPassage("").open();>>
-    <<script>>
-        Dialog.setup("Change Your Build");
-        Dialog.wiki(Story.get("Popup-Build").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Build").wikiPassage("Popup-Build").open();>>
 <</widget>>
 <<widget "PopupBodyBuild">>
     <<set 
-        _height to ["--", "Very Short {below 5’1”/155cm}", "Short {5’1”–5’7”/155-170cm}", "Average {5’7”–6’/170-185cm}", "Tall {6’–6’5”/185-195cm }", "Very Tall {above 6’5”/195cm}"],
+        _height to ["--", "Very Short {below 5’1”/155cm}", "Short {5’1”–5’7”/155-170cm}", "Average {5’7”–6’/170-185cm}", "Tall {6’–6’5”/185-195cm}", "Very Tall {above 6’5”/195cm}"],
         _type to ["--", "Thin", "Slender", "Average", "Curvy", "Chubby", "Fat"],
         _muscle to ["--", "Ripped", "Muscular", "Athletic", "Toned", "Lean", "Soft"]
     >>
 <</widget>>
 
 <<widget "PopupScarChange">>
-    <<run Dialog.create("").wikiPassage("").open();>>
-    <<script>>
-        Dialog.setup("Change Your Scar(s)");
-        Dialog.wiki(Story.get("Popup-Scar").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Scar(s)").wikiPassage("Popup-Scar").open();>>
 <</widget>>
 <<widget "ScarsPicked">>
     <<if $scars.includes("cutting the brow")>><<set _browscar to true>><</if>>
@@ -1091,12 +1020,7 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupProsChange">>
-    <<run Dialog.create("").wikiPassage("").open();>>
-    <<script>>
-        Dialog.setup("Change Your Prosthesis and Procedures");
-        Dialog.wiki(Story.get("Popup-Pros").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Prosthesis and Procedures").wikiPassage("Popup-Pros").open();>>
 <</widget>>
 <<widget "ProsCheck">>
     <<if $aid.proc.includes("HRT")>><<set _hrt to true>><</if>>
@@ -1127,31 +1051,15 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupBodyModChange">>
-    <<run Dialog.create("").wikiPassage("").open();>>
-    <<script>>
-        Dialog.setup("Change Your Body Modification");
-        Dialog.wiki(Story.get("Popup-BodyMod").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Body Modification").wikiPassage("Popup-BodyMod").open();>>
 <</widget>>
 
-
 <<widget "PopupMakeupChange">>
-    <<run Dialog.create("").wikiPassage("").open();>>
-    <<script>>
-        Dialog.setup("Change Your Cosmetics");
-        Dialog.wiki(Story.get("Popup-Makeup").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Cosmetics").wikiPassage("Popup-Makeup").open();>>
 <</widget>>
 
 <<widget "PopupPersoChange">>
-    <<run Dialog.create("").wikiPassage("").open();>>
-    <<script>>
-        Dialog.setup("Change Your Personality");
-        Dialog.wiki(Story.get("Popup-Perso").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Personality").wikiPassage("Popup-Perso").open();>>
 <</widget>>
 <<widget "PersoBars">>
     <center>
@@ -1161,40 +1069,19 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupClassChange">>
-    <<run Dialog.create("").wikiPassage("").open();>>
-    <<script>>
-        Dialog.setup("Change Your Class");
-        Dialog.wiki(Story.get("Popup-Class").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Class").wikiPassage("Popup-Class").open();>>
 <</widget>>
 
 <<widget "PopupBackgroundChange">>
-    <<run Dialog.create("").wikiPassage("").open();>>
-    <<script>>
-        Dialog.setup("Change Your Background");
-        Dialog.wiki(Story.get("Popup-Back").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Background").wikiPassage("Popup-Back").open();>>
 <</widget>>
-/* Maybe a wealthbar? */
 
 <<widget "PopupROGenderChange">>
-    <<run Dialog.create("").wikiPassage("").open();>>
-    <<script>>
-        Dialog.setup("Change Your ROs' Gender");
-        Dialog.wiki(Story.get("Popup-ROGender").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your ROs' Gender").wikiPassage("Popup-ROGender").open();>>
 <</widget>>
 
 <<widget "PopupFamilyChange">>
-    <<run Dialog.create("").wikiPassage("").open();>>
-    <<script>>
-        Dialog.setup("Change Your Family");
-        Dialog.wiki(Story.get("Popup-Family").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Family").wikiPassage("Popup-Family").open();>>
 <</widget>>
 <<widget "CheckFam">>
     <<set
@@ -1208,27 +1095,13 @@ Wrap the whole block of skill change in the main passage with a << liveblock >>,
 <</widget>>
 
 <<widget "PopupPetsChange">>
-    <<run Dialog.create("").wikiPassage("").open();>>
-    <<script>>
-        Dialog.setup("Change Your Pets");
-        Dialog.wiki(Story.get("Popup-Pets").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Change Your Pets").wikiPassage("Popup-Pets").open();>>
 <</widget>>
 
 <<widget "PopupLexicon">>
-    <<run Dialog.create("").wikiPassage("").open();>>
-    <<script>>
-        Dialog.setup("Lexicon");
-        Dialog.wiki(Story.get("Lexicon").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Lexicon").wikiPassage("Lexicon").open();>>
 <</widget>>
 <<widget "PopupStats">>
-    <<run Dialog.create("").wikiPassage("").open();>>
-    <<script>>
-        Dialog.setup("Statistics");
-        Dialog.wiki(Story.get("Statistics").processText());
-        Dialog.open();
-    <</script>>
+    <<run Dialog.create("Statistics").wikiPassage("Statistics").open();>>
 <</widget>>
+

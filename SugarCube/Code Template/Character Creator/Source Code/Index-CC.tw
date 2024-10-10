@@ -123,7 +123,7 @@
 */
 
 
-:: CC-Check
+:: CC-Check {"position":"325,475","size":"100,100"}
 <h1>Is this Correct?</h1>\
 Please review the character page below and confirm the traits chosen are correct. If you would like to change an option, please click the button //Change option//.
 
@@ -219,7 +219,7 @@ Please review the character page below and confirm the traits chosen are correct
             Aid: $aid.aid</td>
             <td><<button "Change Prosthetics and/or Procedures">><<PopupProsChange>><</button>></td>
         </tr>
-        <tr>
+        <tr id="mods">
             <th>Various Body Features</th>
             <td id="mc-bodymod">You <<if !$body.tattoo>>do not have any tattoo<<else>>have a tattoo $body.tattoo<</if>>.
                 You <<if !$body.piercing>>do not have any piercing<<else>>have a $body.piercing piercing<</if>>.
