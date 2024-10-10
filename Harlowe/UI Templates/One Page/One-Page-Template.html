@@ -9,7 +9,7 @@
 </head>
 <body>
 <tw-story><noscript><tw-noscript>JavaScript needs to be enabled to play Harlowe One Page.</tw-noscript></noscript></tw-story>
-<!-- UUID://37BFE9B3-93E0-4A2C-B74E-3FAEF445DBC3// --><tw-storydata name="Harlowe One Page" startnode="10" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="37BFE9B3-93E0-4A2C-B74E-3FAEF445DBC3" zoom="1" format="Harlowe" format-version="3.3.9" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*~ ~ ~ ~ ~ ~ ~  TABLE OF CONTENTS ~ ~ ~ ~ ~ ~ ~ 
+<tw-storydata name="Harlowe One Page" startnode="10" creator="Twine" creator-version="2.9.2" format="Harlowe" format-version="3.3.9" ifid="37BFE9B3-93E0-4A2C-B74E-3FAEF445DBC3" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*~ ~ ~ ~ ~ ~ ~  TABLE OF CONTENTS ~ ~ ~ ~ ~ ~ ~ 
       I - Import Font
      II - Root
     III - Interface
@@ -117,25 +117,33 @@ tw-icon[alt] {
 #menu {
     /* Same as with #title, but you can style it if you want */
 }
+tw-dialog {
+    background: var(--bg2);
+    color: var(--text);
+    border: 1px solid #444;
+}
 
 /***************************
     MACROS
 ***************************/
     /* Links */
     /*Note: #menu tw-link is for the restart link, but you can separate it if you want it styled differently.*/
-tw-passage tw-link, tw-passage tw-link:visited, #menu tw-link {
+tw-passage tw-link, tw-passage tw-link:visited, #menu tw-link, tw-dialog-links tw-link {
     color: var(--text);
     font-weight: bold;
 }
-tw-passage tw-link:hover, #menu tw-link:hover {
+tw-passage tw-link:hover, #menu tw-link:hover, tw-dialog-links tw-link:hover {
     color: var(--grey);
     text-decoration: underline;
 }
-tw-passage tw-link::after {
+tw-passage tw-link::after, tw-dialog-links tw-link::after {
     content: " ∽";
 }
-tw-passage tw-link::before {
+tw-passage tw-link::before, tw-dialog-links tw-link::before {
     content: "∼ ";
+}
+tw-dialog-links tw-link {
+    border: unset;
 }
 /* 
     This stylesheet doesn't differenciate betwee regular and cycling links, but if you want to, you can do so by targetting these elements: 
@@ -293,7 +301,9 @@ tw-story[tags="title"] {
 &lt;div id=&quot;end&quot;&gt;(link-repeat:&quot;RESTART&quot;)[(restart:)] | (link-repeat:&quot;BACK&quot;)[(undo:)]&lt;/div&gt;</tw-passagedata><tw-passagedata pid="3" name="Footer" tags="footer" position="75,300" size="100,100">&lt;tw-footer&gt;(display:&quot;Game Title&quot;)(display:&quot;Navigation&quot;)(display:&quot;Menu&quot;)&lt;/tw-footer&gt;&lt;!--
 	If you don&#39;t want the players to have a undo/redo option, just remove the middle (display:)
 	The code below is so the Footer is actually separate from the tw-passage element. DO NOT REMOVE THIS SCRIPT!!!!!!
---&gt;&lt;script&gt;$(&#39;tw-footer&#39;).insertAfter(&#39;tw-passage&#39;);&lt;/script&gt;</tw-passagedata><tw-passagedata pid="4" name="Game Title" tags="foot-menu" position="175,300" size="100,100">&lt;div id=&quot;title&quot;&gt;//One Page Template//&lt;/div&gt;</tw-passagedata><tw-passagedata pid="5" name="Interactive Macros" tags="" position="600,25" size="100,100">## Cycling Link
+--&gt;&lt;script&gt;$(&#39;tw-footer&#39;).insertAfter(&#39;tw-passage&#39;);&lt;/script&gt;</tw-passagedata><tw-passagedata pid="4" name="Game Title" tags="foot-menu" position="175,300" size="100,100">&lt;div id=&quot;title&quot;&gt;//One Page Template//&lt;/div&gt;</tw-passagedata><tw-passagedata pid="5" name="Interactive Macros" tags="" position="600,25" size="100,100">## Dialog/Popup
+(link-repeat: &quot;Click For Popup&quot;)[(dialog: [Beyond this point, things get serious. Grab a snack and buckle up.], &quot;Sure.&quot;)]
+## Cycling Link
 (cycling-link: bind _head, &quot;Option 1&quot;, &quot;Option 2&quot;, &quot;Option 3&quot;)
 ## Sequence Link
 (seq-link: bind _candy, &quot;First Click&quot;, &quot;Second Click&quot;, &quot;Final Text&quot;)

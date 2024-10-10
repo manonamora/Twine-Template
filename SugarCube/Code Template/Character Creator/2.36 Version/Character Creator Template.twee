@@ -1,0 +1,4125 @@
+:: StoryTitle
+Character Creator Template
+
+
+:: StoryData
+{
+  "ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1",
+  "format": "SugarCube",
+  "format-version": "2.36.1",
+  "start": "Start",
+  "tag-colors": {
+    "popup": "blue",
+    "creation-page": "green",
+    "widget": "red",
+    "nobr": "red"
+  },
+  "zoom": 1
+}
+
+
+:: About {"position":"150,425","size":"100,100"}
+<h1>Some General Guidance and Notes</h1>\
+<h3>This Guide</h3>\
+This Template/Guide is meant to show what //could// be done and included in a character creator, as both content and interactivity.
+> However, this Guide will not explain how a page is coded, how a macro works, or how to edit it to fit your project. 
+> Please look at the code of this file or refer to the [[SugarCube Documentation|http://www.motoslave.net/sugarcube/2/docs/]] or my [[SugarCube Guide|https://manonamora.itch.io/twine-sugarcube-guide]] for help (or send me an ask :P ).
+This Guide is coded in basic SugarCube (no custom macro), with the format version {2.36.1}. Using another version of SugarCube may not yield the same results (i.e. error messages).
+
+There are cases where custom macros could simplify the code in this template/guide. However, custom macros are dependent on the version of the format, and may break with a different version of SugarCube. Please refer to their specific documentation for use.
+
+This guide uses many widgets, objects and arrays. It is possible to do without, but you may end up with an overwhelming amount of variables. I have used more complex elements because I needed to balance the readability of the guide and the organisation of the code.
+
+<h3>Do not feel like you have to follow this guide to the letter.</h3>\
+Mainly because my words are not always right when describing things, making some sentences akward (and probably typoes). There are probably better ways to phrase some things.
+
+There is no one true way when including a character creator in a game, nor is there a best way to add interactivity. This guide provides //one// interactive option for //one// trait.
+You can choose to only use one form of interactivity or mix-n-match macros, whatever fits your needs/project.
+
+I do not recommend to include all the elements of this Guide in your project:
+# not every available option fit every kind of projects 
+# the listed options are not exhaustive (types of traits or options for traits)
+# choice fatigue is something to consider (i.e. too many choices at once can be overwhelming)
+# some options can be bundled together in one passage (rather than one passager per trait) depending on the interactive macro used (i.e. not links)
+
+Some of these character options can be (re)used during the story rather than during a character creator sequence.
+\
+<h3>Other recommendations</h3>\
+As was coded in this template, I do recommend an option for players to choose a pre-set character or a randomiser (chose options for traits at random), especially if your character creation sequence is large.
+
+Another recommendation is to have a confirmation page to review what the player has chosen, with options to edit specific elements rather than going through the whole process again (like in this template).
+
+If you are including stats (e.g. attributes, personality, or relationships), I do recommend having a separate passage for those (this template provides a raw option).
+
+<h3>Special Thanks</h3>\
+To the Twine Discord server (always) and the IntFiction Forum, for their resources and answering any question I have.
+To HiEv, for his slider code.
+Obviously to TME for making Twine and Tweego, and Chris Klimas for making Twine.
+And you (you know who you are), for suggesting me to make this :P
+
+<<return>>
+
+
+:: CC-Age [creation-page] {"position":"1175,100","size":"100,100"}
+<<set _agerange to ["Early 20s", "Mid 20s", "Late 20s", "Early 30s", "Mid 30s", "Late 30s", "Early 40s", "Mid 40s", "Late 40s", "Early 50s", "Mid 50s", "Late 50s", "Technically dead..."]>>\
+<h1>Indicate your Age</h1>\
+This trait is unlikely to be used in many IF projects, as many have a specific setting/story for the PC. Still, age is another aspect to a character. 
+Below is an example that would give the player different ways to input their PC's age (if they wished to).
+
+//What is your age?//
+* <<linkappend "I can give a general bracket">>:
+> Your age: <<listbox "_agelist">><<optionsfrom _agerange>><</listbox>> <<button [[Confirm|Index-CC]]>><<set $mc.age to _agelist>><</button>>
+<</linkappend>>
+* <<linkappend "I'll be specific">>:
+> First Name: <<numberbox "_agenumber" 18 autofocus>> <<button [[Confirm|Index-CC]]>><<set $mc.age to _agenumber>><</button>>
+<</linkappend>>
+* [[I'd rather not share my age|Index-CC][$mc.age to "{/}"]]
+
+/* 
+Notes:
+    Thought I've included different ways to choose an age, I DO NOT RECOMMEND THE CODE ABOVE! Mainly because it would become a headache down the line, with having too many ranges of ages (brackets and specific numbers) to account for in the variation.
+
+    You'd be better off with using a list of options (listbox/radiobutton/links) or numbers (numberbox), for simplicity sake. 
+    
+    DO NOT USE TEXTBOXES to enter a number age, or you'd end up with a string variable instead of a number. Making increasing the PC's age {<<set $age ++>>} break the code.
+    
+    Even better yet, don't include an age variable :P
+    Less headaches...
+*/
+
+
+:: CC-Background [creation-page] {"position":"1650,700","size":"100,100"}
+<h1>Choose a Background</h1>\
+If the story doesn't require a specific background for the PC, you could let the player pick one, with a potential that it may (or not) affect the story, or other characteristics of the player (e.g. wealth) and/or how other NPCs may perceive the PC. 
+
+The example below takes a more general socio-economical class approach, but you could go into more details withing one class (e.g. different noble status, reputation of the family, etc..).
+
+//What is your background?//
+<div id="choose-class">\
+    <div><<link "Commoner">><<PopupCommoner>><</link>>
+        <<button [[Choose|Index-CC]]>>
+            <<CommonerStartingStats>>
+        <</button>>\
+    </div>\
+    <div><<link "Bourgeois">><<PopupBourgeois>><</link>>
+        <<button [[Choose|Index-CC]]>>
+            <<BourgeoisStartingStats>>
+        <</button>>\
+    </div>\
+    <div><<link "Noble">><<PopupNoble>><</link>>
+        <<button [[Choose|Index-CC]]>>
+            <<NobleStartingStats>>
+        <</button>>\
+    </div>\
+</div>
+You can click on the Class's moniker to learn more about it and see its attribute levels.
+Click on the //Choose// button to select the wanted class.
+
+/*
+Also a bunch of notes:
+    Is this the same code as the //CC-Class// passage? Absolutely. It is was built on the same principle (general class + attribute).
+    Essentially, any non-physical traits that may require explanation (e.g. class, backstory, status...) can be formatted like this.
+
+    Like with the class trait, you could add graphics to make the page POP!
+    I didn't because didn't feel like making a ZIP....
+
+    OOOORRRRR you can just make it a list of links. That works too :P
+*/
+
+
+:: CC-BodyFeatures [creation-page] {"position":"1050,700","size":"100,100"}
+<<set 
+    _tattoo to ["No", "Half-Sleeve", "Full Sleeve", "Neck", "Chest", "Belly", "Leg", "Calf", "Foot", "Covered"],
+    _piercing to ["No", "Belly Button", "Nipple", "Surface (Chest)", "Surface (Arm)", "Surface (Back)", "Surface (Leg)", "Surface (Private)"]
+>>\
+<h1>Options for Body Features</h1>\
+Similar to the Face Features, you can have many options to make the body even more //''special''//. Here are some grouped options:
+
+//Do you have any tattoes?//<<listbox "$body.tattoo">>
+    <<optionsfrom _tattoo>>
+<</listbox>>
+
+//Do you have any piercings?//<<listbox "$body.piercing">>
+    <<optionsfrom _piercing>>
+<</listbox>>
+
+//Do you have any other body modification?//
+<<textbox "$body.mods" "">>
+
+<<button [[Confirm|Index-CC]]>>
+    <<if $body.tattoo is "No">>
+        <<run delete $body.tattoo>>
+    <</if>>
+    <<if $body.piercing is "No">>
+        <<run delete $body.piercing>>
+    <</if>>
+    <<if $body.mods is "">>
+        <<run delete $body.mods>>
+    <</if>>
+    <<set $pages.bodymod to true>>
+<</button>>
+
+/* 
+    Like with the Face Mods, this passage would work better if you use checkboxes rather than a list (to give the player more options). And there are probably more locations for mods as well as better names for them.
+
+    You could also distinguish between the left and right side of the body.  
+*/
+
+
+:: CC-Build [creation-page] {"position":"675,700","size":"100,100"}
+<<BodyBuild>>\
+<h1>Set up the frame of the body</h1>\
+Tall, short, wide, thin... there are many ways to define how a body is framed. Below are examples of setting the PC's height, type, and musculature.
+
+//How tall are you?// <<listbox "$body.height">><<optionsfrom _height>><</listbox>>
+
+//What id your body type?// <<listbox "$body.weight">><<optionsfrom _type>><</listbox>>
+
+//How muscular are you?// <<listbox "$body.musc">><<optionsfrom _muscle>><</listbox>>
+
+<<button [[Confirm|Index-CC]]>><</button>>
+/*
+Notes:
+    Additionally, you could include length of limbs (arms/legs), or size of the head in regards of the body, or going more into detail about additional elements (beer belly, size of chest, etc...).
+
+    Different kinds of builds don't just open the door for additional variation depending on the situation (needs to crouch to pass a low door, can't win a fight because no muscles...), you could even add bonuses on stats (+1 strength if muscular)!
+*/
+
+
+:: CC-Check {"position":"325,475","size":"100,100"}
+<h1>Is this Correct?</h1>\
+Please review the character page below and confirm the traits chosen are correct. If you would like to change an option, please click the button //Change option//
+
+<h2>Basic Info</h2>\
+<table>
+    <tr id="name">
+        <th>First Name</th>
+        <td id="mc-name">$mc.name</td>
+        <td><<button "Change First Name">><<PopupNameChange>><</button>></td>
+    </tr>
+    <tr id="nickname">
+        <th>Nickname</th>
+        <td id="mc-nick">$mc.nickname</td>
+        <td><<button "Change Nickname">><<PopupNickNameChange>><</button>></td>
+    </tr>
+    <tr id="surname">
+        <th>Surname</th>
+        <td id="mc-surb">$mc.surname</td>
+        <td><<button "Change Surname">><<PopupSurNameChange>><</button>></td>
+    </tr>
+    <tr id="gender">
+        <th>Gender Identity</th>
+        <td id="mc-idenity">Gender: <<if $mc.trans>>$mc.trans <</if>>$mc.gender
+        Refered as a: $mc.person
+        Title: $mc.title 
+        Sexuality: $mc.sexu</td>
+        <td><<button "Change Gender">><<PopupGenderChange>><</button>></td>
+    </tr>
+    <tr id="pronouns">
+        <th>Pronouns</th>
+        <td id="mc-pro">$mc.pronouns</td>
+        <td><<button "Change Pronouns">><<PopupPronounChange>><</button>></td>
+    </tr>
+    <tr id="age">
+        <th>Age</th>
+        <td id="mc-age">$mc.age</td>
+        <td><<button "Change Age">><<PopupAgeChange>><</button>></td>
+    </tr>
+</table>
+<h2>Physical Traits</h2>\
+    <h3>Face and Hair</h3>\
+    <table>
+        <tr id="eyes">
+            <th>Eyes</th>
+            <td id="mc-eyes">$mc.eyes</td>
+            <td><<button "Change Eye Colour(s)">><<PopupEyesChange>><</button>></td>
+        </tr>
+        <tr id="hair">
+            <th>Hair</th>/*This is one of the most annoying one to summarise because of all the different elements. The sentences definitely doesn't work completely well with all the options*/
+            <td><span id="mc-hairnat"><<if $hair is "bald">>You are $hair.<<else>>You have $hair.length $hair.texture $hair.colour hair <<if $hair.uniform isnot "Yes">>($hair.uniform)<</if>>
+                Your hair is <<if ndef $dye>>not dyed<<else>>dyed $dye.colour in a $dye.pattern pattern<</if>>. <<if $hair.bangs isnot "No">>You have $hair.bangs. <</if>><<if $hair.shave isnot "No">>Your hair is shaved $hair.shave. <</if>> Your hair is styled in a $hair.do way.<</if>></span>
+            <span id="mc-haircover"><<if $wig>>You are wearing a wig, with $wig.length $wig.colour $wig.texture hair. <<if $wigdye>>The wig is dyed $wigdye.colour in a $wigdye.pattern pattern. <</if>><<if $wig.bangs isnot "No">>Your wig has $hair.bangs. <</if>> Your wig is styled in a $wig.do way.<<elseif $cover>>You are wearing a $cover.<<else>>Your hair is not covered.<</if>></span></td>
+            <td><<button "Change Your Natural Hair">><<PopupHairChange>><</button>>
+            <<button "Change Your Wig/Hair Cover">><<PopupWigChange>><</button>></td>
+        </tr>
+        <tr id="facial-features">
+            <th>Facial Features</th>
+            <td id="mc-ffeat">$facefeatures</td>
+            <td><<button "Change Features">><<PopupFaceFeatChange>><</button>></td>
+        </tr>
+        <tr id="face-mod">
+            <th>Facial Accessories</th>
+            <td id="mc-ffacc">You <<if !$face.tattoo>>do not have any tattoo<<else>>have a tattoe $face.tattoo<</if>>.
+            You <<if !$face.piercing>>do not have any piercing<<else>>have a $face.piercing piercing<</if>>.
+            <<if $face.mods>>You also have the following face mod: $face.mods<</if>></td>
+            <td><<button "Change Modifications">><<PopupFaceAccChange>><</button>></td>
+        </tr>
+    </table>
+    <h3>Body</h3>\
+<table>
+    <tr id="skin-colour">
+        <th>Skin</th>
+        <td id="mc-skin">$skin.satmut $skin.undertone $skin.color
+        $skin.features</td>
+        <td><<button "Change Skin Colour">><<PopupSkinColourChange>><</button>></td>
+    </tr>
+    <tr id="body-build">
+        <th>Build</th>
+        <td id="mc-build">Height: $body.height
+        Type: $body.weight
+        Musculature: $body.musc</td>
+        <td><<button "Change Build">><<PopupBuildChange>><</button>></td>
+    </tr>
+    <tr id="scars">
+        <th>Scars</th>
+        <td id="mc-scar">$scars</td>
+        <td><<button "Change Scar(s)">><<PopupScarChange>><</button>></td>
+    </tr>
+    <tr id="pross">
+        <th>Prothesis and Procedures</th>
+        <td id="mc-pros">Procedures: $aid.proc
+        Prothesis: $aid.pros
+        Aid: $aid.aid</td>
+        <td><<button "Change Prosthetics and/or Procedures">><<PopupProsChange>><</button>></td>
+    </tr>
+    <tr>
+        <th>Various Body Features</th>
+        <td id="mc-bodymod">You <<if !$body.tattoo>>do not have any tattoo<<else>>have a tattoe $body.tattoo<</if>>.
+            You <<if !$body.piercing>>do not have any piercing<<else>>have a $body.piercing piercing<</if>>.
+            <<if $body.mods>>You also have the following body mod: $body.mods<</if>></td>
+        <td><<button "Change Body Mods">><<PopupBodyModChange>><</button>></td>
+    </tr>
+    <tr id="makeup">
+        <th>Cosmetic Use</th>
+        <td id="mc-makup"><<if !$skin.makup>>You don't wear any makeup.<<else>>Your make up is $skin.makup.<</if>>
+        Your nails are $body.naislength<<if $body.nails>>, and are painted $body.nailscolour in $body.nails<</if>>.
+        You <<if !$skin.perfume>>don't wear any perfume<<else>>wear a $skin.perfume scent<</if>>.</td>
+        <td><<button "Change Cosmetic Use">><<PopupMakeupChange>><</button>></td>
+    </tr>
+</table>
+<h2>Personality, Class and Background</h2>\
+<table>
+    <tr id="perso">
+        <th>Personality</th>
+        <td id="mc-perso"><<PersoBars>></td>
+        <td><<button "Change Personality">><<PopupPersoChange>><</button>></td>
+    </tr>
+    <tr id="class">
+        <th>Class (Combat)</th>
+        <td id="mc-class">$class</td>
+        <td><<button "Change Class">><<PopupClassChange>><</button>></td>
+    </tr>
+    <tr id="background">
+        <th>Background</th>
+        <td id="mc-backg">$background</td>
+        <td><<button "Change Background">><<PopupBackgroundChange>><</button>></td>
+    </tr>
+</table>
+<h2>Non-MC Options</h2>\
+<table>
+    <tr id="ro">
+        <th>RO Gender</th>
+        <td id="mc-rogen">$Camille
+        $Fran
+        $Alex</td>
+        <td><<button "Change RO Gender">><<PopupROGenderChange>><</button>></td>
+    </tr>
+    <tr id="family">
+        <th>Family</th>
+        <td id="mc-fam">$family.parents
+        $family.siblings sibling(s)
+        $family.children child(ren)<<if $mc.pregnant>>, with one on the way!<</if>></td>
+        <td><<button "Change Family Situation">><<PopupFamilyChange>><</button>></td>
+    </tr>
+    <tr id="pet">
+        <th>Pets</th>
+        <td id="mc-pet">$mc.pet</td>
+        <td><<button "Change Pet">><<PopupPetsChange>><</button>></td>
+    </tr>
+</table>
+
+<<button [[YES!|CC-Confirm]]>><</button>>
+
+/*
+Notes:
+    I've used multiple tables to organise this page, but you use flexboxes, or a grid, of something completely different. I'm sure this is not even the best way of doing this, but it works soooo....
+
+    You don't need the ids on the <tr>, this was for me to organise/fold lines when coding.
+
+    For some elements, I've copied the same code for the popup from the main //CC-// passages. For others, I've chosen other macros.
+
+    Popups might not be the most accessible option for users. You may want to use separate pages, like done with the main menu.
+*/
+
+
+:: CC-Confirm {"position":"325,600","size":"100,100"}
+<h1>Hi $mc.name!</h1>\
+<h2>You're adventure is about to start...</h2>
+
+<<timed 5s>>
+    <<run Engine.restart()>>
+<</timed>>
+/* 
+    I'm re-setting the template here. 
+*/
+
+
+:: CC-Cosmetics [creation-page] {"position":"1175,700","size":"100,100"}
+<<CosmeticOptions>>
+<h1>Options for Cosmetic Use</h1>\
+A face can be a blank canvas on which you can paint many faces. Makeup truly changes how a person can look.
+Obviously, the options proposed below would be highly dependent on the kind of IF project at hand. Different genre/settings would require different options. It might not even be relevant to the story itself (e.g. due to the PC's age or wealth).
+
+//Do you wear any make up?//
+<<nobr>>
+    <<button "Yes, I wear makeup.">>
+        <<replace "#makeupplus">>//What kind of makeup are you wearing?// <<listbox "$skin.makup">>
+                <<optionsfrom _makeup>>
+            <</listbox>>
+        <</replace>>
+    <</button>>
+     | 
+    <<button "No, I don't wear makeup.">><<run delete $skin.makup>><<replace "#makeupplus">><</replace>><</button>>
+<</nobr>>
+
+<span id="makeupplus"></span>
+
+//How do your nails look like?// <<listbox "$body.naislength">>
+    <<optionsfrom _naillength>>    
+<</listbox>>
+
+//Are your nails painted?// 
+<<nobr>>
+    <<button "Yes, my nails are painted.">>
+        <<replace "#naisplus">>//In what style are your nails painted?// <<listbox "$body.nails">>
+                <<optionsfrom _nailart>>
+            <</listbox>><br>
+            //What colour are your nails painted?// <<listbox "$body.nailscolour">>
+                <<optionsfrom _nailcolour>>
+            <</listbox>>
+        <</replace>>
+    <</button>>
+     | 
+    <<button "No, my nails are natural.">><<run delete $body.nails>><<replace "#naisplus">><</replace>><</button>>
+<</nobr>>
+
+<span id="naisplus"></span>
+
+//Do you wear any perfume?//
+<<nobr>>
+    <<button "Yes, I wear perfume.">>
+        <<replace "#perfumeplus">>//What kind of perfume are you wearing?// <<listbox "$skin.perfume">>
+                <<optionsfrom _perfume>>
+            <</listbox>>
+        <</replace>>
+    <</button>>
+     | 
+    <<button "No, I don't wear any perfume.">><<run delete $skin.perfume>><<replace "#perfumeplus">><</replace>><</button>>
+<</nobr>>
+
+<span id="perfumeplus"></span>
+
+<<button [[Confirm|Index-CC]]>>
+    <<set $pages.makeup to true>>
+<</button>>
+
+/*
+Notes:
+    You could just... merge the yes/no with the type, by adding "No/Nothing" as an option in the listboxes. 
+
+    I have not added explanations for the options, but you may want to add a clickable popup to defined what those mean to players who do not know what "Full Face" might mean...
+*/
+
+
+:: CC-Eyes [creation-page] {"position":"1400,100","size":"100,100"}
+<<set _eyecolours = ["white", "grey", "golden", "green", "blue", "maroon", "brown", "black", "red", "pink", "purple", "lime", "seafoam", "cream"]>>/*
+    The above is because I am too lazy to code each option as one line in the macro. You could even use an object instead to attach a value to each option, but again...
+    Lazy :P
+    And unnecessary in this project.
+*/\
+<h1>Choose your Eye Colour(s)</h1>\
+They say eyes are the window to the soul... so it's not unusual to have this trait included in games, with colours ranging from the usual blue/green/brown/black to more uncommon colours (e.g. pink, white, red, lime, etc...), or a combination of two eye colours (heterochromia).
+
+Do your eyes have <<link "the same colour">><<EyesSame>><</link>> or <<link "different colours">><<EyesDiff>><</link>>?
+
+<span id="eye"></span>
+/* 
+Notes:
+    This example accounts for Heterochromia, but you could add here other eye disorders. [I included the use of glasses and contacts in the Prothesis passage, but it could be included here instead]
+
+    Instead of cycles macros (inside the EyesSame and EyesDiff widgets), you could use a listbox macro or a list of colours (radiobutton/links).
+*/
+
+
+:: CC-FaceAccessories [creation-page] {"position":"1775,100","size":"100,100"}
+<<set 
+    _tattoo to ["No", "Covering the Face", "On the Forehead", "Under the Eye", "On the Cheeks", "Under the Chin", "Covering the Eyebrows", "Lining the lips"],
+    _piercing to ["No", "Eyebrow", "Cheek", "Nose", "Septum", "Ear", "Lip", "Tongue"]
+>>\
+<h1>Pick your Face Accessories</h1>\
+This is honestly the last passage I am coding, and I ran out of introductions. So here's a list of face mods:
+
+//Do you have any tattoes?// <<listbox "$face.tattoo">>
+    <<optionsfrom _tattoo>>
+<</listbox>>
+
+//Do you have any piercings?// <<listbox "$face.piercing">>
+    <<optionsfrom _piercing>>
+<</listbox>>
+
+//Do you have any other face modification?//
+<<textbox "$face.mods" "">>
+
+<<button [[Confirm|Index-CC]]>>
+    <<if $face.tattoo is "No">>
+        <<run delete $face.tattoo>>
+    <</if>>
+    <<if $face.piercing is "No">>
+        <<run delete $face.piercing>>
+    <</if>>
+    <<if $face.mods is "">>
+        <<run delete $face.mods>>
+    <</if>>
+    <<set $pages.faceacc to true>>
+<</button>>
+
+/* 
+    For this page, you may be better off with checkboxes rather than listboxes, as you could have more than one tattoo/piercing/mod. But I didn't want to create another checker widget, because they are so long....;-; 
+
+    There are also other placements where you could have a tattoo/piercing/mod. 
+
+    Facial accessories can go further than body modification (e.g. temporary tattoes, clip earings, extensions...)
+*/
+
+
+:: CC-FacialFeatures [creation-page] {"position":"1650,100","size":"100,100"}
+<h1>Options for Facial Features</h1>\
+There are many things that can make a face memorable, litte noticeable features on one's face. Like a fance moustache, or a methodically placed beauty mark, or a scarred eyebrow. For a character creator, you can force players to pick that //one// think that sets their PC appart...
+... or give them a whole list of options so they can pick however many they want. Like below!
+/* 
+    Are all those options compatible? Absolutely not! :#
+    Unless you maybe have multiple faces....
+    
+    Anyway, it might be bettwe if these below were separated by categories, with some using a radiobutton macro instead, to avoid impossible combinations.
+    BUT! ¯\_(ツ)_/¯
+    I hadn't used this specific macro before in this file... 
+    Good luck figuring out a better way :P
+*/
+//What facial features are applicable to you?//
+* <label><<checkbox "_fullmoustache" false true>> a full moustache</label>
+* <label><<checkbox "_thinmoustache" false true>> a thin moustache</label>
+* <label><<checkbox "_goatee" false true>> a goatee</label>
+* <label><<checkbox "_fullbeard" false true>> a full beard</label>
+* <label><<checkbox "_sideburns" false true>> some sideburns</label>
+* <label><<checkbox "_shadow" false true>> shadow</label>
+* <label><<checkbox "_patch" false true>> soul patch</label>
+* <label><<checkbox "_handlebar" false true>> a handle bar</label>
+* <label><<checkbox "_wrinkes" false true>> wrinkles</label>
+* <label><<checkbox "_mole" false true>> a mole</label>
+* <label><<checkbox "_brow" false true>> a unibrow</label>
+* <label><<checkbox "_thickbrow" false true>> thick brows</label>
+* <label><<checkbox "_thinbrow" false true>> thin brows</label>
+* <label><<checkbox "_noeyelash" false true>> no eye lashes</label>
+* <label><<checkbox "_pointedear" false true>> pointed ears</label>
+* <label><<checkbox "_smallears" false true>> small ears</label>
+* <label><<checkbox "_largeears" false true>> large ears</label>
+* <label><<checkbox "_buttonnose" false true>> a Button nose</label>
+* <label><<checkbox "_romannose" false true>> a Roman nose</label>
+* <label><<checkbox "_crooked" false true>> a Crooked nose</label>
+* <label><<checkbox "_widenose" false true>> a Wide nose</label>
+* <label><<checkbox "_hawknose" false true>> a Hawk nose</label>
+* <label><<checkbox "_pointchin" false true>> a pointy chin</label>
+* <label><<checkbox "_roundchin" false true>> a rounded chin</label>
+* <label><<checkbox "_squarejaw" false true>> a square jaw</label>
+* <label><<checkbox "_pronouncedcheeks" false true>> pronounced cheeks</label>
+* <label><<checkbox "_bmrighteye" false true>> a beauty mark below the right eye</label>
+* <label><<checkbox "_bmlefteye" false true>> a beauty mark below the left eye</label>
+* <label><<checkbox "_bmcheek" false true>> a beauty mark on the cheek</label>
+* <label><<checkbox "_bmlips" false true>> a beauty mark above the lips</label>
+* <label><<checkbox "_freckles" false true>> freckles</label>
+* <label><<checkbox "_facehair" false true>> fluff hair</label>
+* <label><<checkbox "_fangs" false true>> fangs</label>
+* <label><<checkbox "_toothgap" false true>> tooth gap</label>
+* <label><<checkbox "_acne" false true>> acne</label>
+
+<<button [[Confirm|Index-CC]]>><<AllThisInAnArray>><<set $pages.facefeat to true>><</button>>
+
+
+:: CC-Family [creation-page] {"position":"2125,400","size":"100,100"}
+<h1>Check-In with the Family</h1>\
+I'm running our of explanations... Especially for traits that are often story related and would usually be pre-set. But on the off-chance this could be used:
+
+Here are a bunch of optional questions about the PC's family:
+
+//Do you have parents?//
+* <label><<radiobutton "$family.parents" "Mother + Father">>Two parents: a mother and a father</label>
+* <label><<radiobutton "$family.parents" "Mother">>One parent: a mother</label>
+* <label><<radiobutton "$family.parents" "Father">>One parent: a father</label>
+* <label><<radiobutton "$family.parents" "Two Fathers">>Two parents: two fathers</label>
+* <label><<radiobutton "$family.parents" "Two Mothers">>Two parents: two mothers</label>
+* <label><<radiobutton "$family.parents" "Nuclear Family">>More than two parents: a nuclear Family</label>
+* <label><<radiobutton "$family.parents" "No Parents">>No Parents</label>
+
+//How many siblings do you have?// <<numberbox "$family.siblings" 0>>
+
+//How many children do you have?//<<numberbox "$family.children" 0>>
+* <label><<checkbox "_preggo" false true>> I'm also pregnant!</label>
+
+<<button [[Confirm|Index-CC]]>>
+    <<set $pages.family to true>>
+    <<if _preggo>>
+        <<set $mc.pregnant to "I am pregnant">>
+    <<else>>
+        <<run delete $mc.pregnant>>
+    <</if>>
+<</button>>
+/* 
+Notes:
+    This could also be part of the set background of the player (with the Background passage), rather than separately.
+
+    There are way more options than the ones listed above obviously. Like other non-traditional family structures, the PC's placement among the siblings...
+
+    The Numberbox macro does not have a minimum or maximum, though a custom macro restricting the range of number can be found here: http://www.motoslave.net/sugarcube/2/
+    
+*/
+
+
+:: CC-Gender [creation-page] {"position":"925,100","size":"100,100"}
+<h1>Set your Gender Identity</h1>\
+Setting a gender for a PC can be as simple as a ternary list of options (woman/man/nb person), or more complex with the separation of different aspects of the gender identity (identity vs noun/title to refer to someone). Below is an example of the second kind:
+/* 
+Notes:
+    Of course, the elements below are not exhaustive in the definition of one's gender or what is relevant for the PC's gender identity.
+    
+    This template also separates gender identity and gender presentation (see options in the Build passage).
+*/
+//What term do you use to describe your gender?//
+* <label><<radiobutton "$mc.gender" "female" checked>> Female</label>
+* <label><<radiobutton "$mc.gender" "male">> Male</label>
+* <label><<radiobutton "$mc.gender" "nonbinary">> Nonbinary</label>
+* <label><<radiobutton "$mc.gender" "custom">> Sometime else</label>
+
+//Are you trans?//
+* <label><<radiobutton "$mc.trans" "transgender">> Yes</label>
+* <label><<radiobutton "$mc.trans" "cisgender">> No</label>
+* <label><<radiobutton "$mc.trans" "NR" checked>> Not relevant/Don't want to disclose</label>
+
+//People would typically refer to you as...//
+* <label><<radiobutton "$mc.person" "woman" checked>> a woman.</label>
+* <label><<radiobutton "$mc.person" "man">> a man.</label>
+* <label><<radiobutton "$mc.person" "person">> a person.</label>
+* <label><<radiobutton "$mc.person" "custom">> sometime else.</label>
+
+//Due to your title, people refer to you as...//
+* <label><<radiobutton "$mc.title" "lady" checked>> Lady $mc.name.</label>
+* <label><<radiobutton "$mc.title" "lord">> Lord $mc.name.</label>
+* <label><<radiobutton "$mc.title" "liege">> Liege $mc.name.</label>
+* <label><<radiobutton "$mc.title" "custom">> sometime else.</label>
+
+//What do you identify as?//
+* <label><<radiobutton "$mc.sexu" "Heterosexual" checked>> Heterosexual</label>
+* <label><<radiobutton "$mc.sexu" "Homosexual">> Homosexual</label>
+* <label><<radiobutton "$mc.sexu" "Bisexual">> Bisexual</label>
+* <label><<radiobutton "$mc.sexu" "Pansexual">> Pansexual</label>
+* <label><<radiobutton "$mc.sexu" "Asexual">> Asexual</label>
+
+<<button "Confirm">>
+    <<set $pages.gender to true>>
+    <<if $mc.trans is "NR">><<run delete $mc.trans>><</if>>
+    <<if $mc.person is "custom" or $mc.gender is "custom" or $mc.title is "custom">>
+        <<script>>
+            Dialog.setup("Custom Answers");
+            Dialog.wiki(Story.get("GenderAddOn").processText());
+            Dialog.open();
+        <</script>>
+    <<else>>
+        <<goto "Index-CC">>
+    <</if>>
+<</button>>
+
+/*
+Notes: 
+    The radio button macro restrict the player to choose from a limited pool of options. I have included an example on how to add customisation with a popup.
+
+    Also, the first and second question could be merged.
+
+    And, there are more genders and sexuality identities than the ones listed here. You may choose instead of those terms to let the player pick which gender they are attracted to.
+*/
+
+
+:: CC-Hair [creation-page] {"position":"1525,100","size":"100,100"}
+<<HairOptions>><h1>Let's Talk Hair</h1>\
+Hair might be one of the most customisable characteristic there is for IF projects. Whether it is type/texture, density, length, colour, hairdo or accessories, the options are wide and varied.
+
+And I may have gone a bit overboard with this one...
+/* 
+    Frankly, I recommend using multiple passages for this (or something like Cycy's liveupdate macro). The example below is barely passable, and does not even take into account options that would be dependent on previous choices (like a hairdo specific to certain hair type).
+*/\
+\
+//Does hair grow on your head?//
+<<nobr>>
+    <<button "Yes, I have hair.">><<addclass ".hair" "visible">><<addclass ".wigq" "visible">><<set $hair to {}>><</button>>
+     | 
+    <<button "No, I am bald.">><<removeclass ".hair" "visible">><<addclass ".wigq" "visible">><<set $hair to "bald">><</button>>
+<</nobr>>
+<span class="hair">
+//What is your natural hair texture?// <<listbox "$hair.texture">>
+    <<optionsfrom _hairtexture>>
+<</listbox>>
+
+//How long is your natural hair?// <<listbox "$hair.length">>
+    <<optionsfrom _hairlength>>
+<</listbox>>
+
+//What is your natural hair colour?// <<listbox "$hair.colour">>
+    <<optionsfrom _haircolour>>
+<</listbox>>
+
+Is your natural hair colour uniform? <<listbox "$hair.uniform">>
+    <<optionsfrom _hairuniform>>
+<</listbox>>
+
+//Is your hair dyed?//
+<<nobr>>
+    <<button "Yes.">><<addclass ".hairdye" "visible">><<set $dye to {}>><</button>>
+     | 
+    <<button "No.">><<removeclass ".hairdye" "visible">><<unset $dye>><</button>>
+<</nobr>>
+<span class="hairdye">
+//How is the hair dyed?// <<listbox "$dye.pattern">>
+    <<optionsfrom _hairdyied>>
+<</listbox>>
+//
+What colour is the dye? //<<listbox "$dye.colour">>
+    <<optionsfrom _dyecolour>>
+<</listbox>>
+</span>\
+
+//Do you have bangs?// <<listbox "$hair.bangs">>
+    <<optionsfrom _bangs>>
+<</listbox>>
+
+//Is your hair (or part of it) shaved?// <<listbox "$hair.shave">>
+    <<optionsfrom _shavedhair>>
+<</listbox>>
+
+//How is your hair styled?// <<listbox "$hair.do">>
+    <<optionsfrom _hairdo>>
+<</listbox>>
+</span>
+<span class="wigq">\
+//Do you wear a wig?//
+<<nobr>>
+    <<button "Yes, I wear a wig.">><<addclass ".wig" "visible">><<removeclass ".cover" "visible">><<set $wig to {}>><</button>>
+     | 
+    <<button "No, but I wear something else.">><<addclass ".cover" "visible">><<removeclass ".wig" "visible">><<unset $wig>><</button>>
+     | 
+    <<button "No, I only have my hair.">><<removeclass ".wig" "visible">><<removeclass ".cover" "visible">><<unset $wig>><</button>>
+<</nobr>>
+</span>\
+\
+<span class="wig">/*Yes, I'm reusing the same options as with the hair. But you don't have to :P */\
+//What is the wig's hair texture? //<<listbox "$wig.texture">>
+    <<optionsfrom _hairtexture>>
+<</listbox>>
+
+//How long is the wig?// <<listbox "$wig.length">>
+    <<optionsfrom _hairlength>>
+<</listbox>>
+
+//What is the wig primary colour?// <<listbox "$wig.colour">>
+    <<optionsfrom _haircolour>>
+<</listbox>>
+
+//Is your wig dyed?//
+<<nobr>>
+    <<button "Yes.">><<addclass ".wigdye" "visible">><<set $wigdye to {}>><</button>>
+     | 
+    <<button "No.">><<removeclass ".wigdye" "visible">><<unset $wigdye>><</button>>
+<</nobr>>
+<span class="wigdye">
+//How is the wig dyed?// <<listbox "$wigdye.pattern">>
+    <<optionsfrom _hairdyied>>
+<</listbox>>
+
+//What colour is the dye? //<<listbox "$wigdye.colour">>
+    <<optionsfrom _dyecolour>>
+<</listbox>>
+</span>\
+
+//Does the wig have bangs?// <<listbox "$wig.bangs">>
+    <<optionsfrom _bangs>>
+<</listbox>>
+
+//How is your wig styled?// <<listbox "$wig.do">>
+    <<optionsfrom _hairdo>>
+<</listbox>>
+</span>\
+\
+<span class="cover">
+//What are you wearing on your head?// <<listbox "$cover">>
+    <<optionsfrom _hairaccess>>
+<</listbox>> 
+</span>
+
+<<button [[Confirm|Index-CC]]>><<set $pages.hair to true>><</button>>
+
+Please answer the question below as they appear on the screen. If you would like to reset this page, <<link [[Click Here|CC-Hair]]>><<unset $hair, $wig>><</link>>. Click the button when you are done.
+
+/* 
+Further notes:
+    Instead of << removeclass >>, you could use << replace >> or Cycy's liveupdate macro. I just wanted to mess around with a different DOM macro.... and maybe I shouldn't have.
+
+    Though I gave options for the hair colour (which have been kept relatively simple), a textbox could work as well there. Same for the wig colour, and the dye.
+
+    For hair dies, you could give the options to enter more than one colour (either through textboxes or if you use another passage, a repeat of the same macro for the number of colours chosen by the player).
+
+    When it comes to hairdos (natural hair or wig), it is possible to take into account the hair texture or the length of the hair. But you would need to structure the page differently and/or use special custom macro.
+
+    For the hair accessories, you could consider using a checkbox list instead (and have the accesories piling up on the PC's head). It is also possible to customise the accessories further (colour, texture, length...). But I've done enough here...
+*/
+
+
+:: CC-Name [creation-page] {"position":"550,100","size":"100,100"}
+<h1>Choose your Name</h1>\
+This trait is pretty much one of the most essential item for IF projects, if the PC is named during the game and does not have preset uncustomisable identitifcation. 
+Depending on the project, you may want to provide a list of potential names for the PC or leave them the option to choose a different name altogether. The example below includes both options.
+
+//What is your name?//
+* <<linkappend "I have a feminine name">>:
+* [[Suzette|Index-CC][$mc.name to "Suzette"]]
+* [[Maribelle|Index-CC][$mc.name to "Maribelle"]]
+* [[Francine|Index-CC][$mc.name to "Francine"]]
+<</linkappend>>
+* <<linkappend "I have a masculine name">>:
+* [[Thomas|Index-CC][$mc.name to "Thomas"]]
+* [[Charles|Index-CC][$mc.name to "Charles"]]
+* [[Alfonso|Index-CC][$mc.name to "Alfonso"]]
+<</linkappend>>
+* <<linkappend "I have a gender-neutral name">>:
+* [[Riley|Index-CC][$mc.name to "Riley"]]
+* [[Blake|Index-CC][$mc.name to "Blake"]]
+* [[Taylor|Index-CC][$mc.name to "Taylor"]]
+<</linkappend>>
+* <<linkappend "I want to input my own name">>: <span id="error">Try //Manon// if you dare...</span>
+> First Name: <<textbox "$mc.name" "" autofocus>> <<button "Confirm">>
+    <<if $mc.name is "Manon">> 
+        /* This is an example of restricting options to input, giving the player an error message */
+        <<replace "#error" t8n>>Yeah, can't use that one, buddy!<</replace>>
+    <<else>>
+        <<if !$mc.name>>
+            <<set $mc.name to "No-Name">>
+        <</if>>
+        <<goto "Index-CC">>
+    <</if>>
+<</button>>
+<</linkappend>>
+
+Once you are set on a name (by clicking one of the listed names or confirming the input), you will be sent back to the menu of traits.
+
+/* 
+Notes:
+    There is no reason for me to add this as the main text, but my to-go option for setting names has always been just a simple text-box. Or just not include this at all (unamed PC or preset PC).
+
+    The textbox allowing for more complex names (multiple first names or hyphenated names), messing with the formating of names (toLowerCase() or toUpperFirst() or toUpperCase()) can have weird consequences... 
+*/
+
+
+:: CC-Nickname [creation-page] {"position":"675,100","size":"100,100"}
+<h1>Choose your Nickname</h1>\
+This traint might not be very common, though I'd imagine it would be used by the PC's family, friends, or ROs (or as a derogaroty way to refer to the PC). If set, you may want to ensure it is included in the story in some form (in specific scenes or at random).
+/* 
+Notes:
+    You could even set up different nicknames depending on the person saying it.
+
+    You can use it at random with a widget which could include the following code:
+    <<if $NicknameVariable>> <-checks if it is defined
+        <<print either($NameVariable, $NicknameVariable)>>
+    <</if>>
+*/
+There are multiple ways to set a nickname, from a list of pre-determined options or a simple textbox. The example below will give the player the options whether to have an nickname.
+
+//Do you go by a nickname?//
+* <<linkappend "Yes, I do!">>:
+> First Name: <<textbox "$mc.nickname" "" autofocus>> <<button "Confirm" "Index-CC">><</button>>
+<</linkappend>>
+* [[No|Index-CC][$mc.nickname to "{/}"]]
+
+Once you are set on a name (by clicking one of the listed options or confirming the input), you will be sent back to the menu of traits.
+/*  
+    I'm only setting the nickname to a "fake thing" for the >No< option for the sake of the menu and the checking page.
+    You may want to ensure the variable is unset before the game starts if the player chose not to have a nickname or leave the textbox empty.
+*/
+
+
+:: CC-PROS [creation-page] {"position":"925,700","size":"100,100"}
+<h1>Indicate Procedures and Prothesis</h1>\
+I've been trying to think of a good introduction here for days, but nothing is coming out right. So here are some options to include more trans/nb and disability representation for the PC.
+
+//Have you undergone any of the following Procedures?//
+* <label><<checkbox "_hrt" false true>> HRT</label> (Hormone Replacement Therapy)
+* <label><<checkbox "_topsurg" false true>> Top Surgery</label> (Breast Augmentation/Reduction/Implants/Removal/etc...)
+* <label><<checkbox "_bottomsurg" false true>> Bottom Surgery</label>
+* <label><<checkbox "_facesurg" false true>> Facial Reconstruction</label>
+* <label><<checkbox "_othersurg" false true>> Other Reconstructive Surgery</label>
+
+//Do you use any of the following prothesis?//
+* <label><<checkbox "_glasses" false true>> Glasses</label>
+* <label><<checkbox "_contacts" false true>> Contacts</label>
+* <label><<checkbox "_hearaidrem" false true>> Hearing Aid</label> (removable)
+* <label><<checkbox "_hearaidimp" false true>> Hearing Aid</label> (Implant)
+* <label><<checkbox "_prosfingers" false true>> Prosthesis</label> (Fingers)
+* <label><<checkbox "_proshand" false true>> Prosthesis</label> (Hand)
+* <label><<checkbox "_prosarm" false true>> Prosthesis</label> (Arm)
+* <label><<checkbox "_prostoes" false true>> Prosthesis</label> (Toes)
+* <label><<checkbox "_prosfoot" false true>> Prosthesis</label> (Foot)
+* <label><<checkbox "_prosleg" false true>> Prosthesis</label> (Leg)
+/* 
+Notes:
+    Though I did not make separate options, you could add an option to determine whether the prothesis is on the right or left side of the body, or go even more in details for the fingers and toes and indicate the concerned limb.
+
+    A similar thing could be applied to the aid section below.
+    For example: the prescription for Glasses and Contacts, or the type of Hearing Aid. 
+*/
+//Do you use any of the following aid?//
+* <label><<checkbox "_cane" false true>> Cane</label>
+* <label><<checkbox "_crutches" false true>> Crutches</label>
+* <label><<checkbox "_walkter" false true>> Walker</label>
+* <label><<checkbox "_servaniguide" false true>> Service Animal</label> (Guide)
+* <label><<checkbox "_servaniother" false true>> Service Animal</label> (Other)
+* <label><<checkbox "_handwheel" false true>> Wheelchair</label> (Hand)
+* <label><<checkbox "_powerwheel" false true>> Wheelchair</label> (Powered)
+* <label><<checkbox "_reader" false true>> Text Reader</label>
+
+<<button [[Confirm|Index-CC]]>>
+    <<set $pages.pros to true>>
+    <<ArraysForPros>>
+<</button>>
+
+
+:: CC-Personality [creation-page] {"position":"1400,700","size":"100,100"}
+<h1>Choose your Personality</h1>\
+While this would probably work better for the player if this trait is calculated through a series of choices, it is still possible to ask the player to choose the PC's personality ahead of the story. Doing it so could give the PC advantages for the story (e.g. outgoing PC might be more persuasive).
+
+//Are you more Introverted or Extroverted?//
+<center>\
+Introverted <input type="range" id="slidetest" name="slidetest" min="1" max="100" value="25" class="slider" data-var="$intext" oninput="SugarCubeInput(this)"> Extroverted
+</center>
+
+//Are you more Cold-natured or Warm-natured?//
+<center>\
+Cold <input type="range" id="slidetest" name="slidetest" min="1" max="100" value="25" class="slider" data-var="$coldwarm" oninput="SugarCubeInput(this)"> Warm
+</center>
+
+<<button [[Confirm|Index-CC]]>>
+    <<set $pages.perso to true>>
+<</button>>
+/*
+Notes:
+    Ok, so I kind of lied. The template has //some// custom code. Some JavaScript and jquery that affect an HTML slider. See the JavaScript passage.
+    Unless {:passagerender} or {State.setVar} change with new updates (UNLIKELY), this won't ever break. 
+*/
+
+
+:: CC-Pets [creation-page] {"position":"2250,400","size":"100,100"}
+<<set _animal to ["--", "a turtle", "a dog", "a cat", "a bird", "a rodent", "a snake", "a tiger", "a dragon", "a robot", "a horse", "a spider", "a moon", "a cow", "a pig"]>>\
+<h1>Choosing a Pet</h1>\
+There are plenty of reasons to why you should include a pet option in a projet, the main being because they are super cute! From a singular companion to a menagerie, there are many ways to let players choose their pets. Below is an example of the former option.
+
+//What pet do you have?// <<listbox "_pet">>
+    <<optionsfrom _animal>>
+<</listbox>>
+
+<<button [[Confirm|Index-CC]]>>
+    <<if _pet isnot "--">>
+        <<set $mc.pet to _pet>>
+    <<else>>
+        <<run delete $mc.pet>>
+    <</if>>
+<</button>>
+
+Choose the option wanted from the list, and click the button to return to the menu.
+
+/* 
+Notes:
+    I've mixed up genres here with the options. But it can be edited at will.
+
+    Some further customisation for the pet could include: the name, the race/specie (depending on the animal), the colour of the fur/scales/coat/etc, a specific trait...
+
+    For a menagerie of pets: checkboxes.
+*/
+
+
+:: CC-Pronouns [creation-page] {"position":"1050,100","size":"100,100"}
+<h1>Choose your Pronouns Set</h1>\
+Another important aspect of gender identity is pronouns. The most common sets are {she/her}, {he/him}, and {they/them}. The example below has expanded that list to a couple neopronouns sets, as well as adding a //Custom// option, for which the player can fill their preferences.
+
+//What pronoun set are you most comfortable with?//
+* <label><<radiobutton "$mc.pronouns" "She/Her" checked>>She/Her</label>
+* <label><<radiobutton "$mc.pronouns" "He/Him">>He/Him</label>
+* <label><<radiobutton "$mc.pronouns" "They/Them (singular)">>They/Them (singular)</label>
+* <label><<radiobutton "$mc.pronouns" "They/Them (plural)">>They/Them (plural)</label>
+* <label><<radiobutton "$mc.pronouns" "Ae/Aer">>Ae/Aer</label>
+* <label><<radiobutton "$mc.pronouns" "E/Em">>E/Em</label>
+* <label><<radiobutton "$mc.pronouns" "custom">>A different set...</label>
+
+<<button "Confirm">>
+    <<set $pages.pronouns to true>>
+    <<if $mc.pronouns is "custom">>
+        <<set $proset.custom to true>>
+        <<script>>
+            Dialog.setup("Custom Pronouns");
+            Dialog.wiki(Story.get("PronounAddOn").processText());
+            Dialog.open();
+        <</script>>
+    <<else>>
+        <<set $proset.custom to false>>
+        <<PronounsSet>>
+        <<goto "Index-CC">>
+    <</if>>
+<</button>>
+
+You can choose the //Custom// option if you would like to customise a specific pronoun, even if your main ones are already listed above.
+
+/* 
+    If the PC is never referred by the 3rd person during the story (e.g. another person talking about the PC), this section would not be particularly relevant.
+    If still included, you may not need the macro setting the actual pronouns into specific variables. 
+*/
+
+
+:: CC-ROGender [creation-page] {"position":"2000,400","size":"100,100"}
+<h1>Choose the Gender of ROs</h1>\
+It is not uncommon now to see IF projects where some (or even all) ROs do not have a set gender, allowing the player to choose the gender (and for some the pronouns) of the potential romantic options. There are many ways to do this, from letting the player manually chose the gender of the ROs, or tie it to the sexuality of the PC. 
+Some projects even let the player choose the pronouns of the RO, separate to their gender.
+
+The example below gives the player the option to set all genders at once, or one for each RO.
+
+> During this story you will meet: 
+> ~ Camille Renaud (She/He/They)
+> ~ Frances/Frank  Wallace (She/He/They)
+> ~ Alexander/Alexandra/Alex Curtis (She/He/They)
+
+//Do you want to set the gender of the ROs?//
+* [[Set them all as female (She/Her)|Index-CC][$pages.rogen to true, $Camille to "Camille (She/Her)", $Fran to "Frances (She/Her)", $Alex to "Alexandra (She/Her)"]]
+* [[Set them all as male (He/Him)|Index-CC][$pages.rogen to true, $Camille to "Camille (He/Him)", $Fran to "Frank (He/Him)", $Alex to "Alexander (He/Him)"]]
+* [[Set them all as nonbinary (They/Them)|Index-CC][$pages.rogen to true, $Camille to "Camille (They/Them)", $Fran to "Frances (They/Them)", $Alex to "Alex (They/Them)"]]
+* [[Randomise the gender|Index-CC][$pages.rogen to true, $Camille to "Camille (She/Her)", $Fran to "Frances (They/Them)", $Alex to "Alexander (He/Him)"]]
+* <<linkappend "Set each RO separately">>
+** <<CamilleCycle>> Renaud
+** <<FranCycle>> Wallace 
+** <<AlexCycle>> Curtis
+    <<button [[Confirm|Index-CC]]>>
+        <<set $Camille to _camille, $Fran to _fran, $Alex to _alex, $pages.rogen to true>>
+    <</button>>
+<</linkappend>>
+* [[Set the gender when each RO is introduced|Index-CC][$pages.rogen to true, $Camille to "N/C", $Fran to "N/C", $Alex to "N/C"]]
+
+Please choose one of the options above. You will be sent back to the main menu.
+
+/* 
+Notes:
+    There are, of course, many more pronoun sets than the one listed above, as well as including custom ones. But for simplicity's sake with template, I just showcased the interactivity.
+
+    Not all ROs should be gender selectable. Not all Gender selectable ROs should have the same options. I've just used the same options out of laziness.
+
+    Also the randomisation here is not a true one. I've picked the genders at random before coding them.
+
+    I did not set the actual pronouns of the ROs, but it would work the same way as the << PronounsSet >> widget
+*/
+
+
+:: CC-Scars [creation-page] {"position":"800,700","size":"100,100"}
+<h1>Pick your <s>FIGHTER</s> Scars</h1>\
+/*Sorry, I was watching TEKKEN when I wrote this part...*/\
+\
+To show off the PC's badassery, or their very tragic backstory, or their stupid need to run into danger, there is a trait for that: ''scars''. Long, short, deep, just a graze, maybe colour changing... you can go as in detail as you want.
+Below, however, shows only a list of locations for potential scars. 
+/* 
+Notes:
+    You could seperate this list and include the face scars into the Face Feature passage instead.
+
+    You could also choose to customise each scar even deeper: discoloration, healed/crusty, type of scarring...
+    Though I would recommend this to be done if only one or maybe to scars at most are chosen.
+*/
+//Do you have any scar on your body?//
+* <label><<checkbox "_browscar" false true>> cutting the brow</label>
+* <label><<checkbox "_eyescar" false true>> crossing the eye</label>
+* <label><<checkbox "_nosescar" false true>> across the nose</label>
+* <label><<checkbox "_cheekscar" false true>> along the cheek</label>
+* <label><<checkbox "_lipscar" false true>> cutting the lip</label>
+* <label><<checkbox "_chinscar" false true>> on the chin</label>
+* <label><<checkbox "_bitescar" false true>> bite marks on the neck</label>
+* <label><<checkbox "_neckscar" false true>> along the neck</label>
+* <label><<checkbox "_throatscar" false true>> across the throat</label>
+* <label><<checkbox "_heartscar" false true>> across the heart</label>
+* <label><<checkbox "_shoulderscar" false true>> cutting the shoulder</label>
+* <label><<checkbox "_torsoscar" false true>> across the torso</label>
+* <label><<checkbox "_ceasarscar" false true>> a caesarian</label>
+* <label><<checkbox "_hipscar" false true>> along the hip</label>
+* <label><<checkbox "_spinescar" false true>> down the spine</label>
+* <label><<checkbox "_backcar" false true>> across the back</label>
+* <label><<checkbox "_buttscar" false true>> bite marks on the butt cheeks</label>
+* <label><<checkbox "_legscar" false true>> down the leg</label>
+* <label><<checkbox "_footscar" false true>> across the foot</label>
+
+<<button [[Confirm|Index-CC]]>>
+    <<set $pages.scars to true>>
+    <<AllThisInAnArrayButItsScars>>
+<</button>>
+
+/* 
+Notes:
+    I was reading a vampire book when I made this passage... 
+
+    The list does not include where the scar is located aside from the general spot. you could include a left/right, top/middle/bottom, front/side/back options if you want to add more details.
+*/
+
+
+:: CC-Skin [creation-page] {"position":"550,700","size":"100,100"}
+<h1>Choose your Skin Characteristics</h1>\
+This page is probably one of the most common one included in IF projects (that include character creators). The range and type of options will depend on the type of game: a canonically [insert ethnicity] PC may be given a more limited range of tones, while a Fantasy or Sci-Fi setting where the PC can be of a different specie may have more unconventional skin colours (e.g. blue, green).
+/* 
+    The options available should fit the project. A pre-set PC may not even be able to change this trait.
+*/
+The example below shows a more detailed way to set this trait:
+/* 
+    All the options from the three widgets could be combined in one (probably long) list. Or you may want to use other words to refer to skin tones. 
+*/
+Your skin colour is <<SkinColourCycle>>, with a <<SkinSatMutCycle>> <<SkinToneCycle>> undertone.
+
+//Does your skin have any notable features?//
+* <label><<checkbox "_vitiligo" false true>> Viligo</label>
+* <label><<checkbox "_freckles" false true>> Freckles</label>
+* <label><<checkbox "_eczema" false true>> Eczema</label>
+* <label><<checkbox "_beatymarks" false true>> Beauty Marks</label>
+* <label><<checkbox "_albinism" false true>> Albinism</label>
+
+<<button [[Confirm|Index-CC]]>>
+    <<set 
+        $skin.color to _color,
+        $skin.satmut to _satmut,
+        $skin.undertone to _undertone,
+        $skin.features to []
+    >>
+    <<if _vitiligo>><<run $skin.features.push("Viligo")>><</if>>
+    <<if _freckles>><<run $skin.features.push("Freckles")>><</if>>
+    <<if _eczema>><<run $skin.features.push("Eczema")>><</if>>
+    <<if _beatymarks>><<run $skin.features.push("Beauty Marks")>><</if>>
+    <<if _albinism>><<run $skin.features.push("Albinism")>><</if>>
+<</button>>
+
+
+:: CC-StatClass [creation-page] {"position":"1525,700","size":"100,100"}
+<h1>Choose your Class</h1>\
+This sections will obviously be very specific, applying only to IF projects where the PC is involved in some sort of Combat mechanism or RPG system (with/out dice check). 
+
+The example below would work more with a Fantasy setting, but it can be edited to showcase options for a class (or even pre-set).The code includes setting variables for different attributes/skils.
+
+//What class have you chosen for yourself?//
+<div id="choose-class">\
+    <div><<link "Warrior">><<PopupWarrior>><</link>>
+        <<button [[Choose|CS2]]>>
+            <<WarriorStartingStats>>
+        <</button>>\
+    </div>\
+    <div><<link "Mage">><<PopupMage>><</link>>
+        <<button [[Choose|CS2]]>>
+            <<MageStartingStats>>
+        <</button>>\
+    </div>\
+    <div><<link "Rogue">><<PopupRogue>><</link>>
+        <<button [[Choose|CS2]]>>
+            <<RogueStartingStats>>
+        <</button>>\
+    </div>\
+</div>\
+
+You can click on the Class's moniker to learn more about it and see its attribute levels.
+Click on the //Choose// button to select the wanted class.
+/*
+Notes:
+    Because I wanted to only have an HTML file, this page doesn't include illustrations to showcase each class. Just add an <img> above the link, and you'd be more or less set :P
+
+    While there are only three class in this example, you could expand it to as many as you want.
+
+    Please ensure you've tested this for mobile, if you add any element to the page. Since the options are in a flex box, they should appear one below the other if the screen width decreases.
+*/
+
+
+:: CC-Surname [creation-page] {"position":"800,100","size":"100,100"}
+<h1>Choose your Surname</h1>\
+Like with First names, this trait can be an extra way to add customisation to the PC. Thought, for many IF projects, this would be completely irrelevant, as the PC's backstory tend to be pre-set. Still, there are many scenarios where the PC may need a/another surname.
+/* 
+Notes:
+    Examples of scenarios: going undercover (spy), giving someone a fake name to enter a place you shouldn't enter, starting a new life...
+
+    Another thing that could be tied to the name would be a background for the PC, and potentially special traits, bonuses, or other. See the Background passage.
+*/
+The example below only includes pre-selected options for the player to choose.
+
+//What is your surname?//
+* [[Bartlett|Index-CC][$mc.surname to "Bartlett"]]
+* [[Kerr|Index-CC][$mc.surname to "Kerr"]]
+* [[Silva|Index-CC][$mc.surname to "Silva"]]
+
+Once you are set on a name (by clicking one of the listed options), you will be sent back to the menu of traits.
+
+/* 
+    Of course, you are not bound to a list of options. A textbox is also possible, letting the player choose for themselves (like with the name/nickname). Or the options could be formatted inside a listbox or with ratiobutton. 
+*/
+
+
+:: CS2 [creation-page] {"position":"1525,825","size":"100,100"}
+<<PopupExtraPoints>><<LockedPoints>>\
+<h1>Spend your Points</h1>\
+Following the more RPG types of games, with level ups, you may want to award points to the players so they can improve their abilities. Here's one way of doing it below:
+
+//To upgrade your skills, and make future adventures easier, increase the level of your abilities!//
+<center>
+    strength : <<RemoveSTR>><span id="strength">$stat.strength</span><<AddSTR>>
+    dexterity : <<RemoveDEX>><span id="dexterity">$stat.dexterity</span><<AddDEX>>
+    willpower : <<RemoveWIL>><span id="willpower">$stat.willpower</span><<AddWIL>>
+    magic : <<RemoveMAG>><span id="magic">$stat.magic</span><<AddMAG>>
+    cunning : <<RemoveCUN>><span id="cunning">$stat.cunning</span><<AddCUN>>
+    consitution : <<RemoveCON>><span id="consitution">$stat.consitution</span><<AddCON>>
+
+    points left: <span id="leftover">$availablepts</span>
+</center>
+<<button [[Confirm|Index-CC]]>><</button>>
+/* 
+So Many Notes:
+    It is partially mentioned in the Widget passage, but this is not the simplest way of updating the variable on the page. This is an example for SugarCube without custom macro. 
+    
+    Using Cycy's LiveUpdate Custom macro would reduce the amount of code needed by at least half (maybe 2/3).
+    If you wrap the whole attributes block with the << liveblock >> macro, and use the << update >> one inside the arrow links, you won't need to set special <span>s to target and update manually.
+    See the code example I've posted here: https://intfiction.org/t/stat-distribution-system-using-numerical-variables-help/65679/2
+
+    If you wanted to go even deeper, you could have the player click on the name of the ability to get more information about it (similar to what was done with the Class or Background passage).
+*/
+
+
+:: ClassExplanations [popup] {"position":"1775,700","size":"100,100"}
+<<if _explanation is "warrior">>\
+    Warriors find themselves on the front line, dealing damage in close combat. Their high levels in streght and dexterity help ward off enemies. Their high constitution also makes them good tanks.
+
+    //Stats://
+* strength : 5
+* dexterity : 4
+* willpower : 0
+* magic : 1
+* cunning : 1
+* consitution : 3
+<<elseif _explanation is "mage">>\
+    Mages get their abilities through high levels of magic and strong willpower. They have the widest range of specialisation, from healing to range damange or close combat. Their low constitution, however, make them weak to attacks.
+
+    //Stats://
+* strength : 1
+* dexterity : 1
+* willpower : 4
+* magic : 6
+* cunning : 2
+* consitution : 0
+<<elseif _explanation is "rogue">>\
+    Rogues use subterfuge and agility to handle their enemies. Working best in the dark, they have high levels of cunning and dexterity, making them incredibly deadly. Their low constitution, however, make them weak to attacks.
+
+    //Stats://
+* strength : 1
+* dexterity : 5
+* willpower : 2
+* magic : 1
+* cunning : 5
+* consitution : 0
+<<else>>\
+    The Gods are looking positively on you.
+    They are awarding you:
+    <center>10 extra SP!</center>
+<</if>>
+/* 
+Notes:
+    I'm incredibly lazy, so I merged the class popups together, instead of creating a passage for each.
+    There is no good or bad ways of doing this, honestly.
+
+    The descriptions are highly generic. I def pulled them out of my ass.
+*/
+
+
+:: GenderAddOn [popup] {"position":"925,225","size":"100,100"}
+Please fill all available textboxes below.
+<<if $mc.gender is "custom">>//What term do you use to describe your gender?//
+    <<textbox _gender "">>
+<</if>>
+<<if $mc.person is "custom">>//People would typically refer to you as a/an...//
+    <<textbox _person "">>
+<</if>>
+<<if $mc.title is "custom">>//Due to your title, people refer to you as a/an...//
+    <<textbox _title "">>
+<</if>>
+
+<<button [[Confirm|Index-CC]]>>
+    <<if $mc.gender is "custom" && _gender is "">>
+        <<set $mc.gender to "nonbinary">>
+    <<elseif $mc.gender is "custom">>
+        <<set _gender to $mc.gender.toLowerCase()>>
+    <</if>>
+    <<if $mc.person is "custom" && _person is "">>
+        <<set $mc.person to "person">>
+    <<elseif $mc.person is "custom">>
+        <<set _person to $mc.person.toLowerCase()>>
+    <</if>>
+    <<if $mc.title is "custom" && _title is "">>
+        <<set $mc.title to "liege">>
+    <<elseif $mc.title is "custom">>
+        <<set _title to $mc.title.toLowerCase()>>
+    <</if>>
+    <<run Dialog.close()>>
+<</button>>
+
+/*
+    I haven't included a warning note, forcing the player to fill in the textboxes (leaving the popup open until they are all filled), because I am lazy. There are a bunch of ways to customise this interactive elements.
+    So if it's not filled, the PC is gender neutral for all elements.
+*/
+
+
+:: Index-CC {"position":"325,350","size":"100,100"}
+<h1>List of Traits</h1>\
+<center><<button [[Use the Randomiser|CC-Check]]>><<Randomiser>><</button>> | <<button [[Use the Pre-Set|CC-Check]]>><<PreSet>><</button>></center>
+<h2>Basic Info</h2>\
+<div class="index-flex">\
+    <div id="name">\
+        FIRST NAME 
+        <<button [[Choose|"CC-Name"]]>><</button>>\
+    </div>
+    <div id="nickname">\
+        NICKNAME 
+        <<button [[Choose|CC-Nickname]]>><</button>>\
+    </div>\
+    <div id="surname">\
+        SURNAME 
+        <<button [[Choose|CC-Surname]]>><</button>>\
+    </div>\
+    <div id="gender">\
+        GENDER AND
+        SEXUAL IDENTITY 
+        <<button [[Choose|CC-Gender]]>><</button>>\
+    </div>\
+    <div id="pronouns">\
+        PRONOUNS
+        <<button [[Choose|CC-Pronouns]]>><</button>>\
+    </div>\
+    <div id="age">\
+        AGE 
+        <<button [[Choose|CC-Age]]>><</button>>\
+    </div>\
+</div>\
+<h2>Physical Traits</h2>\
+    <h3>Face and Hair</h3>\
+        <div class="index-flex">\
+            <div id="eyes">\
+                EYES 
+                <<button [[Choose|CC-Eyes]]>><</button>>\
+            </div>\
+            <div id="hair">\
+                HAIR 
+                <<button [[Choose|CC-Hair]]>><</button>>\
+            </div>\
+            <div id="ffeat">\
+                VARIOUS
+                FACIAL FEATURES
+                <<button [[Choose|CC-FacialFeatures]]>><</button>>\
+            </div>\
+            <div id="facc">\
+                FACIAL ACCESSORIES
+                <<button [[Choose|CC-FaceAccessories]]>><</button>>\
+            </div>\
+        </div>\
+    <h3>Body</h3>
+    <div class="index-flex">
+        <div id="skin">\
+            SKIN
+            <<button [[Choose|CC-Skin]]>><</button>>\
+        </div>\
+        <div id="build">\
+            BUILD
+            <<button [[Choose|CC-Build]]>><</button>>\
+        </div>\
+        <div id="scars">\
+            SCARS
+            <<button [[Choose|CC-Scars]]>><</button>>\
+        </div>\
+        <div id="pros">\
+            PROCEDURES 
+            AND PROSTHESIS
+            <<button [[Choose|CC-PROS]]>><</button>>\
+        </div>\
+        <div id="mods">\
+            BODY MODS
+            <<button [[Choose|CC-BodyFeatures]]>><</button>>\
+        </div>\
+        <div id="makeup">\
+            COSMETIC USE
+            <<button [[Choose|CC-Cosmetics]]>><</button>>\
+        </div>\
+    </div>\
+<h2>Personality, Class and Background</h2>\
+<div class="index-flex">
+    <div id="perso">\
+        PERSONALITY 
+        <<button [[Choose|CC-Personality]]>><</button>>\
+    </div>
+    <div id="class">\
+        CLASS (Combat)
+        <<button [[Choose|CC-StatClass]]>><</button>>\
+    </div>\
+    <div id="back">\
+        BACKGROUND 
+        <<button [[Choose|CC-Background]]>><</button>>\
+    </div>\
+</div>\
+
+<h2>Non-MC Options</h2>\
+<div class="index-flex">
+    <div id="rogender">\
+        RO GENDER
+        <<button [[Choose|CC-ROGender]]>><</button>>\
+    </div>\
+    <div id="family">\
+        FAMILY 
+        <<button [[Choose|CC-Family]]>><</button>>\
+    </div>\
+    <div id="pets">\
+        PETS 
+        <<button [[Choose|CC-Pets]]>><</button>>\
+    </div>\
+</div>
+<<button [[Review Choices|CC-Check]]>><</button>>
+<<CheckifDone>>
+
+/* 
+Notes:
+    CheckifDone essentially looks if a certain variable has been chosen, or a certain page has been cleared, to change the colour of the button to green.
+
+    I build the code of each of the setting pages as if the player could not to back and forth between pages to set their PC (so going from name to nickname to surname to... etc). As such, it does not track previously made choices, unlike the //Review Choices/CC-Check// passage.
+
+    If you are looking to include a Character Creator with a menu such as the one above, I would recommend the code of the //Popup-// passages rather than the //CC-// ones, as they track previously made choices, while the //CC-// ones do not.
+
+    The Randomiser is not completely random, as I didn't fill in any options requiring a text input (textboxes), custom options, or checkboxes traits (features, scars, and other). It is possible to still randomise it, but the widget is over 100 lines long already...
+
+    The Pre-Set option only includes ONE PC (whose option I chose at random), but you could include more than one if you wanted.
+*/
+
+
+:: Lexicon {"position":"150,150","size":"100,100"}
+IF = Interactive Fiction
+PC = Player Character 
+NPC = Non Player Character
+RO = Romance Option
+
+
+:: Notes {"position":"225,25","size":"100,100"}
+/* 
+    ~~ Things I have not included in this template because it is becoming increasingly long and I'm done with this...
+    And because not everything can/should be codified?
+
+    For the PC
+* customisation for already coded elements (see notes on each passage)
+* job/position
+* outfit
+* genitals (prob more relevant to NSFW projects)
+* setting/genre specific options (Sci-Fi alien features)
+* mental disorders/fears/etc (should be project specific) + medication as an aid
+* actual skills (not just levels of attributes): ex: fishing/cooking/etc...
+* hobbies 
+* knowledge/education 
+* ???
+
+    PC-related 
+* Belongings
+* Place of living (could be background-related)
+* ???
+
+    RO-related
+* honestly... the same kind of customisation as the PC (not recommended, you're better off with set ROs)
+
+    Other stuff:
+* Relation stats with non-RO NPCs
+* Status with other groups (kinda set with the background now, but I didn't make a stat)
+* Reputation in general (could be tied to a class/job)
+
+        AGAIN!!!!
+Please don't add the whole template into your game. A bunch of thing would probably not be relevant... A bunch of options are missing or badly written (I've coded a bunch of shit late into the night, half awake) or not relevant to the setting.
+*/
+
+
+:: Popup-Age [popup] {"position":"1175,350","size":"100,100"}
+Your current age is $mc.age.
+If you want to change it, please choose one of the options below:
+
+//What is your age?//
+* <<linkappend "I can give a general bracket">>:
+> Your age: <<listbox "_agelist">><<optionsfrom _agerange>><</listbox>> <<button "Confirm">>
+    <<set $mc.age to _agelist>>
+    <<replace "#mc-age">>$mc.age<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+<</linkappend>>
+* <<linkappend "I'll be specific">>:
+> First Name: <<numberbox "_agenumber" 18 autofocus>> <<button "Confirm">>
+    <<set $mc.age to _agenumber>>
+    <<replace "#mc-age">>$mc.age<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+<</linkappend>>
+* <<link "I'd rather not share my age">>
+    <<set $mc.age to "{/}">>
+    <<replace "#mc-age">>$mc.age<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+
+/* 
+    Yup, I just reused the same code as the main trait setter :P
+    The same comments from the other passage apply here as well! 
+*/
+
+
+:: Popup-Back [popup] {"position":"1650,950","size":"100,100"}
+You are currently a $background.
+If you would like to edit this trait, choose one of the options below:
+
+<<button "Commoner">>
+    <<CommonerStartingStats>>
+    <<replace "#mc-backg">>$background<</replace>>
+    <<run Dialog.close()>>
+<</button>> | \
+<<button "Bourgeois">>
+    <<BourgeoisStartingStats>>
+    <<replace "#mc-backg">>$background<</replace>>
+    <<run Dialog.close()>>
+<</button>> | \
+<<button "Noble">>
+    <<NobleStartingStats>>
+    <<replace "#mc-backg">>$background<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+/*
+    Like with changing the class, this popup does not offer additional information about each class.
+    I do recomend however a line or two, especially if the trait is important for the story!
+*/
+
+
+:: Popup-BodyMod [popup] {"position":"1050,825","size":"100,100"}
+<<if !$face.mods>><<set $face.mods to "">><</if>><<set 
+    _tattoo to ["No", "Half-Sleeve", "Full Sleeve", "Neck", "Chest", "Belly", "Leg", "Calf", "Foot", "Covered"],
+    _piercing to ["No", "Belly Button", "Nipple", "Surface (Chest)", "Surface (Arm)", "Surface (Back)", "Surface (Leg)", "Surface (Private)"]
+>>\
+You <<if !$body.tattoo>>do not have any tattoo<<else>>have a tattoe $body.tattoo<</if>>.
+You <<if !$body.piercing>>do not have any piercing<<else>>have a $body.piercing piercing<</if>>.
+<<if $body.mods>>You also have the following body mod: $body.mods<</if>>
+
+//Do you have any tattoes?//<<listbox "$body.tattoo" autoselect>>
+    <<optionsfrom _tattoo>>
+<</listbox>>
+
+//Do you have any piercings?//<<listbox "$body.piercing" autoselect>>
+    <<optionsfrom _piercing>>
+<</listbox>>
+
+//Do you have any other body modification?//
+<<textbox "$body.mods" `$body.mods`>>
+
+<<button "Confirm">>
+    <<if $body.tattoo is "No">>
+        <<run delete $body.tattoo>>
+    <</if>>
+    <<if $body.piercing is "No">>
+        <<run delete $body.piercing>>
+    <</if>>
+    <<if $body.mods is "">>
+        <<run delete $body.mods>>
+    <</if>>
+    <<replace "#mc-ffacc">>You <<if !$body.tattoo>>do not have any tattoo<<else>>have a tattoe $body.tattoo<</if>>.
+        You <<if !$body.piercing>>do not have any piercing<<else>>have a $body.piercing piercing<</if>>.
+        <<if $body.mods>>You also have the following body mod: $body.mods<</if>>
+    <</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Build [popup] {"position":"675,825","size":"100,100"}
+<<PopupBodyBuild>>\
+You are currently $body.height, with a $body.weight a $body.musc body.
+
+To change this trait, please interact with the elements below. If you'd like to keep some traits as is, keep the listbox on the //--// option.
+
+//How tall are you?// <<listbox "_heightbox">><<optionsfrom _height>><</listbox>>
+
+//What id your body type?// <<listbox "_weightbox">><<optionsfrom _type>><</listbox>>
+
+//How muscular are you?// <<listbox "_muscbox">><<optionsfrom _muscle>><</listbox>>
+
+<<button "Confirm">>
+    <<if _heightbox isnot "--">>
+        <<set $body.height to _heightbox>>
+    <</if>>
+    <<if _weightbox isnot "--">>
+        <<set $body.weight to _weightbox>>
+    <</if>>
+    <<if _muscbox isnot "--">>
+        <<set $body.musc to _muscbox>>
+    <</if>>
+    <<replace "#mc-build">>Height: $body.height
+        Type: $body.weight
+        Musculature: $body.musc<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+/* There was something I wanted to add here but I forgot... */
+
+
+:: Popup-Class [popup] {"position":"1525,950","size":"100,100"}
+You are currently a $class.
+If you would like to edit this trait, choose one of the options below:
+
+<<button "Warrior">>
+    <<WarriorStartingStats>>
+    <<replace "#mc-class">>$class<</replace>>
+    <<run Dialog.close()>>
+<</button>> | \
+<<button "Mage">>
+    <<MageStartingStats>>
+    <<replace "#mc-class">>$class<</replace>>
+    <<run Dialog.close()>>
+<</button>> | \
+<<button "Rogue">>
+    <<RogueStartingStats>>
+    <<replace "#mc-class">>$class<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+/*
+    Unlike the main passage, this one will not offer additional points. Mainly because I didn't feel like doing it again...
+    Though, it is important to stay as consistent as possible between the main passage setters and the check changes!
+*/
+
+
+:: Popup-Eye [popup] {"position":"1400,225","size":"100,100"}
+Your eyes are currently $mc.eyes. 
+If you would like to change their colours, please click on the links below:
+
+Do your eyes have <<link "the same colour">><<EyesSame>><</link>> or <<link "different colours">><<EyesDiff>><</link>>?
+
+<span id="eye"></span>
+
+/*
+    The actual code of this passage can be found in the Widget passage!
+*/
+
+
+:: Popup-FaceAcc [popup] {"position":"1775,225","size":"100,100"}
+<<if !$face.mods>><<set $face.mods to "">><</if>><<set 
+    _tattoo to ["No", "Covering the Face", "On the Forehead", "Under the Eye", "On the Cheeks", "Under the Chin", "Covering the Eyebrows", "Lining the lips"],
+    _piercing to ["No", "Eyebrow", "Cheek", "Nose", "Septum", "Ear", "Lip", "Tongue"]
+>>\
+You <<if !$face.tattoo>>do not have any tattoo<<else>>have a tattoe $face.tattoo<</if>>.
+You <<if !$face.piercing>>do not have any piercing<<else>>have a $face.piercing piercing<</if>>.
+<<if $face.mods>>You also have the following face mod: $face.mods<</if>>
+
+//Do you have any tattoes?// <<listbox "$face.tattoo" autoselect>>
+    <<optionsfrom _tattoo>>
+<</listbox>>
+
+//Do you have any piercings?// <<listbox "$face.piercing" autoselect>>
+    <<optionsfrom _piercing>>
+<</listbox>>
+
+//Do you have any other face modification?//
+<<textbox "$face.mods" `$face.mods`>>
+
+<<button "Confirm">>
+    <<if $face.tattoo is "No">>
+        <<run delete $face.tattoo>>
+    <</if>>
+    <<if $face.piercing is "No">>
+        <<run delete $face.piercing>>
+    <</if>>
+    <<if $face.mods is "">>
+        <<run delete $face.mods>>
+    <</if>>
+    <<replace "#mc-ffacc">>You <<if !$face.tattoo>>do not have any tattoo<<else>>have a tattoe $face.tattoo<</if>>.
+        You <<if !$face.piercing>>do not have any piercing<<else>>have a $face.piercing piercing<</if>>.
+        <<if $face.mods>>You also have the following face mod: $face.mods<</if>>
+    <</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+/* 
+    Could this be coded better? probably... But it //seems// to work :P
+*/
+
+
+:: Popup-FaceFeat [popup] {"position":"1650,225","size":"100,100"}
+<<FacialFeaturesPicked>>\
+You currently have the following features: $facefeatures.
+If you want to edit this trait, please check or uncheck the relevant options below:
+
+//What facial features are applicable to you?//
+* <label><<checkbox "_fullmoustache" false true autocheck>> a full moustache</label>
+* <label><<checkbox "_thinmoustache" false true autocheck>> a thin moustache</label>
+* <label><<checkbox "_goatee" false true autocheck>> a goatee</label>
+* <label><<checkbox "_fullbeard" false true autocheck>> a full beard</label>
+* <label><<checkbox "_sideburns" false true autocheck>> some sideburns</label>
+* <label><<checkbox "_shadow" false true autocheck>> shadow</label>
+* <label><<checkbox "_patch" false true autocheck>> soul patch</label>
+* <label><<checkbox "_handlebar" false true autocheck>> a handle bar</label>
+* <label><<checkbox "_wrinkes" false true autocheck>> wrinkles</label>
+* <label><<checkbox "_mole" false true autocheck>> a mole</label>
+* <label><<checkbox "_brow" false true autocheck>> a unibrow</label>
+* <label><<checkbox "_thickbrow" false true autocheck>> thick brows</label>
+* <label><<checkbox "_thinbrow" false true autocheck>> thin brows</label>
+* <label><<checkbox "_noeyelash" false true autocheck>> no eye lashes</label>
+* <label><<checkbox "_pointedear" false true autocheck>> pointed ears</label>
+* <label><<checkbox "_smallears" false true autocheck>> small ears</label>
+* <label><<checkbox "_largeears" false true autocheck>> large ears</label>
+* <label><<checkbox "_buttonnose" false true autocheck>> a Button nose</label>
+* <label><<checkbox "_romannose" false true autocheck>> a Roman nose</label>
+* <label><<checkbox "_crooked" false true autocheck>> a Crooked nose</label>
+* <label><<checkbox "_widenose" false true autocheck>> a Wide nose</label>
+* <label><<checkbox "_hawknose" false true autocheck>> a Hawk nose</label>
+* <label><<checkbox "_pointchin" false true autocheck>> a pointy chin</label>
+* <label><<checkbox "_roundchin" false true autocheck>> a rounded chin</label>
+* <label><<checkbox "_squarejaw" false true autocheck>> a square jaw</label>
+* <label><<checkbox "_pronouncedcheeks" false true autocheck>> pronounced cheeks</label>
+* <label><<checkbox "_bmrighteye" false true autocheck>> a beauty mark below the right eye</label>
+* <label><<checkbox "_bmlefteye" false true autocheck>> a beauty mark below the left eye</label>
+* <label><<checkbox "_bmcheek" false true autocheck>> a beauty mark on the cheek</label>
+* <label><<checkbox "_bmlips" false true autocheck>> a beauty mark above the lips</label>
+* <label><<checkbox "_freckles" false true autocheck>> freckles</label>
+* <label><<checkbox "_facehair" false true autocheck>> fluff hair</label>
+* <label><<checkbox "_fangs" false true autocheck>> fangs</label>
+* <label><<checkbox "_toothgap" false true autocheck>> tooth gap</label>
+* <label><<checkbox "_acne" false true autocheck>> acne</label>
+
+<<button "Confirm">>
+    <<set $facefeatures to []>>
+    <<AllThisInAnArray>>
+    <<replace "#mc-ffeat">>$facefeatures<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Family [popup] {"position":"2125,525","size":"100,100"}
+<<CheckFam>>\
+This is your current familial situation: 
+* $family.parents
+* $family.siblings sibling(s)
+* $family.children child(ren)<<if $mc.pregnant>>, with one on the way!<</if>>
+
+If you want to change any element, please click on the options below:
+
+//Do you have parents?//
+* <label><<radiobutton "_parents" "Mother + Father" autocheck>>Two parents: a mother and a father</label>
+* <label><<radiobutton "_parents" "Mother" autocheck>>One parent: a mother</label>
+* <label><<radiobutton "_parents" "Father" autocheck>>One parent: a father</label>
+* <label><<radiobutton "_parents" "Two Fathers" autocheck>>Two parents: two fathers</label>
+* <label><<radiobutton "_parents" "Two Mothers" autocheck>>Two parents: two mothers</label>
+* <label><<radiobutton "_parents" "Nuclear Family" autocheck>>More than two parents: a nuclear Family</label>
+* <label><<radiobutton "_parents" "No Parents" autocheck>>No Parents</label>
+
+//How many siblings do you have?// <<numberbox "_siblings" `_siblings`>>
+
+//How many children do you have?//<<numberbox "_children" `_children`>>
+* <label><<checkbox "_preggo" false true autocheck>> I'm also pregnant!</label>
+
+<<button "Confirm">>
+    <<set
+        $family.siblings to _siblings,
+        $family.children to _children,
+        $family.parents to _parents
+    >>
+    <<if _preggo>>
+        <<set $mc.pregnant to "I am pregnant">>
+    <<else>>
+        <<run delete $mc.pregnant>>
+    <</if>>
+    <<replace "mc-fam">>$family.parents
+        $family.siblings sibling(s)
+        $family.children child(ren)<<if $mc.pregnant>>, with one on the way!<</if>><</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Gender [popup] {"position":"925,350","size":"100,100"}
+<<IfGenderIsCustom>>\
+You currently describe yourself as a <<if $mc.trans>>$mc.trans <</if>>$mc.gender, refered by others as a(n) $mc.person, and a(n) $mc.title 
+
+If you want to change any trait, please select one of the options below:
+
+//What term do you use to describe your gender?//
+* <label><<radiobutton "_gender" "female" autocheck>> Female</label>
+* <label><<radiobutton "_gender" "male" autocheck>> Male</label>
+* <label><<radiobutton "_gender" "nonbinary" autocheck>> Nonbinary</label>
+* <label><<radiobutton "_gender" "custom" autocheck>> Sometime else</label>
+
+//Are you trans?//
+* <label><<radiobutton "_trans" "transgender" autocheck>> Yes</label>
+* <label><<radiobutton "_trans" "cisgender" autocheck>> No</label>
+* <label><<radiobutton "_trans" "NR" autocheck>> Not relevant/Don't want to disclose</label>
+
+//People would typically refer to you as...//
+* <label><<radiobutton "_person" "woman" autocheck>> a woman.</label>
+* <label><<radiobutton "_person" "man" autocheck>> a man.</label>
+* <label><<radiobutton "_person" "person" autocheck>> a person.</label>
+* <label><<radiobutton "_person" "custom" autocheck>> sometime else.</label>
+
+//Due to your title, people refer to you as...//
+* <label><<radiobutton "_title" "lady" autocheck>> Lady $mc.name.</label>
+* <label><<radiobutton "_title" "lord" autocheck>> Lord $mc.name.</label>
+* <label><<radiobutton "_title" "liege" autocheck>> Liege $mc.name.</label>
+* <label><<radiobutton "_title" "custom" autocheck>> sometime else.</label>
+
+//What do you identify as?//
+* <label><<radiobutton "$mc.sexu" "Heterosexual" checked>> Heterosexual</label>
+* <label><<radiobutton "$mc.sexu" "Homosexual" checked>> Homosexual</label>
+* <label><<radiobutton "$mc.sexu" "Bisexual" checked>> Bisexual</label>
+* <label><<radiobutton "$mc.sexu" "Pansexual" checked>> Pansexual</label>
+* <label><<radiobutton "$mc.sexu" "Asexual" checked>> Asexual</label>
+
+<<button "Confirm">>
+    <<if _trans is "NR">>
+        <<run delete $mc.trans>>
+    <</if>>
+    <<if _gender isnot "custom">>
+        <<set $mc.gender to _gender>>
+    <</if>>
+    <<if _person isnot "custom">>
+        <<set $mc.gender to _person>>
+    <</if>>
+    <<if _title isnot "custom">>
+        <<set $mc.gender to _title>>
+    <</if>>
+    <<if _person is "custom" or _gender is "custom" or _title is "custom">>
+        <<script>>
+            Dialog.setup("Custom Answers");
+            Dialog.wiki(Story.get("Popup-GenderAddOn").processText());
+            Dialog.open();
+        <</script>>
+    <<else>>
+        <<unset _person, _gender, _title>>
+        <<replace "#mc-surb">>Gender: <<if $mc.trans>>$mc.trans <</if>>$mc.gender
+        Refered as a: $mc.person
+        Title: $mc.title <</replace>>
+        <<run Dialog.close()>>
+    <</if>>
+<</button>>
+
+
+:: Popup-GenderAddOn [popup] {"position":"925,475","size":"100,100"}
+Please fill all available textboxes below.
+
+<<if _gender is "custom">>//What term do you use to describe your gender?//
+    <<textbox _genderbox `$mc.gender`>>
+<</if>>
+<<if _person is "custom">>//People would typically refer to you as a/an...//
+    <<textbox _personbox `$mc.person`>>
+<</if>>
+<<if _title is "custom">>//Due to your title, people refer to you as a/an...//
+    <<textbox _titlebox `$mc.title`>>
+<</if>>
+
+<<button "Confirm">>
+    <<if _gender is "custom" && _genderbox is "">>
+        <<set $mc.gender to "nonbinary">>
+    <<elseif _gender is "custom">>
+        <<set _genderbox to $mc.gender.toLowerCase()>>
+    <</if>>
+    <<if _person is "custom" && _personbox is "">>
+        <<set $mc.person to "person">>
+    <<elseif _person is "custom">>
+        <<set _personbox to $mc.person.toLowerCase()>>
+    <</if>>
+    <<if _title is "custom" && _titlebox is "">>
+        <<set $mc.title to "liege">>
+    <<elseif _title is "custom">>
+        <<set _titlebox to $mc.title.toLowerCase()>>
+    <</if>>
+    <<unset _gender, _genderbox, _person, _personbox, _title, _titlebox>>
+    <<replace "#mc-surb">>Gender: <<if $mc.trans>>$mc.trans <</if>>$mc.gender
+        Refered as a: $mc.person
+        Title: $mc.title <</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+/*
+Notes:
+    Unsetting the temporary variables is only because I'm forcing the player to stay on the same page. But if you make the player go to a different page (or reload this one), it's unnecessary.
+
+    I haven't included a warning note, forcing the player to fill in the textboxes (leaving the popup open until they are all filled), because I am lazy. There are a bunch of ways to customise this interactive elements.
+    So if it's not filled, the PC is gender neutral for all elements.
+*/
+
+
+:: Popup-Hair [popup] {"position":"1525,225","size":"100,100"}
+<<if $hair is "bald">>You are $hair.<<else>>You have $hair.length $hair.texture $hair.colour hair <<if $hair.uniform isnot "Yes">>($hair.uniform)<</if>>
+Your hair is <<if ndef $dye>>not dyed<<else>>dyed $dye.colour in a $dye.pattern pattern<</if>>. <<if $hair.bangs isnot "No">>You have $hair.bangs. <</if>><<if $hair.shave isnot "No">>Your hair is shaved $hair.shave. <</if>> Your hair is styled in a $hair.do way.<</if>>
+
+If you want to edit this trait, please interact with the elements below!
+
+//Does hair grow on your head?//
+<<nobr>>
+    <<button "Yes, I have hair.">><<addclass ".hair" "visible">><<set _hair to true>><</button>>
+     | 
+    <<button "No, I am bald.">><<removeclass ".hair" "visible">><<set _hair to false>><</button>>
+<</nobr>>
+<span class="hair">
+//What is your natural hair texture?// <<listbox "_texture">>
+    <<optionsfrom _hairtexture>>
+<</listbox>>
+
+//How long is your natural hair?// <<listbox "_length">>
+    <<optionsfrom _hairlength>>
+<</listbox>>
+
+//What is your natural hair colour?// <<listbox "_colour">>
+    <<optionsfrom _haircolour>>
+<</listbox>>
+
+Is your natural hair colour uniform? <<listbox "_uniform">>
+    <<optionsfrom _hairuniform>>
+<</listbox>>
+
+//Is your hair dyed?//
+<<nobr>>
+    <<button "Yes.">><<addclass ".hairdye" "visible">><<set _dye to true>><</button>>
+     | 
+    <<button "No.">><<removeclass ".hairdye" "visible">><<set _dye to false>><</button>>
+<</nobr>>
+<span class="hairdye">
+//How is the hair dyed?// <<listbox "_dyepattern">>
+    <<optionsfrom _hairdyied>>
+<</listbox>>
+//
+What colour is the dye? //<<listbox "_dyecolour">>
+    <<optionsfrom _dyecolour>>
+<</listbox>>
+</span>\
+
+//Do you have bangs?// <<listbox "_bangs">>
+    <<optionsfrom _bangs>>
+<</listbox>>
+
+//Is your hair (or part of it) shaved?// <<listbox "_shave">>
+    <<optionsfrom _shavedhair>>
+<</listbox>>
+
+//How is your hair styled?// <<listbox "_do">>
+    <<optionsfrom _hairdo>>
+<</listbox>>
+</span>
+
+<<button "Confirm">>
+    <<if _hair is false>>
+        <<set $hair to "bald">>
+    <<else>>
+        <<set $hair to {},
+            $hair.texture to _texture,
+            $hair.length to _length,
+            $hair.colour to _colour,
+            $hair.uniform to _uniform,
+            $hair.bangs to _bangs,
+            $hair.shave to _shave,
+            $hair.do to _do
+        >>
+        <<if _dye is false>>
+            <<unset $dye>>
+        <<else>>
+            <<set $dye to {},
+                $dye.pattern to _dyepattern,
+                $dye.colour to _dyecolour
+            >>
+        <</if>>
+    <</if>>
+    <<replace "#mc-hairnat">><<if $hair is "bald">>You are $hair.<<else>>You have $hair.length $hair.texture $hair.colour hair <<if $hair.uniform isnot "Yes">>($hair.uniform)<</if>>
+    Your hair is <<if ndef $dye>>not dyed<<else>>dyed $dye.colour in a $dye.pattern pattern<</if>>. <<if $hair.bangs isnot "No">>You have $hair.bangs. <</if>><<if $hair.shave isnot "No">>Your hair is shaved $hair.shave. <</if>> Your hair is styled in a $hair.do way.<</if>><</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Hair-Wig [popup] {"position":"1525,350","size":"100,100"}
+<<if $wig>>You are wearing a wig, with $wig.length $wig.colour $wig.texture hair. <<if $wigdye>>The wig is dyed $wigdye.colour in a $wigdye.pattern pattern. <</if>><<if $wig.bangs isnot "No">>Your wig has $hair.bangs. <</if>> Your wig is styled in a $wig.do way.<<elseif $cover>>You are wearing a $cover.<<else>>Your hair is not covered.<</if>>
+
+If you want to edit this trait, please interact with the elements below!
+
+<span class="wigq">\
+//Do you wear a wig?//
+<<nobr>>
+    <<button "Yes, I wear a wig.">><<addclass ".wig" "visible">><<removeclass ".cover" "visible">><<set _wig to true>><</button>>
+     | 
+    <<button "No, but I wear something else.">><<addclass ".cover" "visible">><<removeclass ".wig" "visible">><<set _wig to "cover">><</button>>
+     | 
+    <<button "No, I only have my hair.">><<removeclass ".wig" "visible">><<removeclass ".cover" "visible">><<set _wig to false>><</button>>
+<</nobr>>
+</span>\
+\
+<span class="wig">\
+//What is the wig's hair texture? //<<listbox "_wigtexture">>
+    <<optionsfrom _hairtexture>>
+<</listbox>>
+
+//How long is the wig?// <<listbox "_wiglength">>
+    <<optionsfrom _hairlength>>
+<</listbox>>
+
+//What is the wig primary colour?// <<listbox "_wigcolour">>
+    <<optionsfrom _haircolour>>
+<</listbox>>
+
+//Is your wig dyed?//
+<<nobr>>
+    <<button "Yes.">><<addclass ".wigdye" "visible">><<set _wigdye to true>><</button>>
+     | 
+    <<button "No.">><<removeclass ".wigdye" "visible">><<set _wigdye to false>><</button>>
+<</nobr>>
+<span class="wigdye">
+//How is the wig dyed?// <<listbox "_wigdyepattern">>
+    <<optionsfrom _hairdyied>>
+<</listbox>>
+
+//What colour is the dye? //<<listbox "_wigdyecolour">>
+    <<optionsfrom _dyecolour>>
+<</listbox>>
+</span>\
+
+//Does the wig have bangs?// <<listbox "_wigbangs">>
+    <<optionsfrom _bangs>>
+<</listbox>>
+
+//How is your wig styled?// <<listbox "_wigdo">>
+    <<optionsfrom _hairdo>>
+<</listbox>>
+</span>\
+\
+<span class="cover">
+//What are you wearing on your head?// <<listbox "_cover">>
+    <<optionsfrom _hairaccess>>
+<</listbox>> 
+</span>
+
+<<button "Confirm">>
+    <<if _wig is false>>
+        <<unset $wig, $wigdye>>
+        <<run delete $cover>>
+    <<elseif _wig is "cover">>
+        <<unset $wig, $wigdye>>
+        <<set $cover to _cover>>
+    <<else>>
+        <<set $wig to {},
+            $wig.texture to _wigtexture,
+            $wig.length to _wiglength,
+            $wig.colour to _wigcolour,
+            $wig.bangs to _wigbangs,
+            $wig.do to _wigdo
+        >>
+        <<if _wigdye is false>>
+            <<unset $wigdye>>
+        <<else>>
+            <<set $wigdye to {},
+                $wigdye.pattern to _wigdyepattern,
+                $wigdye.colour to _wigdyecolour
+            >>
+        <</if>>
+    <</if>>
+    <<replace "#mc-haircover">><<if $wig>>You are wearing a wig, with $wig.length $wig.colour $wig.texture hair. <<if $wigdye>>The wig is dyed $wigdye.colour in a $wigdye.pattern pattern. <</if>><<if $wig.bangs isnot "No">>Your wig has $hair.bangs. <</if>> Your wig is styled in a $wig.do way.<<elseif $cover>>You are wearing a $cover.<<else>>Your hair is not covered.<</if>><</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Makeup [popup] {"position":"1175,825","size":"100,100"}
+<<if !$skin.makup>>You don't wear any makeup.<<else>>Your make up is $skin.makup.<</if>>
+Your nails are $body.naislength<<if $body.nails>>, and are painted $body.nailscolour in $body.nails<</if>>.
+You <<if !$skin.perfume>>don't wear any perfume<<else>>wear a $skin.perfume scent<</if>>.
+
+Interact with the elements below to change this trait.
+
+//Do you wear any make up?//
+<<nobr>>
+    <<button "Yes, I wear makeup.">>
+        <<replace "#makeupplus">>//What kind of makeup are you wearing?// <<listbox "$skin.makup">>
+                <<optionsfrom _makeup>>
+            <</listbox>>
+        <</replace>>
+    <</button>>
+     | 
+    <<button "No, I don't wear makeup.">><<run delete $skin.makup>><<replace "#makeupplus">><</replace>><</button>>
+<</nobr>>
+
+<span id="makeupplus"></span>
+
+//How do your nails look like?// <<listbox "$body.naislength">>
+    <<optionsfrom _naillength>>    
+<</listbox>>
+
+//Are your nails painted?// 
+<<nobr>>
+    <<button "Yes, my nails are painted.">>
+        <<replace "#naisplus">>//In what style are your nails painted?// <<listbox "$body.nails">>
+                <<optionsfrom _nailart>>
+            <</listbox>>
+            //What colour are your nails painted?// <<listbox "$body.nailscolour">>
+                <<optionsfrom _nailcolour>>
+            <</listbox>>
+        <</replace>>
+    <</button>>
+     | 
+    <<button "No, my nails are natural.">><<run delete $body.nails>><<replace "#naisplus">><</replace>><</button>>
+<</nobr>>
+
+<span id="naisplus"></span>
+
+//Do you wear any perfume?//
+<<nobr>>
+    <<button "Yes, I wear perfume.">>
+        <<replace "#perfumeplus">>//What kind of perfume are you wearing?// <<listbox "$skin.perfume">>
+                <<optionsfrom _perfume>>
+            <</listbox>>
+        <</replace>>
+    <</button>>
+     | 
+    <<button "No, I don't wear any perfume.">><<run delete $skin.perfume>><<replace "#perfumeplus">><</replace>><</button>>
+<</nobr>>
+
+<span id="perfumeplus"></span>
+
+<<button "Confirm">>
+    <<replace "#mc-makup">><<if !$skin.makup>>You don't wear any makeup.<<else>>Your make up is $skin.makup.<</if>>
+    Your nails are $body.naislength<<if $body.nails>>, and are painted $body.nailscolour in $body.nails<</if>>.
+    You <<if !$skin.perfume>>don't wear any perfume<<else>>wear a $skin.perfume scent<</if>>.<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Name [popup] {"position":"550,350","size":"100,100"}
+Your name is currently $mc.name.
+If you want to change your name, please indicate it in the textbox below:
+
+<<textbox "_name" `$mc.name` autofocus>> 
+
+<<button "Confirm">>
+    <<if _name>>
+        <<set $mc.name to _name>>
+        <<replace "#mc-name">>$mc.name<</replace>>
+    <</if>>
+    <<run Dialog.close()>>
+<</button>>
+/*
+    If you are using Cycy's liveupdate, change the <<replace>> macro for <<update>>. [Ensure the Check Traits page is wrapped in a <<liveblock>> first]
+*/
+
+
+:: Popup-NickName [popup] {"position":"675,350","size":"100,100"}
+<<if $mc.nickname>>Your nickanme is currently $mc.nickname.
+    If you want to change your name, please indicate it in the textbox below:
+<<else>>You currently do not have a nickanme.
+    If you want to indicate one, please fill the textbox below:
+<</if>>
+
+<<textbox "_nickname" `$mc.nickname` autofocus>> 
+
+<<button "Confirm">>
+    <<if _nickname>>
+        <<set $mc.nickname to _nickname>>
+        <<replace "#mc-nick">>$mc.nickname<</replace>>
+    <</if>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Perso [popup] {"position":"1400,950","size":"100,100"}
+Your current personality is set as followed:
+<<PersoBars>>
+
+If you want to edit this trait, please interacti with the sliders below:
+
+//Are you more Introverted or Extroverted?//
+<center>\
+Introverted <input type="range" id="slidetest" name="slidetest" min="1" max="100" @value="$intext" class="slider" data-var="_intext" oninput="SugarCubeInput(this)"> Extroverted
+</center>
+
+//Are you more Cold-natured or Warm-natured?//
+<center>\
+Cold <input type="range" id="slidetest" name="slidetest" min="1" max="100" @value="$coldwarm" class="slider" data-var="_coldwarm" oninput="SugarCubeInput(this)"> Warm
+</center>
+
+<<button "Confirm">>
+    <<set $intext to _intext>>
+    <<set $coldwarm to _coldwarm>>
+    <<replace "#mc-perso">><<PersoBars>><</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Pets [popup] {"position":"2250,525","size":"100,100"}
+<<set _animal to ["--", "a turtle", "a dog", "a cat", "a bird", "a rodent", "a snake", "a tiger", "a dragon", "a robot", "a horse", "a spider", "a moon", "a cow", "a pig"]>>\
+You current pet is $mc.pet.
+If you would like to change this trait, please use the interactive element below:
+
+//What pet do you have?// <<listbox "_pet">>
+    <<optionsfrom _animal>>
+<</listbox>>
+
+<<button "Confirm">>
+    <<if _pet isnot "--">>
+        <<set $mc.pet to _pet>>
+    <<else>>
+        <<run delete $mc.pet>>
+    <</if>>
+    <<replace "mc-pet">>$mc.pet<</replace>>
+<</button>>
+
+
+:: Popup-PronounAddOn [popup] {"position":"1050,475","size":"100,100"}
+<<if $proset.plural is true>><<set _plural to true>><<else>><<set _plural to false>><</if>>
+Please fill all the textboxes below if your preferred pronouns.
+<center>
+''Subject:'' //I wished to know what ''they'' wanted.//
+	<<textbox "_they" `$proset.they`>>
+'Object:'' //You have to stop bothering ''them'' during meals.//
+	<<textbox"_them" `$proset.them`>>
+''Possessive Adjective:'' //Could you get ''their'' coat?//
+	<<textbox "_their" `$proset.their`>>
+''Possessive:'' //Don't take this book, it's ''theirs''.//
+	<<textbox "_theirs" `$proset.theirs`>>
+''Reflexive:'' //They want to keep it for ''themself''.//
+	<<textbox "_themself" `$proset.themselves`>>
+</center>
+\
+//What verb tense do your pronouns use?//
+* <label><<radiobutton "_plural" true autocheck>> Plural (they ''are'')</label>
+* <label><<radiobutton "_plural" false autocheck>> Singular (<<print either("she","he","ae","e")>> ''is'')</label>
+
+<center><<button "Confirm">>
+    <<set 
+        $proset.they to _they.toLowerCase(), 
+        $proset.them to _them.toLowerCase(), 
+        $proset.their to _their.toLowerCase(), 
+        $proset.theirs to _theirs.toLowerCase(), 
+        $proset.themselves to _themself.toLowerCase(),
+        $mc.pronouns to _they.toLowerCase() + "/" _them.toLowerCase(),
+        $proset.plural to _plural
+    >>
+    <<replace "#mc-pro">>$mc.pronouns<</replace>>
+    <<run Dialog.close()>>
+<</button>></center>
+
+/*
+    I've ensured the pronouns as all in lowercases by default. For Capitalised or Uppercase version, you can create either a widget or set a new variable for each pronoun.
+*/
+
+
+:: Popup-Pronouns [popup] {"position":"1050,350","size":"100,100"}
+<<IfPronounsIsCustom>>\
+Your current set of pronouns is $mc.pronouns. If you want to change your pronouns, please pick one of the options below:
+
+//What pronoun set are you most comfortable with?//
+* <label><<radiobutton "_pronouns" "She/Her">>She/Her</label>
+* <label><<radiobutton "_pronouns" "He/Him">>He/Him</label>
+* <label><<radiobutton "_pronouns" "They/Them (singular)">>They/Them (singular)</label>
+* <label><<radiobutton "_pronouns" "They/Them (plural)">>They/Them (plural)</label>
+* <label><<radiobutton "_pronouns" "Ae/Aer">>Ae/Aer</label>
+* <label><<radiobutton "_pronouns" "E/Em">>E/Em</label>
+* <label><<radiobutton "_pronouns" "custom">>A different set...</label>
+
+<<button "Confirm">>
+    <<set $pages.pronouns to true>>
+    <<if $mc.pronouns is "custom">>
+        <<set $proset.custom to true>>
+        <<script>>
+            Dialog.setup("Custom Pronouns");
+            Dialog.wiki(Story.get("PronounAddOn").processText());
+            Dialog.open();
+        <</script>>
+    <<else>>
+        <<set $proset.custom to false>>
+        <<PronounsCustomSet>>
+        <<replace "#mc-pro">>$mc.pronouns<</replace>>
+    <</if>>
+    <<run Dialog.close()>>
+<</button>>
+
+You can choose the //Custom// option if you would like to customise a specific pronoun, even if your main ones are already listed above.
+
+
+:: Popup-Pros [popup] {"position":"925,825","size":"100,100"}
+<<ProsCheck>>You current have the following traits:
+> Procedures: $aid.proc
+> Prothesis: $aid.pros
+> Aid: $aid.aid
+
+If you would like to change them, please interact with the options below: 
+
+//Have you undergone any of the following Procedures?//
+* <label><<checkbox "_hrt" false true autocheck>> HRT</label> (Hormone Replacement Therapy)
+* <label><<checkbox "_topsurg" false true autocheck>> Top Surgery</label> (Breast Augmentation/Reduction/Implants/Removal/etc...)
+* <label><<checkbox "_bottomsurg" false true autocheck>> Bottom Surgery</label>
+* <label><<checkbox "_facesurg" false true autocheck>> Facial Reconstruction</label>
+* <label><<checkbox "_othersurg" false true autocheck>> Other Reconstructive Surgery</label>
+
+//Do you use any of the following prothesis?//
+* <label><<checkbox "_glasses" false true autocheck>> Glasses</label>
+* <label><<checkbox "_contacts" false true autocheck>> Contacts</label>
+* <label><<checkbox "_hearaidrem" false true autocheck>> Hearing Aid</label> (removable)
+* <label><<checkbox "_hearaidimp" false true autocheck>> Hearing Aid</label> (Implant)
+* <label><<checkbox "_prosfingers" false true autocheck>> Prosthesis</label> (Fingers)
+* <label><<checkbox "_proshand" false true autocheck>> Prosthesis</label> (Hand)
+* <label><<checkbox "_prosarm" false true autocheck>> Prosthesis</label> (Arm)
+* <label><<checkbox "_prostoes" false true autocheck>> Prosthesis</label> (Toes)
+* <label><<checkbox "_prosfoot" false true autocheck>> Prosthesis</label> (Foot)
+* <label><<checkbox "_prosleg" false true autocheck>> Prosthesis</label> (Leg)
+
+//Do you use any of the following aid?//
+* <label><<checkbox "_cane" false true autocheck>> Cane</label>
+* <label><<checkbox "_crutches" false true autocheck>> Crutches</label>
+* <label><<checkbox "_walkter" false true autocheck>> Walker</label>
+* <label><<checkbox "_servaniguide" false true autocheck>> Service Animal</label> (Guide)
+* <label><<checkbox "_servaniother" false true autocheck>> Service Animal</label> (Other)
+* <label><<checkbox "_handwheel" false true autocheck>> Wheelchair</label> (Hand)
+* <label><<checkbox "_powerwheel" false true autocheck>> Wheelchair</label> (Powered)
+* <label><<checkbox "_reader" false true autocheck>> Text Reader</label>
+
+<<button "Confirm">>
+    <<set $pages.pros to true>>
+    <<ArraysForPros>>
+    <<replace "#mc-pros">>Procedures: $aid.proc
+        Prothesis: $aid.pros
+        Aid: $aid.aid<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-ROGender [popup] {"position":"2000,525","size":"100,100"}
+The ROs are currently: $Camille, $Fran, and $Alex.
+If you would like to change their genders, please interact with the elements below:
+
+//Do you want to set the gender of the ROs?//
+* <<link "Set them all as female (She/Her)">>
+    <<set $Camille to "Camille (She/Her)", $Fran to "Frances (She/Her)", $Alex to "Alexandra (She/Her)">>
+    <<replace "mc-rogen">>$Camille
+        $Fran
+        $Alex<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+* <<link "Set them all as male (He/Him)">>
+    <<set $Camille to "Camille (He/Him)", $Fran to "Frank (He/Him)", $Alex to "Alexander (He/Him)">>
+    <<replace "mc-rogen">>$Camille
+        $Fran
+        $Alex<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+* <<link "Set them all as nonbinary (They/Them)">>
+    <<set $Camille to "Camille (They/Them)", $Fran to "Frances (They/Them)", $Alex to "Alex (They/Them)">>
+    <<replace "mc-rogen">>$Camille
+        $Fran
+        $Alex<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+* <<link "Randomise the gender">>
+    <<set $Camille to "Camille (She/Her)", $Fran to "Frances (They/Them)", $Alex to "Alexander (He/Him)">>
+    <<replace "mc-rogen">>$Camille
+        $Fran
+        $Alex<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+* <<linkappend "Set each RO separately">>
+** <<CamilleCycle>> Renaud
+** <<FranCycle>> Wallace 
+** <<AlexCycle>> Curtis
+    <<button "Confirm">>
+        <<set $Camille to _camille, $Fran to _fran, $Alex to _alex>>
+        <<replace "mc-rogen">>$Camille
+        $Fran
+        $Alex<</replace>>
+        <<run Dialog.close()>>
+    <</button>>
+<</linkappend>>
+* <<link "Set the gender when each RO is introduced">>
+    <<set $Camille to "N/C", $Fran to "N/C", $Alex to "N/C">>
+    <<replace "mc-rogen">>$Camille
+        $Fran
+        $Alex<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+
+
+:: Popup-Scar [popup] {"position":"800,825","size":"100,100"}
+<<ScarsPicked>>\
+You currently have the following scars on your body: $scars.
+If you want to change this trait, please click the relevant options below.
+
+//Do you have any scar on your body?//
+* <label><<checkbox "_browscar" false true autocheck>> cutting the brow</label>
+* <label><<checkbox "_eyescar" false true autocheck>> crossing the eye</label>
+* <label><<checkbox "_nosescar" false true autocheck>> across the nose</label>
+* <label><<checkbox "_cheekscar" false true autocheck>> along the cheek</label>
+* <label><<checkbox "_lipscar" false true autocheck>> cutting the lip</label>
+* <label><<checkbox "_chinscar" false true autocheck>> on the chin</label>
+* <label><<checkbox "_bitescar" false true autocheck>> bite marks on the neck</label>
+* <label><<checkbox "_neckscar" false true autocheck>> along the neck</label>
+* <label><<checkbox "_throatscar" false true autocheck>> across the throat</label>
+* <label><<checkbox "_heartscar" false true autocheck>> across the heart</label>
+* <label><<checkbox "_shoulderscar" false true autocheck>> cutting the shoulder</label>
+* <label><<checkbox "_torsoscar" false true autocheck>> across the torso</label>
+* <label><<checkbox "_ceasarscar" false true autocheck>> a caesarian</label>
+* <label><<checkbox "_hipscar" false true autocheck>> along the hip</label>
+* <label><<checkbox "_spinescar" false true autocheck>> down the spine</label>
+* <label><<checkbox "_backcar" false true autocheck>> across the back</label>
+* <label><<checkbox "_buttscar" false true autocheck>> bite marks on the butt cheeks</label>
+* <label><<checkbox "_legscar" false true autocheck>> down the leg</label>
+* <label><<checkbox "_footscar" false true autocheck>> across the foot</label>
+
+<<button "Confirm">>
+    <<set $pages.scars to true>>
+    <<set $scars to []>>
+    <<AllThisInAnArrayButItsScars>>
+    <<replace "#mc-scar">>$scars<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Skin [popup] {"position":"550,825","size":"100,100"}
+<<PopupSkinChecker>>Your skin is currently $skin.satmut $skin.undertone $skin.color, with $skin.features.
+To change this trait, interact with the elements below: 
+
+Your skin colour is <<SkinColourCycle>>, with a <<SkinSatMutCycle>> <<SkinToneCycle>> undertone.
+
+//Does your skin have any notable features?//
+* <label><<checkbox "_vitiligo" false true autocheck>> Viligo</label>
+* <label><<checkbox "_freckles" false true autocheck>> Freckles</label>
+* <label><<checkbox "_eczema" false true autocheck>> Eczema</label>
+* <label><<checkbox "_beatymarks" false true autocheck>> Beauty Marks</label>
+* <label><<checkbox "_albinism" false true autocheck>> Albinism</label>
+
+<<button "Confirm">>
+    <<set 
+        $skin.color to _color,
+        $skin.satmut to _satmut,
+        $skin.undertone to _undertone,
+        $skin.features to []
+    >>
+    <<if _vitiligo>><<run $skin.features.push("Viligo")>><</if>>
+    <<if _freckles>><<run $skin.features.push("Freckles")>><</if>>
+    <<if _eczema>><<run $skin.features.push("Eczema")>><</if>>
+    <<if _beatymarks>><<run $skin.features.push("Beauty Marks")>><</if>>
+    <<if _albinism>><<run $skin.features.push("Albinism")>><</if>>
+    <<replace "#mc-skin">>$skin.satmut $skin.undertone $skin.color
+        $skin.features<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+/*
+    You could make the checkbox autochecked here, as well as have the cycles start at the first chosen value if wanted.
+*/
+
+
+:: Popup-SurName [popup] {"position":"800,350","size":"100,100"}
+Your surname is currently $mc.surname.
+If you want to change it, please select one of the options below:
+
+* <<link "Bartlett">>
+    <<set $mc.surname to "Bartlett">>
+    <<replace "#mc-surb">>$mc.surname<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+* <<link "Kerr">>
+    <<set $mc.surname to "Kerr">>
+    <<replace "#mc-surb">>$mc.surname<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+* <<link "Silva">>
+    <<set $mc.surname to "Silva">>
+    <<replace "#mc-surb">>$mc.surname<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+
+
+:: PronounAddOn [popup] {"position":"1050,225","size":"100,100"}
+Please fill all the textboxes below if your preferred pronouns.
+<center>
+''Subject:'' //I wished to know what ''they'' wanted.//
+	<<textbox "$they" "they">>
+'Object:'' //You have to stop bothering ''them'' during meals.//
+	<<textbox"$them" "them">>
+''Possessive Adjective:'' //Could you get ''their'' coat?//
+	<<textbox "$their" "their">>
+''Possessive:'' //Don't take this book, it's ''theirs''.//
+	<<textbox "$theirs" "theirs">>
+''Reflexive:'' //They want to keep it for ''themself''.//
+	<<textbox "$themself" "themself">>
+</center>
+\
+//What verb tense do your pronouns use?//
+* <label><<radiobutton "$proset.plural" "true">> Plural (they ''are'')</label>
+* <label><<radiobutton "$proset.plural" "false">> Singular (<<print either("she","he","ae","e")>> ''is'')</label>
+
+<center><<button "Confirm">>
+    <<set 
+        $proset.they to $they.toLowerCase(), 
+        $proset.them to $them.toLowerCase(), 
+        $proset.their to $their.toLowerCase(), 
+        $proset.theirs to $theirs.toLowerCase(), 
+        $proset.themselves to $themself.toLowerCase(),
+        $mc.pronouns to $they.toLowerCase() + "/" $them.toLowerCase()
+    >>
+    <<unset $they, $them, $their, $theirs, $themself>>
+    <<run Dialog.close()>>
+    <<goto "Index-CC">>
+<</button>></center>
+
+/*
+    I've ensured the pronouns as all in lowercases by default. For Capitalised or Uppercase version, you can create either a widget or set a new variable for each pronoun.
+*/
+
+
+:: Start {"position":"150,300","size":"100,100"}
+<h1> Welcome to the This Character Creator Template!</h1>\
+<h3 style="font-weight: normal;">This Template/Guide is meant to show what //could// be done for a character creator.
+Check the [[General Guidance and Notes|About]] before diving into the code.</h3>\
+
+<center><<button [[See the List of Traits|Index-CC]]>><</button>>
+	or
+<<button [[Play through the "game"]]>><</button>>
+<small>This section isn't ready yet, because I can't think of a good "storyline" to make someone to through all of this...</small>
+</center>
+
+
+:: Statistics {"position":"275,150","size":"100,100"}
+<h3>Personality</h3>\
+<center>
+	Introverted <progress @value="$intext" max="100"></progress> Extroverted<br>  
+    Cold <progress @value="$coldwarm" max="100"></progress> Warm    
+</center>
+<h3>Wealth</h3>\
+<progress @value="$statusStat.wealth" max="100"></progress> $statusStat.wealth
+
+<h3>Relationship Progress</h3>\
+$Camille: <progress value="70" max="100"></progress>
+$Fran: <progress value="30" max="100"></progress>
+$Alex: <progress value="50" max="100"></progress>
+
+/* The stats for the ROs are obviously not variable dependent here, I've just chosen them at random. */
+
+
+:: StatusExplanations [popup] {"position":"1775,825","size":"100,100"}
+<<if _explanation is "commoner">>\
+    The commoner has a hard life with little funds to sustain their wellbeing. Though they have some support from other commoners, and are potentially able to sway some weak merchants, no member of the court will ever receive them.
+
+* wealth : 0
+* favours at court : 0
+* favours with commoners : 40
+* favours with merchants : 15
+* difficulty : "hard"
+<<elseif _explanation is "bourgeois">>\
+    The bourgeois will be able to navigate the world with few worries... if they manage their wealth smartly. They are sometimes received at court and find much influence with the merchant class. However, the commoners will not look favourably towards them.
+
+* wealth : 45
+* favours at court : 25
+* favours with commoners : 10
+* favours with merchants : 50
+* difficulty : "medium"
+<<elseif _explanation is "noble">>\
+    The noble will never have a day of struggle in their life, unless they arouse the wrath of the KING. They will usually be able to easily trade favours with other nobles, sway merchants to their cause, and find limited support with the commoners thanks to charities.
+
+* wealth : 100
+* favours at court : 60
+* favours with commoners : 20
+* favours with merchants : 40
+* difficulty : "easy"
+<</if>>
+
+
+:: StoryCaption {"position":"25,150","size":"100,100"}
+<<button "Lexicon">><<PopupLexicon>><</button>>
+<<if passage() is "CC-Check">><<button "Statistics">><<PopupStats>><</button>><</if>>
+
+
+:: StoryInit {"position":"25,25","size":"100,100"}
+/*
+~ Notes: ~ 
+	You don't //have to// set variables ahead of time. I've done it for a handful of them because of how I've coded the template.
+
+	I also rely heavily on objects and arrays, but you can use regular basic variables instead. This is just how I organise stuff (I don't even bother setting subobjects either...).
+*/
+<<set 
+	$mc to {},
+	$proset to {},
+	$hair to {},
+	$face to {},
+	$facefeatures to [],
+	$skin to {},
+	$body to {},
+	$scars to [],
+	$aid to {},
+	$family to {}
+>>
+<<set 
+	$stat = {
+		strength : 0,
+		dexterity : 0,
+		willpower : 0,
+		magic : 0,
+		cunning : 0,
+		consitution : 0
+	},
+	$statusStat = {
+		wealth : 0,
+		court : 0,
+		commoner : 0,
+		merchant : 0,
+		difficulty : 0
+	}
+>>
+/* The variables below are only for practicalities */
+<<set
+	$pages to {}
+>>
+
+
+:: Wigets [widget nobr] {"position":"400,25","size":"100,100"}
+/*************************** 
+    SET PRONOUNS WIDGET
+***************************/
+<<widget "PronounsSet">>
+    <<if $mc.pronouns is "She/Her">>
+        <<set 
+            $proset.they to "she", 
+            $proset.them to "her", 
+            $proset.their to "her", 
+            $proset.theirs to "hers", 
+            $proset.themselves to "herself",
+            $proset.plural to false
+        >>
+    <<elseif $mc.pronouns is "He/Him">>
+        <<set 
+            $proset.they to "he", 
+            $proset.them to "him", 
+            $proset.their to "his", 
+            $proset.theirs to "his", 
+            $proset.themselves to "himself",
+            $proset.plural to false
+        >>
+    <<elseif $mc.pronouns is "They/Them (singular)">>
+        <<set 
+            $proset.they to "they", 
+            $proset.them to "them", 
+            $proset.their to "their", 
+            $proset.theirs to "theirs", 
+            $proset.themselves to "themself",
+            $proset.plural to false
+        >>
+    <<elseif $mc.pronouns is "They/Them (plural)">>
+        <<set 
+            $proset.they to "they", 
+            $proset.them to "them", 
+            $proset.their to "their", 
+            $proset.theirs to "theirs", 
+            $proset.themselves to "themselves",
+            $proset.plural to true
+        >>
+    <<elseif $mc.pronouns is "Ae/Aer">>
+        <<set 
+            $proset.they to "ae", 
+            $proset.them to "aer", 
+            $proset.their to "aer", 
+            $proset.theirs to "aers", 
+            $proset.themselves to "aerself",
+            $proset.plural to false
+        >>
+    <<elseif $mc.pronouns is "E/Em">>
+        <<set 
+            $proset.they to "e", 
+            $proset.them to "em", 
+            $proset.their to "eir", 
+            $proset.theirs to "eirs", 
+            $proset.themselves to "emself",
+            $proset.plural to false
+        >>
+    <</if>>
+<</widget>>
+<<widget "PronounsCustomSet">>
+    <<if _pronouns is "She/Her">>
+        <<set 
+            $mc.pronouns to "She/Her",
+            $proset.they to "she", 
+            $proset.them to "her", 
+            $proset.their to "her", 
+            $proset.theirs to "hers", 
+            $proset.themselves to "herself",
+            $proset.plural to false
+        >>
+    <<elseif _pronouns is "He/Him">>
+        <<set 
+            $mc.pronouns to "He/Him",
+            $proset.they to "he", 
+            $proset.them to "him", 
+            $proset.their to "his", 
+            $proset.theirs to "his", 
+            $proset.themselves to "himself",
+            $proset.plural to false
+        >>
+    <<elseif _pronouns is "They/Them (singular)">>
+        <<set 
+            $mc.pronouns to "They/Them (singular)",
+            $proset.they to "they", 
+            $proset.them to "them", 
+            $proset.their to "their", 
+            $proset.theirs to "theirs", 
+            $proset.themselves to "themself",
+            $proset.plural to false
+        >>
+    <<elseif _pronouns is "They/Them (plural)">>
+        <<set 
+            $mc.pronouns to "They/Them (plural)",
+            $proset.they to "they", 
+            $proset.them to "them", 
+            $proset.their to "their", 
+            $proset.theirs to "theirs", 
+            $proset.themselves to "themselves",
+            $proset.plural to true
+        >>
+    <<elseif _pronouns is "Ae/Aer">>
+        <<set 
+            $mc.pronouns to "Ae/Aer",
+            $proset.they to "ae", 
+            $proset.them to "aer", 
+            $proset.their to "aer", 
+            $proset.theirs to "aers", 
+            $proset.themselves to "aerself",
+            $proset.plural to false
+        >>
+    <<elseif _pronouns is "E/Em">>
+        <<set 
+            $mc.pronouns to "E/Em",
+            $proset.they to "e", 
+            $proset.them to "em", 
+            $proset.their to "eir", 
+            $proset.theirs to "eirs", 
+            $proset.themselves to "emself",
+            $proset.plural to false
+        >>
+    <</if>>
+<</widget>>
+
+/*************************** 
+    EYE COLOURS WIDGETS 
+***************************/
+/* 
+    The widgets below have been merged to be used for both the main trait page and the change popup :P
+*/
+<<widget "EyesSame">>
+    <<set $heterochromia to false>>
+    <<replace "#eye">>
+        Eye Colours: <<cycle "_eyes">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>><br>
+        Cycle through the options until you find the colour you want.<br>
+        <br>
+        <<button "Confirm">>
+            <<set $mc.eyes to _eyes>>
+            <<if passage() is "CC-Check">>
+                <<replace "#mc-eyes">>$mc.eyes<</replace>>
+                <<run Dialog.close()>>
+            <<else>>
+                <<goto "Index-CC">>
+            <</if>>
+        <</button>>
+    <</replace>>
+<</widget>>
+<<widget "EyesDiff">>
+    <<set $heterochromia to true>>
+    <<replace "#eye">>
+        Left: <<cycle "_eyesleft">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>><br>
+        Right: <<cycle "_eyesright">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>><br>
+        Cycle through the options until you find the colours you want.<br>
+        <br>
+        <<button "Confirm">>
+            <<set $mc.eyes to _eyesleft + " and " + _eyesright>>
+            /* 
+                If eye colours matters in the story more than just being printed on the page, this setting method won't be the best one. You may be better using a different way (like a variable for each eye). 
+            */
+            <<if passage() is "CC-Check">>
+                <<replace "#mc-eyes">>$mc.eyes<</replace>>
+                <<run Dialog.close()>>
+            <<else>>
+                <<goto "Index-CC">>
+            <</if>>
+        <</button>>
+    <</replace>>
+<</widget>>
+
+/*************************** 
+    HAIR WIDGETS
+***************************/
+<<widget "HairOptions">>
+    <<set 
+        _hairtexture to ["--", "Straight", "Wavy", "Curly (loose)", "Curly (tight)", "Coily"],
+        _hairlength to ["--", "Buzzcut", "Short", "Ear-Length", "Chin-Length", "Shoulder-Lentgh", "Long", "Waist-Length", "Hip-Length", "Knee-Length", "Floor-Length"],
+        _haircolour to ["--", "Black", "Brown", "Auburn", "Red", "Blond", "White"],
+        _hairuniform to ["Yes", "Graying", "White Streaks"],
+        _hairdyied to ["Uniform Dye", "Half-n-Half", "Streaks", "Roots", "Ends", "In-to-Out"],
+        _dyecolour to ["Pink", "Blue", "Green", "Purple", "Platinum", "Silver", "Seafoam"],
+        _shavedhair to ["No", "Completely", "Undercut", "Shaved Left Side", "Shaved Right Side", "Mohawk"],
+        _bangs to ["No", "Curtain Bangs", "Bottleneck Bangs", "Blunt Bangs", "Curly Bangs", "Side-Swept Bangs", "Layered Bangs", "Choppy Bangs", "Braided Bangs", "Wispy Bangs", "Wavy Bangs", "Micro Bangs", "Shaggy Bangs", "Picey Bangs", "Clip-In Bangs"],
+        _hairdo to ["Natural", "Covered", "Up do", "Braided", "Ponytail", "Buns", "Unstyled"],
+        _hairaccess to ["Headwrap", "Cap", "Clips", "Extensions", "Hairband", "Barrette", "Pins"]
+    >>
+    /*Yes, I know the amount of options for each is not really consistent... */
+<</widget>>
+
+/*************************** 
+    FACE WIDGETS 
+***************************/
+/* 
+    This widget pushed all options ticked into an array.
+    Depending on how your organise features, you may end up with multiple variables (regular variables and/or other arrays).
+*/
+<<widget "AllThisInAnArray">>
+    <<if _fullmoustache>><<run $facefeatures.push("a full moustache")>><</if>>
+    <<if _thinmoustache>><<run $facefeatures.push("a thin moustache")>><</if>>
+    <<if _goatee>><<run $facefeatures.push("a goatee")>><</if>>
+    <<if _fullbeard>><<run $facefeatures.push("a full beard")>><</if>>
+    <<if _sideburns>><<run $facefeatures.push("some sideburns")>><</if>>
+    <<if _shadow>><<run $facefeatures.push("shadow")>><</if>>
+    <<if _patch>><<run $facefeatures.push("soul patch")>><</if>>
+    <<if _handlebar>><<run $facefeatures.push("a handle bar")>><</if>>
+    <<if _wrinkles>><<run $facefeatures.push("wrinkles")>><</if>>
+    <<if _mole>><<run $facefeatures.push("a mole")>><</if>>
+    <<if _brow>><<run $facefeatures.push("a unibrow")>><</if>>
+    <<if _thickbrow>><<run $facefeatures.push("thick brows")>><</if>>
+    <<if _thinbrow>><<run $facefeatures.push("thin brows")>><</if>>
+    <<if _noeyelash>><<run $facefeatures.push("no eye lashes")>><</if>>
+    <<if _pointedear>><<run $facefeatures.push("pointed ears")>><</if>>
+    <<if _smallears>><<run $facefeatures.push("small ears")>><</if>>
+    <<if _largeears>><<run $facefeatures.push("large ears")>><</if>>
+    <<if _buttonnose>><<run $facefeatures.push("a Button nose")>><</if>>
+    <<if _romannose>><<run $facefeatures.push("a Roman nose")>><</if>>
+    <<if _crooked>><<run $facefeatures.push("a Crooked nose")>><</if>>
+    <<if _widenose>><<run $facefeatures.push("a Wide nose")>><</if>>
+    <<if _hawknose>><<run $facefeatures.push("a Hawk nose")>><</if>>
+    <<if _pointchin>><<run $facefeatures.push("a pointy chin")>><</if>>
+    <<if _roundchin>><<run $facefeatures.push("a rounded chin")>><</if>>
+    <<if _squarejawe>><<run $facefeatures.push("a square jaw")>><</if>>
+    <<if _pronouncedcheeks>><<run $facefeatures.push("pronounced cheeks")>><</if>>
+    <<if _bmrighteye>><<run $facefeatures.push("a beauty mark below the right eye")>><</if>>
+    <<if _bmlefteye>><<run $facefeatures.push("a beauty mark below the left eye")>><</if>>
+    <<if _bmcheek>><<run $facefeatures.push("a beauty mark on the cheek")>><</if>>
+    <<if _bmlips>><<run $facefeatures.push("a beauty mark above the lips")>><</if>>
+    <<if _freckles>><<run $facefeatures.push("freckles")>><</if>>
+    <<if _facehair>><<run $facefeatures.push("fluff hair")>><</if>>  
+    <<if _fangs>><<run $facefeatures.push("fangs")>><</if>>  
+    <<if _toothgap>><<run $facefeatures.push("tooth gap")>><</if>>  
+    <<if _acne>><<run $facefeatures.push("acne")>><</if>>  
+<</widget>>
+
+/*************************** 
+    MAKEUP WIDGETS 
+***************************/
+<<widget "CosmeticOptions">>
+    <<set
+        _makeup to ["A Bold Lip", "Smokey Eyes", "Clown Makeup", "Winged Liner", "Smokey Eye", "Disco Ball", "Vamp/Goth Makeup", "RenFair Makeup", "Drunk Makeup", "SFX Makeup", "E-Girl Makeup", "'Natural' Makeup", "Full Face", "Grunge Core", "Hippie Core", "MUA Comp Face"],
+        _naillength to ["Short Nails", "Mid Nails", "Long Nails", "Fake Nails", "Sharp Nails", "Claws", "Hoofs"],
+        _nailart to ["Single Swap", "French Manicure", "Onbré Nails", "Flora Design", "Dot Design", "Line Art", "Celestial Style", "Marble Design", "Printed Design", "Glitter Bomb"],
+        _nailcolour to ["Transparant Shine", "White", "Black", "Blue", "Green", "Red", "Yellow", "Orange", "Purple", "Pink", "Maroon", "Lime", "Silver", "Gold"],
+        _perfume to ["Floral", "Woody", "Gourmand", "Fruity", "Oriental", "Green", "Oceanic", "Citrus", "Spicy"]
+    >>
+<</widget>>
+/*************************** 
+    SKIN COLOURS WIDGETS 
+***************************/
+<<widget "SkinColourCycle">>
+    <<cycle "_color" autoselect>>
+        <<option "white">>
+        <<option "pink">>
+        <<option "beige">>
+        <<option "brown">>
+        <<option "black">>
+        <<option "blue">>
+        <<option "green">>
+        <<option "purple">>
+    <</cycle>>
+<</widget>>
+<<widget "SkinSatMutCycle">>
+    <<cycle "_satmut" autoselect>>
+        <<option "muted">>
+        <<option "saturated">>
+    <</cycle>>
+<</widget>>
+<<widget "SkinToneCycle">>
+    <<cycle "_undertone" autoselect>>
+        <<option "warm">>
+        <<option "neutral">>
+        <<option "cold">>
+    <</cycle>>
+<</widget>>
+
+/*************************** 
+    BUILD WIDGETS 
+***************************/
+<<widget "BodyBuild">>
+    <<set 
+        _height to ["Very Short {below 5’1”/155cm}", "Short {5’1”–5’7”/155-170cm}", "Average {5’7”–6’/170-185cm}", "Tall {6’–6’5”/185-195cm }", "Very Tall {above 6’5”/195cm}"],
+        _type to ["Thin", "Slender", "Average", "Curvy", "Chubby", "Fat"],
+        _muscle to ["Ripped", "Muscular", "Athletic", "Toned", "Lean", "Soft"]
+    >>
+<</widget>>
+
+/*************************** 
+    SCARS WIDGETS 
+***************************/
+<<widget "AllThisInAnArrayButItsScars">>
+    <<if _browscar>><<run $scars.push("cutting the brow")>><</if>>
+    <<if _eyescar>><<run $scars.push("crossing the eye")>><</if>> 
+    <<if _nosescar>><<run $scars.push("across the nose")>><</if>> 
+    <<if _cheekscar>><<run $scars.push("along the cheek")>><</if>> 
+    <<if _lipscar>><<run $scars.push("cutting the lip")>><</if>> 
+    <<if _chinscar>><<run $scars.push("on the chin")>><</if>> 
+    <<if _bitescar>><<run $scars.push("bite marks on the neck")>><</if>> 
+    <<if _neckscar>><<run $scars.push("along the neck")>><</if>> 
+    <<if _throatscar>><<run $scars.push("across the throat")>><</if>> 
+    <<if _heartscar>><<run $scars.push("across the heart")>><</if>> 
+    <<if _shoulderscar>><<run $scars.push("cutting the shoulder")>><</if>> 
+    <<if _torsoscar>><<run $scars.push("across the torso")>><</if>> 
+    <<if _ceasarscar>><<run $scars.push("a caesarian")>><</if>> 
+    <<if _hipscar>><<run $scars.push("along the hip")>><</if>> 
+    <<if _spinescar>><<run $scars.push("down the spine")>><</if>> 
+    <<if _backcar>><<run $scars.push("across the back")>><</if>> 
+    <<if _buttscar>><<run $scars.push("bite marks on the butt cheeks")>><</if>> 
+    <<if _legscar>><<run $scars.push("down the leg")>><</if>> 
+    <<if _footscar>><<run $scars.push("across the foot")>><</if>>
+<</widget>>
+
+/*********************************
+    PROSTHEICS/CEDURES WIDGETS 
+*********************************/
+<<widget "ArraysForPros">>
+    <<set $aid.proc to [], $aid.pros to [], $aid.aid to []>>
+    /* Procedures */
+    <<if _hrt>><<run $aid.proc.push("HRT")>><</if>>
+    <<if _topsurg>><<run $aid.proc.push("Top Surgery")>><</if>>
+    <<if _bottomsurg>><<run $aid.proc.push("Bottom Surgery")>><</if>>
+    <<if _facesurg>><<run $aid.proc.push("Facial Reconstruction")>><</if>>
+    <<if _othersurg>><<run $aid.proc.push("Other Reconstructive Surgery")>><</if>>
+    /* Prosthesis */
+    <<if _glasses>><<run $aid.pros.push("Glasses")>><</if>>
+    <<if _contacts>><<run $aid.pros.push("Contacts")>><</if>>
+    <<if _hearaidrem>><<run $aid.pros.push("Hearing Aid (removable)")>><</if>>
+    <<if _hearaidimp>><<run $aid.pros.push("Hearing Aid (Implant)")>><</if>>
+    <<if _prosfingers>><<run $aid.pros.push("Prosthesis (Fingers)")>><</if>>
+    <<if _proshand>><<run $aid.pros.push("Prosthesis (Hand)")>><</if>>
+    <<if _prosarm>><<run $aid.pros.push("Prosthesis (Arm)")>><</if>>
+    <<if _prostoes>><<run $aid.pros.push("Prosthesis (Toes)")>><</if>>
+    <<if _prosfoot>><<run $aid.pros.push("Prosthesis (Foot)")>><</if>>
+    <<if _prosleg>><<run $aid.pros.push("Prosthesis (Leg)")>><</if>>
+    /* Aid */
+    <<if _cane>><<run $aid.aid.push("Cane")>><</if>>
+    <<if _crutches>><<run $aid.aid.push("Crutches")>><</if>>
+    <<if _walkter>><<run $aid.aid.push("Walker")>><</if>>
+    <<if _servaniguide>><<run $aid.aid.push("Service Animal (Guide)")>><</if>>
+    <<if _servaniother>><<run $aid.aid.push("Service Animal (Other)")>><</if>>
+    <<if _handwheel>><<run $aid.aid.push("Wheelchair (Hand)")>><</if>>
+    <<if _powerwheel>><<run $aid.aid.push("Wheelchair (Powered)")>><</if>>
+    <<if _reader>><<run $aid.aid.push("Text Reader")>><</if>>
+<</widget>>
+
+
+/*************************** 
+    CHOOSE CLASS WIDGETS 
+***************************/
+<<widget "WarriorStartingStats">>
+    <<set 
+        $class to "warrior",
+        $stat = {
+            strength : 5,
+            dexterity : 4,
+            willpower : 0,
+            magic : 1,
+            cunning : 1,
+            consitution : 3
+        },
+        $availablepts = 10
+    >>
+<</widget>>
+<<widget "MageStartingStats">>
+    <<set 
+        $class to "mage",
+        $stat = {
+            strength : 1,
+            dexterity : 1,
+            willpower : 4,
+            magic : 6,
+            cunning : 2,
+            consitution : 0
+        },
+        $availablepts = 10
+    >>
+<</widget>>
+<<widget "RogueStartingStats">>
+    <<set 
+        $class to "rogue",
+        $stat = {
+            strength : 1,
+            dexterity : 5,
+            willpower : 2,
+            magic : 1,
+            cunning : 5,
+            consitution : 0
+        },
+        $availablepts = 10
+    >>
+<</widget>>
+/* 
+Notes:
+    You could technically merge the popup widgets below into one, using an argument widget to set each option appart.
+
+    I'm using the same passage to display inside the popup because I am lazy. See the ClassExplanations Passage.
+
+    Another easier way would be to use Chapel's Dialog API macro (especially the <<popup>> one). You wouldn't even need the widgets...
+*/
+<<widget "PopupWarrior">>
+    <<set _explanation to "warrior">>
+    <<script>>
+        Dialog.setup("The Warrior Class");
+        Dialog.wiki(Story.get("ClassExplanations").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "PopupMage">>
+    <<set _explanation to "mage">>
+    <<script>>
+        Dialog.setup("The Mage Class");
+        Dialog.wiki(Story.get("ClassExplanations").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "PopupRogue">>
+    <<set _explanation to "rogue">>
+    <<script>>
+        Dialog.setup("The Rogue Class");
+        Dialog.wiki(Story.get("ClassExplanations").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "PopupExtraPoints">>
+    <<set _explanation to "points">>
+    <<script>>
+        Dialog.setup("A Gift from the Gods!");
+        Dialog.wiki(Story.get("ClassExplanations").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+/*************************** 
+    SPEND POINTS WIDGETS 
+***************************/
+/* The following widgets are used to update the spending points passage. It can be made MUCH simpler with Cycy's Liveupdate macro (as in those widgets would be useless).
+Wrap the whole block of skill change in the main passage with a << liveblock >>, and use << update >> instead of the << replace >> macos. Like:
+        <<link "MORE">>
+            <<set $skill ++, $points -->> 
+            <<update>>
+        <</link>>
+*/
+<<widget "LockedPoints">>
+    <<set 
+        _statlocked = {
+            strength : $stat.strength,
+            dexterity : $stat.dexterity,
+            willpower : $stat.willpower,
+            magic : $stat.magic,
+            cunning : $stat.cunning,
+            consitution : $stat.consitution
+        }
+    >>
+<</widget>>
+
+<<widget "RemoveSTR">>
+    <span id="str-minus">
+        <<if $stat.strength is _statlocked.strength>>
+            ←
+        <<else>>
+            <<link "←">>
+                <<set $stat.strength --, $availablepts ++>>
+                <<replace "#strength">>$stat.strength<</replace>>
+                <<replace "#leftover">>$availablepts<</replace>>
+                <<if $stat.strength is _statlocked.strength>>
+                    <<replace "#str-minus">><<RemoveSTR>><</replace>>
+                <</if>>
+                <<if $availablepts gt 0 >>
+                    <<UpdateAddPoints>>
+                <</if>>
+            <</link>>
+        <</if>>
+    </span>
+<</widget>>
+<<widget "AddSTR">>
+        <span id="str-plus">
+        <<if $availablepts is 0 >>
+            →
+        <<else>>
+            <<link "→">>
+                <<set $stat.strength ++, $availablepts -->>
+                <<replace "#strength">>$stat.strength<</replace>>
+                <<replace "#leftover">>$availablepts<</replace>>
+                <<if $availablepts is 0 >>
+                    <<UpdateAddPoints>>
+                <</if>>
+                <<if $stat.strength gt _statlocked.strength>>
+                    <<replace "#str-minus">><<RemoveSTR>><</replace>>
+                <</if>>
+            <</link>>
+        <</if>>
+    </span>
+<</widget>>
+
+<<widget "RemoveDEX">>
+    <span id="dex-minus">
+        <<if $stat.dexterity is _statlocked.dexterity>>
+            ←
+        <<else>>
+            <<link "←">>
+                <<set $stat.dexterity --, $availablepts ++>>
+                <<replace "#dexterity">>$stat.dexterity<</replace>>
+                <<replace "#leftover">>$availablepts<</replace>>
+                <<if $stat.dexterity is _statlocked.dexterity>>
+                    <<replace "#dex-minus">><<RemoveDEX>><</replace>>
+                <</if>>
+                <<if $availablepts gt 0 >>
+                    <<UpdateAddPoints>>
+                <</if>>
+            <</link>>
+        <</if>>
+    </span>
+<</widget>>
+<<widget "AddDEX">>
+        <span id="dex-plus">
+        <<if $availablepts is 0 >>
+            →
+        <<else>>
+            <<link "→">>
+                <<set $stat.dexterity ++, $availablepts -->>
+                <<replace "#dexterity">>$stat.dexterity<</replace>>
+                <<replace "#leftover">>$availablepts<</replace>>
+                <<if $availablepts is 0 >>
+                    <<UpdateAddPoints>>
+                <</if>>
+                <<if $stat.dexterity gt _statlocked.dexterity>>
+                    <<replace "#dex-minus">><<RemoveDEX>><</replace>>
+                <</if>>
+            <</link>>
+        <</if>>
+    </span>
+<</widget>>
+
+<<widget "RemoveWIL">>
+    <span id="wil-minus">
+        <<if $stat.willpower is _statlocked.willpower>>
+            ←
+        <<else>>
+            <<link "←">>
+                <<set $stat.willpower --, $availablepts ++>>
+                <<replace "#dexterity">>$stat.willpower<</replace>>
+                <<replace "#leftover">>$availablepts<</replace>>
+                <<if $stat.willpower is _statlocked.willpower>>
+                    <<replace "#wil-minus">><<RemoveWIL>><</replace>>
+                <</if>>
+                <<if $availablepts gt 0 >>
+                    <<UpdateAddPoints>>
+                <</if>>
+            <</link>>
+        <</if>>
+    </span>
+<</widget>>
+<<widget "AddWIL">>
+        <span id="wil-plus">
+        <<if $availablepts is 0 >>
+            →
+        <<else>>
+            <<link "→">>
+                <<set $stat.willpower ++, $availablepts -->>
+                <<replace "#willpower">>$stat.willpower<</replace>>
+                <<replace "#leftover">>$availablepts<</replace>>
+                <<if $availablepts is 0 >>
+                    <<UpdateAddPoints>>
+                <</if>>
+                <<if $stat.willpower gt _statlocked.willpower>>
+                    <<replace "#wil-minus">><<RemoveWIL>><</replace>>
+                <</if>>
+            <</link>>
+        <</if>>
+    </span>
+<</widget>>
+
+<<widget "RemoveMAG">>
+    <span id="mag-minus">
+        <<if $stat.magic is _statlocked.magic>>
+            ←
+        <<else>>
+            <<link "←">>
+                <<set $stat.magic --, $availablepts ++>>
+                <<replace "#magic">>$stat.magic<</replace>>
+                <<replace "#leftover">>$availablepts<</replace>>
+                <<if $stat.magic is _statlocked.magic>>
+                    <<replace "#mag-minus">><<RemoveMAG>><</replace>>
+                <</if>>
+                <<if $availablepts gt 0 >>
+                    <<UpdateAddPoints>>
+                <</if>>
+            <</link>>
+        <</if>>
+    </span>
+<</widget>>
+<<widget "AddMAG">>
+        <span id="mag-plus">
+        <<if $availablepts is 0 >>
+            →
+        <<else>>
+            <<link "→">>
+                <<set $stat.magic ++, $availablepts -->>
+                <<replace "#magic">>$stat.magic<</replace>>
+                <<replace "#leftover">>$availablepts<</replace>>
+                <<if $availablepts is 0 >>
+                    <<UpdateAddPoints>>
+                <</if>>
+                <<if $stat.magic gt _statlocked.magic>>
+                    <<replace "#mag-minus">><<RemoveMAG>><</replace>>
+                <</if>>
+            <</link>>
+        <</if>>
+    </span>
+<</widget>>
+
+<<widget "RemoveCUN">>
+    <span id="cun-minus">
+        <<if $stat.cunning is _statlocked.cunning>>
+            ←
+        <<else>>
+            <<link "←">>
+                <<set $stat.cunning --, $availablepts ++>>
+                <<replace "#cunning">>$stat.cunning<</replace>>
+                <<replace "#leftover">>$availablepts<</replace>>
+                <<if $stat.cunning is _statlocked.cunning>>
+                    <<replace "#cun-minus">><<RemoveCUN>><</replace>>
+                <</if>>
+                <<if $availablepts gt 0 >>
+                    <<UpdateAddPoints>>
+                <</if>>
+            <</link>>
+        <</if>>
+    </span>
+<</widget>>
+<<widget "AddCUN">>
+        <span id="cun-plus">
+        <<if $availablepts is 0 >>
+            →
+        <<else>>
+            <<link "→">>
+                <<set $stat.cunning ++, $availablepts -->>
+                <<replace "#cunning">>$stat.cunning<</replace>>
+                <<replace "#leftover">>$availablepts<</replace>>
+                <<if $availablepts is 0 >>
+                    <<UpdateAddPoints>>
+                <</if>>
+                <<if $stat.cunning gt _statlocked.cunning>>
+                    <<replace "#cun-minus">><<RemoveCUN>><</replace>>
+                <</if>>
+            <</link>>
+        <</if>>
+    </span>
+<</widget>>
+
+<<widget "RemoveCON">>
+    <span id="con-minus">
+        <<if $stat.consitution is _statlocked.consitution>>
+            ←
+        <<else>>
+            <<link "←">>
+                <<set $stat.consitution --, $availablepts ++>>
+                <<replace "#consitution">>$stat.consitution<</replace>>
+                <<replace "#leftover">>$availablepts<</replace>>
+                <<if $stat.consitution is _statlocked.consitution>>
+                    <<replace "#con-minus">><<RemoveCON>><</replace>>
+                <</if>>
+                <<if $availablepts gt 0 >>
+                    <<UpdateAddPoints>>
+                <</if>>
+            <</link>>
+        <</if>>
+    </span>
+<</widget>>
+<<widget "AddCON">>
+        <span id="con-plus">
+        <<if $availablepts is 0 >>
+            →
+        <<else>>
+            <<link "→">>
+                <<set $stat.consitution ++, $availablepts -->>
+                <<replace "#consitution">>$stat.consitution<</replace>>
+                <<replace "#leftover">>$availablepts<</replace>>
+                <<if $availablepts is 0 >>
+                    <<UpdateAddPoints>>
+                <</if>>
+                <<if $stat.consitution gt _statlocked.consitution>>
+                    <<replace "#con-minus">><<RemoveCON>><</replace>>
+                <</if>>
+            <</link>>
+        <</if>>
+    </span>
+<</widget>>
+
+<<widget "UpdateAddPoints">>
+    <<replace "#str-plus">><<AddSTR>><</replace>>
+    <<replace "#dex-plus">><<AddDEX>><</replace>>
+    <<replace "#wil-plus">><<AddWIL>><</replace>>
+    <<replace "#mag-plus">><<AddMAG>><</replace>>
+    <<replace "#cun-plus">><<AddCUN>><</replace>>
+    <<replace "#con-plus">><<AddCON>><</replace>>
+<</widget>>
+
+/********************************
+    CHOOSE BACKGROUND WIDGETS 
+********************************/
+<<widget "CommonerStartingStats">>
+    <<set 
+        $background to "commoner",
+        $statusStat = {
+            wealth : 0,
+            court : 0,
+            commoner : 40,
+            merchant : 15,
+            difficulty : "hard"
+        }
+    >>
+<</widget>>
+<<widget "BourgeoisStartingStats">>
+    <<set 
+        $background to "bourgeois",
+        $statusStat = {
+            wealth : 45,
+            court : 25,
+            commoner : 10,
+            merchant : 50,
+            difficulty : "medium"
+        },
+        $availablepts = 10
+    >>
+<</widget>>
+<<widget "NobleStartingStats">>
+    <<set 
+        $background to "noble",
+        $statusStat = {
+            wealth : 100,
+            court : 60,
+            commoner : 20,
+            merchant : 40,
+            difficulty : "easy"
+        }
+    >>
+<</widget>>
+/* PopupNote: I'm just lazy, so I merged related popups together, instead of have a passage for each 
+Also Chapel's << popup >> macro from this Dialog API set would remove the use of those widgets...
+*/
+<<widget "PopupCommoner">>
+    <<set _explanation to "commoner">>
+    <<script>>
+        Dialog.setup("The Commoner");
+        Dialog.wiki(Story.get("StatusExplanations").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "PopupBourgeois">>
+    <<set _explanation to "bourgeois">>
+    <<script>>
+        Dialog.setup("The Bourgeois");
+        Dialog.wiki(Story.get("StatusExplanations").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "PopupNoble">>
+    <<set _explanation to "noble">>
+    <<script>>
+        Dialog.setup("The Noble");
+        Dialog.wiki(Story.get("StatusExplanations").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+/********************************
+    RO GENDER WIDGETS 
+********************************/
+<<widget "CamilleCycle">>
+    <<cycle "_camille">>
+        <<option "Camille (She/Her)">>
+        <<option "Camille (He/Him)">>
+        <<option "Camille (They/Them)">>
+    <</cycle>>
+<</widget>>
+<<widget "FranCycle">>
+    <<cycle "_fran">>
+        <<option "Frances (She/Her)">>
+        <<option "Frank (He/Him)">>
+        <<option "Frances (They/Them)">>
+    <</cycle>>
+<</widget>>
+<<widget "AlexCycle">>
+    <<cycle "_alex">>
+        <<option "Alexandra (She/Her)">>
+        <<option "Alexander (He/Him)">>
+        <<option "Alex (They/Them)">>
+    <</cycle>>
+<</widget>>
+
+
+
+/********************************
+    MAIN PAGE WIDGETS 
+********************************/
+<<widget "Randomiser">>
+    <<set
+        $mc.name to either ("Suzette", "Maribelle", "Francine", "Thomas", "Charles", "Alfonso", "Riley", "Blake", "Taylor"),
+        $mc.nickname to "{/}",
+        $mc.surname to either("Bartlett", "Kerr", "Silva"),
+        $mc.gender to either("female", "male", "nonbinary"),
+        $mc.trans to either("transgender", "cisgender", "NR"),
+        $mc.person to either("woman", "man", "person"),
+        $mc.title to either("lady", "lord", "liege"),
+        $mc.sexu to either("Heterosexual", "Homosexual", "Bisexual", "Pansexual", "Asexual"),
+        $mc.pronouns to either("She/Her", "He/Him", "They/Them (singular)", "They/Them (plural)", "Ae/Aer", "E/Em"),
+        $mc.age to random(18, 78),
+        $heterochromia to either(true, false),
+        _bald to either(true, false),
+        _dye to either(true, false),
+        _wig to either(true, false, "cover"),
+        _wigdye to either(true, false),
+        $facefeatures to "{/}",
+        $face.tattoo to either("No", "Covering the Face", "On the Forehead", "Under the Eye", "On the Cheeks", "Under the Chin", "Covering the Eyebrows", "Lining the lips"),
+        $face.piercing to either("No", "Eyebrow", "Cheek", "Nose", "Septum", "Ear", "Lip", "Tongue"),
+        $skin.color to either("white", "pink", "beige", "brown", "black", "blue", "green", "purple"),
+        $skin.satmut to either("muted", "saturated"),
+        $skin.undertone to either("warm", "neutral", "cold"),
+        $skin.features to "{/}",
+        $body.height to either("Very Short {below 5’1”/155cm}", "Short {5’1”–5’7”/155-170cm}", "Average {5’7”–6’/170-185cm}", "Tall {6’–6’5”/185-195cm }", "Very Tall {above 6’5”/195cm}"),
+        $body.weight to either("Thin", "Slender", "Average", "Curvy", "Chubby", "Fat"),
+        $body.musc to either("Ripped", "Muscular", "Athletic", "Toned", "Lean", "Soft"),
+        $scars to "{/}",
+        $aid.proc to "{/}",
+        $aid.pros to "{/}",
+        $aid.aid to "{/}",
+        $body.tattoo to either("No", "Half-Sleeve", "Full Sleeve", "Neck", "Chest", "Belly", "Leg", "Calf", "Foot", "Covered"),
+        $body.piercing to either("No", "Belly Button", "Nipple", "Surface (Chest)", "Surface (Arm)", "Surface (Back)", "Surface (Leg)", "Surface (Private)"),
+        _makeup to either(true, false),
+        $body.naislength to either("Short Nails", "Mid Nails", "Long Nails", "Fake Nails", "Sharp Nails", "Claws", "Hoofs"),
+        _nail to either(true, false),
+        _perfume to either(true, false),
+        $intext to random(0, 100),
+        $coldwarm to random(0, 100),
+        _class to random(1,3),
+        _bg to random(1,3),
+        $Camille to either("Camille (She/Her)", "Camille (He/Him)", "Camille (They/Them)"),
+        $Fran to either("Frances (She/Her)", "Frank (He/Him)", "Frances (They/Them)"),
+        $Alex to either("Alexandra (She/Her)", "Alexander (He/Him)", "Alex (They/Them)"),
+        $family.parents to either("Mother + Father", "Mother", "Father", "Two Fathers", "Two Mothers", "Nuclear Family", "No Parents"),
+        $family.siblings to random(0, 10),
+        $family.children to random(0, 5),
+        _preggo to either(true, false, false, false),
+        $mc.pet to either("a turtle", "a dog", "a cat", "a bird", "a rodent", "a snake", "a tiger", "a dragon", "a robot", "a horse", "a spider", "a moon", "a cow", "a pig")
+    >>
+    <<if $mc.trans is "NR">><<run delete $mc.trans>><</if>>
+    <<PronounsSet>>
+    <<if $heterochromia>>
+            <<set $mc.eyes to either("white", "grey", "golden", "green", "blue", "maroon", "brown", "black", "red", "pink", "purple", "lime", "seafoam", "cream")>>
+        <<else>>
+            <<set 
+                _eyesleft to either("white", "grey", "golden", "green", "blue", "maroon", "brown", "black", "red", "pink", "purple", "lime", "seafoam", "cream"),
+                _eyesright to either("white", "grey", "golden", "green", "blue", "maroon", "brown", "black", "red", "pink", "purple", "lime", "seafoam", "cream"),
+                $mc.eyes to _eyesleft + " and " + _eyesright
+            >>
+    <</if>>
+    <<if _bald>>
+        <<set $hair to "bald">>
+        <<else>>
+            <<set 
+                $hair to {},
+                $hair.texture to either("Straight", "Wavy", "Curly (loose)", "Curly (tight)", "Coily"),
+                $hair.length to either("Buzzcut", "Short", "Ear-Length", "Chin-Length", "Shoulder-Lentgh", "Long", "Waist-Length", "Hip-Length", "Knee-Length", "Floor-Length"),
+                $hair.colour to either("Black", "Brown", "Auburn", "Red", "Blond", "White"),
+                $hair.uniform to either("Yes", "Graying", "White Streaks"),
+                $hair.bangs to either("No", "Curtain Bangs", "Bottleneck Bangs", "Blunt Bangs", "Curly Bangs", "Side-Swept Bangs", "Layered Bangs", "Choppy Bangs", "Braided Bangs", "Wispy Bangs", "Wavy Bangs", "Micro Bangs", "Shaggy Bangs", "Picey Bangs", "Clip-In Bangs"),
+                $hair.shave to either("No", "Completely", "Undercut", "Shaved Left Side", "Shaved Right Side", "Mohawk"),
+                $hair.do to either("Natural", "Covered", "Up do", "Braided", "Ponytail", "Buns", "Unstyled")
+            >>
+            <<if _dye>>
+                <<set 
+                    $dye to {},
+                    $dye.pattern to either("Uniform Dye", "Half-n-Half", "Streaks", "Roots", "Ends", "In-to-Out"),
+                    $dye.colour to either("Pink", "Blue", "Green", "Purple", "Platinum", "Silver", "Seafoam")
+                >>
+            <</if>>
+    <</if>>
+    <<if _wig is "cover">>
+            <<set $cover to either("Headwrap", "Cap", "Clips", "Extensions", "Hairband", "Barrette", "Pins")>>
+        <<elseif _wig>>
+            <<set 
+                $wig to {},
+                $wig.texture to either("Straight", "Wavy", "Curly (loose)", "Curly (tight)", "Coily"),
+                $wig.length to either("Buzzcut", "Short", "Ear-Length", "Chin-Length", "Shoulder-Lentgh", "Long", "Waist-Length", "Hip-Length", "Knee-Length", "Floor-Length"),
+                $wig.colour to either("Black", "Brown", "Auburn", "Red", "Blond", "White"),
+                $wig.bangs to either("No", "Curtain Bangs", "Bottleneck Bangs", "Blunt Bangs", "Curly Bangs", "Side-Swept Bangs", "Layered Bangs", "Choppy Bangs", "Braided Bangs", "Wispy Bangs", "Wavy Bangs", "Micro Bangs", "Shaggy Bangs", "Picey Bangs", "Clip-In Bangs"),
+                $wig.do to either("Natural", "Covered", "Up do", "Braided", "Ponytail", "Buns", "Unstyled")
+            >>
+            <<if _wigdye>>
+                <<set 
+                    $wigdye to {},
+                    $wigdye.pattern to either("Uniform Dye", "Half-n-Half", "Streaks", "Roots", "Ends", "In-to-Out"),
+                    $wigdye.colour to either("Pink", "Blue", "Green", "Purple", "Platinum", "Silver", "Seafoam")
+                >>
+            <</if>>
+    <</if>>
+    <<if $face.tattoo is "No">><<run delete $face.tattoo>><</if>>
+    <<if $face.piercing is "No">><<run delete $face.piercing>><</if>>
+    <<if $body.tattoo is "No">><<run delete $body.tattoo>><</if>>
+    <<if $body.piercing is "No">><<run delete $body.piercing>><</if>>
+    <<if _makeup>>
+        <<set $skin.makup to either("A Bold Lip", "Smokey Eyes", "Clown Makeup", "Winged Liner", "Smokey Eye", "Disco Ball", "Vamp/Goth Makeup", "RenFair Makeup", "Drunk Makeup", "SFX Makeup", "E-Girl Makeup", "'Natural' Makeup", "Full Face", "Grunge Core", "Hippie Core", "MUA Comp Face")>><</if>>
+    <<if _nail>>
+        <<set
+            $body.nails to either("Single Swap", "French Manicure", "Onbré Nails", "Flora Design", "Dot Design", "Line Art", "Celestial Style", "Marble Design", "Printed Design", "Glitter Bomb"),
+            $body.nailscolour to either("Transparant Shine", "White", "Black", "Blue", "Green", "Red", "Yellow", "Orange", "Purple", "Pink", "Maroon", "Lime", "Silver", "Gold")
+        >><</if>>
+    <<if _perfume>>
+        <<set $skin.perfume to either("Floral", "Woody", "Gourmand", "Fruity", "Oriental", "Green", "Oceanic", "Citrus", "Spicy")>><</if>>
+    <<if _class is 1>>
+            <<WarriorStartingStats>>
+        <<elseif _class is 2>>
+            <<MageStartingStats>>
+        <<else>>
+            <<RogueStartingStats>>
+    <</if>>
+    <<if _bg is 1>>
+            <<CommonerStartingStats>>
+        <<elseif _bg is 2>>
+            <<BourgeoisStartingStats>>
+        <<else>>
+            <<NobleStartingStats>>
+    <</if>>
+    <<if _preggo>><<set $mc.pregnant to "I am pregnant">><</if>>
+<</widget>>
+<<widget "PreSet">>
+    <<set 
+        $mc.name to "Audrey",
+        $mc.nickname to "{/}",
+        $mc.surname to "Bartlett",
+        $mc.gender to "female",
+        $mc.trans to "cisgender",
+        $mc.person to "woman",
+        $mc.title to "lady",
+        $mc.sexu to "Bisexual",
+        $mc.pronouns to "They/Them (singular)",
+        $mc.age to "{/}",
+        $heterochromia to false,
+        $mc.eyes to "red",
+        $hair to "bald",
+        $cover to "Headwrap",
+        $facefeatures to ["a mole", "no eye lashes", "pointed ears", "a Hawk nose", "fangs"],
+        $face.tattoo to "Lining the lips",
+        $face.piercing to "Eyebrow",
+        $skin.color to "white",
+        $skin.satmut to "muted",
+        $skin.undertone to "cold",
+        $skin.features to ["Freckles"],
+        $body.height to "Very Short {below 5’1”/155cm}",
+        $body.weight to "Thin",
+        $body.musc to "Soft",
+        $scars to ["cutting the lip", "along the hip", "down the leg"], 
+        $aid.pros to ["Glasses", "Hearing Aid (removable)"],
+        $aid.aid to ["Cane"],
+        $body.tattoo to "Calf",
+        $body.piercing to "Nipple",
+        $skin.makup to "Smokey Eyes",
+        $body.naislength to "Claws",
+        $body.nails to "Printed Design",
+        $body.nailscolour to "Yellow",
+        $skin.perfume to "Woody",
+        $intext to 9,
+        $coldwarm to 15,
+        $class to "mage",
+        $stat = {
+            strength : 1,
+            dexterity : 1,
+            willpower : 4,
+            magic : 6,
+            cunning : 2,
+            consitution : 0
+        },
+        $background to "noble",
+        $statusStat = {
+            wealth : 100,
+            court : 60,
+            commoner : 20,
+            merchant : 40,
+            difficulty : "easy"
+        },
+        $Camille to "Camille (She/Her)", 
+        $Fran to "Frances (They/Them)", 
+        $Alex to "Alexander (He/Him)",
+        $family.parents to "No Parents",
+        $family.siblings to 0,
+        $family.children to 0,
+        $mc.pet to "a horse"
+    >>
+<</widget>>
+<<widget "CheckifDone">>
+    <<done>>
+        <<if $mc.name>>
+            <<addclass "#name" "green">>
+        <</if>>
+        <<if $mc.nickname>>
+            <<addclass "#nickname" "green">>
+        <</if>>
+        <<if $mc.surname>>
+            <<addclass "#surname" "green">>
+        <</if>>
+        <<if $mc.surname>>
+            <<addclass "#surname" "green">>
+        <</if>>
+        <<if $pages.gender>>
+            <<addclass "#gender" "green">>
+        <</if>>
+        <<if $pages.pronouns>>
+            <<addclass "#pronouns" "green">>
+        <</if>>
+        <<if $mc.age>>
+            <<addclass "#age" "green">>
+        <</if>>
+        <<if $mc.eyes>>
+            <<addclass "#eyes" "green">>
+        <</if>>
+        <<if $pages.hair>>
+            <<addclass "#hair" "green">>
+        <</if>>
+        <<if $pages.facefeat>>
+            <<addclass "#ffeat" "green">>
+        <</if>>
+        <<if $pages.faceacc>>
+            <<addclass "#facc" "green">>
+        <</if>>
+        <<if $skin.color>>
+            <<addclass "#skin" "green">>
+        <</if>>
+        <<if $body.height>>
+            <<addclass "#build" "green">>
+        <</if>>
+        <<if $pages.scars>>
+            <<addclass "#scars" "green">>
+        <</if>>
+        <<if $pages.pros>>
+            <<addclass "#pros" "green">>
+        <</if>>
+        <<if $pages.bodymod>>
+            <<addclass "#mods" "green">>
+        <</if>>
+        <<if $pages.makeup>>
+            <<addclass "#makeup" "green">>
+        <</if>>
+        <<if $pages.perso>>
+            <<addclass "#perso" "green">>
+        <</if>>
+        <<if $class>>
+            <<addclass "#class" "green">>
+        <</if>>
+        <<if $background>>
+            <<addclass "#back" "green">>
+        <</if>>
+        <<if $pages.rogen>>
+            <<addclass "#rogender" "green">>
+        <</if>>
+        <<if $pages.family>>
+            <<addclass "#family" "green">>
+        <</if>>
+        <<if $mc.pet>>
+            <<addclass "#pets" "green">>
+        <</if>>
+    <</done>>
+<</widget>>
+/********************************
+    CHANGE POPUP WIDGETS 
+********************************/
+/*
+    Of course, all the "Popup" widgets could be reduced to one line of code if you use Chapel's Dialog API Macro set.
+    But this template is base SugarCube only.
+*/
+<<widget "PopupNameChange">>
+    <<script>>
+        Dialog.setup("Change Your Name");
+        Dialog.wiki(Story.get("Popup-Name").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+<<widget "PopupNickNameChange">>
+    <<script>>
+        Dialog.setup("Change Your Nickname");
+        Dialog.wiki(Story.get("Popup-NickName").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+<<widget "PopupSurNameChange">>
+    <<script>>
+        Dialog.setup("Change Your Surname");
+        Dialog.wiki(Story.get("Popup-SurName").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+<<widget "PopupGenderChange">>
+    <<script>>
+        Dialog.setup("Change Your Gender");
+        Dialog.wiki(Story.get("Popup-Gender").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "IfGenderIsCustom">>
+    /*This is to check whether a trait was custom, because the dialog box edits temporary variables instead of the main one (in case the player closes the popup by mistake) */
+    <<if $mc.gender is "female">>
+        <<set _gender to "female">>
+    <<elseif $mc.gender is "male">>
+        <<set _gender to "male">>
+    <<elseif $mc.gender is "nonbinary">>
+        <<set _gender to "nonbinary">>
+    <<else>>
+        <<set _gender to "custom">>
+    <</if>>
+    <<if $mc.trans is "transgender">>
+        <<set _trans to "transgender">>
+    <<elseif $mc.trans is "cisgender">>
+        <<set _trans to "cisgender">>
+    <<else>>
+        <<set _trans to "NR">>
+    <</if>>
+    <<if $mc.gender is "woman">>
+        <<set _person to "woman">>
+    <<elseif $mc.gender is "man">>
+        <<set _person to "man">>
+    <<elseif $mc.gender is "person">>
+        <<set _person to "person">>
+    <<else>>
+        <<set _person to "custom">>
+    <</if>>
+    <<if $mc.gender is "lady">>
+        <<set _title to "lady">>
+    <<elseif $mc.gender is "lord">>
+        <<set _title to "lord">>
+    <<elseif $mc.gender is "liege">>
+        <<set _title to "liege">>
+    <<else>>
+        <<set _title to "custom">>
+    <</if>>
+<</widget>>
+
+<<widget "PopupPronounChange">>
+    <<script>>
+        Dialog.setup("Change Your Pronouns");
+        Dialog.wiki(Story.get("Popup-Pronouns").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "IfPronounsIsCustom">>
+    /*This is to check whether the pronouns were custom, because the dialog box edits temporary variables instead of the main one (in case the player closes the popup by mistake) */
+    <<if !$proset.custom>>
+        <<if $mc.pronouns is "She/Her">>
+            <<set _pronouns to "She/Her">>
+        <<elseif $mc.pronouns is "He/Him">>
+            <<set _pronouns to "He/Him">>
+        <<elseif $mc.pronouns is "They/Them (singular)">>
+            <<set _pronouns to "They/Them (singular)">>
+        <<elseif $mc.pronouns is "They/Them (plural)">>
+            <<set _pronouns to "They/Them (plural)">>
+        <<elseif $mc.pronouns is "Ae/Aer">>
+            <<set _pronouns to "Ae/Aer">>
+        <<elseif $mc.pronouns is "E/Em">>
+            <<set _pronouns to "E/Em">>
+        <</if>>
+    <<else>>
+        <<set _pronouns to "custom">>
+    <</if>>
+<</widget>>
+
+<<widget "PopupAgeChange">>
+    <<script>>
+        Dialog.setup("Change Your Age");
+        Dialog.wiki(Story.get("Popup-Age").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+<<widget "PopupEyesChange">>
+    <<script>>
+        Dialog.setup("Change Your Eye");
+        Dialog.wiki(Story.get("Popup-Eye").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+<<widget "PopupHairChange">>
+    <<script>>
+        Dialog.setup("Change Your Hair");
+        Dialog.wiki(Story.get("Popup-Hair").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "PopupWigChange">>
+    <<script>>
+        Dialog.setup("Change Your Wig/Cover");
+        Dialog.wiki(Story.get("Popup-Hair-Wig").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+<<widget "PopupFaceFeatChange">>
+    <<script>>
+        Dialog.setup("Change Your Features");
+        Dialog.wiki(Story.get("Popup-FaceFeat").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "FacialFeaturesPicked">>
+    <<if $facefeatures.includes("a full moustache")>><<set _fullmoustache to true>><</if>>
+    <<if $facefeatures.includes("a thin moustache")>><<set _thinmoustache to true>><</if>>
+    <<if $facefeatures.includes("a goatee")>><<set _goatee to true>><</if>>
+    <<if $facefeatures.includes("a full beard")>><<set _fullbeard to true>><</if>>
+    <<if $facefeatures.includes("some sideburns")>><<set _sideburns to true>><</if>>
+    <<if $facefeatures.includes("shadow")>><<set _shadow to true>><</if>>
+    <<if $facefeatures.includes("soul patch")>><<set _patch to true>><</if>>
+    <<if $facefeatures.includes("a handle bar")>><<set _handlebar to true>><</if>>
+    <<if $facefeatures.includes("wrinkles")>><<set _wrinkles to true>><</if>>
+    <<if $facefeatures.includes("a mole")>><<set _mole to true>><</if>>
+    <<if $facefeatures.includes("a unibrow")>><<set _brow to true>><</if>>
+    <<if $facefeatures.includes("thick brows")>><<set _thickbrow to true>><</if>>
+    <<if $facefeatures.includes("thin brows")>><<set _thinbrow to true>><</if>>
+    <<if $facefeatures.includes("no eye lashes")>><<set _noeyelash to true>><</if>>
+    <<if $facefeatures.includes("pointed ears")>><<set _pointedear to true>><</if>>
+    <<if $facefeatures.includes("small ears")>><<set _smallears to true>><</if>>
+    <<if $facefeatures.includes("large ears")>><<set _largeears to true>><</if>>
+    <<if $facefeatures.includes("a Button nose")>><<set _buttonnose to true>><</if>>
+
+    <<if $facefeatures.includes("a Roman nose")>><<set _romannose to true>><</if>>
+    <<if $facefeatures.includes("a Crooked nose")>><<set _crooked to true>><</if>>
+    <<if $facefeatures.includes("a Wide nose")>><<set _widenose to true>><</if>>
+    <<if $facefeatures.includes("a Hawk nose")>><<set _hawknose to true>><</if>>
+    <<if $facefeatures.includes("a pointy chin")>><<set _pointchin to true>><</if>>
+    <<if $facefeatures.includes("a rounded chin")>><<set _roundchin to true>><</if>>
+    <<if $facefeatures.includes("a square jaw")>><<set _squarejawe to true>><</if>>
+    <<if $facefeatures.includes("pronounced cheeks")>><<set _pronouncedcheeks to true>><</if>>
+    <<if $facefeatures.includes("a beauty mark below the right eye")>><<set _bmrighteye to true>><</if>>
+    <<if $facefeatures.includes("a beauty mark below the left eye")>><<set _bmlefteye to true>><</if>>
+    <<if $facefeatures.includes("a beauty mark on the cheek")>><<set _bmcheek to true>><</if>>
+    <<if $facefeatures.includes("a beauty mark above the lips")>><<set _bmlips to true>><</if>>
+    <<if $facefeatures.includes("freckles")>><<set _freckles to true>><</if>>
+    <<if $facefeatures.includes("fluff hair")>><<set _facehair to true>><</if>>
+    <<if $facefeatures.includes("fangs")>><<set _fangs to true>><</if>>
+    <<if $facefeatures.includes("tooth gap")>><<set _toothgap to true>><</if>>
+    <<if $facefeatures.includes("acne")>><<set _acne to true>><</if>>
+<</widget>>
+
+<<widget "PopupFaceAccChange">>
+    <<script>>
+        Dialog.setup("Change Your Facial Accessories");
+        Dialog.wiki(Story.get("Popup-FaceAcc").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+<<widget "PopupSkinColourChange">>
+    <<script>>
+        Dialog.setup("Change Your Skin Colour");
+        Dialog.wiki(Story.get("Popup-Skin").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "PopupSkinChecker">>
+    <<set 
+        _undertone to $skin.undertone,
+        _color to $skin.color,
+        _satmut to $skin.satmut,
+    >>
+    <<if $skin.features.includes("Viligo")>><<set _vitiligo to true>><</if>>
+    <<if $skin.features.includes("Freckles")>><<set _freckles to true>><</if>>
+    <<if $skin.features.includes("Eczema")>><<set _eczema to true>><</if>>
+    <<if $skin.features.includes("Beauty Marks")>><<set _beatymarks to true>><</if>>
+    <<if $skin.features.includes("Albinism")>><<set _albinism to true>><</if>>
+<</widget>>
+
+<<widget "PopupBuildChange">>
+    <<script>>
+        Dialog.setup("Change Your Build");
+        Dialog.wiki(Story.get("Popup-Build").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "PopupBodyBuild">>
+    <<set 
+        _height to ["--", "Very Short {below 5’1”/155cm}", "Short {5’1”–5’7”/155-170cm}", "Average {5’7”–6’/170-185cm}", "Tall {6’–6’5”/185-195cm }", "Very Tall {above 6’5”/195cm}"],
+        _type to ["--", "Thin", "Slender", "Average", "Curvy", "Chubby", "Fat"],
+        _muscle to ["--", "Ripped", "Muscular", "Athletic", "Toned", "Lean", "Soft"]
+    >>
+<</widget>>
+
+<<widget "PopupScarChange">>
+    <<script>>
+        Dialog.setup("Change Your Scar(s)");
+        Dialog.wiki(Story.get("Popup-Scar").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "ScarsPicked">>
+    <<if $scars.includes("cutting the brow")>><<set _browscar to true>><</if>>
+    <<if $scars.includes("crossing the eye")>><<set _eyescar to true>><</if>>
+    <<if $scars.includes("across the nose")>><<set _nosescar to true>><</if>>
+    <<if $scars.includes("a full beardalong the cheek")>><<set _cheekscar to true>><</if>>
+    <<if $scars.includes("cutting the lip")>><<set _lipscar to true>><</if>>
+    <<if $scars.includes("on the chin")>><<set _chinscar to true>><</if>>
+    <<if $scars.includes("bite marks on the neck")>><<set _bitescar to true>><</if>>
+    <<if $scars.includes("along the neck")>><<set _neckscar to true>><</if>>
+    <<if $scars.includes("across the throat")>><<set _throatscar to true>><</if>>
+    <<if $scars.includes("across the heart")>><<set _heartscar to true>><</if>>
+    <<if $scars.includes("cutting the shoulder")>><<set _shoulderscar to true>><</if>>
+    <<if $scars.includes("across the torso")>><<set _torsoscar to true>><</if>>
+    <<if $scars.includes("a caesarian")>><<set _ceasarscar to true>><</if>>
+    <<if $scars.includes("along the hip")>><<set _hipscar to true>><</if>>
+    <<if $scars.includes("down the spine")>><<set _spinescar to true>><</if>>
+    <<if $scars.includes("across the back")>><<set _backcar to true>><</if>>
+    <<if $scars.includes("bite marks on the butt cheeks")>><<set _buttscar to true>><</if>>
+    <<if $scars.includes("down the leg")>><<set _legscar to true>><</if>>
+    <<if $scars.includes("across the foot")>><<set _footscar to true>><</if>>
+<</widget>>
+
+<<widget "PopupProsChange">>
+    <<script>>
+        Dialog.setup("Change Your Prosthesis and Procedures");
+        Dialog.wiki(Story.get("Popup-Pros").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "ProsCheck">>
+    <<if $aid.proc.includes("HRT")>><<set _hrt to true>><</if>>
+    <<if $aid.proc.includes("Top Surgery")>><<set _topsurg to true>><</if>>
+    <<if $aid.proc.includes("Bottom Surgery")>><<set _bottomsurg to true>><</if>>
+    <<if $aid.proc.includes("Facial Reconstruction")>><<set _facesurg to true>><</if>>
+    <<if $aid.proc.includes("Other Reconstructive Surgery")>><<set _othersurg to true>><</if>>
+    /* Prosthesis */
+    <<if $aid.pros.includes("Glasses")>><<set _glasses to true>><</if>>
+    <<if $aid.pros.includes("Contacts")>><<set _contacts to true>><</if>>
+    <<if $aid.pros.includes("Hearing Aid (removable)")>><<set _hearaidrem to true>><</if>>
+    <<if $aid.pros.includes("Hearing Aid (Implant)")>><<set _hearaidimp to true>><</if>>
+    <<if $aid.pros.includes("Prosthesis (Fingers)")>><<set _prosfingers to true>><</if>>
+    <<if $aid.pros.includes("Prosthesis (Hand)")>><<set _proshand to true>><</if>>
+    <<if $aid.pros.includes("Prosthesis (Arm)")>><<set _prosarm to true>><</if>>
+    <<if $aid.pros.includes("Prosthesis (Toes)")>><<set _prostoes to true>><</if>>
+    <<if $aid.pros.includes("Prosthesis (Foot)")>><<set _prosfoot to true>><</if>>
+    <<if $aid.pros.includes("Prosthesis (Leg)")>><<set _prosleg to true>><</if>>
+    /* Aid */
+    <<if $aid.aid.includes("Cane")>><<set _cane to true>><</if>>
+    <<if $aid.aid.includes("Crutches")>><<set _crutches to true>><</if>>
+    <<if $aid.aid.includes("Walker")>><<set _walkter to true>><</if>>
+    <<if $aid.aid.includes("Service Animal (Guide)")>><<set _servaniguide to true>><</if>>
+    <<if $aid.aid.includes("Service Animal (Other)")>><<set _servaniother to true>><</if>>
+    <<if $aid.aid.includes("Wheelchair (Hand)")>><<set _handwheel to true>><</if>>
+    <<if $aid.aid.includes("Wheelchair (Powered)")>><<set _powerwheel to true>><</if>>
+    <<if $aid.aid.includes("Text Reader")>><<set _reader to true>><</if>>
+<</widget>>
+
+<<widget "PopupBodyModChange">>
+    <<script>>
+        Dialog.setup("Change Your Body Modification");
+        Dialog.wiki(Story.get("Popup-BodyMod").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+
+<<widget "PopupMakeupChange">>
+    <<script>>
+        Dialog.setup("Change Your Cosmetics");
+        Dialog.wiki(Story.get("Popup-Makeup").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+<<widget "PopupPersoChange">>
+    <<script>>
+        Dialog.setup("Change Your Personality");
+        Dialog.wiki(Story.get("Popup-Perso").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "PersoBars">>
+    <center>
+        Introverted <progress @value="$intext" max="100"></progress> Extroverted<br>  
+        Cold <progress @value="$coldwarm" max="100"></progress> Warm    
+    </center>
+<</widget>>
+
+<<widget "PopupClassChange">>
+    <<script>>
+        Dialog.setup("Change Your Class");
+        Dialog.wiki(Story.get("Popup-Class").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+<<widget "PopupBackgroundChange">>
+    <<script>>
+        Dialog.setup("Change Your Background");
+        Dialog.wiki(Story.get("Popup-Back").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+/* Maybe a wealthbar? */
+
+<<widget "PopupROGenderChange">>
+    <<script>>
+        Dialog.setup("Change Your ROs' Gender");
+        Dialog.wiki(Story.get("Popup-ROGender").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+<<widget "PopupFamilyChange">>
+    <<script>>
+        Dialog.setup("Change Your Family");
+        Dialog.wiki(Story.get("Popup-Family").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "CheckFam">>
+    <<set
+        _siblings to $family.siblings,
+        _children to $family.children,
+        _parents to $family.parents
+    >>
+    <<if $mc.pregnant>>
+        <<set _preggo to true>>
+    <</if>>
+<</widget>>
+
+<<widget "PopupPetsChange">>
+    <<script>>
+        Dialog.setup("Change Your Pets");
+        Dialog.wiki(Story.get("Popup-Pets").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+<<widget "PopupLexicon">>
+    <<script>>
+        Dialog.setup("Lexicon");
+        Dialog.wiki(Story.get("Lexicon").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+<<widget "PopupStats">>
+    <<script>>
+        Dialog.setup("Statistics");
+        Dialog.wiki(Story.get("Statistics").processText());
+        Dialog.open();
+    <</script>>
+<</widget>>
+
+
+:: StoryScript [script]
+// ~ ~ ~ SLIDER TO VARIABLE ~ ~ ~
+/* The code below was taken from HiEv's Sample Code:
+    https://hiev-heavy-ind.com/Sample_Code
+
+    It will try to find any <input> code on the page that wants to save the value into a variable.
+        <input type="range" min="0" max="100" value="50"
+			data-var="$VAR" oninput="SugarCubeInput(this)">
+    
+    type="range"    -> makes the slider
+    min="0"         -> the min value
+    max="100"       -> the max value
+    value="50"      -> the base value
+    data-var="$VAR" -> the variable to save the value
+                       $variable, _temporary, $object.var...
+    oninput="SugarCubeInput(this)"
+                    -> the function to make it all work (below)		
+*/
+
+window.SugarCubeInput = function (element) {
+	var varname = $(element).data("var");
+	if ((varname.indexOf("$") === 0) || (varname.indexOf(".") === 0)) {
+		State.setVar(varname, $(element).val());
+	}
+};
+
+$(document).on(":passagerender", function (event) {
+	$(event.content).find("input").each(function () {
+		var varname = $(this).data("var");
+		if (varname !== undefined) {
+			if ((varname.indexOf("$") === 0) || (varname.indexOf(".") === 0)) {
+				State.setVar(varname, $(this).val());
+			}
+		}
+	});
+});
+
+
+:: StoryStylesheet [stylesheet]
+h1, h2, h3 {
+    text-align: center;
+}
+
+#choose-class, .index-flex {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+#choose-class div, .index-flex div {
+    text-align: center;
+    flex: 1 0 33%;
+    margin: 10px 0;
+}
+
+
+button.link-broken {
+    color: peachpuff;
+    background: darkred;
+    border-color: darkred;
+}
+
+.hair, .wigq, .hairdye, .wig, .wigdye, .cover {
+    display: none;
+}
+.visible {
+    display: block;
+}
+
+.green button {
+    background-color: darkgreen;
+}
+
+input#slidetest {
+    margin: 0 1em;
+}
+
+.passage table {width: 100%;}
+
+
+.passage th {
+    text-align: end;
+    padding-right: 10px;
+}
+
+.passage td:first-of-type {
+    text-align: center;
+    padding-bottom: 10px;
+}

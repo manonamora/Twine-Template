@@ -1,0 +1,223 @@
+:: StoryTitle
+VN-lite RPG Template
+
+
+:: StoryData
+{
+	"ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1",
+	"format": "SugarCube",
+	"format-version": "2.37.3",
+	"start": "Start"
+}
+
+
+:: StoryInterface {"position":"100,100","size":"100,100"}
+<div id="header" data-passage="StoryDisplayTitle"></div><!--Title-->
+<div id="container">
+	<div id="passages"></div><!--DO NOT REMOVE-->
+	<div id="perso" data-passage="ImgPerso"></div><!--Passage image-->
+</div>
+<div id="footer">
+	<div id="side-image" data-passage="SidePerso"></div><!--Party image-->
+	<div id="menu" data-passage="Menu"></div><!--Menu-->
+</div>
+<!-- The container for everything is #story -->
+
+
+:: StoryDisplayTitle {"position":"225,100","size":"100,100"}
+Title Game/*  
+	For long titles, you will probably need to edit the StyleSheet to make sure it fits properly on the page.
+*/
+
+
+:: Start [title noreturn] {"position":"500,100","size":"100,100"}
+[[NEW GAME|Next]]
+<<if Save.browser.size > 0>><<link "RESUME GAME">><<run Save.browser.continue();Engine.show();>><</link>>
+<</if>>\
+<<link 'SAVES'>><<run UI.saves()>><</link>>
+<<link 'SETTINGS'>><<run UI.settings()>><</link>>
+<<link 'CREDITS'>><<run Dialog.create("CREDITS").wikiPassage("credits").open();>><</link>>
+/*
+	This being the Main Menu Page, you edit this list however you want.
+	But you might want to watch out for the number of links on the page (too many would mean scrolling).
+*/
+
+
+:: Next {"position":"625,100","size":"100,100"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas scelerisque arcu malesuada dapibus faucibus. Aliquam sodales mauris commodo suscipit lobortis. Nam est dui, efficitur nec fermentum sit amet, feugiat at enim. Proin est turpis, porttitor eget scelerisque non, convallis a nunc. Praesent sed tempus odio. Morbi fringilla velit eu eros finibus, in ornare massa fermentum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
+
+Proin molestie auctor magna, vel tincidunt sapien blandit sed. Pellentesque sapien dui, ultricies eu lectus mollis, egestas feugiat nulla. Maecenas pellentesque erat posuere maximus efficitur. Cras bibendum sed nisl lobortis sodales. Suspendisse potenti. Nullam aliquet fermentum justo, ac auctor tellus faucibus ut. Pellentesque vitae aliquet nunc. Nullam aliquam sapien at mauris tempor, eget vulputate velit tempus. Nunc sagittis tellus luctus, lacinia nibh fermentum, viverra metus.
+
+Mauris quis diam ac diam sodales euismod. Mauris egestas velit nulla, sit amet ullamcorper sapien faucibus quis. Curabitur ut dui quis turpis aliquet congue vitae eget risus. Etiam vehicula ipsum at ultricies tempus. Suspendisse massa orci, accumsan vitae erat non, fermentum vestibulum mi. Sed hendrerit, nunc sagittis gravida porttitor, nunc quam iaculis turpis, ac hendrerit enim mauris eu purus. Proin sit amet leo sit amet justo porta facilisis at posuere urna. Duis tincidunt aliquam leo, vitae finibus risus semper sollicitudin. Sed id sagittis ligula. Proin ac laoreet leo, id placerat mauris. Cras et cursus sem, eget fringilla urna. Nam id venenatis lorem.
+
+Sed quam magna, mattis sit amet suscipit eget, imperdiet quis felis. Sed pulvinar ut lorem nec consequat. Suspendisse aliquam augue vitae nunc vehicula, rhoncus mollis ligula sodales. Nam viverra justo aliquam dapibus dictum. Nullam tristique eleifend ex, ac varius justo condimentum a. Fusce nec urna vel nibh dignissim volutpat. Nulla sit amet interdum lectus. Maecenas cursus suscipit turpis eu dictum. In at neque quis mi bibendum pulvinar in at metus. Mauris non placerat enim. Quisque ut justo turpis. In in rhoncus quam.
+
+[[Styling]]
+
+
+:: Styling {"position":"750,100","size":"100,100"}
+<h1>Heading 1</h1>\
+<h2>Heading 2</h2>\
+<h3>Heading 3</h3>\
+<h4>Heading 4</h4>\
+<h5>Heading 5</h5>\
+<h6>Heading 6</h6>\
+<hr>
+<center>''Lists:''</center>
+<ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+</ul>
+<hr>
+<center>''Basic Table:''</center>
+<table>
+<tr>
+    <th>Column 1</th>
+    <th>Column 2</th>
+    <th>Column 3</th>    
+</tr>
+<tr>
+    <td>Item 1</td>
+    <td>Item 2</td>
+    <td>Item 3</td>
+</tr>
+<tr>
+    <td>Item 1</td>
+    <td>Item 2</td>
+    <td>Item 3</td>
+</tr>
+</table>
+<hr>
+<center>''Links''</center>
+//Basic://
+[[Basic Macros]]
+//As a list://
+* [[Basic Macros]]
+//With Div://
+<div class="choice">[[Basic Macros]]</div>
+
+
+:: Basic Macros {"position":"875,100","size":"100,100"}
+<h2>Textbox</h2>\
+<<textbox "_test" 2>>
+
+<h2>Text Area</h2>\
+<<textarea "_pieEssay" "">>
+
+<h2>Radio Buttons</h2>\
+What's your favorite pie?
+<<radiobutton "_pie" "blueberry" autocheck>> Choice 1
+<label><<radiobutton "_pie" "cherry" autocheck>> Choice 2 with a label </label>
+<<radiobutton "_pie" "coconut cream" autocheck>> Choice 3
+
+<h2>Number Box</h2>\
+<<numberbox "_wager" 100>>
+
+<h2>List Box</h2>\
+<<listbox "_answer" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+<</listbox>>
+
+<h2>Cycle</h2>\
+<<cycle "_answers" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+<</cycle>>
+
+<h2>Check Box</h2>\
+<<checkbox "_pieBlueberry" false true autocheck>> Option 1
+<label><<checkbox "_pieCherry" false true autocheck>> Option 2 with a label</label>
+<<checkbox "_pieCoconutCream" false true autocheck>> Option 3
+
+<h2>Button</h2>\
+<<button "I do not do anything">><</button>>
+
+[[Back to Menu|Start]]
+
+
+:: ImgPerso {"position":"100,350","size":"100,100"}
+<<if tags().includes("side")>><img src="img2.jpg"><<elseif passage() isnot "Next">><img src="img1.jpg"><<else>><img src="img3.jpg"><</if>>/*
+	This is the character image next to the passage. You could have it represent the MC or a NPC talking.
+	If you want to have it gone on certain passages, you can target the [#perso] element in the StyleSheet.
+*/
+
+:: SidePerso {"position":"100,475","size":"100,100"}
+<<if not tags().includes("side")>><img src="img2.jpg">\
+<<if passage() isnot "Next">><img src="img3.jpg"><</if>><</if>>/*
+	These are the images on the bottom left section of the screen.
+		Two seems to be the max for mobile screens (unless you move the menu around or hide it). If you're going for a computer-only release, you can easily add more. Testing + editing the StyleSheet is required though.
+	If a passage is tagged [side], they won't appear.
+*/
+
+
+:: Menu [nobr] {"position":"100,225","size":"100,100"}
+<<link '<i class="fa-solid fa-backward-fast"></i>'>><<run UI.restart()>><</link>>
+<<link '<i class="fa-solid fa-gear"></i>'>><<run UI.settings()>><</link>>
+<<link '<i class="fa-solid fa-floppy-disk"></i>'>><<run UI.saves()>><</link>>
+<<link '<i class="fa-solid fa-box-open"></i>' "Inventory">><</link>>
+<<link '<i class="fa-solid fa-book"></i>' "Codex">><</link>>
+<<link '<i class="fa-solid fa-user"></i>' "Player">><</link>>
+/* 
+	The links here are using Font-Awesome's icons, but you can choose Unicode characters, a different font altogether, or even images/SVGs.
+	Because of the formatting of this interface, I do not recommend using actual words for the links (otherwise it won't fit on the page properly, and you will need to edit the StyleSheet).
+
+	You are not bound to the amount of links listed here, though if you do add/remove them, you will want to test the interface and make adjustments in sizing.
+
+	The links send the players to new passaged, but you can change them to popups instead.
+*/
+
+
+:: Inventory [noreturn side] {"position":"350,475","size":"100,100"}
+This page could show the player's inventory. Or you can change it to a stats page!
+Saving a playthrough will not work here.
+<<back>>
+
+
+:: Codex [noreturn side] {"position":"350,225","size":"100,100"}
+This page could be a landing page for Codex entries.
+Saving a playthrough will not work here.
+<<back>>
+
+
+:: Player [noreturn side] {"position":"350,350","size":"100,100"}
+This page could show the player's characteristics.
+Saving a playthrough will not work here.
+<<back>>
+
+
+:: credits {"position":"225,225","size":"100,100"}
+The ''VN-lite RPG Template'' was created by manonamora on Twine 2/Tweego with SugarCube 2.37.3. It was inspired by interfaces of games like Disco Elysium and games made with Narrat.
+\
+<h3>The VN-lite RPG Template</h3>\
+This template was made possible thanks to the assets and resources below:
+> //Assets://
+* Background from [[SVG Backgroud|https://www.svgbackgrounds.com/]]
+* [[FontAwesome|https://fontawesome.com/]]
+* [[GoogleFonts|https://fonts.google.com]]
+* Unsplash: [[Kimson Doan|https://unsplash.com/photos/HD8KlyWRYYM]], [[Lucas Gouvêa|https://unsplash.com/photos/aoEwuEH7YAs]], [[Prince Akachi|https://unsplash.com/photos/J1OScm_uHUQ]]
+\
+<h3>manonamora</h3>\
+You can find:
+* my other templates on [[Itch|https://manonamora.itch.io/]], as well as my guides:
+** [[SugarCube Guide|https://manonamora.itch.io/twine-sugarcube-guide]]
+** [[Ready-to-Use Tweego and Guide |https://manonamora.itch.io/ready-to-use-tweego-folder]] 
+** [[ChoiceScript to SugarCube Guide |https://manonamora.itch.io/choicescript-sugarcube-guide]] 
+* my games and IF experiments on [[Itch|https://manonamora.itch.io/]]
+* me, and ask me questions, over on [[Tumblr|https://manonamora-if.tumblr.com]] or [[my website|https://manonamora.neocities.org/]]
+* my Twine Resource Masterlist on the [[IntFiction Forum|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]] (an out-of-date version is rebloggable on [[Tumbr|https://manonamora-if.tumblr.com/post/700577877042888704/]]).
+\
+<h3>Twine and SugarCube</h3>\
+You can download Twine over on the [[Twinery.org|https://twinery.org/]] website, which includes the SugarCube format.
+Thomas M. Edwards hosts the Documentation for the SugarCube format over on [[his website|https://www.motoslave.net/sugarcube/2/docs/]].
+
+There are resources and help available with Twine and SugarCube:
+* on the [[IntFiction Forum|https://intfiction.org/c/authoring/twine/46]]
+* on the [[Twine Subreddit|https://www.reddit.com/r/twinegames/]]
+* in the [[Twine Discord|https://discord.gg/n5dJvPp]]
+* and more listed in this [[Masterlist|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]]
+<hr>\
+<h5>You can find my other SugarCube templates [[here|https://manonamora.itch.io/twine-sugarcube-templates]].</h5>
+

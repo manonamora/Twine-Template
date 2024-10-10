@@ -1,0 +1,382 @@
+:: StoryTitle
+Space/Tech UI Template
+
+
+:: StoryData
+{
+	"ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1",
+	"format": "SugarCube",
+	"format-version": "2.37.3",
+	"start": "Start"
+}
+
+
+:: StoryInterface {"position":"100,100","size":"100,100"}
+<div id="topcontainter">
+	<div id="left-menu" data-passage="first-menu"><!--  not visible with small device --></div>
+	<div id="center-block" data-passage="center-block"></div>
+	<div id="right-menu" data-passage="second-menu"><!--  not visible with small device --></div>
+</div>
+<div id="mobile-top-menu" data-passage="second-menu-mobile"><!--  not visible with large device --></div>
+<div id="passages"><!-- DO NOT REMOVE-->></div>
+<div id="mobile-btm-menu" data-passage="first-menu"><!--  not visible with large device --></div>
+<!-- 
+	If you don't want visible stats bars in your main interface, simply change:
+		data-passage="second-menu-mobile"
+	FOR
+		data-passage="second-menu"
+
+	And remove the conditional statement in the [second-menu] passage.
+
+	The container for everything is #story
+-->
+
+
+:: first-menu {"position":"100,225","size":"100,100"}
+<<link '©'>><<run Dialog.create("Credits").wikiPassage("credits").open();>><</link>>
+<<link '🖫'>><<run UI.saves();>><</link>>
+<<link '⛭'>><<run UI.settings();>><</link>>
+<<link '⟲'>><<run UI.restart();>><</link>>
+/*
+	This is the left-side menu (bottom on mobile) section.
+	You can add/remove links here.
+	Though I don't recommend more than 5 links in this block (because of the menu size on the screen).
+
+	Sidenote: I've only used unicode characters for the menu, but you can use the FontAwesome (or other icon) font instead! Because it's only being used for the space-ship list button...
+*/
+
+
+:: center-block [nobr] {"position":"200,225","size":"100,100"}
+<<if tags().includes("first")>>
+	<h1>NAME OF YOUR GAME</h1>
+<<elseif tags().includes("codex")>>
+	<h1>Codex</h1>
+<<else>>
+	<h1>$chapter</h1>
+<</if>>
+/*
+	You can also display other stuff than text here, like animated icons moving from one side to the other (testing required obv), or portraits of MC/NPCs. 
+	Simply add a new <<elseif>> with the wanted condition (name of passage or tags).
+*/
+
+
+:: second-menu {"position":"300,225","size":"100,100"}
+<<if not tags().includes("stats-visible")>>
+	[[ጰ|Player Character]]
+	[[▤|Statistics]]
+	[[🕮|Codex]]
+	[[⮽|Inventory]]
+<<else>>
+	<<statsformat "_web">>
+<</if>>
+/*
+	This is the right-side menu (top on mobile) section.
+	Depending on the tag of the passage ([stats-visible]/nothing), you will either see 3 vertical stats bar (editable in the [StatWidget] Passage) or the list icons.
+
+	If you do not want to display stats bars on the page, delete everything except the links! (I recommend a max of 5.)
+
+	Sidenote: I've only used unicode characters for the menu, but you can use the FontAwesome (or other icon) font instead! Because it's only being used for the space-ship list button...
+
+*/
+
+
+:: second-menu-mobile {"position":"300,325","size":"100,100"}
+<<if not tags().includes("stats-visible")>>
+	[[ጰ|Player Character]]
+	[[▤|Statistics]]
+	[[🕮|Codex]]
+	[[⮽|Inventory]]
+<<else>>
+	<<statsformat "_mobile">>
+<</if>>
+/*
+	This is the top menu on mobile section.
+	Depending on the tag of the passage ([stats-visible]/nothing), you will either see 3 horizontal stats bar (editable in the [StatWidget] Passage) or the list icons.
+
+	If you do not want to display stats bars on the page, delete this passage and follow the instruction in StoryInterface.
+
+	Sidenote: I've only used unicode characters for the menu, but you can use the FontAwesome (or other icon) font instead! Because it's only being used for the space-ship list button...
+
+*/
+
+
+:: StatWidget [widget nobr] {"position":"350,100","size":"100,100"}
+	/*Visible Stats Bars*/
+<<widget "statsformat">>
+	/*
+		Used in [second-menu] and [second-menu-mobile] + mobile compatible
+		Explanation of code below:
+			<<[widget name] + [mobile/web] + [css colour] + [variable] + [Text]>>
+		You can change:
+			- the colour of the bar in the StyleSheet (see .stat1, .stat2, .stat3)
+			- the variable to track ($fuel/oxygen/cargo -> whatever you want)
+			- the text representing each bar
+	*/
+    <<= `<<percent_stat` + _args[0]+ ` "stat1" $fuel "Bar">>`>> /*Left*/
+    <<= `<<percent_stat` + _args[0]+ ` "stat2" $oxygen "Stats">>`>> /*Middle */
+    <<= `<<percent_stat` + _args[0]+ ` "stat3" $cargo "Some">>`>> /*Right */
+<</widget>>
+
+	/*Format the Stats bar in width (_mobile) or height (_web)*/
+/*
+	If you still want stats bars in your project, but don't want them displayed outside of a Stats-specific passage, you can use the widgets below, independently to the one coded above.
+		> I would recommend the [_mobile] version in this case (easier to read).
+	Use the widgets in passages:
+	<<[widget name] "CSS class" $variable "Text displayed">>
+	<<percent_stat_mobile "stat1" $fuel "Fuel">>
+*/
+<<widget "percent_stat_web">>
+	<div class="stat">
+		<<= '<div class="' + _args[0] + ' skills" style="height:' + _args[1] + '%"></div>'>>
+		<div class="text">_args[2]</div>
+	</div>
+<</widget>>
+<<widget "percent_stat_mobile">>
+	<div class="stat">
+		<<= '<div class="' + _args[0] + ' skills" style="width:' + _args[1] + '%"></div>'>>
+		<div class="text">_args[2]</div>
+	</div>
+<</widget>>
+
+
+:: StoryInit {"position":"225,100","size":"100,100"}
+	/* Those three variables are for the Stats Bar. */
+<<set $fuel to 20, $oxygen to 50, $cargo to 100>>
+	/* This variable will be displayed in the center block on the page */
+<<set $chapter to "Chapter 1">>
+
+
+:: Start [title noreturn] {"position":"625,100","size":"100,100"}
+<h1>Name of
+your game</h1>\
+<p><<if Save.browser.size > 0>><<link "Resume Game">><<run Save.browser.continue();Engine.show();>><</link>> | <</if>><<link "New Game" "Next">><</link>>
+<<link "Load Game">><<run UI.saves();>><</link>> | <<link "Settings">><<run UI.settings();>><</link>></p>
+
+
+:: Next [stats-visible] {"position":"750,100","size":"100,100"}
+This template includes two sections with different formatting:
+* a "Space" interface, inspired by ship controls, for more of the story side.
+* a "Tech" interface, inspired by old CRT devices, perfect for Codex pages or interaction with computers/other tech devices.
+\
+Both interfaces include styling for text/macro elements, as well as the popups (Settings/Saves/Restart and custom). The "Space" UI is 'the base' styling, while the "Tech" UI is added on with the [codex] tag.
+If you are not using the "Tech" UI, simply remove any block of code with {{{[data-tags~="codex"]}}} in the StyleSheet. If you only want to use the "Tech" UI, you can either tag all your passages with the [codex] tag, or transfer the CSS rules for each {{{[data-tags~="codex"]}}} coded block to their non-tagged counterpart in the StyleSheet (so it becomes the 'main' theme).
+
+This template include (3) stats bars, which can be rendered visible with the [stats-visible] tag (like with this passage). The stats bars have been styled to be mobile compatible.
+If you are not planning on displaying stats in the main interface (using a popup or separate passage instead), you should follow the comments left in the {{{StoryInterface}}} and {{{second-menu}}} passages.
+
+[[Styling]]
+
+
+:: Styling {"position":"875,100","size":"100,100"}
+<h1>Heading 1</h1>\
+<h2>Heading 2</h2>\
+<h3>Heading 3</h3>\
+<h4>Heading 4</h4>\
+<h5>Heading 5</h5>\
+<h6>Heading 6</h6>\
+<hr>
+<center>Lists:</center>
+<ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+</ul>
+<hr>
+<center>Basic Table:</center>
+<table>
+<tr>
+    <th>Column 1</th>
+    <th>Column 2</th>
+    <th>Column 3</th>    
+</tr>
+<tr>
+    <td>Item 1</td>
+    <td>Item 2</td>
+    <td>Item 3</td>
+</tr>
+<tr>
+    <td>Item 1</td>
+    <td>Item 2</td>
+    <td>Item 3</td>
+</tr>
+</table>
+<hr>
+<center>''Links''</center>
+//Basic://
+[[Basic Macros]]
+//As a list://
+* [[Basic Macros]]
+//With Div://
+
+<div class="choice">[[Basic Macros]]</div>
+
+
+:: Basic Macros [stats-visible] {"position":"1000,100","size":"100,100"}
+<h2>Textbox</h2>\
+<<textbox "_test" 2>>
+
+<h2>Text Area</h2>\
+<<textarea "_pieEssay" "">>
+
+<h2>Radio Buttons</h2>\
+What's your favorite pie?
+<<radiobutton "_pie" "blueberry" autocheck>> Choice 1
+<label><<radiobutton "_pie" "cherry" autocheck>> Choice 2 with a label </label>
+<<radiobutton "_pie" "coconut cream" autocheck>> Choice 3
+
+<h2>Number Box</h2>\
+<<numberbox "_wager" 100>>
+
+<h2>List Box</h2>\
+<<listbox "_answer" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+<</listbox>>
+
+<h2>Cycle</h2>\
+<<cycle "_answers" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+<</cycle>>
+
+<h2>Check Box</h2>\
+<<checkbox "_pieBlueberry" false true autocheck>> Option 1
+<label><<checkbox "_pieCherry" false true autocheck>> Option 2 with a label</label>
+<<checkbox "_pieCoconutCream" false true autocheck>> Option 3
+
+<h2>Button</h2>\
+<<button "I do not do anything">><</button>>
+
+[[Codex]]
+
+
+:: Codex [codex] {"position":"1125,100","size":"100,100"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tellus lorem, porta a eleifend id, iaculis ac risus. Nullam justo nibh, sodales in velit cursus, posuere feugiat mauris. Cras elementum, mauris eu consequat congue, odio velit maximus erat, sit amet euismod nunc metus ut massa. Fusce eu est non orci bibendum vehicula nec vel tortor. Sed non venenatis est, quis scelerisque ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus aliquam tempor libero, a congue neque dapibus vel. Ut venenatis ultricies tortor sed ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+
+Nam tempor libero nibh, eu ornare ante consequat congue. Donec viverra urna id enim faucibus, eget accumsan est blandit. Maecenas vel nulla cursus, pulvinar eros gravida, vehicula massa. Vestibulum urna lectus, pretium at tristique at, accumsan a est. Nunc vel lacus nec nunc viverra condimentum. Donec ultricies dui eu aliquet luctus. In id egestas neque. Quisque eget metus sit amet orci porttitor iaculis quis consectetur neque. Duis eu ligula iaculis, tempus nunc id, eleifend neque. Mauris ac lorem ac mi condimentum consectetur a vitae arcu. Nulla in consequat lacus. Ut vitae diam sit amet leo elementum varius. 
+
+[[Styling Codex]]
+
+
+:: Styling Codex [codex] {"position":"1250,100","size":"100,100"}
+<h1>Heading 1</h1>\
+<h2>Heading 2</h2>\
+<h3>Heading 3</h3>\
+<h4>Heading 4</h4>\
+<h5>Heading 5</h5>\
+<h6>Heading 6</h6>\
+<hr>
+<center>Lists:</center>
+<ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+</ul>
+<hr>
+<center>Basic Table:</center>
+<table>
+<tr>
+    <th>Column 1</th>
+    <th>Column 2</th>
+    <th>Column 3</th>    
+</tr>
+<tr>
+    <td>Item 1</td>
+    <td>Item 2</td>
+    <td>Item 3</td>
+</tr>
+<tr>
+    <td>Item 1</td>
+    <td>Item 2</td>
+    <td>Item 3</td>
+</tr>
+</table>
+<hr>
+<center>''Links''</center>
+//Basic://
+[[Basic Macros Codex]]
+//As a list://
+* [[Basic Macros Codex]]
+//With Div://
+
+<div class="choice">[[Basic Macros Codex]]</div>
+
+
+:: Basic Macros Codex [codex] {"position":"1375,100","size":"100,100"}
+<h2>Textbox</h2>\
+<<textbox "_test" 2>>
+
+<h2>Text Area</h2>\
+<<textarea "_pieEssay" "">>
+
+<h2>Radio Buttons</h2>\
+What's your favorite pie?
+<<radiobutton "_pie" "blueberry" autocheck>> Choice 1
+<label><<radiobutton "_pie" "cherry" autocheck>> Choice 2 with a label </label>
+<<radiobutton "_pie" "coconut cream" autocheck>> Choice 3
+
+<h2>Number Box</h2>\
+<<numberbox "_wager" 100>>
+
+<h2>List Box</h2>\
+<<listbox "_answer" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+<</listbox>>
+
+<h2>Cycle</h2>\
+<<cycle "_answers" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+<</cycle>>
+
+<h2>Check Box</h2>\
+<<checkbox "_pieBlueberry" false true autocheck>> Option 1
+<label><<checkbox "_pieCherry" false true autocheck>> Option 2 with a label</label>
+<<checkbox "_pieCoconutCream" false true autocheck>> Option 3
+
+<h2>Button</h2>\
+<<button "I do not do anything">><</button>>
+
+[[END]]
+
+
+:: END [title]  {"position":"1500,100","size":"100,100"}
+This is the last page.
+
+<<button "Restart">><<run UI.restart();>><</button>>
+
+
+:: credits {"position":"100,375","size":"100,100"}
+The ''Space/Tech UI Template'' was created by manonamora on Twine 2/Tweego with SugarCube 2.37.3.
+\
+<h3>The Space/Tech UI Template</h3>\
+This template was made possible thanks to the assets and resources below:
+> //Assets://
+* [[FontAwesome|https://fontawesome.com/]] (for the spaceship icon)
+* [[GoogleFonts|https://fonts.google.com]]
+* [[SVG Backgrouns|https://www.svgbackgrounds.com/]]
+\
+<h3>manonamora</h3>\
+You can find:
+* my other templates on [[Itch|https://manonamora.itch.io/]], as well as my guides:
+** [[SugarCube Guide|https://manonamora.itch.io/twine-sugarcube-guide]]
+** [[Ready-to-Use Tweego and Guide |https://manonamora.itch.io/ready-to-use-tweego-folder]] 
+** [[ChoiceScript to SugarCube Guide |https://manonamora.itch.io/choicescript-sugarcube-guide]] 
+* my games and IF experiments on [[Itch|https://manonamora.itch.io/]]
+* me, and ask me questions, over on [[Tumblr|https://manonamora-if.tumblr.com]] or [[my website|https://manonamora.neocities.org/]]
+* my Twine Resource Masterlist on the [[IntFiction Forum|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]] (an out-of-date version is rebloggable on [[Tumbr|https://manonamora-if.tumblr.com/post/700577877042888704/]]).
+\
+<h3>Twine and SugarCube</h3>\
+You can download Twine over on the [[Twinery.org|https://twinery.org/]] website, which includes the SugarCube format.
+Thomas M. Edwards hosts the Documentation for the SugarCube format over on [[his website|https://www.motoslave.net/sugarcube/2/docs/]].
+
+There are resources and help available with Twine and SugarCube:
+* on the [[IntFiction Forum|https://intfiction.org/c/authoring/twine/46]]
+* on the [[Twine Subreddit|https://www.reddit.com/r/twinegames/]]
+* in the [[Twine Discord|https://discord.gg/n5dJvPp]]
+* and more listed in this [[Masterlist|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]]
+<hr>\
+<h5>You can find my other SugarCube templates [[here|https://manonamora.itch.io/twine-sugarcube-templates]].</h5>

@@ -1,0 +1,344 @@
+/*~ ~ ~ ~ ~ ~ ~  TABLE OF CONTENTS ~ ~ ~ ~ ~ ~ ~ 
+    I-      Import Fonts
+        a- Google Fonts
+        b- Example Local Fonts
+    II-     THEME SWITCH (BASE)
+        a- Body
+        b- Buttons and link
+        c- Textbox, Textarea, List Boxes  
+        d- Extra for the slider
+        e- Other HTML Elements
+        f- UI Bar
+        g- UI Dialog
+    III-    FONT SETTINGS
+        a- Font Change
+        b- Alignment
+        c- Line Height
+    IV-     Macros and Other
+        a- Notify
+        b- No Gif Setting
+
+    Notes:            
+        CTRL/Cmd+F the Title to jump
+        
+        This template does not show all possible ways to edit a project, but more to show what the settings can do.
+
+        To view how a UI can be further edited, see my other templates: https://manonamora.itch.io/twine-sugarcube-templates
+*/
+
+/***************************
+    IMPORTS
+***************************/
+    /*
+        This template only includes online fonts like Google, using the @import rule.
+        But it is recommended to only use local (downloaded) fonts, as online fonts are dependent on the hosting server (i.e. Google could always pull the font, or change the API). Local import also ensures the project is playable offline (downloaded or intermittent internet).
+        To do that, download the fonts, include those files in your game folder, and import them with @font-face.
+    */
+ /* Sans-serif: Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+ /* Serif: Tinos */
+@import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+ /* Monospace: Roboto Mono  */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+/* 
+    Example of a local font import: 
+
+@font-face {
+    font-family: "Dyslexic";
+    src: url(fonts/OpenDyslexic-Regular.otf) format("opentype");
+    font-style: normal;
+    font-weight: 400;
+} 
+    > Repeat for each font + style (normal/italics) + weight (regular/bold)
+*/
+
+
+/***************************
+    THEME SWITCH (BASE)
+***************************/
+    /* 
+        Created in the Theme Toggle in the JavaScript, the class [.rev] will indicate which CSS rules to use, when changing theme.
+        You need to have the theme class options defined //AFTER// the base element, otherwise, your themes will be overridden by the default styling.
+    */
+
+    /*Body*/
+body {
+    background-color: #fafafa;
+    color: #212121;
+}
+.rev body {
+    background-color: #212121;
+    color : #fafafa;
+}
+
+    /*Buttons and links*/
+a {
+    color: #303f9f;
+    font-weight: bold;
+}
+.rev a {
+    color: #7084ff;
+}
+a:hover {
+    color: #1777a6;
+}
+.rev a:hover {
+    color: #70d0ff;
+}
+
+button {
+    color: #212121;
+    background-color: #8ca0ff;
+    border-color: #303f9f;
+}
+.rev button {
+    color: #fafafa;
+    background-color: #303f9f;
+    border-color: #8ca0ff;
+
+}
+button:hover {
+    background-color: #1777a6;
+    border-color: #8ca0ff;
+    color: #fafafa;
+}
+.rev button:hover {
+    background-color: #70d0ff;
+    border-color: #303f9f;
+    color: #212121;
+}
+    /* Disabled should be defined after the main styling, since it's a special state */
+button:disabled {
+	background-color: #ccc;
+	border-color: #aaa;
+    opacity: 0.7;
+}
+.rev button:disabled {
+    background-color: #3b3b3b;
+    border-color: #616060;
+}
+    /*Textbox, Textarea, List Boxes*/
+input, select, textarea {
+	color: #212121;
+    background-color: #ddd;
+	border-color: #ccc;
+}
+.rev input, .rev select, .rev textarea {
+	color: #fafafa;
+    background-color: #424242;
+	border-color: #3b3b3b;
+}
+input:not(:disabled):focus, select:not(:disabled):focus, textarea:not(:disabled):focus, input:not(:disabled):hover, select:not(:disabled):hover, textarea:not(:disabled):hover {
+	background-color: #8ca0ff;
+	border-color: #111;
+}
+.rev input:not(:disabled):focus, .rev select:not(:disabled):focus, .rev textarea:not(:disabled):focus, .rev input:not(:disabled):hover, .rev select:not(:disabled):hover, .rev textarea:not(:disabled):hover {
+	background-color: #303f9f;
+	border-color: #8ca0ff;
+}
+/*
+> Extra for the slider (Chromium/Firefox)
+    You can edit those a bit further for the button to slider or the track.
+    If you add :hover after the input[type="range"] you can give extra customisation when you hover over the whole slider
+    If you add :hover before the {, it will only change when the mouse hovers over the element
+        ~~ Chromium
+input[type="range"]::-webkit-slider-runnable-track {
+	background: #222;
+	border: 1px solid #444;
+}
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	background: #35a;
+	border: 1px solid #57c;
+}
+input[type="range"]:focus::-webkit-slider-runnable-track {
+	background: #222;
+}
+        ~~ Firefox
+input[type="range"]::-moz-range-track {
+	background: #222;
+	border: 1px solid #444;
+}
+input[type="range"]::-moz-range-thumb {
+	background: #35a;
+	border: 1px solid #57c;
+}
+*/
+
+    /*Other HTML elements*/
+label {
+    font-weight: bold;
+}
+
+hr {
+    border-color: #212121;
+}
+.rev hr {
+    border-color: #fafafa;
+}
+
+.passage caption, .passage td, .passage th, .passage tr {
+    border: 1px solid #212121;
+}
+.rev .passage caption, .rev .passage td, .rev .passage th, .rev .passage tr {
+    border: 1px solid #fafafa;
+}
+
+    /*UI Bar*/
+#ui-bar {
+    background-color: #fafafa;
+    border-color: #eee;
+}
+.rev #ui-bar {
+    background-color: #212121;
+    border-color: #424242;
+}
+
+#ui-bar-toggle, #ui-bar-history [id|="history"] {
+	color: #212121;
+	border-color: #ccc;
+}
+.rev #ui-bar-toggle, .rev #ui-bar-history [id|="history"] {
+	color: #fafafa;
+	border-color: #212121;
+}
+#ui-bar-toggle:hover, #ui-bar-history [id|="history"]:hover {
+	background-color: #ddd;
+	border-color: #212121;
+}
+.rev #ui-bar-toggle:hover, .rev #ui-bar-history [id|="history"]:hover {
+	background-color: #424242;
+	border-color: #ddd;
+}
+#ui-bar-history [id|="history"]:disabled {
+	color: #ccc;
+	background-color: transparent;
+	border-color: #ccc;
+}
+.rev #ui-bar-history [id|="history"]:disabled {
+	color: #424242;
+	background-color: transparent;
+	border-color: transparent;
+}
+
+#menu ul {
+	border-color: #ccc;
+}
+.rev #menu ul {
+	border-color: #424242;
+}
+#menu li:not(:first-child) {
+	border-top-color: #ccc;
+}
+.rev #menu li:not(:first-child) {
+	border-top-color: #424242;
+}
+#menu li a {
+	color: #303f9f;
+}
+.rev #menu li a {
+	color: #8ca0ff;
+}
+#menu li a:hover {
+	background-color: #ddd;
+	border-color: #212121;
+}
+.rev #menu li a:hover {
+	background-color: #424242;
+	border-color: #212121;
+}
+
+    /*UI Dialog*/
+#ui-overlay {
+	background-color: #777;
+}
+.rev #ui-overlay {
+	background-color: #212121;
+}
+#ui-dialog-titlebar {
+	background-color: #ccc;
+}
+.rev #ui-dialog-titlebar {
+	background-color: #424242;
+}
+#ui-dialog-body {
+	background-color: #fff;
+	border-color: #ccc;
+}
+.rev #ui-dialog-body {
+	background-color: #212121;
+	border-color: #424242;
+}
+#ui-dialog-body hr {
+	background-color: #424242;
+}
+.rev #ui-dialog-body hr {
+	background-color: #ccc;
+}
+#ui-dialog-body.settings button[id|="setting-control"] {
+    background-color: #ddd;
+    color: #212121;
+}
+.rev #ui-dialog-body.settings button[id|="setting-control"] {
+    background-color: #424242;
+    color: #ddd;
+}
+#ui-dialog-body.settings button[id|="setting-control"].enabled {
+    color: #fafafa;
+}
+
+/***************************
+    FONT SETTINGS
+***************************/
+    /*Font Change*/
+        /* 
+            The font type is only applied to the Passage + the body of popups here. It won't touch the sidebar or the title of popups.
+            If you want it to be applied to the WHOLE page: 
+                .class body {front-family: 'Font'}
+        */
+.sansserif .passage, .sansserif #ui-dialog-body {font-family: 'Montserrat', sans-serif;}
+.monospace .passage, .monospace #ui-dialog-body {font-family:  "Roboto Mono", monospace}
+.serif .passage, .serif #ui-dialog-body {font-family: 'Tinos', serif;}
+
+    /*Alignment*/
+.justified .passage {text-align: justify;}
+
+    /*Line Height*/
+.lh-small .passage {line-height: 1.2;}
+.lh-medium .passage {line-height: 1.6;}
+.lh-large .passage {line-height: 2.0;}
+.lh-biggest .passage {line-height: 2.4;}
+
+/***************************
+    MACROS AND OTHER
+***************************/
+/* Chapel's Notification Macro */
+#notify {
+    position : fixed;
+    display : block;
+    width : 16em;
+    right : -20em; top : 2em;
+    padding : 0.5em;
+    background-color : #fff;
+    color : #000;
+    -webkit-transition : right 0.3s;
+    -moz-transition : right 0.3s;
+    -o-transition : right 0.3s;
+    transition : right 0.3s;
+}
+#notify.open { right : 0; }
+
+    /*  No Gif Toggle
+            It changes the background image when toggled.
+    */
+.example-image {
+    width: 500px;
+    height: 500px;
+    background-image: url('assets/image.gif');
+
+}
+.nogif .example-image {
+    background-image: url('assets/image.png');
+}
+

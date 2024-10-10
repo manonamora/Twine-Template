@@ -1,0 +1,606 @@
+/**********************************************
+
+          The Title Page StyleSheets
+
+**********************************************/
+/* 
+    This Page Includes the needed code for each Title/Menu page in this template.
+    Just:
+		- Select the block you want for your Title/Menu page
+		- Copy it all
+		- Add it to your StyleSheet
+		- Ensure the tag in the code matches the tag of the Title/Menu passage
+		- Customise the code to your wishes (i.e. change the background/palette)
+
+	Order of Title Page Styling:
+		- Basic Page
+		- Left Aligned Menu
+        - Right Aligned Menu
+        - Center Aligned Menu
+        - Menu in the Middle of Page
+        - Mixed Alignment Left
+        - Mixed Alignment Right
+*/
+
+/**********************
+    Root
+**********************/
+/*
+	The SVG here is so I don't have to copy paste it for each section (because it's pretty long and ugly...)
+*/
+:root {
+    --svg-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 400'%3E%3Cdefs%3E%3CradialGradient id='a' cx='396' cy='281' r='514' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23D18'/%3E%3Cstop offset='1' stop-color='%23330000'/%3E%3C/radialGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='400' y1='148' x2='400' y2='333'%3E%3Cstop offset='0' stop-color='%23FA3' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23FA3' stop-opacity='0.5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23a)' width='800' height='400'/%3E%3Cg fill-opacity='0.4'%3E%3Ccircle fill='url(%23b)' cx='267.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='532.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='400' cy='30' r='300'/%3E%3C/g%3E%3C/svg%3E");
+}
+/**********************
+    Template Clean up
+**********************/
+/*
+	This is just because I wanted the popups to match in styling. Disregard when selecting the wanted code.
+*/
+
+#ui-dialog {
+    background-color: #330000;
+    background-image: var(--svg-bg);
+    background-attachment: fixed;
+    background-size: cover;
+	background-position: center;
+    text-shadow: 0px 0px 10px black;
+}
+#ui-dialog-titlebar {
+  	background-color: transparent;
+}
+#ui-dialog-body {
+  	background-color: transparent;
+  	border: unset;
+}
+
+/**********************
+    Basic Page
+**********************/
+/* 
+    Keeps the SideBar.
+    Does not change the position of elements
+*/
+    /* Making the Body cute */
+[data-tags~="basic"] body {
+    background-color: #330000;
+    background-image: var(--svg-bg);
+    background-attachment: fixed;
+    background-size: cover;
+    text-shadow: 0px 0px 10px black;
+}
+    /* Quick Edit of the SideBar */
+[data-tags~="basic"] #ui-bar {
+    background: linear-gradient(90deg, #640527, transparent);
+    border-right: 1px dotted #e5565b;
+}
+[data-tags~="basic"] #ui-bar * {
+    border-color: #e5565b3d;
+}
+    /* Menu Page Content */
+[data-tags~="basic"] #game-title {
+    text-align: center;
+    font-size: 5em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: serif;
+    color: #9dfff1;
+    text-shadow: 1px 1px #4dc9cf;
+}
+[data-tags~="basic"] #title-links {
+    text-align: center;
+    font-size: 3em;
+    color: #4dc9cf;
+    text-shadow: 1px 1px #b8fcff;
+}
+        /* The Menu Links */
+[data-tags~="basic"] #title-links a {
+    font-size: 48px;
+    color: #4dc9cf;
+    text-shadow: 1px 1px #b8fcff;
+}
+[data-tags~="basic"] #title-links a:hover {
+    font-weight: normal;
+    font-size: 56px;
+    text-align: left;
+    color: #7cdc9d;
+    text-decoration: none;
+}
+    /* Mobile */
+@media screen and (max-width: 768px) {
+    [data-tags~="basic"] #ui-bar {
+      background : #640527;
+    }
+    [data-tags~="basic"] #game-title {
+      line-height: 1;
+      margin-bottom: 1.2em;
+    }
+    [data-tags~="basic"] #title-links {
+        font-size: 2em;
+    }
+    [data-tags~="basic"] #title-links a {
+      font-size: 32px;
+    }
+    [data-tags~="basic"] #title-links a:hover {
+      font-size: 40px;
+    }
+}
+@media screen and (max-width: 400px) {
+    [data-tags~="basic"] #ui-bar {
+        width: 100%;
+    }
+    [data-tags~="basic"] #game-title {
+      font-size: 3em;
+    }
+    [data-tags~="basic"] #title-links {
+        font-size: 1.5em;
+    }
+    [data-tags~="basic"] #title-links a {
+      font-size: 24px;
+    }
+    [data-tags~="basic"] #title-links a:hover {
+      font-size: 32px;
+    }
+}
+
+/**********************
+    Left Aligned Menu
+**********************/
+/* 
+    No SideBar
+    Changes the position of elements
+*/
+    /* Making the Body cute */
+[data-tags~="top-left"] body {
+    background-color: #330000;
+    background-image: var(--svg-bg);
+    background-attachment: fixed;
+    background-size: cover;
+    text-shadow: 0px 0px 10px black;
+}
+    /* Removing the SideBar for that passage */
+[data-tags~="top-left"] #ui-bar {
+    display: none;
+}
+    /* Changing the Position of <.passage> */
+[data-tags~="top-left"] .passage {
+    position: absolute;
+    top: 15%;
+    left: 5%;
+}
+    /* Menu Page Content */
+[data-tags~="top-left"] #game-title {
+    font-size: 5em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: serif;
+    color: #9dfff1;
+    text-shadow: 1px 1px #4dc9cf;
+}
+[data-tags~="top-left"] #title-links {
+    margin-left: 8%;
+}
+        /* The Menu Links */
+[data-tags~="top-left"] #title-links a {
+    font-size: 48px;
+    color: #4dc9cf;
+    text-shadow: 1px 1px #b8fcff;
+}
+[data-tags~="top-left"] #title-links a:hover {
+    font-weight: normal;
+    font-size: 56px;
+    text-align: left;
+    color: #7cdc9d;
+    text-decoration: none;
+}
+@media screen and (max-width: 768px) {
+    [data-tags~="top-left"] #game-title {
+      line-height: 1;
+      margin-bottom: 1.2em;
+    }
+    [data-tags~="top-left"] #title-links a {
+      font-size: 32px;
+    }
+    [data-tags~="top-left"] #title-links a:hover {
+      font-size: 40px;
+    }
+}
+@media screen and (max-width: 400px) {
+    [data-tags~="top-left"] #game-title {
+      font-size: 3em;
+    }
+    [data-tags~="top-left"] #title-links a {
+      font-size: 24px;
+    }
+    [data-tags~="top-left"] #title-links a:hover {
+      font-size: 32px;
+    }
+}
+
+/**********************
+    Right Aligned Menu
+**********************/
+/* 
+    No SideBar
+    Changes the position of elements
+*/
+    /* Making the Body cute */
+[data-tags~="top-right"] body {
+    background-color: #330000;
+    background-image: var(--svg-bg);
+    background-attachment: fixed;
+    background-size: cover;
+    text-shadow: 0px 0px 10px black;
+}
+    /* Removing the SideBar for that passage */
+[data-tags~="top-right"] #ui-bar {
+    display: none;
+}
+    /* Changing the Position of <.passage> */
+[data-tags~="top-right"] .passage {
+    position: absolute;
+    text-align: right;
+    top: 15%;
+    right: 5%;
+}
+    /* Menu Page Content */
+[data-tags~="top-right"] #game-title {
+    font-size: 5em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: serif;
+    color: #9dfff1;
+    text-shadow: 1px 1px #4dc9cf;
+}
+[data-tags~="top-right"] #title-links {
+    margin-right: 8%;
+}
+        /* The Menu Links */
+[data-tags~="top-right"] #title-links a {
+    font-size: 48px;
+    color: #4dc9cf;
+    text-shadow: 1px 1px #b8fcff;
+}
+[data-tags~="top-right"] #title-links a:hover {
+    font-weight: normal;
+    font-size: 56px;
+    text-align: left;
+    color: #7cdc9d;
+    text-decoration: none;
+}
+@media screen and (max-width: 768px) {
+    [data-tags~="top-right"] #game-title {
+      line-height: 1;
+      margin-bottom: 1.2em;
+    }
+    [data-tags~="top-right"] #title-links a {
+      font-size: 32px;
+    }
+    [data-tags~="top-right"] #title-links a:hover {
+      font-size: 40px;
+    }
+}
+@media screen and (max-width: 400px) {
+    [data-tags~="top-right"] #game-title {
+      font-size: 3em;
+    }
+    [data-tags~="top-right"] #title-links a {
+      font-size: 24px;
+    }
+    [data-tags~="top-right"] #title-links a:hover {
+      font-size: 32px;
+    }
+}
+
+/**********************
+    Center Aligned Menu
+**********************/
+/* 
+    No SideBar
+    Changes the position of elements
+*/
+    /* Making the Body cute */
+[data-tags~="bar"] body {
+    background-color: #330000;
+    background-image: var(--svg-bg);
+    background-attachment: fixed;
+    background-size: cover;
+    text-shadow: 0px 0px 10px black;
+}
+    /* Removing the SideBar for that passage */
+[data-tags~="bar"] #ui-bar {
+    display: none;
+}
+    /* Changing the Position of <.passage> */
+[data-tags~="bar"] .passage {
+    text-align: center;
+    position: absolute;
+    top: 3%;
+    margin: auto;
+    left: 0;
+    right: 0;
+}
+    /* Menu Page Content */
+[data-tags~="bar"] #game-title {
+    font-size: 5em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: serif;
+    color: #9dfff1;
+    text-shadow: 1px 1px #4dc9cf;
+}
+        /* The Menu Links */
+[data-tags~="bar"] #title-links a {
+    font-size: 48px;
+    color: #4dc9cf;
+    text-shadow: 1px 1px #b8fcff;
+}
+[data-tags~="bar"] #title-links a:hover {
+    font-weight: normal;
+    font-size: 56px;
+    text-align: left;
+    color: #7cdc9d;
+    text-decoration: none;
+}
+@media screen and (max-width: 768px) {
+    [data-tags~="bar"] #game-title {
+      line-height: 1;
+      margin-bottom: 1.2em;
+    }
+    [data-tags~="bar"] #title-links a {
+      font-size: 32px;
+    }
+    [data-tags~="bar"] #title-links a:hover {
+      font-size: 40px;
+    }
+}
+@media screen and (max-width: 400px) {
+    [data-tags~="bar"] #game-title {
+      font-size: 3em;
+    }
+    [data-tags~="bar"] #title-links a {
+      font-size: 24px;
+    }
+    [data-tags~="bar"] #title-links a:hover {
+      font-size: 32px;
+    }
+}
+
+/**********************
+    Menu in the Middle of Page
+**********************/
+/* 
+    No SideBar
+    Changes the position of elements
+*/
+    /* Making the Body cute */
+[data-tags~="centered"] body {
+    background-color: #330000;
+    background-image: var(--svg-bg);
+    background-attachment: fixed;
+    background-size: cover;
+    text-shadow: 0px 0px 10px black;
+}
+    /* Removing the SideBar for that passage */
+[data-tags~="centered"] #ui-bar {
+    display: none;
+}
+    /* Changing the Position of <.passage> */
+[data-tags~="centered"] .passage {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: fit-content;
+    width: fit-content;
+    text-align: center;
+}
+    /* Menu Page Content */
+[data-tags~="centered"] #game-title {
+    font-size: 5em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: serif;
+    color: #9dfff1;
+    text-shadow: 1px 1px #4dc9cf;
+}
+[data-tags~="centered"] #title-links {
+    text-align: center;
+    font-size: 3em;
+    color: #4dc9cf;
+    text-shadow: 1px 1px #b8fcff;
+}
+        /* The Menu Links */
+[data-tags~="centered"] #title-links a {
+    font-size: 48px;
+    color: #4dc9cf;
+    text-shadow: 1px 1px #b8fcff;
+}
+[data-tags~="centered"] #title-links a:hover {
+    font-weight: normal;
+    font-size: 56px;
+    text-align: left;
+    color: #7cdc9d;
+    text-decoration: none;
+}
+@media screen and (max-width: 768px) {
+    [data-tags~="centered"] #game-title {
+      line-height: 1;
+      margin-bottom: 1.2em;
+    }
+    [data-tags~="centered"] #title-links {
+        font-size: 2em;
+    }
+    [data-tags~="centered"] #title-links a {
+      font-size: 32px;
+    }
+    [data-tags~="centered"] #title-links a:hover {
+      font-size: 40px;
+    }
+}
+@media screen and (max-width: 400px) {
+    [data-tags~="centered"] #game-title {
+      font-size: 3em;
+    }
+    [data-tags~="centered"] #title-links {
+        font-size: 1.5em;
+    }
+    [data-tags~="centered"] #title-links a {
+      font-size: 24px;
+    }
+    [data-tags~="centered"] #title-links a:hover {
+      font-size: 32px;
+    }
+}
+
+/**********************
+    Mixed Alignment Left
+**********************/
+/* 
+    No SideBar
+    Changes the position of elements
+    Separates title and links
+*/
+    /* Making the Body cute */
+[data-tags~="bottom-left"] body {
+    background-color: #330000;
+    background-image: var(--svg-bg);
+    background-attachment: fixed;
+    background-size: cover;
+    text-shadow: 0px 0px 10px black;
+}
+    /* Removing the SideBar for that passage */
+[data-tags~="bottom-left"] #ui-bar {
+    display: none;
+}
+    /* Changing the Position of <#game-title> */
+[data-tags~="bottom-left"] #game-title {
+    font-size: 5em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: serif;
+    color: #9dfff1;
+    text-shadow: 1px 1px #4dc9cf;
+    position: absolute;
+    bottom: 0%;
+    left: 3%;
+}
+    /* Changing the Position of <#title-links> */
+[data-tags~="bottom-left"] #title-links {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    text-align: right;
+}
+[data-tags~="bottom-left"] #title-links a {
+    font-size: 48px;
+    color: #4dc9cf;
+    text-shadow: 1px 1px #b8fcff;
+}
+[data-tags~="bottom-left"] #title-links a:hover {
+    font-weight: normal;
+    font-size: 56px;
+    text-align: left;
+    color: #7cdc9d;
+    text-decoration: none;
+}
+@media screen and (max-width: 768px) {
+    [data-tags~="bottom-left"] #game-title {
+      line-height: 1;
+      margin-bottom: 1.2em;
+    }
+    [data-tags~="bottom-left"] #title-links a {
+      font-size: 32px;
+    }
+    [data-tags~="bottom-left"] #title-links a:hover {
+      font-size: 40px;
+    }
+}
+@media screen and (max-width: 400px) {
+    [data-tags~="bottom-left"] #game-title {
+      font-size: 3em;
+    }
+    [data-tags~="bottom-left"] #title-links a {
+      font-size: 24px;
+    }
+    [data-tags~="bottom-left"] #title-links a:hover {
+      font-size: 32px;
+    }
+}
+
+/**********************
+    Mixed Alignment Right
+**********************/
+/* 
+    No SideBar
+    Changes the position of elements
+    Separates title and links
+*/
+    /* Making the Body cute */
+[data-tags~="bottom-right"] body {
+    background-color: #330000;
+    background-image: var(--svg-bg);
+    background-attachment: fixed;
+    background-size: cover;
+    text-shadow: 0px 0px 10px black;
+}
+    /* Removing the SideBar for that passage */
+[data-tags~="bottom-right"] #ui-bar {
+    display: none;
+}
+    /* Changing the Position of <#game-title> */
+[data-tags~="bottom-right"] #game-title {
+    font-size: 5em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: serif;
+    color: #9dfff1;
+    text-shadow: 1px 1px #4dc9cf;
+    position: absolute;
+    bottom: 0%;
+    right: 3%;
+}
+    /* Changing the Position of <#title-links> */
+[data-tags~="bottom-right"] #title-links {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+}
+[data-tags~="bottom-right"] #title-links a {
+    font-size: 48px;
+    color: #4dc9cf;
+    text-shadow: 1px 1px #b8fcff;
+}
+[data-tags~="bottom-right"] #title-links a:hover {
+    font-weight: normal;
+    font-size: 56px;
+    text-align: left;
+    color: #7cdc9d;
+    text-decoration: none;
+}
+@media screen and (max-width: 768px) {
+    [data-tags~="bottom-right"] #game-title {
+      line-height: 1;
+      margin-bottom: 1.2em;
+    }
+    [data-tags~="bottom-right"] #title-links a {
+      font-size: 32px;
+    }
+    [data-tags~="bottom-right"] #title-links a:hover {
+      font-size: 40px;
+    }
+}
+@media screen and (max-width: 400px) {
+    [data-tags~="bottom-right"] #game-title {
+      font-size: 3em;
+    }
+    [data-tags~="bottom-right"] #title-links a {
+      font-size: 24px;
+    }
+    [data-tags~="bottom-right"] #title-links a:hover {
+      font-size: 32px;
+    }
+}
+/* END STYLESHEET */

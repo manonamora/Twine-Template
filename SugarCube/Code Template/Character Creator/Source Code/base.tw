@@ -1,0 +1,172 @@
+:: StoryTitle
+Character Creator Template
+
+
+:: StoryData
+{
+	"ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1",
+	"format": "SugarCube",
+	"format-version": "2.37.3",
+	"start": "Start"
+}
+
+
+:: StoryInit {"position":"25,25","size":"100,100"}
+/*
+ ~ Notes: ~ 
+	You don't *have to* set variables ahead of time. I've only done it here for a handful of them, because of the way I've coded this template. You should however, ensure that a minimum of variables are coded here, especially if they are used before the player interact with them (i.e. included in the Autoname code, setup variables, etc...).
+
+	Also, I rely heavily on objects and arrays here (and in general), to organise the player information, since this template is pretty extensive. However, you can use basic single variables, if you prefer those. This is just how I (personally) organise my stuff (and I don't even bother setting sub-objects...).
+*/
+	/* General MC/PC characteristics */
+<<set 
+	$mc to {},
+	$proset to {},
+	$hair to {},
+	$face to {},
+	$facefeatures to [],
+	$skin to {},
+	$body to {},
+	$scars to [],
+	$aid to {},
+	$family to {}
+>>
+	/* MC/PC stats */
+<<set 
+	$stat = {
+		strength : 0,
+		dexterity : 0,
+		willpower : 0,
+		magic : 0,
+		cunning : 0,
+		constitution : 0
+	},
+	$statusStat = {
+		wealth : 0,
+		court : 0,
+		commoner : 0,
+		merchant : 0,
+		difficulty : 0
+	}
+>>
+	/* This last one is only for practicality */
+<<set $pages to {}>>
+
+
+:: StoryCaption {"position":"25,150","size":"100,100"}
+<<button "Lexicon">><<PopupLexicon>><</button>>
+<<button "Credits">><<PopupCredits>><</button>>
+<<if passage() is "CC-Check">><<button "Statistics">><<PopupStats>><</button>><</if>>
+
+
+:: Start {"position":"150,300","size":"100,100"}
+<h1>Welcome to the This Character Creator Template!</h1>\
+<h3 style="font-weight: normal;">This Template/Guide is meant to showcase what //could// be done with a character creator, displaying different characteristics and types of interactivity.
+Check the [[General Guidance and Notes|About]] before diving into the code.</h3>\
+
+<center><<button [[See the List of Traits|Index-CC]]>><</button>></center>
+
+
+:: About {"position":"150,425","size":"100,100"}
+<h1>Some General Guidance and Notes</h1>\
+<h3>This Guide</h3>\
+This template is meant to showcase what //could// be done with and //could// be included in a character creator, both in terms of content and interactivity. It displays different examples as options, which you can pick-n-choose.
+> However, this Guide ''does not'' explain how the different passages are coded, how the macros/widgets work, or how to edit it all so it can fit in your project.
+> Instead, you should check the code of this guide (there are notes), refer to the [[SugarCube Documentation|http://www.motoslave.net/sugarcube/2/docs/]], or check my [[SugarCube Guide|https://manonamora.itch.io/twine-sugarcube-guide]] for help.
+\
+This Guide was coded in base SugarCube (no custom macro), updated for the format version {{{2.37.3}}}. Using a previous version of SugarCube will throw some errors. 
+> You can find the {{{2.36.1}}} version of this Guide on my [[GitHub|https://github.com/manonamora/Twine-Template/tree/main/SugarCube/Code%20Template/Character%20Creator]]. 
+
+There are cases where a custom macro could simplify elements coded in this template, introduce constraints for the player, or display elements differently. However, these custom macros will be dependent on SugarCube's version (i.e. could break with older/newer versions), and have their specific documentation (which you should consult to use). 
+
+For organisation, I used many widgets, objects and arrays. It is possible to do without (code on the passage itself + only basic variables), though the passages and the number of variables to track could end up looking overwhelming. I have at times used more complex elements to balance the readability of this guide and the organisation of the code.
+\
+<h3>Do not feel like you have to follow this guide to the letter.</h3>\
+Especially when it comes to the words and descriptions, because I know I can write pretty awkwardly (and there could still be typos, even with double-checking). There are surely better ways to phrase some of these page.
+
+There is also ''no one true way'' to code a character creator in a project, nor is there a best way to add interactivity (though there //are// some best practices in terms of formatting). This guide only provides //one// interactive possibility for //one// trait.
+It is more than fine to choose only one form of interactivity, or mix-n-match between the different types. Whatever fits the needs of your project.
+
+I ''do not recommend'' to include all the elements of this Guide in your project:
+# not every available option can fit every kind of projects 
+# the listed options are not exhaustive (types of traits or options for traits)
+# choice fatigue is something to consider (i.e. too many choices at once can be overwhelming)
+# some options can be bundled together in one passage (rather than one passage per trait) depending on the interactive macro used (i.e. not links)
+
+Some of these character options can be (re)used during the story rather than during a character creator sequence.
+\
+<h3>Other recommendations</h3>\
+As was coded in this template, I do recommend an option for players to choose a pre-set character or a randomiser (chose options for traits at random), especially if your character creation sequence is pretty long or extensive. Some players prefer to jump into the story right away, and are not much interested in creating a specific build.
+
+Another recommendation is to have a confirmation page to review what the player has chosen, with options to edit specific elements rather than going through the whole process again (like in this template). This can help against mistakes (avoid restarting the story) and let players change their mind.
+
+If you are including stats (e.g. attributes, personality, or relationships), I do recommend having a separate passage to display those (this template provides a raw option). 
+\
+<h3>Special Thanks</h3>\
+To the Twine Discord server (always) and the IntFiction Forum, for their resources and answering any question I have.
+To HiEv, for his slider code.
+Obviously to TME for making Twine and Tweego, and Chris Klimas for making Twine.
+And you (you know who you are), for suggesting me to make this. :P
+
+<<back>>
+
+
+:: Lexicon {"position":"150,150","size":"100,100"}
+IF = Interactive Fiction
+PC = Player Character 
+NPC = Non Player Character
+RO = Romance Option
+
+
+:: Statistics {"position":"275,150","size":"100,100"}
+<h3>Personality</h3>\
+<center>
+	Introverted <progress @value="$intext" max="100"></progress> Extroverted<br>  
+    Cold <progress @value="$coldwarm" max="100"></progress> Warm    
+</center>
+<h3>Wealth</h3>\
+<progress @value="$statusStat.wealth" max="100"></progress> $statusStat.wealth
+
+<h3>Relationship Progress</h3>\
+$Camille: <progress value="70" max="100"></progress>
+$Fran: <progress value="30" max="100"></progress>
+$Alex: <progress value="50" max="100"></progress>
+
+/* 
+	The stats for the ROs are obviously not variable dependent here, I've just chosen them at random.
+
+	You could also turn the names into popups for more information about each RO. Same with Personality traits or other Background info.
+*/
+
+:: Credits {"position":"150,550","size":"100,100"}
+The ''Character Creator Template'' was created by manonamora on Twine 2/Tweego with SugarCube (2.37.3).
+\
+<h3>The Character Creator Template</h3>\
+This template was made possible thanks to the assets and resources below:
+> //Code, APIs and Macros://
+* the [[SugarCube documentation|https://www.motoslave.net/sugarcube/2/docs/]]
+* various posts from the [[Intfiction.org Forum|https://intfiction.org/c/authoring/twine]] and [[Reddit r/twinegames|https://www.reddit.com/r/twinegames/]]
+* HiEv's [[Sample Code|https://hiev-heavy-ind.com/Sample_Code/Sample_Code.html]]
+\
+<h3>manonamora</h3>\
+You can find:
+* my other templates on [[Itch|https://manonamora.itch.io/]], as well as my guides:
+** [[SugarCube Guide|https://manonamora.itch.io/twine-sugarcube-guide]]
+** [[Ready-to-Use Tweego and Guide|https://manonamora.itch.io/ready-to-use-tweego-folder]]
+** [[ChoiceScript to SugarCube Guide|https://manonamora.itch.io/choicescript-sugarcube-guide]]
+* my games and IF experiments on [[Itch|https://manonamora.itch.io/]]
+* me, and ask me questions, over on [[Tumblr|https://manonamora-if.tumblr.com]] or [[my website|https://manonamora.neocities.org/]]
+* my Twine Resource Masterlist on the [[IntFiction Forum|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]] (an out-of-date version is rebloggable on [[Tumbr|https://manonamora-if.tumblr.com/post/700577877042888704/]]).
+\
+<h3>Twine and SugarCube</h3>\
+You can download Twine over on the [[Twinery.org|https://twinery.org/]] website, which includes the SugarCube format.
+Thomas M. Edwards hosts the Documentation for the SugarCube format over on [[his website|https://www.motoslave.net/sugarcube/2/docs/]].
+
+There are resources and help available with Twine and SugarCube:
+* on the [[IntFiction Forum|https://intfiction.org/c/authoring/twine/46]]
+* on the [[Twine Subreddit|https://www.reddit.com/r/twinegames/]]
+* in the [[Twine Discord|https://discord.gg/n5dJvPp]]
+* and more listed in this [[Masterlist|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]]
+<hr>\
+<h5>You can find my other SugarCube templates [[here|https://manonamora.itch.io/twine-sugarcube-templates]].</h5>
+

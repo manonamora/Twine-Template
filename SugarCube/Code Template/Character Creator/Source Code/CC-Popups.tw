@@ -1,0 +1,1166 @@
+:: Popup-Name [popup] {"position":"550,350","size":"100,100"}
+Your name is currently $mc.name.
+If you want to change your name, please indicate it in the textbox below:
+
+<<textbox "_name" `$mc.name` autofocus>> 
+
+<<button "Confirm">>
+    <<if _name>>
+        <<set $mc.name to _name>>
+        <<replace "#mc-name">>$mc.name<</replace>>
+    <</if>>
+    <<run Dialog.close()>>
+<</button>>
+/*
+    Instead of [<<replace>>], you could use the <<do>>/<<redo>> macro combo (with <<do>> wrapping at least the table).
+*/
+
+
+:: Popup-NickName [popup] {"position":"675,350","size":"100,100"}
+<<if $mc.nickname>>Your nickname is currently $mc.nickname.
+    If you want to change your name, please indicate it in the textbox below:
+<<else>>You currently do not have a nickname.
+    If you want to indicate one, please fill the textbox below:
+<</if>>
+\
+<<textbox "_nickname" `$mc.nickname` autofocus>> 
+
+<<button "Confirm">>
+    <<if _nickname>>
+        <<set $mc.nickname to _nickname>>
+        <<replace "#mc-nick">>$mc.nickname<</replace>>
+    <</if>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-SurName [popup] {"position":"800,350","size":"100,100"}
+Your surname is currently $mc.surname.
+If you want to change it, please select one of the options below:
+
+* <<link "Bartlett">>
+    <<set $mc.surname to "Bartlett">>
+    <<replace "#mc-surb">>$mc.surname<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+* <<link "Kerr">>
+    <<set $mc.surname to "Kerr">>
+    <<replace "#mc-surb">>$mc.surname<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+* <<link "Silva">>
+    <<set $mc.surname to "Silva">>
+    <<replace "#mc-surb">>$mc.surname<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+
+
+:: Popup-Gender [popup] {"position":"925,350","size":"100,100"}
+<<IfGenderIsCustom>>\
+You currently describe yourself as a <<if $mc.trans>>$mc.trans <</if>>$mc.gender, referred by others as a(n) $mc.person, and a(n) $mc.title 
+
+If you want to change any trait, please select one of the options below:
+
+//What term do you use to describe your gender?//
+* <label><<radiobutton "_gender" "female" autocheck>> Female</label>
+* <label><<radiobutton "_gender" "male" autocheck>> Male</label>
+* <label><<radiobutton "_gender" "nonbinary" autocheck>> Nonbinary</label>
+* <label><<radiobutton "_gender" "custom" autocheck>> Sometime else</label>
+
+//Are you trans?//
+* <label><<radiobutton "_trans" "transgender" autocheck>> Yes</label>
+* <label><<radiobutton "_trans" "cisgender" autocheck>> No</label>
+* <label><<radiobutton "_trans" "NR" autocheck>> Not relevant/Don't want to disclose</label>
+
+//People would typically refer to you as...//
+* <label><<radiobutton "_person" "woman" autocheck>> a woman.</label>
+* <label><<radiobutton "_person" "man" autocheck>> a man.</label>
+* <label><<radiobutton "_person" "person" autocheck>> a person.</label>
+* <label><<radiobutton "_person" "custom" autocheck>> sometime else.</label>
+
+//Due to your title, people refer to you as...//
+* <label><<radiobutton "_title" "lady" autocheck>> Lady $mc.name.</label>
+* <label><<radiobutton "_title" "lord" autocheck>> Lord $mc.name.</label>
+* <label><<radiobutton "_title" "liege" autocheck>> Liege $mc.name.</label>
+* <label><<radiobutton "_title" "custom" autocheck>> sometime else.</label>
+
+//What do you identify as?//
+* <label><<radiobutton "$mc.sexu" "Heterosexual" checked>> Heterosexual</label>
+* <label><<radiobutton "$mc.sexu" "Homosexual" checked>> Homosexual</label>
+* <label><<radiobutton "$mc.sexu" "Bisexual" checked>> Bisexual</label>
+* <label><<radiobutton "$mc.sexu" "Pansexual" checked>> Pansexual</label>
+* <label><<radiobutton "$mc.sexu" "Asexual" checked>> Asexual</label>
+
+<<button "Confirm">>
+    <<if _trans is "NR">>
+        <<unset $mc.trans>>
+    <</if>>
+    <<if _gender isnot "custom">>
+        <<set $mc.gender to _gender>>
+    <</if>>
+    <<if _person isnot "custom">>
+        <<set $mc.gender to _person>>
+    <</if>>
+    <<if _title isnot "custom">>
+        <<set $mc.gender to _title>>
+    <</if>>
+    <<if _person is "custom" or _gender is "custom" or _title is "custom">>
+        <<run Dialog.create("Custom Answers").wikiPassage("Popup-GenderAddOn").open();>>
+    <<else>>
+        <<unset _person, _gender, _title>>
+        <<replace "#mc-surb">>Gender: <<if $mc.trans>>$mc.trans <</if>>$mc.gender
+        Referred as a: $mc.person
+        Title: $mc.title <</replace>>
+        <<run Dialog.close()>>
+    <</if>>
+<</button>>
+
+
+:: Popup-GenderAddOn [popup] {"position":"925,475","size":"100,100"}
+Please fill all available textboxes below.
+
+<<if _gender is "custom">>//What term do you use to describe your gender?//
+    <<textbox _genderbox `$mc.gender`>>
+<</if>>
+<<if _person is "custom">>//People would typically refer to you as a/an...//
+    <<textbox _personbox `$mc.person`>>
+<</if>>
+<<if _title is "custom">>//Due to your title, people refer to you as a/an...//
+    <<textbox _titlebox `$mc.title`>>
+<</if>>
+
+<<button "Confirm">>
+    <<if _gender is "custom" && _genderbox is "">>
+        <<set $mc.gender to "nonbinary">>
+    <<elseif _gender is "custom">>
+        <<set _genderbox to $mc.gender.toLowerCase()>>
+    <</if>>
+    <<if _person is "custom" && _personbox is "">>
+        <<set $mc.person to "person">>
+    <<elseif _person is "custom">>
+        <<set _personbox to $mc.person.toLowerCase()>>
+    <</if>>
+    <<if _title is "custom" && _titlebox is "">>
+        <<set $mc.title to "liege">>
+    <<elseif _title is "custom">>
+        <<set _titlebox to $mc.title.toLowerCase()>>
+    <</if>>
+    <<unset _gender, _genderbox, _person, _personbox, _title, _titlebox>>
+    <<replace "#mc-surb">>Gender: <<if $mc.trans>>$mc.trans <</if>>$mc.gender
+        Referred as a: $mc.person
+        Title: $mc.title <</replace>>
+    <<run Dialog.close()>>
+<</button>>
+/*
+Notes:
+    <<unset>> the temporary variables is normally not needed, I'm only using it here because I'm forcing the player to stay on the same page and want to avoid value issues.
+
+    For this popup, I have not include any warning messages to force the player to fill all available textboxes.
+    Mainly because I am pretty lazy, and there's already an example of this with the [CC-Name] passage.
+    So if left empty, this popup will default to gender neutral for all the listed elements.
+*/
+
+
+:: GenderAddOn [popup] {"position":"925,225","size":"100,100"}
+Please fill all available textboxes below.
+<<if $mc.gender is "custom">>//What term do you use to describe your gender?//
+    <<textbox _gender "">>
+<</if>>
+<<if $mc.person is "custom">>//People would typically refer to you as a/an...//
+    <<textbox _person "">>
+<</if>>
+<<if $mc.title is "custom">>//Due to your title, people refer to you as a/an...//
+    <<textbox _title "">>
+<</if>>
+
+<<button [[Confirm|Index-CC]]>>
+  /* Gender Textbox check */
+    <<if $mc.gender is "custom" && _gender is "">>
+        <<set $mc.gender to "nonbinary">>
+    <<elseif $mc.gender is "custom">>
+        <<set _gender to $mc.gender.toLowerCase()>>
+    <</if>>
+  /* Person Textbox check */
+    <<if $mc.person is "custom" && _person is "">>
+        <<set $mc.person to "person">>
+    <<elseif $mc.person is "custom">>
+        <<set _person to $mc.person.toLowerCase()>>
+    <</if>>
+  /* Title Textbox check */
+    <<if $mc.title is "custom" && _title is "">>
+        <<set $mc.title to "liege">>
+    <<elseif $mc.title is "custom">>
+        <<set _title to $mc.title.toLowerCase()>>
+    <</if>>
+    <<run Dialog.close()>>
+<</button>>
+/*
+    For this popup, I have not include any warning messages to force the player to fill all available textboxes.
+    Mainly because I am pretty lazy, and there's already an example of this with the [CC-Name] passage.
+    So if left empty, this popup will default to gender neutral for all the listed elements.
+*/
+
+
+:: Popup-Pronouns [popup] {"position":"1050,350","size":"100,100"}
+<<IfPronounsIsCustom>>\
+Your current set of pronouns is $mc.pronouns. If you want to change your pronouns, please pick one of the options below:
+
+//What pronoun set are you most comfortable with?//
+* <label><<radiobutton "_pronouns" "She/Her">>She/Her</label>
+* <label><<radiobutton "_pronouns" "He/Him">>He/Him</label>
+* <label><<radiobutton "_pronouns" "They/Them (singular)">>They/Them (singular)</label>
+* <label><<radiobutton "_pronouns" "They/Them (plural)">>They/Them (plural)</label>
+* <label><<radiobutton "_pronouns" "Ae/Aer">>Ae/Aer</label>
+* <label><<radiobutton "_pronouns" "E/Em">>E/Em</label>
+* <label><<radiobutton "_pronouns" "custom">>A different set...</label>
+
+<<button "Confirm">>
+    <<set $pages.pronouns to true>>
+    <<if $mc.pronouns is "custom">>
+        <<set $proset.custom to true>>
+        <<run Dialog.create("Custom Pronouns").wikiPassage("PronounAddOn").open();>>
+    <<else>>
+        <<set $proset.custom to false>>
+        <<PronounsCustomSet>>
+        <<replace "#mc-pro">>$mc.pronouns<</replace>>
+    <</if>>
+    <<run Dialog.close()>>
+<</button>>
+
+You can choose the //Custom// option if you would like to customise a specific pronoun, even if your main ones are already listed above.
+
+
+:: PronounAddOn [popup] {"position":"1050,225","size":"100,100"}
+Please fill all the textboxes below if your preferred pronouns.
+<center>
+''Subject:'' //I wished to know what ''they'' wanted.//
+	<<textbox "$they" "they">>
+'Object:'' //You have to stop bothering ''them'' during meals.//
+	<<textbox"$them" "them">>
+''Possessive Adjective:'' //Could you get ''their'' coat?//
+	<<textbox "$their" "their">>
+''Possessive:'' //Don't take this book, it's ''theirs''.//
+	<<textbox "$theirs" "theirs">>
+''Reflexive:'' //They want to keep it for ''themself''.//
+	<<textbox "$themself" "themself">>
+</center>
+\
+//What verb tense do your pronouns use?//
+* <label><<radiobutton "$proset.plural" "true">> Plural (they ''are'')</label>
+* <label><<radiobutton "$proset.plural" "false">> Singular (<<print either("she","he","ae","e")>> ''is'')</label>
+
+<center><<button "Confirm">>
+    <<set 
+        $proset.they to $they.toLowerCase(), 
+        $proset.them to $them.toLowerCase(), 
+        $proset.their to $their.toLowerCase(), 
+        $proset.theirs to $theirs.toLowerCase(), 
+        $proset.themselves to $themself.toLowerCase(),
+        $mc.pronouns to $they.toLowerCase() + "/" + $them.toLowerCase()
+    >>
+    <<unset $they, $them, $their, $theirs, $themself>>
+    <<run Dialog.close()>>
+    <<goto "Index-CC">>
+<</button>></center>
+/*
+ ~ Notes:
+    I've ensured the pronouns as all in lowercases by default. For Capitalised or Uppercase version, you can create either a widget or set a new variable for each pronoun.
+
+    You should make sure you are using all pronouns defined (they, them, their, theirs, themselves). If you are not, you might as well not define the ones left unused.
+
+*/
+
+
+:: Popup-PronounAddOn [popup] {"position":"1050,475","size":"100,100"}
+<<if $proset.plural is true>><<set _plural to true>><<else>><<set _plural to false>><</if>>\
+Please fill all the textboxes below if your preferred pronouns.
+<center>
+''Subject:'' //I wished to know what ''they'' wanted.//
+	<<textbox "_they" `$proset.they`>>
+'Object:'' //You have to stop bothering ''them'' during meals.//
+	<<textbox"_them" `$proset.them`>>
+''Possessive Adjective:'' //Could you get ''their'' coat?//
+	<<textbox "_their" `$proset.their`>>
+''Possessive:'' //Don't take this book, it's ''theirs''.//
+	<<textbox "_theirs" `$proset.theirs`>>
+''Reflexive:'' //They want to keep it for ''themself''.//
+	<<textbox "_themself" `$proset.themselves`>>
+</center>
+\
+//What verb tense do your pronouns use?//
+* <label><<radiobutton "_plural" true autocheck>> Plural (they ''are'')</label>
+* <label><<radiobutton "_plural" false autocheck>> Singular (<<print either("she","he","ae","e")>> ''is'')</label>
+
+<center><<button "Confirm">>
+    <<set 
+        $proset.they to _they.toLowerCase(), 
+        $proset.them to _them.toLowerCase(), 
+        $proset.their to _their.toLowerCase(), 
+        $proset.theirs to _theirs.toLowerCase(), 
+        $proset.themselves to _themself.toLowerCase(),
+        $mc.pronouns to _they.toLowerCase() + "/" + _them.toLowerCase(),
+        $proset.plural to _plural
+    >>
+    <<replace "#mc-pro">>$mc.pronouns<</replace>>
+    <<run Dialog.close()>>
+<</button>></center>
+/*
+ ~ Notes:
+    I've ensured the pronouns as all in lowercases by default. For Capitalised or Uppercase version, you can create either a widget or set a new variable for each pronoun.
+
+    You should make sure you are using all pronouns defined (they, them, their, theirs, themselves). If you are not, you might as well not define the ones left unused.
+*/
+
+
+:: Popup-Age [popup] {"position":"1175,350","size":"100,100"}
+<<set _agerange to ["Early 20s", "Mid 20s", "Late 20s", "Early 30s", "Mid 30s", "Late 30s", "Early 40s", "Mid 40s", "Late 40s", "Early 50s", "Mid 50s", "Late 50s", "Technically dead..."]>>\
+Your current age is $mc.age.
+If you want to change it, please choose one of the options below:
+
+//What is your age?//
+* <<linkappend "I can give a general bracket">>:
+> Your age: <<listbox "_agelist">><<optionsfrom _agerange>><</listbox>> <<button "Confirm">>
+    <<set $mc.age to _agelist>>
+    <<replace "#mc-age">>$mc.age<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+<</linkappend>>
+* <<linkappend "I'll be specific">>:
+> First Name: <<numberbox "_agenumber" 18 autofocus>> <<button "Confirm">>
+    <<set $mc.age to _agenumber>>
+    <<replace "#mc-age">>$mc.age<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+<</linkappend>>
+* <<link "I'd rather not share my age">>
+    <<set $mc.age to "{/}">>
+    <<replace "#mc-age">>$mc.age<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+/* 
+    Yup, I just reused the same code as the main trait setter :P
+    The same comments from the other passage apply here as well! 
+*/
+
+
+:: Popup-Eye [popup] {"position":"1400,225","size":"100,100"}
+Your eyes are currently $mc.eyes. 
+If you would like to change their colours, please click on the links below:
+
+Do your eyes have <<link "the same colour">><<set _heterochromia to false>><<redo "eyesc">><</link>> or <<link "different colours">><<set _heterochromia to true>><<redo "eyesc">><</link>>?
+
+<<do tag "eyesc">>\
+    <<if _heterochromia is false>>\
+        Eye Colours: <<cycle "$mc.eyes">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>>
+        //Cycle through the options until you find the colour you want.//
+        <<button "Confirm">>
+            <<replace "#mc-eyes">>$mc.eyes<</replace>>
+            <<run Dialog.close()>>
+        <</button>>
+    <<elseif _heterochromia is true>>\
+        Left: <<cycle "_eyesleft">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>>
+        Right: <<cycle "_eyesright">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>>
+        //Cycle through the options until you find the colours you want.//
+        <<button "Confirm">>
+            <<set $mc.eyes to _eyesleft + " and " + _eyesright>>
+            <<replace "#mc-eyes">>$mc.eyes<</replace>>
+            <<run Dialog.close()>>
+        <</button>>
+    <</if>>\
+<</do>>
+/* 
+    This is the same code as with the [CC-Eyes] passage, except with the [<<replace>>] macro.
+*/
+
+:: Popup-Hair [popup] {"position":"1525,225","size":"100,100"}
+<<HairOptions>><<if $hair is "bald">>You are $hair.<<else>>You have $hair.length $hair.texture $hair.colour hair <<if $hair.uniform isnot "Yes">>($hair.uniform)<</if>>.
+Your hair is <<if ndef $dye>>not dyed<<else>>dyed $dye.colour in a $dye.pattern pattern<</if>>. <<if $hair.bangs isnot "No">>You have $hair.bangs. <</if>><<if $hair.shave isnot "No">>Your hair is shaved $hair.shave. <</if>> Your hair is styled in a $hair.do way.<</if>>
+
+If you want to edit this trait, please interact with the elements below!
+
+//Does hair grow on your head?//
+<<nobr>>
+    <<button "Yes, I have hair.">><<addclass ".hair" "visible">><<set _hair to true>><</button>>
+     | 
+    <<button "No, I am bald.">><<removeclass ".hair" "visible">><<set _hair to false>><</button>>
+<</nobr>>
+<span class="hair">
+//What is your natural hair texture?// <<listbox "_texture">>
+    <<optionsfrom _hairtexture>>
+<</listbox>>
+
+//How long is your natural hair?// <<listbox "_length">>
+    <<optionsfrom _hairlength>>
+<</listbox>>
+
+//What is your natural hair colour?// <<listbox "_colour">>
+    <<optionsfrom _haircolour>>
+<</listbox>>
+
+Is your natural hair colour uniform? <<listbox "_uniform">>
+    <<optionsfrom _hairuniform>>
+<</listbox>>
+
+//Is your hair dyed?//
+<<nobr>>
+    <<button "Yes.">>
+        <<<replace "#hairdye">>
+            //How is the hair dyed?// <<listbox "_dyepattern">>
+                <<optionsfrom _hairdyied>>
+            <</listbox>><br>
+            <br>
+            //What colour is the dye? //<<listbox "_dyecoloured">>
+                <<optionsfrom _dyecolour>>
+            <</listbox>>
+        <</replace>>
+        <<set _dye to true>>
+    <</button>>
+     | 
+    <<button "No.">><<replace "#hairdye">><</replace>><<set _dye to false>><</button>>
+<</nobr>>
+<span id="hairdye"></span>\
+
+//Do you have bangs?// <<listbox "_bangs">>
+    <<optionsfrom _bangs>>
+<</listbox>>
+
+//Is your hair (or part of it) shaved?// <<listbox "_shave">>
+    <<optionsfrom _shavedhair>>
+<</listbox>>
+
+//How is your hair styled?// <<listbox "_do">>
+    <<optionsfrom _hairdo>>
+<</listbox>>
+</span>
+
+<<button "Confirm">>
+    <<if _hair is false>>
+        <<set $hair to "bald">>
+    <<else>>
+        <<set $hair to {},
+            $hair.texture to _texture,
+            $hair.length to _length,
+            $hair.colour to _colour,
+            $hair.uniform to _uniform,
+            $hair.bangs to _bangs,
+            $hair.shave to _shave,
+            $hair.do to _do
+        >>
+        <<if _dye is false>>
+            <<unset $dye>>
+        <<else>>
+            <<set $dye to {},
+                $dye.pattern to _dyepattern,
+                $dye.colour to _dyecoloured
+            >>
+        <</if>>
+    <</if>>
+    <<replace "#mc-hairnat">><<if $hair is "bald">>You are $hair.<<else>>You have $hair.length $hair.texture $hair.colour hair <<if $hair.uniform isnot "Yes">>($hair.uniform)<</if>>.
+    Your hair is <<if ndef $dye>>not dyed<<else>>dyed $dye.colour in a $dye.pattern pattern<</if>>. <<if $hair.bangs isnot "No">>You have $hair.bangs. <</if>><<if $hair.shave isnot "No">>Your hair is shaved $hair.shave. <</if>> Your hair is styled in a $hair.do way.<</if>><</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Hair-Wig [popup] {"position":"1525,350","size":"100,100"}
+<<HairOptions>><<if $wig>>You are wearing a wig, with $wig.length $wig.colour $wig.texture hair. <<if $wigdye>>The wig is dyed $wigdye.colour in a $wigdye.pattern pattern. <</if>><<if $wig.bangs isnot "No">>Your wig has $hair.bangs. <</if>> Your wig is styled in a $wig.do way.<<elseif $cover>>You are wearing a $cover.<<else>>Your hair is not covered.<</if>>
+
+If you want to edit this trait, please interact with the elements below!
+
+<span class="wigq">\
+//Do you wear a wig?//
+<<nobr>>
+    <<button "Yes, I wear a wig.">><<addclass ".wig" "visible">><<replace "#cover">><</replace>><<set _wig to true>><</button>>
+     | 
+    <<button "No, but I wear something else.">>
+        <<replace "#cover">>
+            //What are you wearing on your head?// <<listbox "_cover">>
+                <<optionsfrom _hairaccess>>
+            <</listbox>> 
+        <</replace>>>
+        <<removeclass ".wig" "visible">>
+        <<set _wig to "cover">>
+    <</button>>
+     | 
+    <<button "No, I only have my hair.">><<removeclass ".wig" "visible">><<replace "#cover">><</replace>><<set _wig to false>><</button>>
+<</nobr>>
+</span>\
+\
+<span class="wig">\
+//What is the wig's hair texture? //<<listbox "_wigtexture">>
+    <<optionsfrom _hairtexture>>
+<</listbox>>
+
+//How long is the wig?// <<listbox "_wiglength">>
+    <<optionsfrom _hairlength>>
+<</listbox>>
+
+//What is the wig primary colour?// <<listbox "_wigcolour">>
+    <<optionsfrom _haircolour>>
+<</listbox>>
+
+//Is your wig dyed?//
+<<nobr>>
+    <<button "Yes.">><<addclass ".wigdye" "visible">><<set _wigdye to true>><</button>>
+     | 
+    <<button "No.">><<removeclass ".wigdye" "visible">><<set _wigdye to false>><</button>>
+<</nobr>>
+<span class="wigdye">
+//How is the wig dyed?// <<listbox "_wigdyepattern">>
+    <<optionsfrom _hairdyied>>
+<</listbox>>
+
+//What colour is the dye? //<<listbox "_wigdyecolour">>
+    <<optionsfrom _dyecolour>>
+<</listbox>>
+</span>\
+
+//Does the wig have bangs?// <<listbox "_wigbangs">>
+    <<optionsfrom _bangs>>
+<</listbox>>
+
+//How is your wig styled?// <<listbox "_wigdo">>
+    <<optionsfrom _hairdo>>
+<</listbox>>
+</span>\
+\
+<span id="cover"></span>
+
+<<button "Confirm">>
+    <<if _wig is false>>
+        <<unset $wig, $wigdye>>
+        <<unset $cover>>
+    <<elseif _wig is "cover">>
+        <<unset $wig, $wigdye>>
+        <<set $cover to _cover>>
+    <<else>>
+        <<set $wig to {},
+            $wig.texture to _wigtexture,
+            $wig.length to _wiglength,
+            $wig.colour to _wigcolour,
+            $wig.bangs to _wigbangs,
+            $wig.do to _wigdo
+        >>
+        <<if _wigdye is false>>
+            <<unset $wigdye>>
+        <<else>>
+            <<set $wigdye to {},
+                $wigdye.pattern to _wigdyepattern,
+                $wigdye.colour to _wigdyecolour
+            >>
+        <</if>>
+    <</if>>
+    <<replace "#mc-haircover">><<if $wig>>You are wearing a wig, with $wig.length $wig.colour $wig.texture hair. <<if $wigdye>>The wig is dyed $wigdye.colour in a $wigdye.pattern pattern. <</if>><<if $wig.bangs isnot "No">>Your wig has $hair.bangs. <</if>> Your wig is styled in a $wig.do way.<<elseif $cover>>You are wearing a $cover.<<else>>Your hair is not covered.<</if>><</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-FaceFeat [popup] {"position":"1650,225","size":"100,100"}
+<<FacialFeaturesPicked>>\
+You currently have the following features: $facefeatures.
+If you want to edit this trait, please check or uncheck the relevant options below:
+
+//What facial features are applicable to you?//
+* <label><<checkbox "_fullmoustache" false true autocheck>> a full moustache</label>
+* <label><<checkbox "_thinmoustache" false true autocheck>> a thin moustache</label>
+* <label><<checkbox "_goatee" false true autocheck>> a goatee</label>
+* <label><<checkbox "_fullbeard" false true autocheck>> a full beard</label>
+* <label><<checkbox "_sideburns" false true autocheck>> some sideburns</label>
+* <label><<checkbox "_shadow" false true autocheck>> shadow</label>
+* <label><<checkbox "_patch" false true autocheck>> soul patch</label>
+* <label><<checkbox "_handlebar" false true autocheck>> a handle bar</label>
+* <label><<checkbox "_wrinkes" false true autocheck>> wrinkles</label>
+* <label><<checkbox "_mole" false true autocheck>> a mole</label>
+* <label><<checkbox "_brow" false true autocheck>> a unibrow</label>
+* <label><<checkbox "_thickbrow" false true autocheck>> thick brows</label>
+* <label><<checkbox "_thinbrow" false true autocheck>> thin brows</label>
+* <label><<checkbox "_noeyelash" false true autocheck>> no eye lashes</label>
+* <label><<checkbox "_pointedear" false true autocheck>> pointed ears</label>
+* <label><<checkbox "_smallears" false true autocheck>> small ears</label>
+* <label><<checkbox "_largeears" false true autocheck>> large ears</label>
+* <label><<checkbox "_buttonnose" false true autocheck>> a Button nose</label>
+* <label><<checkbox "_romannose" false true autocheck>> a Roman nose</label>
+* <label><<checkbox "_crooked" false true autocheck>> a Crooked nose</label>
+* <label><<checkbox "_widenose" false true autocheck>> a Wide nose</label>
+* <label><<checkbox "_hawknose" false true autocheck>> a Hawk nose</label>
+* <label><<checkbox "_pointchin" false true autocheck>> a pointy chin</label>
+* <label><<checkbox "_roundchin" false true autocheck>> a rounded chin</label>
+* <label><<checkbox "_squarejaw" false true autocheck>> a square jaw</label>
+* <label><<checkbox "_pronouncedcheeks" false true autocheck>> pronounced cheeks</label>
+* <label><<checkbox "_bmrighteye" false true autocheck>> a beauty mark below the right eye</label>
+* <label><<checkbox "_bmlefteye" false true autocheck>> a beauty mark below the left eye</label>
+* <label><<checkbox "_bmcheek" false true autocheck>> a beauty mark on the cheek</label>
+* <label><<checkbox "_bmlips" false true autocheck>> a beauty mark above the lips</label>
+* <label><<checkbox "_freckles" false true autocheck>> freckles</label>
+* <label><<checkbox "_facehair" false true autocheck>> fluff hair</label>
+* <label><<checkbox "_fangs" false true autocheck>> fangs</label>
+* <label><<checkbox "_toothgap" false true autocheck>> tooth gap</label>
+* <label><<checkbox "_acne" false true autocheck>> acne</label>
+
+<<button "Confirm">>
+    <<set $facefeatures to []>>
+    <<AllThisInAnArray>>
+    <<replace "#mc-ffeat">>$facefeatures<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-FaceAcc [popup] {"position":"1775,225","size":"100,100"}
+<<if !$face.mods>><<set $face.mods to "">><</if>><<set 
+    _tattoo to ["No", "Covering the Face", "On the Forehead", "Under the Eye", "On the Cheeks", "Under the Chin", "Covering the Eyebrows", "Lining the lips"],
+    _piercing to ["No", "Eyebrow", "Cheek", "Nose", "Septum", "Ear", "Lip", "Tongue"]
+>>\
+You <<if !$face.tattoo>>do not have any tattoo<<else>>have a tattoe $face.tattoo<</if>>.
+You <<if !$face.piercing>>do not have any piercing<<else>>have a $face.piercing piercing<</if>>.
+<<if $face.mods>>You also have the following face mod: $face.mods<</if>>
+
+//Do you have any tattoes?// <<listbox "$face.tattoo" autoselect>>
+    <<optionsfrom _tattoo>>
+<</listbox>>
+
+//Do you have any piercings?// <<listbox "$face.piercing" autoselect>>
+    <<optionsfrom _piercing>>
+<</listbox>>
+
+//Do you have any other face modification?//
+<<textbox "$face.mods" `$face.mods`>>
+
+<<button "Confirm">>
+    <<if $face.tattoo is "No">>
+        <<unset $face.tattoo>>
+    <</if>>
+    <<if $face.piercing is "No">>
+        <<unset $face.piercing>>
+    <</if>>
+    <<if $face.mods is "">>
+        <<unset $face.mods>>
+    <</if>>
+    <<replace "#mc-ffacc">>You <<if !$face.tattoo>>do not have any tattoo<<else>>have a tattoe $face.tattoo<</if>>.
+        You <<if !$face.piercing>>do not have any piercing<<else>>have a $face.piercing piercing<</if>>.
+        <<if $face.mods>>You also have the following face mod: $face.mods<</if>>
+    <</replace>>
+    <<run Dialog.close()>>
+<</button>>
+/* 
+    Could this be coded better? probably... But it //seems// to work :P
+*/
+
+
+:: Popup-Skin [popup] {"position":"550,825","size":"100,100"}
+<<PopupSkinChecker>>Your skin is currently $skin.satmut $skin.undertone $skin.color, with $skin.features.
+To change this trait, interact with the elements below: 
+
+Your skin colour is <<SkinColourCycle>>, with a <<SkinSatMutCycle>> <<SkinToneCycle>> undertone.
+
+//Does your skin have any notable features?//
+* <label><<checkbox "_vitiligo" false true autocheck>> Viligo</label>
+* <label><<checkbox "_freckles" false true autocheck>> Freckles</label>
+* <label><<checkbox "_eczema" false true autocheck>> Eczema</label>
+* <label><<checkbox "_beatymarks" false true autocheck>> Beauty Marks</label>
+* <label><<checkbox "_albinism" false true autocheck>> Albinism</label>
+
+<<button "Confirm">>
+    <<set 
+        $skin.color to _color,
+        $skin.satmut to _satmut,
+        $skin.undertone to _undertone,
+        $skin.features to []
+    >>
+    <<if _vitiligo>><<run $skin.features.push("Viligo")>><</if>>
+    <<if _freckles>><<run $skin.features.push("Freckles")>><</if>>
+    <<if _eczema>><<run $skin.features.push("Eczema")>><</if>>
+    <<if _beatymarks>><<run $skin.features.push("Beauty Marks")>><</if>>
+    <<if _albinism>><<run $skin.features.push("Albinism")>><</if>>
+    <<replace "#mc-skin">>$skin.satmut $skin.undertone $skin.color
+        $skin.features<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+/*
+    You could make the checkbox autochecked here, as well as have the cycles start at the first chosen value if wanted.
+*/
+
+
+:: Popup-Build [popup] {"position":"675,825","size":"100,100"}
+<<PopupBodyBuild>>\
+You are currently $body.height, with a $body.weight a $body.musc body.
+
+To change this trait, please interact with the elements below. If you'd like to keep some traits as is, keep the listbox on the //--// option.
+
+//How tall are you?// <<listbox "_heightbox">><<optionsfrom _height>><</listbox>>
+
+//What id your body type?// <<listbox "_weightbox">><<optionsfrom _type>><</listbox>>
+
+//How muscular are you?// <<listbox "_muscbox">><<optionsfrom _muscle>><</listbox>>
+
+<<button "Confirm">>
+    <<if _heightbox isnot "--">>
+        <<set $body.height to _heightbox>>
+    <</if>>
+    <<if _weightbox isnot "--">>
+        <<set $body.weight to _weightbox>>
+    <</if>>
+    <<if _muscbox isnot "--">>
+        <<set $body.musc to _muscbox>>
+    <</if>>
+    <<replace "#mc-build">>Height: $body.height
+        Type: $body.weight
+        Musculature: $body.musc<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Scar [popup] {"position":"800,825","size":"100,100"}
+<<ScarsPicked>>\
+You currently have the following scars on your body: $scars.
+If you want to change this trait, please click the relevant options below.
+
+//Do you have any scar on your body?//
+* <label><<checkbox "_browscar" false true autocheck>> cutting the brow</label>
+* <label><<checkbox "_eyescar" false true autocheck>> crossing the eye</label>
+* <label><<checkbox "_nosescar" false true autocheck>> across the nose</label>
+* <label><<checkbox "_cheekscar" false true autocheck>> along the cheek</label>
+* <label><<checkbox "_lipscar" false true autocheck>> cutting the lip</label>
+* <label><<checkbox "_chinscar" false true autocheck>> on the chin</label>
+* <label><<checkbox "_bitescar" false true autocheck>> bite marks on the neck</label>
+* <label><<checkbox "_neckscar" false true autocheck>> along the neck</label>
+* <label><<checkbox "_throatscar" false true autocheck>> across the throat</label>
+* <label><<checkbox "_heartscar" false true autocheck>> across the heart</label>
+* <label><<checkbox "_shoulderscar" false true autocheck>> cutting the shoulder</label>
+* <label><<checkbox "_torsoscar" false true autocheck>> across the torso</label>
+* <label><<checkbox "_ceasarscar" false true autocheck>> a caesarian</label>
+* <label><<checkbox "_hipscar" false true autocheck>> along the hip</label>
+* <label><<checkbox "_spinescar" false true autocheck>> down the spine</label>
+* <label><<checkbox "_backcar" false true autocheck>> across the back</label>
+* <label><<checkbox "_buttscar" false true autocheck>> bite marks on the butt cheeks</label>
+* <label><<checkbox "_legscar" false true autocheck>> down the leg</label>
+* <label><<checkbox "_footscar" false true autocheck>> across the foot</label>
+
+<<button "Confirm">>
+    <<set $pages.scars to true>>
+    <<AllThisInAnArrayButItsScars>>
+    <<replace "#mc-scar">>$scars<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Pros [popup] {"position":"925,825","size":"100,100"}
+<<ProsCheck>>You current have the following traits:
+> Procedures: $aid.proc
+> Prothesis: $aid.pros
+> Aid: $aid.aid
+
+If you would like to change them, please interact with the options below: 
+
+//Have you undergone any of the following Procedures?//
+* <label><<checkbox "_hrt" false true autocheck>> HRT</label> (Hormone Replacement Therapy)
+* <label><<checkbox "_topsurg" false true autocheck>> Top Surgery</label> (Breast Augmentation/Reduction/Implants/Removal/etc...)
+* <label><<checkbox "_bottomsurg" false true autocheck>> Bottom Surgery</label>
+* <label><<checkbox "_facesurg" false true autocheck>> Facial Reconstruction</label>
+* <label><<checkbox "_othersurg" false true autocheck>> Other Reconstructive Surgery</label>
+
+//Do you use any of the following prothesis?//
+* <label><<checkbox "_glasses" false true autocheck>> Glasses</label>
+* <label><<checkbox "_contacts" false true autocheck>> Contacts</label>
+* <label><<checkbox "_hearaidrem" false true autocheck>> Hearing Aid</label> (removable)
+* <label><<checkbox "_hearaidimp" false true autocheck>> Hearing Aid</label> (Implant)
+* <label><<checkbox "_prosfingers" false true autocheck>> Prosthesis</label> (Fingers)
+* <label><<checkbox "_proshand" false true autocheck>> Prosthesis</label> (Hand)
+* <label><<checkbox "_prosarm" false true autocheck>> Prosthesis</label> (Arm)
+* <label><<checkbox "_prostoes" false true autocheck>> Prosthesis</label> (Toes)
+* <label><<checkbox "_prosfoot" false true autocheck>> Prosthesis</label> (Foot)
+* <label><<checkbox "_prosleg" false true autocheck>> Prosthesis</label> (Leg)
+
+//Do you use any of the following aid?//
+* <label><<checkbox "_cane" false true autocheck>> Cane</label>
+* <label><<checkbox "_crutches" false true autocheck>> Crutches</label>
+* <label><<checkbox "_walkter" false true autocheck>> Walker</label>
+* <label><<checkbox "_servaniguide" false true autocheck>> Service Animal</label> (Guide)
+* <label><<checkbox "_servaniother" false true autocheck>> Service Animal</label> (Other)
+* <label><<checkbox "_handwheel" false true autocheck>> Wheelchair</label> (Hand)
+* <label><<checkbox "_powerwheel" false true autocheck>> Wheelchair</label> (Powered)
+* <label><<checkbox "_reader" false true autocheck>> Text Reader</label>
+
+<<button "Confirm">>
+    <<set $pages.pros to true>>
+    <<ArraysForPros>>
+    <<replace "#mc-pros">>Procedures: $aid.proc
+        Prothesis: $aid.pros
+        Aid: $aid.aid<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-BodyMod [popup] {"position":"1050,825","size":"100,100"}
+<<if !$face.mods>><<set $face.mods to "">><</if>><<set 
+    _tattoo to ["No", "Half-Sleeve", "Full Sleeve", "Neck", "Chest", "Belly", "Leg", "Calf", "Foot", "Covered"],
+    _piercing to ["No", "Belly Button", "Nipple", "Surface (Chest)", "Surface (Arm)", "Surface (Back)", "Surface (Leg)", "Surface (Private)"]
+>>\
+You <<if !$body.tattoo>>do not have any tattoo<<else>>have a tattoe $body.tattoo<</if>>.
+You <<if !$body.piercing>>do not have any piercing<<else>>have a $body.piercing piercing<</if>>.
+<<if $body.mods>>You also have the following body mod: $body.mods<</if>>
+
+//Do you have any tattoes?//<<listbox "$body.tattoo" autoselect>>
+    <<optionsfrom _tattoo>>
+<</listbox>>
+
+//Do you have any piercings?//<<listbox "$body.piercing" autoselect>>
+    <<optionsfrom _piercing>>
+<</listbox>>
+
+//Do you have any other body modification?//
+<<textbox "$body.mods" `$body.mods`>>
+
+<<button "Confirm">>
+    <<if $body.tattoo is "No">>
+        <<unset $body.tattoo>>
+    <</if>>
+    <<if $body.piercing is "No">>
+        <<unset $body.piercing>>
+    <</if>>
+    <<if $body.mods is "">>
+        <<unset $body.mods>>
+    <</if>>
+    <<replace "#mc-ffacc">>You <<if !$body.tattoo>>do not have any tattoo<<else>>have a tattoe $body.tattoo<</if>>.
+        You <<if !$body.piercing>>do not have any piercing<<else>>have a $body.piercing piercing<</if>>.
+        <<if $body.mods>>You also have the following body mod: $body.mods<</if>>
+    <</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Makeup [popup] {"position":"1175,825","size":"100,100"}
+<<CosmeticOptions>>\
+<<if !$skin.makeup>>You don't wear any makeup.<<else>>Your make up is $skin.makeup.<</if>>
+Your nails are $body.naislength<<if $body.nails>>, and are painted $body.nailscolour in $body.nails<</if>>.
+You <<if !$skin.perfume>>don't wear any perfume<<else>>wear a $skin.perfume scent<</if>>.
+
+Interact with the elements below to change this trait.
+
+//Do you wear any make up?//
+<<nobr>>
+    <<button "Yes, I wear make-up.">><<set $skin.makeup to true>><<redo "makeupplus">><</button>>
+     | 
+    <<button "No, I don't wear make-up.">><<unset $skin.makeup>><<redo "makeupplus">><</button>>
+<</nobr>>
+
+<<do tag "makeupplus">><<nobr>>
+    <<if $skin.makeup>> 
+        //What kind of make-up are you wearing?// <<listbox "$skin.makeup">>
+                <<optionsfrom _makeup>>
+        <</listbox>>
+    <</if>>
+<</nobr>><</do>>
+
+//How do your nails look like?// <<listbox "$body.naislength">>
+    <<optionsfrom _naillength>>    
+<</listbox>>
+
+//Are your nails painted?// 
+<<nobr>>
+    <<button "Yes, my nails are painted.">><<set $body.nails to true>><<redo "naisplus">><</button>>
+     | 
+    <<button "No, my nails are natural.">><<unset $body.nails>><redo "naisplus">><</button>>
+<</nobr>>
+
+<<do tag "naisplus">><<nobr>>
+    <<if $body.nails>>
+        //In what style are your nails painted?// <<listbox "$body.nails">>
+            <<optionsfrom _nailart>>
+        <</listbox>><br>
+        //What colour are your nails painted?// <<listbox "$body.nailscolour">>
+            <<optionsfrom _nailcolour>>
+        <</listbox>>
+    <</if>>
+<</nobr>><</do>>
+
+//Do you wear any perfume?//
+<<nobr>>
+    <<button "Yes, I wear perfume.">><<set $skin.perfume to true>><<redo "perfumeplus">><</button>>
+     | 
+    <<button "No, I don't wear any perfume.">><<unset $skin.perfume>><<redo "perfumeplus">><</button>>
+<</nobr>>
+
+<<do tag "perfumeplus">><<nobr>>
+    <<if $skin.perfume>>
+        //What kind of perfume are you wearing?// <<listbox "$skin.perfume">>
+            <<optionsfrom _perfume>>
+        <</listbox>>
+    <</if>>
+<</nobr>><</do>>
+
+<<button "Confirm">>
+    <<replace "#mc-makup">><<if !$skin.makeup>>You don't wear any makeup.<<else>>Your make up is $skin.makeup.<</if>>
+    Your nails are $body.naislength<<if $body.nails>>, and are painted $body.nailscolour in $body.nails<</if>>.
+    You <<if !$skin.perfume>>don't wear any perfume<<else>>wear a $skin.perfume scent<</if>>.<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Perso [popup] {"position":"1400,950","size":"100,100"}
+Your current personality is set as followed:
+<<PersoBars>>
+
+If you want to edit this trait, please interacti with the sliders below:
+
+//Are you more Introverted or Extroverted?//
+<center>\
+Introverted <input type="range" id="slidetest" name="slidetest" min="1" max="100" @value="$intext" class="slider" data-var="_intext" oninput="SugarCubeInput(this)"> Extroverted
+</center>
+
+//Are you more Cold-natured or Warm-natured?//
+<center>\
+Cold <input type="range" id="slidetest" name="slidetest" min="1" max="100" @value="$coldwarm" class="slider" data-var="_coldwarm" oninput="SugarCubeInput(this)"> Warm
+</center>
+
+<<button "Confirm">>
+    <<set $intext to _intext>>
+    <<set $coldwarm to _coldwarm>>
+    <<replace "#mc-perso">><<PersoBars>><</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Class [popup] {"position":"1525,950","size":"100,100"}
+You are currently a $class.
+If you would like to edit this trait, choose one of the options below:
+
+<<button "Warrior">>
+    <<WarriorStartingStats>>
+    <<replace "#mc-class">>$class<</replace>>
+    <<run Dialog.close()>>
+<</button>> | \
+<<button "Mage">>
+    <<MageStartingStats>>
+    <<replace "#mc-class">>$class<</replace>>
+    <<run Dialog.close()>>
+<</button>> | \
+<<button "Rogue">>
+    <<RogueStartingStats>>
+    <<replace "#mc-class">>$class<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+/*
+ ~ Notes:
+    Unlike the main passage, this one will not offer additional points. Mainly because I didn't feel like doing it again...
+    Though, it is important to stay as consistent as possible between the main passage setters and the check changes!
+
+    Also... not exlanation about the traits, because you can't stack popups. Though you could create an explanation popup with a button re-opening this one again...
+*/
+
+
+:: ClassExplanations [popup] {"position":"1775,700","size":"100,100"} 
+<<if _explanation is "warrior">>\
+    Warriors find themselves on the front line, dealing damage in close combat. Their high levels in streght and dexterity help ward off enemies. Their high constitution also makes them good tanks.
+
+    //Stats://
+* strength : 5
+* dexterity : 4
+* willpower : 0
+* magic : 1
+* cunning : 1
+* constitution : 3
+<<elseif _explanation is "mage">>\
+    Mages get their abilities through high levels of magic and strong willpower. They have the widest range of specialisation, from healing to range damange or close combat. Their low constitution, however, make them weak to attacks.
+
+    //Stats://
+* strength : 1
+* dexterity : 1
+* willpower : 4
+* magic : 6
+* cunning : 2
+* constitution : 0
+<<elseif _explanation is "rogue">>\
+    Rogues use subterfuge and agility to handle their enemies. Working best in the dark, they have high levels of cunning and dexterity, making them incredibly deadly. Their low constitution, however, make them weak to attacks.
+
+    //Stats://
+* strength : 1
+* dexterity : 5
+* willpower : 2
+* magic : 1
+* cunning : 5
+* constitution : 0
+<<else>>\
+    The Gods are looking positively on you.
+    They are awarding you:
+    <center>10 extra SP!</center>
+<</if>>
+/* 
+ ~ Notes:
+    Was lazy, so I merged the class popups together, instead of creating a passage for each.
+    There is no good or bad ways of doing this, honestly.
+
+    The descriptions are highly generic. I def pulled them out of my ass.
+*/
+
+
+:: Popup-Back [popup] {"position":"1650,950","size":"100,100"}
+You are currently a $background.
+If you would like to edit this trait, choose one of the options below:
+
+<<button "Commoner">>
+    <<CommonerStartingStats>>
+    <<replace "#mc-backg">>$background<</replace>>
+    <<run Dialog.close()>>
+<</button>> | \
+<<button "Bourgeois">>
+    <<BourgeoisStartingStats>>
+    <<replace "#mc-backg">>$background<</replace>>
+    <<run Dialog.close()>>
+<</button>> | \
+<<button "Noble">>
+    <<NobleStartingStats>>
+    <<replace "#mc-backg">>$background<</replace>>
+    <<run Dialog.close()>>
+<</button>>
+/*
+    Like with changing the class, this popup does not offer additional information about each class.
+    I do recomend however a line or two, especially if the trait is important for the story!
+*/
+
+
+:: StatusExplanations [popup] {"position":"1775,825","size":"100,100"}
+<<if _explanation is "commoner">>\
+    The commoner has a hard life with little funds to sustain their wellbeing. Though they have some support from other commoners, and are potentially able to sway some weak merchants, no member of the court will ever receive them.
+
+* wealth : 0
+* favours at court : 0
+* favours with commoners : 40
+* favours with merchants : 15
+* difficulty : "hard"
+<<elseif _explanation is "bourgeois">>\
+    The bourgeois will be able to navigate the world with few worries... if they manage their wealth smartly. They are sometimes received at court and find much influence with the merchant class. However, the commoners will not look favourably towards them.
+
+* wealth : 45
+* favours at court : 25
+* favours with commoners : 10
+* favours with merchants : 50
+* difficulty : "medium"
+<<elseif _explanation is "noble">>\
+    The noble will never have a day of struggle in their life, unless they arouse the wrath of the KING. They will usually be able to easily trade favours with other nobles, sway merchants to their cause, and find limited support with the commoners thanks to charities.
+
+* wealth : 100
+* favours at court : 60
+* favours with commoners : 20
+* favours with merchants : 40
+* difficulty : "easy"
+<</if>>
+
+
+:: Popup-ROGender [popup] {"position":"2000,525","size":"100,100"}
+The ROs are currently: $Camille, $Fran, and $Alex.
+If you would like to change their genders, please interact with the elements below:
+
+//Do you want to set the gender of the ROs?//
+* <<link "Set them all as female (She/Her)">>
+    <<set $Camille to "Camille (She/Her)", $Fran to "Frances (She/Her)", $Alex to "Alexandra (She/Her)">>
+    <<replace "mc-rogen">>$Camille
+        $Fran
+        $Alex<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+* <<link "Set them all as male (He/Him)">>
+    <<set $Camille to "Camille (He/Him)", $Fran to "Frank (He/Him)", $Alex to "Alexander (He/Him)">>
+    <<replace "mc-rogen">>$Camille
+        $Fran
+        $Alex<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+* <<link "Set them all as nonbinary (They/Them)">>
+    <<set $Camille to "Camille (They/Them)", $Fran to "Frances (They/Them)", $Alex to "Alex (They/Them)">>
+    <<replace "mc-rogen">>$Camille
+        $Fran
+        $Alex<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+* <<link "Randomise the gender">>
+    <<set $Camille to "Camille (She/Her)", $Fran to "Frances (They/Them)", $Alex to "Alexander (He/Him)">>
+    <<replace "mc-rogen">>$Camille
+        $Fran
+        $Alex<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+* <<linkappend "Set each RO separately">>
+** <<CamilleCycle>> Renaud
+** <<FranCycle>> Wallace 
+** <<AlexCycle>> Curtis
+    <<button "Confirm">>
+        <<set $Camille to _camille, $Fran to _fran, $Alex to _alex>>
+        <<replace "mc-rogen">>$Camille
+        $Fran
+        $Alex<</replace>>
+        <<run Dialog.close()>>
+    <</button>>
+<</linkappend>>
+* <<link "Set the gender when each RO is introduced">>
+    <<set $Camille to "N/C", $Fran to "N/C", $Alex to "N/C">>
+    <<replace "mc-rogen">>$Camille
+        $Fran
+        $Alex<</replace>>
+    <<run Dialog.close()>>
+<</link>>
+
+
+:: Popup-Family [popup] {"position":"2125,525","size":"100,100"}
+<<CheckFam>>\
+This is your current familial situation: 
+* $family.parents
+* $family.siblings sibling(s)
+* $family.children child(ren)<<if $mc.pregnant>>, with one on the way!<</if>>
+
+If you want to change any element, please click on the options below:
+
+//Do you have parents?//
+* <label><<radiobutton "_parents" "Mother + Father" autocheck>>Two parents: a mother and a father</label>
+* <label><<radiobutton "_parents" "Mother" autocheck>>One parent: a mother</label>
+* <label><<radiobutton "_parents" "Father" autocheck>>One parent: a father</label>
+* <label><<radiobutton "_parents" "Two Fathers" autocheck>>Two parents: two fathers</label>
+* <label><<radiobutton "_parents" "Two Mothers" autocheck>>Two parents: two mothers</label>
+* <label><<radiobutton "_parents" "Nuclear Family" autocheck>>More than two parents: a nuclear Family</label>
+* <label><<radiobutton "_parents" "No Parents" autocheck>>No Parents</label>
+
+//How many siblings do you have?// <<numberbox "_siblings" `_siblings`>>
+
+//How many children do you have?//<<numberbox "_children" `_children`>>
+* <label><<checkbox "_preggo" false true autocheck>> I'm also pregnant!</label>
+
+<<button "Confirm">>
+    <<set
+        $family.siblings to _siblings,
+        $family.children to _children,
+        $family.parents to _parents
+    >>
+    <<if _preggo>>
+        <<set $mc.pregnant to "I am pregnant">>
+    <<else>>
+        <<unset $mc.pregnant>>
+    <</if>>
+    <<replace "mc-fam">>$family.parents
+        $family.siblings sibling(s)
+        $family.children child(ren)<<if $mc.pregnant>>, with one on the way!<</if>><</replace>>
+    <<run Dialog.close()>>
+<</button>>
+
+
+:: Popup-Pets [popup] {"position":"2250,525","size":"100,100"}
+<<set _animal to ["--", "a turtle", "a dog", "a cat", "a bird", "a rodent", "a snake", "a tiger", "a dragon", "a robot", "a horse", "a spider", "a moon", "a cow", "a pig"]>>\
+You current pet is $mc.pet.s
+If you would like to change this trait, please use the interactive element below:
+
+//What pet do you have?// <<listbox "_pet">>
+    <<optionsfrom _animal>>
+<</listbox>>
+
+<<button "Confirm">>
+    <<if _pet isnot "--">>
+        <<set $mc.pet to _pet>>
+    <<else>>
+        <<unset $mc.pet>>
+    <</if>>
+    <<replace "mc-pet">>$mc.pet<</replace>>
+<</button>>
+

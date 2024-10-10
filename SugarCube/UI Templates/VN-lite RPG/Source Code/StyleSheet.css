@@ -1,0 +1,677 @@
+/*~ ~ ~ ~ ~ ~ ~  TABLE OF CONTENTS ~ ~ ~ ~ ~ ~ ~ 
+    I-      Import Fonts
+        a- Font Awesome (6.4.0)
+        b- Google Fonts
+    II-     Base CSS
+        a- Scrollbar    
+        b- Body
+        c- Passage
+        d- Menu Title Footer
+        e- Character Img
+    III-    HTML CSS
+        a- Links
+        b- Buttons
+        c- Headers (h1, h2, etc...)
+        d- Tables
+        e- Other
+    IV-     Macros
+        a- Textbox, Textarea, Select
+        b- Cycle
+    V-      UI Dialog
+        a- Base CSS
+        b- Settings Dialog
+        c- Saves Dialog
+    VI-     Media Sizing
+    VII-    Title Page
+
+    Notes:            
+        CTRL/Cmd+F the Title to jump
+        {title} tagged passages have a special formatting, all defined below by the starting code [data-tags~="title"]
+
+        Want to have a Theme Setting on top of the special tagged passages? Follow this formatting:
+
+            .theme-class [data-tags~="passage-tag"] element {
+                CSS code
+            }
+*/
+
+
+/***************************
+    IMPORT FONTS
+***************************/
+/*
+    This template only includes online fonts  Google, using the @import rule.
+    But it is recommended to only use local (downloaded) fonts, as online fonts are dependent on the hosting server (i.e. Google could always pull the font, or change the API). Local import also ensures the project is playable offline (downloaded or intermittent internet).
+    To do that, download the fonts, include those files in your game folder, and import them with @font-face.
+        > This doesn't apply to Font-Awesome. See the Template Guide (https://manonamora.itch.io/twine-sugarcube-templates).
+*/
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100&display=swap');
+
+/***************************
+    BASE CSS
+***************************/
+
+    /***************************
+        Scrollbar
+    ***************************/
+* {
+    box-sizing: border-box;
+    scrollbar-color: darkblue transparent;
+    scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent; 
+}
+::-webkit-scrollbar-thumb {
+  background-color: darkblue; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #0004ff54; 
+}
+
+    /***************************
+        Body
+    ***************************/
+body {
+    height: 100vh;
+    width: 100vw;
+    background-color: #FF8E14;
+    background-image: url(subtle-prism.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right;
+    color: black;
+}
+#story {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    background-color: #0004ff54;
+}
+
+    /***************************
+        Passage
+    ***************************/
+#container {
+    aspect-ratio: 1.26/1;
+    width: 100%;
+    flex-grow: 1;
+    height: calc(90% - 80px);
+    background-color: #a04b00b5;
+    border-radius: 5%;
+}
+#passages {
+    overflow: auto;
+    width: 66%;
+    height: 98%;
+    padding: 2%;
+    margin: 1% 3% 80px auto;
+    max-width: 720px;
+}
+
+    /***************************
+        Menu
+        Title
+        Footer
+    ***************************/
+#header {
+    height: 10%;
+    width: 100%;
+    max-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8vh;
+    padding: 1%;
+    color: white;
+    text-shadow: 0 0 10px #070961;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+#footer {
+    height: 80px;
+    width: 100%;
+}
+
+#menu {
+    max-height: 100px;
+    aspect-ratio: 6/1;
+    width: 100%;
+    max-width: calc(100% - 30vw);
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    height: 80px;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #00008bad;
+    border-radius: 15px;
+}
+      /*Links in Menu box*/
+#menu a {
+    color: #9f5226;
+}
+#menu a:hover, #menu a:focus {
+    color: orange;
+    text-decoration: none;
+}
+
+    /***************************
+        Character Img
+    ***************************/
+#perso {
+    position: absolute;
+    width: 100%;
+    max-width: 23vw;
+    top: 11%;
+    left: 4.5%;
+    max-height: 286px;
+    aspect-ratio: 0.73/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: clip;
+    border: 4px solid #00008b;
+    border-radius: 5%;
+}
+#perso img {
+    width: 100%;
+}
+#side-image {
+    position: absolute;
+    bottom: 0;
+    max-height: 286px;
+    max-width: 30vw;
+    min-height: 80px;
+    aspect-ratio: 1/0.79;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+#side-image img {
+    width: 45%;
+    border-radius: 5%;
+    border: 4px solid #00008b;
+}
+
+/***************************
+    HTML CSS
+***************************/
+    /***************************
+        Links
+    ***************************/
+.passage a {
+    color: white;
+    width: 90%;
+    font-weight: bold;
+    display: inline-block;
+    text-indent: 1em;
+    letter-spacing: 0.1em;
+    border: 2px solid transparent;
+    border-left: unset;
+    border-right: unset;
+}
+.passage a:hover, .passage a:focus {
+    text-decoration: none;
+    background-color: #070961de;
+    padding-right: 1%;
+    border-color: white;
+}
+
+#ui-dialog-body a {
+    color:#00008b;
+    font-weight: bold;
+    text-decoration: underline dotted;
+}
+
+    /***************************
+        Buttons
+    ***************************/
+button {
+    background-color: darkblue;
+    border: 1px dashed orange;
+}
+button:hover {
+    background-color: #0004ff8c;
+    border: 1px solid transparent;
+}
+button:disabled {
+    opacity: 0.4;
+}
+
+    /***************************
+        Headers
+    ***************************/
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Sans', sans-serif;
+    color: darkblue;
+}
+h1 {
+    text-align: right;
+}
+h2 {
+    text-align: right;
+    font-style: italic;
+}
+h3 {
+    text-align: center;
+}
+h4 {
+    text-align: center;
+    font-style: italic;
+}
+h6 {
+    font-style: italic;
+}
+
+    /***************************
+        Tables
+    ***************************/
+/*
+    Don't remove [.passage] here, or it will affect the <table> element in the Save pop-up.
+    If you want to style one specific table, you can add ID/class to target it:
+      -> one table
+        <table id="this-one">
+            -> table#this-one { CSS rules }
+      -> multiple tables (but not all of them)
+        <table class="special">
+            -> table.special { CSS rules }
+*/
+.passage table {
+    width: 100%;
+}  
+.passage th {
+    text-align: center;
+}
+.passage td, .passage th, .passage tr {
+    border: 1px dotted darkblue;
+}
+    /***************************
+        Other
+    ***************************/
+li::marker {
+    content: "\f192\00a0";
+    font-family: "Font Awesome 6 Free";
+    color: darkblue;
+}
+
+hr {
+    border-top: 2px dashed darkblue;
+}
+
+label {
+    font-weight: bold;
+}
+
+/***************************
+    MACROS
+***************************/
+    /***************************
+        Textbox, Textarea,
+        Select
+    ***************************/
+input, select, textarea {
+    border: 1px dashed #0e0a67;
+    background-color: #0004ff29;
+}
+input:not(:disabled):focus, input:not(:disabled):hover, select:not(:disabled):focus, select:not(:disabled):hover, textarea:not(:disabled):focus, textarea:not(:disabled):hover {
+    background-color: #0004ffc9;
+    border-color: orange;
+}
+input[type="text"] {
+    width: 100%;
+    min-width: 1em;
+    max-width: 18em;
+}
+textarea {
+    width: 100%;
+    min-width: 0em;
+    max-width: 30em;
+    resize: both;
+}
+input[type="number"] {
+    width: 100%;
+    min-width: 1em;
+    max-width: 10em;
+}
+
+    /***************************
+        Cycle
+    ***************************/
+a.macro-cycle {
+    color: blue;
+    letter-spacing: unset;
+    text-indent: unset;
+}
+a.macro-cycle:hover, a.macro-cycle:focus {
+    background-color: unset;
+    border-color: transparent;
+    color: #0e0a67;
+}
+  
+a.macro-cycle::before, a.macro-cycle::after {
+    content: "\00a0\f192\00a0";
+    font-family: "Font Awesome 6 Free";
+    font-weight: normal;
+    transition-duration: .2s;
+}
+a.macro-cycle:hover::before, a.macro-cycle:hover::after, a.macro-cycle:focus::before, a.macro-cycle:focus::after {
+    font-weight: bold;
+}
+
+/***************************
+    UI DIALOG
+***************************/
+
+    /***************************
+        Base CSS
+    ***************************/
+#ui-dialog {
+    max-width: 50em;
+}
+#ui-dialog-titlebar {
+    border-radius: 10px 10px 0px 0px;
+    background-color: #0e0a67;
+}
+#ui-dialog-title {
+    font-size: 30px;
+    color: white;
+    padding: .2em;
+    font-family: 'Noto Sans', sans-serif;
+    letter-spacing: 0.5em;
+}
+#ui-dialog-close:hover {
+    background-color: transparent;
+    border-color: transparent;
+    font-size: 150%;
+    opacity: 1;
+}
+#ui-dialog-close {
+    opacity: 0.8;
+}
+#ui-dialog-body {
+    max-height: calc(100% - 2.1em);
+    height: 100%;
+    border-radius: 0px 0px 10px 10px;
+    background-color: #803c00;
+    border: unset;
+}
+
+ul.buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+ul.buttons button {
+    font-weight: normal;
+}
+
+    /***************************
+        Settings Dialog
+    ***************************/
+#ui-dialog-body.settings button[id|="setting-control"] {
+    background-color: #693100;
+    border: 1px solid #0e0a67;
+}
+#ui-dialog-body.settings button[id|="setting-control"]:hover {
+    background-color: #803c00;
+    border-color: #693100;
+}
+#ui-dialog-body.settings button[id|="setting-control"].enabled {
+    background-color: darkblue;
+    border-color: #0e0a67;
+}
+#ui-dialog-body.settings button[id|="setting-control"].enabled:hover {
+    background-color: #211ca6;
+    border-color: darkblue;
+}
+#restart-cancel, #settings-reset {
+    font-weight: normal;
+    background-color: #4c0202;
+    border: 1px solid #300000;
+}
+#restart-cancel:hover, #settings-reset:hover {
+    background-color: darkred;
+    border-color: #4c0202;
+}
+
+    /***************************
+        Saves Dialog
+    ***************************/
+        /* Save and Load buttons */
+#ui-dialog-body.saves #saves-list button.load:not(:disabled), #ui-dialog-body.saves #saves-list button {
+    color: white;
+    background-color: darkblue;
+    border: 1px dashed orange;
+    font-weight: normal;
+}
+#ui-dialog-body.saves #saves-list button.load:not(:disabled):hover, #ui-dialog-body.saves #saves-list button:not(:disabled):hover {
+    background-color: #0004ff8c;
+    border: 1px solid transparent;
+}
+
+        /* Delete Save(s) buttons */
+#ui-dialog-body.saves #saves-list button.delete:not(:disabled), #ui-dialog-body.saves button[id="saves-clear"]:not(:disabled) {
+    font-weight: normal;
+    background-color: #4c0202;
+    border: 1px solid #300000;
+}
+#ui-dialog-body.saves #saves-list button.delete:not(:disabled):hover, #ui-dialog-body.saves button[id="saves-clear"]:not(:disabled):hover {
+    background-color: darkred;
+    border-color: #4c0202;
+}
+
+#ui-dialog-body.saves #saves-list button:disabled {
+    opacity: 0.4;
+    font-weight: normal;
+    background-color: #4c0202;
+    border: 1px solid #300000;
+}
+
+        /* Saves Headers */
+#ui-dialog-body.saves>h2 {
+    background-color: transparent;
+    text-indent: 1em;
+    direction: rtl;
+}
+
+/***************************
+    Media Sizing
+***************************/
+/*
+    This template was built for mobile first, then expanded for larger screen. Hence the use of min-width instead of max-width.
+*/
+@media screen and (min-width: 800px) {
+    #perso {
+        max-width: 210px;
+    }
+    #ui-dialog-body {
+        height: calc(80% - 2.1em);
+    }
+    #ui-dialog-title {
+        font-size: 40px;
+    }
+}
+@media screen and (min-width: 1280px) {
+    #story {
+        display: block;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        display: initial;
+    }
+    #header {
+        position: absolute;
+        width: 33%;
+        height: 20%;
+        top: 1%;
+        left: 1%;
+        font-size: 6vw;
+    }
+    #container {
+        width: 58.7%;
+        height: 91.6%;
+        height: 89%;
+        position: absolute;
+        right: 3%;
+        top: 1%;
+    }
+    #footer {
+        height: 80px;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        height: unset;
+    }
+    #menu {
+        max-width: 771px;
+        width: 40%;
+        right: 1%;
+        bottom: 9px;
+        height: unset;
+        position: absolute;
+    }
+    #passages {
+        width: 76%;
+        height: 92%;
+    }  
+    #side-image {
+        width: 19%;
+        max-width: 362px;
+    }
+    #perso {
+        width: 20.9%;
+        left: -5%;
+    }
+}
+
+/***************************
+    TITLE PAGE
+***************************/
+[data-tags~="title"] #perso, [data-tags~="title"] #footer {
+    display: none;
+}
+[data-tags~="title"] #container {
+    background-color: transparent;
+}
+[data-tags~="title"] #passages {
+    height: 90%;
+    width: 85%;
+    margin: auto;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(#a04b00b5 75%,transparent);
+}
+[data-tags~="title"] .passage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 75%;
+    width: 100%;
+    font-family: 'Noto Sans', sans-serif;
+    text-align: center;
+}
+[data-tags~="title"] .passage a {
+    width: 100%;
+    color: white;
+    font-weight: bold;
+}
+[data-tags~="title"] .passage a:hover, [data-tags~="title"] .passage a:focus {
+    text-decoration: none;
+    font-size: 40px;
+    background-color: #070961;
+    padding-right: 1%;
+    border: 5px solid white;
+    border-left: unset;
+    border-right: unset;
+}
+@media screen and (max-width: 350px) {
+    [data-tags~="title"] #passages {
+        font-size: 20px;
+    }
+    [data-tags~="title"] .passage a:hover, [data-tags~="title"] .passage a:focus {
+        font-size: 25px;
+    }
+}
+@media screen and (max-width: 450px) {
+    [data-tags~="title"] #passages {
+        font-size: 30px;
+    }
+    [data-tags~="title"] .passage a:hover, [data-tags~="title"] .passage a:focus {
+        font-size: 35px;
+    }
+}
+@media screen and (max-width: 800px) {
+    [data-tags~="title"] #passages {
+        font-size: 35px;
+    }
+    [data-tags~="title"] .passage a:hover, [data-tags~="title"] .passage a:focus {
+        font-size: 40px;
+    }
+}
+@media screen and (max-width: 900px) {
+    [data-tags~="title"] #passages {
+        font-size: 25px;
+    }
+    [data-tags~="title"] .passage a:hover, [data-tags~="title"] .passage a:focus {
+        font-size: 30px;
+    }
+}
+@media screen and (max-width: 1020px) {
+    [data-tags~="title"] #passages {
+        font-size: 30px;
+    }
+    [data-tags~="title"] .passage a:hover, [data-tags~="title"] .passage a:focus {
+        font-size: 35px;
+    }
+}
+@media screen and (min-width: 800px) and (max-width: 1280px) {
+    [data-tags~="title"] #header {
+        position: absolute;
+        width: 33%;
+        height: 20%;
+        font-size: 6vw;
+    }
+}
+@media screen and (min-width: 800px) {
+    [data-tags~="title"] #passages {
+        height: 100%;
+        left: 10%;
+        position: absolute;
+        justify-content: end;
+        width: 40%;
+        max-width: 500px;
+    }
+    [data-tags~="title"] #container {
+        right: unset;
+        width: 100%;
+        top: unset;
+        height: 100%;
+    }
+    [data-tags~="title"] #header {
+        bottom:  3%;
+        top: unset;
+        left: unset;
+        right: 2%;
+    }
+    [data-tags~="title"] .passage {
+        text-align: right;
+        line-height: 2;
+    }
+}

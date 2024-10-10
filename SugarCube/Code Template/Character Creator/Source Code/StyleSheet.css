@@ -1,0 +1,64 @@
+h1, h2, h3 {
+    text-align: center;
+}
+
+#choose-class, .index-flex {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+#choose-class div, .index-flex div {
+    text-align: center;
+    flex: 1 0 33%;
+    margin: 10px 0;
+}
+
+
+button.link-broken {
+    color: peachpuff;
+    background: darkred;
+    border-color: darkred;
+}
+
+.hair, .wigq, .wig, .wigdye {
+    display: none;
+    visibility: hidden;
+}
+.visible {
+    display: block;
+    visibility: visible;
+}
+
+.green button {
+    background-color: darkgreen;
+}
+
+input#slidetest {
+    margin: 0 1em;
+}
+
+.passage table {width: 100%;}
+
+
+.passage th {
+    text-align: end;
+    padding-right: 10px;
+}
+
+.passage td:first-of-type {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+icon {
+    font-family: sc-icons !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    line-height: 1;
+    speak: never;
+    text-rendering: auto;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

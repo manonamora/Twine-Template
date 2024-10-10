@@ -1,0 +1,148 @@
+:: StoryTitle
+Title Page Template
+
+
+:: StoryData
+{
+  "ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1",
+  "format": "SugarCube",
+  "format-version": "2.37.3",
+  "start": "Start",
+  "tag-colors": {
+    "title": "yellow",
+    "basic": "green",
+    "top-left": "green",
+    "top-right": "green",
+    "centered": "green",
+    "bar": "green",
+    "bottom-right": "green",
+    "bottom-left": "green"
+  },
+  "zoom": 1
+}
+
+
+:: Bar [title bar] {"position":"350,325","size":"100,100"}
+<<include "Menu Elements">>
+
+
+:: Basic [basic] {"position":"450,125","size":"100,100"}
+<div id="game-title">Game Title</div>\
+<div id="title-links">\
+	<<link "New Game" "Start">><</link>> | 	<<link "Load Save">><<run UI.saves()>><</link>>
+	<<link "Settings">><<run UI.settings()>><</link>> |	<<link "Credits">><<run Dialog.create("Credits", "credits").wikiPassage("Credits").open();>><</link>>
+</div>
+<hr>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sit amet turpis diam. Nulla egestas nisi eget sapien pretium, at hendrerit metus lacinia. Phasellus et neque vitae augue iaculis vestibulum. Aliquam eu orci ut risus elementum efficitur eu eget est. Suspendisse in nisi ornare, interdum turpis nec, bibendum urna. Curabitur scelerisque ullamcorper sapien sed molestie. Duis quis sagittis risus. Vivamus pharetra cursus lectus, at tempor velit blandit id. Aliquam fringilla hendrerit neque, vel mollis eros commodo vitae. Maecenas ac luctus tellus. Aliquam et orci mauris.
+
+
+:: Bottom Left [title bottom-left] {"position":"350,425","size":"100,100"}
+<<include "Menu Elements">>
+
+
+:: Bottom Right [title bottom-right] {"position":"250,425","size":"100,100"}
+<<include "Menu Elements">>
+
+
+:: Credits {"position":"25,225","size":"100,100"}
+The ''Title Page Template'' was created by manonamora on Twine 2/Tweego with SugarCube 2.37.3.
+\
+<h3>The Title Page Template</h3>\
+This template was made possible thanks to the assets and resources below:
+> //Assets://
+* Background from [[SVG Backgroud|https://www.svgbackgrounds.com/]]
+\
+<h3>manonamora</h3>\
+You can find:
+* my other templates on [[Itch|https://manonamora.itch.io/]], as well as my guides:
+** [[SugarCube Guide|https://manonamora.itch.io/twine-sugarcube-guide]]
+** [[Ready-to-Use Tweego and Guide |https://manonamora.itch.io/ready-to-use-tweego-folder]] 
+** [[ChoiceScript to SugarCube Guide |https://manonamora.itch.io/choicescript-sugarcube-guide]] 
+* my games and IF experiments on [[Itch|https://manonamora.itch.io/]]
+* me, and ask me questions, over on [[Tumblr|https://manonamora-if.tumblr.com]] or [[my website|https://manonamora.neocities.org/]]
+* my Twine Resource Masterlist on the [[IntFiction Forum|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]] (an out-of-date version is rebloggable on [[Tumbr|https://manonamora-if.tumblr.com/post/700577877042888704/]]).
+\
+<h3>Twine and SugarCube</h3>\
+You can download Twine over on the [[Twinery.org|https://twinery.org/]] website, which includes the SugarCube format.
+Thomas M. Edwards hosts the Documentation for the SugarCube format over on [[his website|https://www.motoslave.net/sugarcube/2/docs/]].
+
+There are resources and help available with Twine and SugarCube:
+* on the [[IntFiction Forum|https://intfiction.org/c/authoring/twine/46]]
+* on the [[Twine Subreddit|https://www.reddit.com/r/twinegames/]]
+* in the [[Twine Discord|https://discord.gg/n5dJvPp]]
+* and more listed in this [[Masterlist|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]]
+<hr>\
+<h5>You can find my other SugarCube templates [[here|https://manonamora.itch.io/twine-sugarcube-templates]].</h5>
+
+
+:: Menu Elements {"position":"475,250","size":"100,100"}
+<div id="game-title">Game Title</div>\
+<div id="title-links">\
+	<<link "New Game" "Start">><</link>>
+	<<link "Load Save">><<run UI.saves()>><</link>>
+	<<link "Settings">><<run UI.settings()>><</link>>
+	<<link "Credits">><<run Dialog.create("Credits", "credits").wikiPassage("Credits").open();>><</link>>
+</div>
+
+
+:: Middle Page [title centered] {"position":"250,325","size":"100,100"}
+<div id="game-title">Game Title</div>\
+<div id="title-links">\
+	<<link "New Game" "Start">><</link>> | 	<<link "Load Save">><<run UI.saves()>><</link>>
+	<<link "Settings">><<run UI.settings()>><</link>> |	<<link "Credits">><<script>>Dialog.setup("Credits", "credits"); Dialog.wiki(Story.get("Credits").processText()); Dialog.open();<</script>><</link>>
+</div>
+
+
+:: Notes [basic] {"position":"25,125","size":"100,100"}
+! <center>Some Coding Notes</center>
+The different Title/Menu pages included in this template are only just a few basic position examples (and mobile-tested) out of the [insert comically larger number] ways of creating a Title/Menu page. You can either pick and choose the format desired (and editing it so it fits your project) or use it as an inspiration/base for your own design.
+> The palette here was chosen at random, to showcase the build/positioning - not the aesthetic.
+
+Each Title page is built with only a couple of elements
+* specific passage tags for each different position
+* defined {{{<div>}}} elements to separate the title from the links
+* CSS code in the StyleSheet for the position/styling.
+\
+By using {{{[data-tags~="the-tag"]}}} in the StyleSheet, you will ensure the relevant CSS code will only work for passages with //that// tag.
+The StyleSheet includes a mini optimisation for mobile, though you will want to edit its to take into account the font used in your project and the title length.
+
+You can find more information about Passage Tags or other SugarCube elements in [[my SugarCube Guide|https://manonamora.itch.io/twine-sugarcube-guide]].
+
+<<return "Back to Menu">>
+<style>
+	a {color: #a3ff00;}
+	a:hover {color: #00ff40;}
+</style>
+
+
+:: Start [basic] {"position":"300,75","size":"100,100"}
+! <center>Welcome to the Title Page Template</center>
+This template showcases different options of title/menu pages for a Twine/SugarCube project.
+While these were built specifically for the base SugarCube UI, they have been edited in a way so that it would also work for Custom UI.
+\
+* Example of a [[Menu Page with the SideBar|Basic]]
+* Examples of a Menu Page without the SideBar:
+** [[Left Aligned Menu|Top Left]] 
+** [[Right Aligned Menu|Top Right]]
+** [[Center Aligned Menu|Bar]]
+** [[Menu in the Middle of Page|Middle Page]]
+** [[Mixed Alignment Left|Bottom Left]]
+** [[Mixed Alignment Right|Bottom Right]]
+\
+To come back to this menu, click the //New Game// link on the title example pages.
+Read the [[Notes]].
+<hr>\
+<<link "Credits">><<run Dialog.create("Credits", "credits").wikiPassage("Credits").open();>><</link>>
+<style>
+	a {color: #a3ff00;}
+	a:hover {color: #00ff40;}
+</style>
+
+
+:: Top Left [title top-left] {"position":"250,225","size":"100,100"}
+<<include "Menu Elements">>
+
+
+:: Top Right [title top-right] {"position":"350,225","size":"100,100"}
+<<include "Menu Elements">>
+

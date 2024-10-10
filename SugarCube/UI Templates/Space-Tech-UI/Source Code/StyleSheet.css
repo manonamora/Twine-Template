@@ -1,0 +1,848 @@
+/*~ ~ ~ ~ ~ ~ ~  TABLE OF CONTENTS ~ ~ ~ ~ ~ ~ ~ 
+    I-      Import Fonts
+        a- Font Awesome (6.3.0)
+        a- Google Fonts
+    II-     Root
+    III-    Scrollbar
+    IV-     Theme (Base)
+        a- Container
+            1- Top Container
+            2- Title Block
+            3- Menu Block
+            4- Stats Bar Block
+            5- Passage Block
+            6- Links
+            7- Buttons
+        b- UI Dialog Box
+    V-      Theme (Codex)
+        a- Container
+            1- Top Container
+            2- Title Block
+            3- Menu Block
+            4- Stats Bar Block
+            5- Passage Block
+            6- Links
+            7- Buttons
+        b- UI Dialog Box
+    VI-     Title Page
+    VII-    Settings/Restart/Save
+    VIII-   Other HTML + Icons
+        a- Headers (h1, h2, etc...)
+        b- <label>
+        c- <hr>
+        d- Lists
+        e- Tables
+    IX-     Macros
+    X-      Font Settings
+    XI-     Mobile
+
+    Notes:            
+        { CTRL/Cmd + F } the Title to jump to the wanted part. 
+        
+        {title} tagged passages have a special formatting, all defined below by the starting code [data-tags~="title"]
+
+        {codex} tagged passages have a special formatting, all defined below by the starting code [data-tags~="codex"].
+            > Don't want it? Then, delete any line including this code.
+            > Only want that? Then, either:
+                - tag all your passages with [codex]
+                - transfer the colours to its "base" element counterpart
+
+        Want to have a Theme Setting on top of the special tagged passages? Follow this formatting:
+
+            .theme-class [data-tags~="passage-tag"] element {
+                CSS code
+            }
+*/
+
+/***************************
+    IMPORTS
+***************************/
+/*
+    This template only includes online fonts like Google, using the @import rule.
+    But it is recommended to only use local (downloaded) fonts, as online fonts are dependent on the hosting server (i.e. Google could always pull the font, or change the API). Local import also ensures the project is playable offline (downloaded or intermittent internet).
+    To do that, download the fonts, include those files in your game folder, and import them with @font-face.
+        > This doesn't apply to Font-Awesome. See the Template Guide (https://manonamora.itch.io/twine-sugarcube-templates).
+*/
+
+ /* Icons: Font Awesome */
+ @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css');
+
+ /* Sans-serif: Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+ /* Serif: Tinos */
+@import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+ /* Monospace: Roboto Mono  */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+ /* Codex: Orbitron */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+/* 
+    Example of a local font import: 
+
+@font-face {
+    font-family: "Dyslexic";
+    src: url(fonts/OpenDyslexic-Regular.otf) format("opentype");
+    font-style: normal;
+    font-weight: 400;
+} 
+    > Repeat for each font + style (normal/italics) + weight (regular/bold)
+*/
+
+/***************************
+    Root
+***************************/
+:root {
+    --computer: 'Orbitron', sans-serif;
+    --icon: "Font Awesome 6 Free";
+}
+
+/***************************
+    SCROLLBAR
+***************************/
+/*~ Firefox/some Chromium ~*/
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #0092ff #00000035;
+    scrollbar-gutter: auto;
+}
+
+[data-tags~="codex"] * {
+    scrollbar-color: #004A08 #00000035;
+}
+/*~ Chromium/Other ~*/
+  ::-webkit-scrollbar {width: 8px;}
+  ::-webkit-scrollbar-track {background: #00000035;}
+  ::-webkit-scrollbar-thumb {background: #0092ff;}
+  ::-webkit-scrollbar-thumb:hover {background: #4cb1ff;} 
+
+[data-tags~="codex"] ::-webkit-scrollbar-thumb {background: #004A08;}
+[data-tags~="codex"] ::-webkit-scrollbar-thumb:hover {background: #016e0c;} 
+
+/***************************
+    THEME (BASE)
+***************************/
+body {
+    overflow: hidden;
+    background-color: #060133;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='428' height='428' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%230C2E41' stroke-width='2'%3E%3Cpath d='M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63'/%3E%3Cpath d='M-31 229L237 261 390 382 603 493 308.5 537.5 101.5 381.5M370 905L295 764'/%3E%3Cpath d='M520 660L578 842 731 737 840 599 603 493 520 660 295 764 309 538 390 382 539 269 769 229 577.5 41.5 370 105 295 -36 126.5 79.5 237 261 102 382 40 599 -69 737 127 880'/%3E%3Cpath d='M520-140L578.5 42.5 731-63M603 493L539 269 237 261 370 105M902 382L539 269M390 382L102 382'/%3E%3Cpath d='M-222 42L126.5 79.5 370 105 539 269 577.5 41.5 927 80 769 229 902 382 603 493 731 737M295-36L577.5 41.5M578 842L295 764M40-201L127 80M102 382L-261 269'/%3E%3C/g%3E%3Cg fill='%23203F56'%3E%3Ccircle cx='769' cy='229' r='12'/%3E%3Ccircle cx='539' cy='269' r='12'/%3E%3Ccircle cx='603' cy='493' r='12'/%3E%3Ccircle cx='731' cy='737' r='12'/%3E%3Ccircle cx='520' cy='660' r='12'/%3E%3Ccircle cx='309' cy='538' r='12'/%3E%3Ccircle cx='295' cy='764' r='12'/%3E%3Ccircle cx='40' cy='599' r='12'/%3E%3Ccircle cx='102' cy='382' r='12'/%3E%3Ccircle cx='127' cy='80' r='12'/%3E%3Ccircle cx='370' cy='105' r='12'/%3E%3Ccircle cx='578' cy='42' r='12'/%3E%3Ccircle cx='237' cy='261' r='12'/%3E%3Ccircle cx='390' cy='382' r='12'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 20%;
+}
+
+    /***************************
+      Container on 2 levels 
+        -> Left + Title + Right
+        -> Passage Text
+    ***************************/
+#story {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    display: block;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: 530px;
+    max-width: 800px;
+    outline: 1px solid black;
+    border: 4px solid black;
+    box-shadow: inset hsl(0, 0%, 14.9%) 0 0px 0px 4px, inset hsla(0, 0%, 15%, .8) 0 -1px 5px 4px, inset hsla(0, 0%, 0%, .25) 0 -1px 0px 7px, inset hsla(0, 0%, 50%, .7) 0 2px 1px 7px, hsla(0, 0%, 50%, .15) 0 -5px 6px 4px, hsla(231.1, 97.8%, 17.6%, 0.5) 0 5px 6px 4px;
+    border-radius: 2em;
+    overflow: hidden;
+    background: black;
+}
+
+        /***************************
+         Top Container 
+            -> Left + Title + Right
+         Note: Mobile section have extra rules
+        ***************************/
+
+#topcontainter {
+    height: 40%;
+    background-size: 100%, 1218px 218px, 218px 218px, 100%;
+    overflow: hidden;
+    display: flex;
+    background: linear-gradient(#34436E, #010319);
+}
+        /***************************
+            Title Block
+        ***************************/
+#center-block {
+    box-shadow: inset #3c7fb0 0px 0px 10px;
+    background-color: #060133;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 1500'%3E%3Cdefs%3E%3Cpath fill='none' stroke-width='23.1' stroke-opacity='0.41' id='a' d='M0.74-509.63l485.39 352.65l-185.4 570.61h-599.97l-185.4-570.61L0.74-509.63 M0.74-510.87l-486.56 353.51l185.85 571.99h601.42L487.3-157.36L0.74-510.87L0.74-510.87z'/%3E%3C/defs%3E%3Cg transform='scale(0.316)' style='transform-origin:center'%3E%3Cg transform='rotate(26.64 0 0)' style='transform-origin:center'%3E%3Cg transform='rotate(-160 0 0)' style='transform-origin:center'%3E%3Cg transform='translate(1000 750)'%3E%3Cuse stroke='%230B31CC' href='%23a' transform='rotate(10 0 0) scale(1.1)'/%3E%3Cuse stroke='%230042d5' href='%23a' transform='rotate(20 0 0) scale(1.2)'/%3E%3Cuse stroke='%23004fdb' href='%23a' transform='rotate(30 0 0) scale(1.3)'/%3E%3Cuse stroke='%23005ade' href='%23a' transform='rotate(40 0 0) scale(1.4)'/%3E%3Cuse stroke='%230063df' href='%23a' transform='rotate(50 0 0) scale(1.5)'/%3E%3Cuse stroke='%23006bde' href='%23a' transform='rotate(60 0 0) scale(1.6)'/%3E%3Cuse stroke='%230073da' href='%23a' transform='rotate(70 0 0) scale(1.7)'/%3E%3Cuse stroke='%23007ad6' href='%23a' transform='rotate(80 0 0) scale(1.8)'/%3E%3Cuse stroke='%230080d0' href='%23a' transform='rotate(90 0 0) scale(1.9)'/%3E%3Cuse stroke='%230086c9' href='%23a' transform='rotate(100 0 0) scale(2)'/%3E%3Cuse stroke='%23008cc2' href='%23a' transform='rotate(110 0 0) scale(2.1)'/%3E%3Cuse stroke='%230091bb' href='%23a' transform='rotate(120 0 0) scale(2.2)'/%3E%3Cuse stroke='%230096b4' href='%23a' transform='rotate(130 0 0) scale(2.3)'/%3E%3Cuse stroke='%23009aad' href='%23a' transform='rotate(140 0 0) scale(2.4)'/%3E%3Cuse stroke='%23009fa8' href='%23a' transform='rotate(150 0 0) scale(2.5)'/%3E%3Cuse stroke='%2301A3A3' href='%23a' transform='rotate(160 0 0) scale(2.6)'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-size: 224%;
+    background-size: 224%;
+    background-position: center;
+    flex-grow: 1;
+    border-radius: 40px;
+    margin: 0.5% 0.4%;
+    display: flex;
+}
+#center-block h1 {
+    margin: auto;
+    text-align: center;
+    font-family: var(--computer);
+    text-shadow: 0 0 10px #060133;
+}
+        /***************************
+            Left Menu Block
+                and Right non-Stat
+        ***************************/
+#left-menu, #right-menu {
+    width: 10%;
+    display: flex;
+    height: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+#left-menu {border-right: 3px solid black;}
+#right-menu {border-left: 3px solid black;}
+#mobile-btm-menu, #mobile-top-menu {
+    display: none;
+    visibility: hidden;
+    height: 8%;
+    background: linear-gradient(#34436E, #010319);
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 150%;
+}
+#left-menu a, #mobile-btm-menu a, #right-menu a, #mobile-top-menu a  {
+    font-size: 150%;
+    text-shadow: 0 0 15px #121212;
+    color: #98d3ff;
+}
+#left-menu a:hover, #mobile-btm-menu a:hover, #right-menu a:hover, #mobile-top-menu a:hover {
+    color: #0092ff;
+    text-decoration: none;
+}
+
+        /***************************
+            Right Menu when
+                Stats are enabled
+        ***************************/
+[data-tags~="stats-visible"] #right-menu {
+    width: 10%;
+    background: black;
+    display: flex;
+    justify-content: space-between;
+    border-left: 2px solid black;
+    flex-direction: row;
+}
+[data-tags~="stats-visible"] #mobile-top-menu {
+    display: none;
+    visibility: hidden;
+    width: 100%;
+    height: 11%;
+    flex-direction: column;
+    border-left: none;
+    border-top: 3px solid black;
+    background: black;
+}
+    /* Stat bars code */
+.stat {
+    width: 31%;
+    height: 100%;
+    margin: 0 1%;
+    position: relative;
+    background: linear-gradient(#34436E, #010319);
+}
+.skills {
+    width: 100%; 
+    position: absolute;
+    bottom: 0;
+}
+.stat .text {
+    position: absolute;
+    font-weight: bold;
+    bottom: 42%;
+    margin-left: 60%;
+    text-align: center;
+    transform: translateX(-50%) translateY(-50%) rotate(90deg);
+}
+    /* Stat bar colour */
+.stat1 {background-color: #025491;}
+.stat2 {background-color: #1f3e55;}
+.stat3 {background-color: #17099d;}
+
+        /***************************
+            Passage Block
+        ***************************/
+#passages {
+    height: 60%;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1% 0 2% 1%;
+    box-sizing: border-box;
+    background: linear-gradient(#34436E, #010319);
+    border-top: 3px solid black; 
+}
+.passage {
+    padding: 1%;
+    padding-right: 2%;
+}
+
+        /***************************
+            Links
+        ***************************/
+.passage a {
+    font-size: 110%;
+    font-weight: bold;
+    color: #0092ff;
+}
+.passage a:hover {
+    color: #98d3ff;
+    text-decoration: none;
+}
+.choice a {
+    text-shadow: 0 0 10px #0f419f;
+    box-shadow: inset 0 0 10px #0f419f;
+    border: 2px ridge #57b7ff;
+    padding: 1%;
+    margin: 0 1%;
+    border-radius: 10px;
+}
+
+        /***************************
+            Buttons
+        ***************************/
+button {
+    background-color: #09129d;
+    border-color: #025491;
+    color: #addefd;
+}
+button:not(:disabled):hover {
+    background-color: #09129d6e;
+    border-color: #0092ff;
+}
+button:disabled {
+    opacity: 0.5;
+}
+  
+    /***************************
+      UI DIALOG BOX
+    ***************************/
+#ui-dialog {
+    width: 50vw;
+    max-width: 650px;
+    max-height: 75vh;
+    margin-top: 10vh;
+    outline: 1px solid black;
+    border: 4px solid black;
+    box-shadow: inset hsl(0, 0%, 14.9%) 0 0px 0px 4px, inset hsla(0, 0%, 15%, .8) 0 -1px 5px 4px, inset hsla(0, 0%, 0%, .25) 0 -1px 0px 7px, inset hsla(0, 0%, 50%, .7) 0 2px 1px 7px, hsla(0, 0%, 50%, .15) 0 -5px 6px 4px, hsla(231.1, 97.8%, 17.6%, 0.5) 0 5px 6px 4px;
+    border-radius: 2em;
+    overflow: hidden;
+    background: black;
+}
+
+#ui-dialog-titlebar {
+    background: linear-gradient(#34436E, #010319);
+    color: #4fb8f9;
+    padding: .3em .5em;
+    letter-spacing: 0.3em;
+    display: flex;
+    justify-content: center;
+    font-family: var(--computer);
+
+}
+#ui-dialog-title {padding: .2em;}
+#ui-dialog-close {
+    height: 100%;
+    color: #eee;
+}
+
+#ui-dialog-body {
+    max-height: calc(75vh - 5em);
+    background: linear-gradient(#34436E, #010319);
+    border: none;
+    border-top: 3px solid black;
+    color: #addefd;
+}
+#ui-dialog-body a {
+    font-weight: bold;
+    color: #0092ff;
+}
+#ui-dialog-body a:hover {
+    color: #98d3ff;
+}
+
+/***************************
+    THEME (CODEX)
+***************************/
+body[data-tags~="codex"] {
+    background: repeating-linear-gradient(to bottom, #021007 0px, #101c0f 8px, #021007 8px, #03240f 16px);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+    /***************************
+      Container on 2 levels 
+        -> Title + Menu
+        -> Passage Text
+    ***************************/
+[data-tags~="codex"] #story {
+    outline-color: #101c0f;
+    border-color: #001c03;
+    box-shadow: inset hsl(0, 0%, 14.9%) 0 0px 0px 4px, inset hsla(0, 0%, 14.9%, 0.8) 0 -1px 5px 4px, inset hsla(0, 0%, 0%, .25) 0 -1px 0px 7px, inset hsla(0, 0%, 50%, .7) 0 2px 1px 7px, hsla(0, 0%, 50%, .15) 0 -5px 6px 4px, hsla(0, 0%, 0%, .5) 0 5px 6px 4px;
+}
+        /***************************
+         Top Container 
+            -> Title + Menu
+         Note: Stats do not appear
+        ***************************/
+[data-tags~="codex"] #topcontainter {
+    flex-direction: column-reverse;
+    background: repeating-linear-gradient(to bottom, #021007 0px, #101c0f 1px, #021007 1px, #03240f 2px);
+    height: 25%;
+}
+        /***************************
+            Title Block
+        ***************************/
+[data-tags~="codex"] #center-block {
+    background: none;
+    box-shadow: none;
+    display: flex;
+    justify-content: space-between;
+
+}
+[data-tags~="codex"] #center-block h1 {
+    color: #009a00;
+}
+        /***************************
+            Menu Block
+        ***************************/
+[data-tags~="codex"] #left-menu {
+    width: 100%;
+    flex-direction: row;
+    height: 30%;
+    border-right: none;
+    border-top: 2px solid #001c03;
+}
+[data-tags~="codex"] #mobile-btm-menu {
+    background: repeating-linear-gradient(to bottom, #021007 0px, #101c0f 1px, #021007 1px, #03240f 2px);
+} 
+[data-tags~="codex"] #left-menu a, [data-tags~="codex"] #mobile-btm-menu a {
+    color: #4FAF6A;
+    text-shadow: 0 0 21px lime, 0 0 4px #001C03;
+}
+[data-tags~="codex"] #left-menu a:hover,[data-tags~="codex"] #mobile-btm-menu a:hover {color: #02b502;}
+
+        /***************************
+            Stats Bar (Not displayed)
+        ***************************/
+[data-tags~="codex"] #right-menu, [data-tags~="codex"] #mobile-top-menu  {
+    display: none;
+    visibility: hidden;
+}
+        /***************************
+            Passage Block
+        ***************************/
+[data-tags~="codex"] #passages {
+    height: 75%;
+    background: repeating-linear-gradient(to bottom, #021007 0px, #101c0f 1px, #021007 1px, #03240f 2px);
+    border-top-color: #001c03;
+    border-bottom-color: #001c03;
+}
+[data-tags~="codex"] .passage {
+    font-family: var(--computer) !important;
+    letter-spacing: 0.1em;
+}
+        /***************************
+            Links
+        ***************************/
+[data-tags~="codex"] .passage a {
+    color: #4FAF6A;
+    text-shadow: 0 0 1em #001C03, 0 0 0.5em #001C03;
+}
+[data-tags~="codex"] .passage a:hover {color: #02b502;}
+[data-tags~="codex"] .choice a {
+    border-color: lime;
+    text-shadow: 0 0 10px #001C03;
+    box-shadow: inset 0 0 10px #001C03;
+}
+        /***************************
+            Buttons
+        ***************************/
+[data-tags~="codex"] button {
+    background-color: #043106;
+    border-color: #068406;
+    color: #d5ffd5;
+}
+[data-tags~="codex"] button:not(:disabled):hover {
+    background-color: #0889046e;
+    border-color: #93c395;
+}
+    /***************************
+      UI DIALOG BOX
+    ***************************/
+[data-tags~="codex"] #ui-dialog {
+    outline-color: #003c07;
+    border-color: #001c03;
+    box-shadow: inset hsl(0, 0%, 14.9%) 0 0px 0px 4px, inset hsla(0, 0%, 14.9%, 0.8) 0 -1px 5px 4px, inset hsla(0, 0%, 0%, .25) 0 -1px 0px 7px, inset hsla(0, 0%, 50%, .7) 0 2px 1px 7px, hsla(0, 0%, 50%, .15) 0 -5px 6px 4px, hsla(0, 0%, 0%, .5) 0 5px 6px 4px;
+}
+
+[data-tags~="codex"] #ui-dialog-titlebar {
+    background: repeating-linear-gradient(to bottom, #021007 0px, #101c0f 1px, #021007 1px, #03240f 2px);
+    color: #02b502;
+}
+
+[data-tags~="codex"] #ui-dialog-body {
+    background: repeating-linear-gradient(to bottom, #021007 0px, #101c0f 1px, #021007 1px, #03240f 2px);
+    border-top-color: #001c03;
+    color: #d5ffd5;
+}
+[data-tags~="codex"] #ui-dialog-body a {
+    color: #02b502;
+    text-shadow: 0 0 1em #001C03, 0 0 0.5em #001C03;
+}
+[data-tags~="codex"] #ui-dialog-body a:hover {color: #02b502;}
+
+
+/***************************
+    TITLE PAGE
+***************************/
+
+[data-tags~="title"] #topcontainter {
+    display: none;
+    visibility: hidden;
+}
+  
+[data-tags~="title"] #passages {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+[data-tags~="title"] .passage {
+    text-align: center;
+}
+  
+[data-tags~="title"] h1 {
+    text-align: center;
+}
+  
+/***************************
+    SETTINGS/RESTART/SAVE
+***************************/
+#ui-dialog-body.saves > h2 {
+    background-color: transparent; 
+    border-bottom: 1px dotted #00cfff;
+}
+[data-tags~="codex"] #ui-dialog-body.saves > h2 {
+    border-bottom: 1px dotted #02b502;
+}
+
+#ui-dialog-body.settings div[id|="header-body"]:not(:first-child) {
+    border-top: 1px dotted #72ebff;
+}
+[data-tags~="codex"] #ui-dialog-body.settings div[id|="header-body"]:not(:first-child) {
+    border-top: 1px dotted #02b502;
+}
+
+
+#ui-dialog-body.settings button[id|="setting-control"] {
+    color: #5ab7f2;
+    border: 1px solid #2643d21c;
+}
+[data-tags~="codex"] #ui-dialog-body.settings button[id|="setting-control"] {
+    color: #d5ffd5;
+    border: 1px solid #02b5027a;
+}
+
+
+#ui-dialog-body.settings button[id|="setting-control"]:hover {
+    background-color: #2643d21c;
+    border-color: #72d0ff;
+}
+[data-tags~="codex"] #ui-dialog-body.settings button[id|="setting-control"]:hover {
+    background-color: #26d2311c;
+    border-color: #d5ffd56e;
+}
+
+
+#ui-dialog-body.settings button[id|="setting-control"].enabled {
+    background-color: #5ab7f2;
+    border-color: #09129d;
+    color: #09129d;
+}
+[data-tags~="codex"] #ui-dialog-body.settings button[id|="setting-control"].enabled {
+    background-color: #d5ffd5b0;
+    border-color: #005600;
+    color: #022e01;
+}
+
+
+#ui-dialog-body.settings button[id|="setting-control"].enabled:hover {
+    background-color: #09129d;
+    border-color: #5ab7f2;
+    color: #5ab7f2;
+}
+[data-tags~="codex"] #ui-dialog-body.settings button[id|="setting-control"].enabled:hover {
+    background-color: #005005;
+    border-color: #d5ffd5;
+    color: #d5ffd5;
+}
+
+#ui-dialog-body.saves #saves-list button.load:not(:disabled), #ui-dialog-body.saves #saves-list button {
+    font-weight: normal;
+    background-color: #09129d;
+    border-color: #025491;
+    color: #addefd;
+}
+[data-tags~="codex"] #ui-dialog-body.saves #saves-list button.load:not(:disabled), [data-tags~="codex"] #ui-dialog-body.saves #saves-list button {
+    background-color: #043106;
+    border-color: #068406;
+    color: #d5ffd5;
+}
+
+ #ui-dialog-body.saves #saves-list button.load:not(:disabled):hover, #ui-dialog-body.saves #saves-list button:not(:disabled):hover {
+    background-color: #09129d6e;
+    border-color: #0092ff;
+}
+[data-tags~="codex"] #ui-dialog-body.saves #saves-list button.load:not(:disabled):hover, [data-tags~="codex"] #ui-dialog-body.saves #saves-list button:not(:disabled):hover {
+    background-color: #0889046e;
+    border-color: #93c395;
+}
+
+
+#ui-dialog-body.saves #saves-list button.delete:not(:disabled), #ui-dialog-body.saves button[id="saves-clear"]:not(:disabled), #restart-cancel {
+    font-weight: normal;
+    background-color: #4a0c37;
+    border-color: #711116;
+}
+#ui-dialog-body.saves #saves-list button.delete:not(:disabled):hover, #ui-dialog-body.saves button[id="saves-clear"]:not(:disabled):hover, button#restart-cancel:hover {
+    background-color: #39092b;
+    border-color: #6c1050;
+}
+
+
+#ui-dialog-body.saves #saves-list button:disabled {
+    border-color: #025491;
+    color: #addefd;
+}
+[data-tags~="codex"] #ui-dialog-body.saves #saves-list button:disabled {
+    border-color: #068406;
+    color: #d5ffd5;
+}
+
+#ui-dialog-body ul.buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+#ui-dialog-body ul.buttons li {
+    padding: 0.5em 1em;
+}
+#ui-dialog-body ul.buttons > li + li > button {
+    margin-left: 0;
+}
+#ui-dialog-body.saves > :not(:first-child) {
+    border-top-color: transparent;
+}
+
+/***************************
+    OTHER HTML + ICONS
+***************************/
+    /* Headers */
+h1 {
+    text-align: right;
+    font-family: var(--computer);
+    letter-spacing: 0.3em;
+    color: #98d3ff;
+}
+[data-tags~="codex"] h1 {color: #d5ffd5;}
+
+h2 {
+    letter-spacing: 0.1em;
+    font-family: var(--computer);
+    text-align: center;
+    color: #00cfff;
+}
+[data-tags~="codex"] h2 {color: #02b502;}
+
+h3 {
+    letter-spacing: 0.1em;
+    text-decoration: underline dotted;
+    font-family: var(--computer);
+    text-align: center;
+}
+h4 {
+    color: cadetblue;
+}
+h5 {
+    font-weight: normal;
+    font-style: italic;
+}
+h6 {
+    font-weight: normal;
+    text-decoration: overline underline dotted;
+}
+    /* After External Links */
+a.link-external:after {
+    content:"\00a0\e80e\00a0\00a0";
+}
+label {
+    font-weight: bold;
+}
+    /* Lists */
+ul {
+    list-style: none;
+    padding-left: 2em;
+    margin: auto;
+    text-align: left;
+}
+ul li::before {
+    content: "\f197\00A0\00A0";
+    font-family: var(--icon) !important;
+    font-weight: 900;
+    color: #57b7ff;
+}
+[data-tags~="codex"] ul li::before {
+    color: #4FAF6A;
+}
+ul.buttons li::before {
+    display: none;
+}
+    /* Tables */
+.passage table {
+    margin: auto;
+    width: 75%;
+    text-align: center;
+}
+.passage table, .passage th, .passage td {border: 1px dotted #57b7ff;}
+[data-tags~="codex"] .passage table, [data-tags~="codex"] .passage th, [data-tags~="codex"] .passage td {border: 1px dotted #4faf6a;}
+
+.passage th {font-size: 110%;}
+/***************************
+    MACROS
+***************************/
+input, select, textarea {
+    color: #addefd;
+    border: 1px solid #025491;
+}
+[data-tags~="codex"] input, [data-tags~="codex"] select, [data-tags~="codex"] textarea {
+    color: #d5ffd5;
+    border: 1px solid #02b5027a;
+}
+input:not(:disabled):focus, input:not(:disabled):hover, select:not(:disabled):focus, select:not(:disabled):hover, textarea:not(:disabled):focus, textarea:not(:disabled):hover {
+    background-color: #080e72;
+    border-color: #addefd;
+}
+[data-tags~="codex"] input:not(:disabled):focus, [data-tags~="codex"] input:not(:disabled):hover, [data-tags~="codex"] select:not(:disabled):focus, [data-tags~="codex"] select:not(:disabled):hover, [data-tags~="codex"] textarea:not(:disabled):focus, [data-tags~="codex"] textarea:not(:disabled):hover {
+    background-color: #021f03;
+}
+
+.macro-cycle::before {
+    content: "\f197\00A0";
+    font-family: var(--icon) !important;
+    font-weight: 900;
+    transform: rotate(-45deg);
+    display: inline-block;
+    transition: all 0.5s ease-in-out;
+}
+a:hover.macro-cycle::before {
+    transform: rotate(-90deg);
+}
+/***************************
+    FONT SETTINGS
+***************************/
+    /*Font Change*/
+.sansserif .passage, .sansserif #ui-dialog-body {font-family: 'Montserrat', sans-serif;}
+.monospace .passage, .monospace #ui-dialog-body {font-family: "Roboto Mono", monospace}
+.serif .passage, .serif #ui-dialog-body {font-family: 'Tinos', serif;}
+
+
+/***************************
+    MOBILE
+***************************/
+/* 
+    This template was built for larger screens first, then scaled down for mobile/smaller-width. 
+*/
+@media all and (max-width: 820px) {
+    #story {
+        width: 97%;
+        max-height: 650px;
+    }
+}
+@media all and (max-width: 700px) {
+    #story {
+        max-width: 98%;
+        max-height: 98%;
+    }
+    #topcontainter {
+        height: 30%;
+    }
+    [data-tags~="codex"] #topcontainter {
+        height: 17%;
+    }
+    #center-block {
+        margin: 0.5% 5%;
+        height: 95%;
+    }
+    #left-menu, #right-menu, [data-tags~="stats-visible"] #right-menu {
+        display: none;
+        visibility: hidden;
+    }
+    #mobile-btm-menu, #mobile-top-menu, [data-tags~="stats-visible"] #mobile-top-menu {
+        display: flex;
+        visibility: visible;
+    }
+    #mobile-btm-menu, #mobile-top-menu {
+        font-size: 125%;
+        height: 6%;
+    }
+    [data-tags~="title"] #mobile-btm-menu, [data-tags~="title"] #mobile-top-menu {
+        display: none;
+        visibility: hidden;
+    }
+    .stat {
+        width: 100%;
+        height: 33%;
+        margin: 0;
+    }
+    .skills {
+        height: 100%; 
+    }
+    .stat .text {
+        transform: none;
+        width: 100%;
+        margin: 0;
+        bottom: 25%;
+    }
+    #passages {
+        border-bottom: 3px solid black;
+        height: 58%;
+    }
+    [data-tags~="stats-visible"] #passages {
+        height: 53%;
+    }
+    [data-tags~="title"] #passages {
+        height: 100%;
+    }
+    [data-tags~="codex"] #passages {
+        height: 77%;
+    }
+    #ui-dialog {
+        width: 100%;
+        max-width: 90vw;
+    }
+}
+@media all and (max-width:664px) {
+    #ui-dialog{
+        max-width: 85vw;
+        width: 100%;
+        max-height: 90vh;
+        margin-top: unset;
+    }
+    #ui-dialog-body {
+        max-height: calc(90vh - 2.5em);
+    }
+}
+@media all and (max-width: 520px) {
+    .passage {
+        padding: 1% 4% 1% 2%;
+    }
+}

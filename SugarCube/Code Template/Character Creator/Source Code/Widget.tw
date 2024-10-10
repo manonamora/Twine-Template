@@ -1,0 +1,1110 @@
+:: Widgets [widget nobr] {"position":"400,25","size":"100,100"}
+/*************************** 
+    SET PRONOUNS WIDGETS
+***************************/
+<<widget "PronounsSet">>
+    <<if $mc.pronouns is "She/Her">>
+        <<set 
+            $proset.they to "she", 
+            $proset.them to "her", 
+            $proset.their to "her", 
+            $proset.theirs to "hers", 
+            $proset.themselves to "herself",
+            $proset.plural to false
+        >>
+    <<elseif $mc.pronouns is "He/Him">>
+        <<set 
+            $proset.they to "he", 
+            $proset.them to "him", 
+            $proset.their to "his", 
+            $proset.theirs to "his", 
+            $proset.themselves to "himself",
+            $proset.plural to false
+        >>
+    <<elseif $mc.pronouns is "They/Them (singular)">>
+        <<set 
+            $proset.they to "they", 
+            $proset.them to "them", 
+            $proset.their to "their", 
+            $proset.theirs to "theirs", 
+            $proset.themselves to "themself",
+            $proset.plural to false
+        >>
+    <<elseif $mc.pronouns is "They/Them (plural)">>
+        <<set 
+            $proset.they to "they", 
+            $proset.them to "them", 
+            $proset.their to "their", 
+            $proset.theirs to "theirs", 
+            $proset.themselves to "themselves",
+            $proset.plural to true
+        >>
+    <<elseif $mc.pronouns is "Ae/Aer">>
+        <<set 
+            $proset.they to "ae", 
+            $proset.them to "aer", 
+            $proset.their to "aer", 
+            $proset.theirs to "aers", 
+            $proset.themselves to "aerself",
+            $proset.plural to false
+        >>
+    <<elseif $mc.pronouns is "E/Em">>
+        <<set 
+            $proset.they to "e", 
+            $proset.them to "em", 
+            $proset.their to "eir", 
+            $proset.theirs to "eirs", 
+            $proset.themselves to "emself",
+            $proset.plural to false
+        >>
+    <</if>>
+<</widget>>
+<<widget "PronounsCustomSet">>
+    <<if _pronouns is "She/Her">>
+        <<set $mc.pronouns to "She/Her">>
+    <<elseif _pronouns is "He/Him">>
+        <<set $mc.pronouns to "He/Him">>
+    <<elseif _pronouns is "They/Them (singular)">>
+        <<set $mc.pronouns to "They/Them (singular)">>
+    <<elseif _pronouns is "They/Them (plural)">>
+        <<set $mc.pronouns to "They/Them (plural)">>
+    <<elseif _pronouns is "Ae/Aer">>
+        <<set $mc.pronouns to "Ae/Aer">>
+    <<elseif _pronouns is "E/Em">>
+        <<set $mc.pronouns to "E/Em">>
+    <</if>>
+    <<PronounsSet>>
+<</widget>>
+/* 
+    The Second one is for the popup version.
+*/
+
+/*************************** 
+    HAIR WIDGET
+***************************/
+<<widget "HairOptions">>
+    <<set 
+        _hairtexture to ["--", "Straight", "Wavy", "Curly (loose)", "Curly (tight)", "Coily"],
+        _hairlength to ["--", "Buzzcut", "Short", "Ear-Length", "Chin-Length", "Shoulder-Length", "Long", "Waist-Length", "Hip-Length", "Knee-Length", "Floor-Length"],
+        _haircolour to ["--", "Black", "Brown", "Auburn", "Red", "Blond", "White"],
+        _hairuniform to ["Yes", "Graying", "White Streaks"],
+        _hairdyied to ["Uniform Dye", "Half-n-Half", "Streaks", "Roots", "Ends", "In-to-Out"],
+        _dyecolour to ["Pink", "Blue", "Green", "Purple", "Platinum", "Silver", "Seafoam"],
+        _shavedhair to ["No", "Completely", "Undercut", "Shaved Left Side", "Shaved Right Side", "Mohawk"],
+        _bangs to ["No", "Curtain Bangs", "Bottleneck Bangs", "Blunt Bangs", "Curly Bangs", "Side-Swept Bangs", "Layered Bangs", "Choppy Bangs", "Braided Bangs", "Wispy Bangs", "Wavy Bangs", "Micro Bangs", "Shaggy Bangs", "Piecey Bangs", "Clip-In Bangs"],
+        _hairdo to ["Natural", "Covered", "Up do", "Braided", "Ponytail", "Buns", "Unstyled"],
+        _hairaccess to ["Headwrap", "Cap", "Clips", "Extensions", "Hairband", "Barrette", "Pins"]
+    >>
+    /*Yes, I know the amount of options for each is not really consistent... */
+<</widget>>
+
+/*************************** 
+    FACE WIDGET
+***************************/
+/* 
+    This widget pushed all options ticked into an array.
+    Depending on how your organise features, you may end up with multiple variables (regular variables and/or other arrays).
+*/
+<<widget "AllThisInAnArray">>
+    <<set $facefeatures to []>>
+    <<if _fullmoustache>><<run $facefeatures.push("a full moustache")>><</if>>
+    <<if _thinmoustache>><<run $facefeatures.push("a thin moustache")>><</if>>
+    <<if _goatee>><<run $facefeatures.push("a goatee")>><</if>>
+    <<if _fullbeard>><<run $facefeatures.push("a full beard")>><</if>>
+    <<if _sideburns>><<run $facefeatures.push("some sideburns")>><</if>>
+    <<if _shadow>><<run $facefeatures.push("shadow")>><</if>>
+    <<if _patch>><<run $facefeatures.push("soul patch")>><</if>>
+    <<if _handlebar>><<run $facefeatures.push("a handle bar")>><</if>>
+    <<if _wrinkles>><<run $facefeatures.push("wrinkles")>><</if>>
+    <<if _mole>><<run $facefeatures.push("a mole")>><</if>>
+    <<if _brow>><<run $facefeatures.push("a unibrow")>><</if>>
+    <<if _thickbrow>><<run $facefeatures.push("thick brows")>><</if>>
+    <<if _thinbrow>><<run $facefeatures.push("thin brows")>><</if>>
+    <<if _noeyelash>><<run $facefeatures.push("no eye lashes")>><</if>>
+    <<if _pointedear>><<run $facefeatures.push("pointed ears")>><</if>>
+    <<if _smallears>><<run $facefeatures.push("small ears")>><</if>>
+    <<if _largeears>><<run $facefeatures.push("large ears")>><</if>>
+    <<if _buttonnose>><<run $facefeatures.push("a Button nose")>><</if>>
+    <<if _romannose>><<run $facefeatures.push("a Roman nose")>><</if>>
+    <<if _crooked>><<run $facefeatures.push("a Crooked nose")>><</if>>
+    <<if _widenose>><<run $facefeatures.push("a Wide nose")>><</if>>
+    <<if _hawknose>><<run $facefeatures.push("a Hawk nose")>><</if>>
+    <<if _pointchin>><<run $facefeatures.push("a pointy chin")>><</if>>
+    <<if _roundchin>><<run $facefeatures.push("a rounded chin")>><</if>>
+    <<if _squarejawe>><<run $facefeatures.push("a square jaw")>><</if>>
+    <<if _pronouncedcheeks>><<run $facefeatures.push("pronounced cheeks")>><</if>>
+    <<if _bmrighteye>><<run $facefeatures.push("a beauty mark below the right eye")>><</if>>
+    <<if _bmlefteye>><<run $facefeatures.push("a beauty mark below the left eye")>><</if>>
+    <<if _bmcheek>><<run $facefeatures.push("a beauty mark on the cheek")>><</if>>
+    <<if _bmlips>><<run $facefeatures.push("a beauty mark above the lips")>><</if>>
+    <<if _freckles>><<run $facefeatures.push("freckles")>><</if>>
+    <<if _facehair>><<run $facefeatures.push("fluff hair")>><</if>>  
+    <<if _fangs>><<run $facefeatures.push("fangs")>><</if>>  
+    <<if _toothgap>><<run $facefeatures.push("tooth gap")>><</if>>  
+    <<if _acne>><<run $facefeatures.push("acne")>><</if>>  
+<</widget>>
+
+/*************************** 
+    MAKEUP WIDGET
+***************************/
+<<widget "CosmeticOptions">>
+    <<set
+        _makeup to ["A Bold Lip", "Smokey Eyes", "Clown Makeup", "Winged Liner", "Smokey Eye", "Disco Ball", "Vamp/Goth Makeup", "RenFair Makeup", "Drunk Makeup", "SFX Makeup", "E-Girl Makeup", "'Natural' Makeup", "Full Face", "Grunge Core", "Hippie Core", "MUA Comp Face"],
+        _naillength to ["Short Nails", "Mid Nails", "Long Nails", "Fake Nails", "Sharp Nails", "Claws", "Hoofs"],
+        _nailart to ["Single Swap", "French Manicure", "Onbré Nails", "Flora Design", "Dot Design", "Line Art", "Celestial Style", "Marble Design", "Printed Design", "Glitter Bomb"],
+        _nailcolour to ["Transparent Shine", "White", "Black", "Blue", "Green", "Red", "Yellow", "Orange", "Purple", "Pink", "Maroon", "Lime", "Silver", "Gold"],
+        _perfume to ["Floral", "Woody", "Gourmand", "Fruity", "Oriental", "Green", "Oceanic", "Citrus", "Spicy"]
+    >>
+<</widget>>
+
+/*************************** 
+    SKIN COLOURS WIDGETS 
+***************************/
+<<widget "SkinColourCycle">>
+    <<cycle "_color" autoselect>>
+        <<option "white">>
+        <<option "pink">>
+        <<option "beige">>
+        <<option "brown">>
+        <<option "black">>
+        <<option "blue">>
+        <<option "green">>
+        <<option "purple">>
+    <</cycle>>
+<</widget>>
+<<widget "SkinSatMutCycle">>
+    <<cycle "_satmut" autoselect>>
+        <<option "muted">>
+        <<option "saturated">>
+    <</cycle>>
+<</widget>>
+<<widget "SkinToneCycle">>
+    <<cycle "_undertone" autoselect>>
+        <<option "warm">>
+        <<option "neutral">>
+        <<option "cold">>
+    <</cycle>>
+<</widget>>
+
+/*************************** 
+    BUILD WIDGET
+***************************/
+<<widget "BodyBuild">>
+    <<set 
+        _height to ["Very Short {below 5’1”/155cm}", "Short {5’1”–5’7”/155-170cm}", "Average {5’7”–6’/170-185cm}", "Tall {6’–6’5”/185-195cm}", "Very Tall {above 6’5”/195cm}"],
+        _type to ["Thin", "Slender", "Average", "Curvy", "Chubby", "Fat"],
+        _muscle to ["Ripped", "Muscular", "Athletic", "Toned", "Lean", "Soft"]
+    >>
+<</widget>>
+
+/*************************** 
+    SCARS WIDGET
+***************************/
+<<widget "AllThisInAnArrayButItsScars">>
+    <<set $scars to []>>
+    <<if _browscar>><<run $scars.push("cutting the brow")>><</if>>
+    <<if _eyescar>><<run $scars.push("crossing the eye")>><</if>> 
+    <<if _nosescar>><<run $scars.push("across the nose")>><</if>> 
+    <<if _cheekscar>><<run $scars.push("along the cheek")>><</if>> 
+    <<if _lipscar>><<run $scars.push("cutting the lip")>><</if>> 
+    <<if _chinscar>><<run $scars.push("on the chin")>><</if>> 
+    <<if _bitescar>><<run $scars.push("bite marks on the neck")>><</if>> 
+    <<if _neckscar>><<run $scars.push("along the neck")>><</if>> 
+    <<if _throatscar>><<run $scars.push("across the throat")>><</if>> 
+    <<if _heartscar>><<run $scars.push("across the heart")>><</if>> 
+    <<if _shoulderscar>><<run $scars.push("cutting the shoulder")>><</if>> 
+    <<if _torsoscar>><<run $scars.push("across the torso")>><</if>> 
+    <<if _ceasarscar>><<run $scars.push("a caesarian")>><</if>> 
+    <<if _hipscar>><<run $scars.push("along the hip")>><</if>> 
+    <<if _spinescar>><<run $scars.push("down the spine")>><</if>> 
+    <<if _backcar>><<run $scars.push("across the back")>><</if>> 
+    <<if _buttscar>><<run $scars.push("bite marks on the butt cheeks")>><</if>> 
+    <<if _legscar>><<run $scars.push("down the leg")>><</if>> 
+    <<if _footscar>><<run $scars.push("across the foot")>><</if>>
+<</widget>>
+
+/*********************************
+    PRO-STHEICS/CEDURES WIDGET 
+*********************************/
+<<widget "ArraysForPros">>
+    <<set $aid.proc to [], $aid.pros to [], $aid.aid to []>>
+    /* Procedures */
+    <<if _hrt>><<run $aid.proc.push("HRT")>><</if>>
+    <<if _topsurg>><<run $aid.proc.push("Top Surgery")>><</if>>
+    <<if _bottomsurg>><<run $aid.proc.push("Bottom Surgery")>><</if>>
+    <<if _facesurg>><<run $aid.proc.push("Facial Reconstruction")>><</if>>
+    <<if _othersurg>><<run $aid.proc.push("Other Reconstructive Surgery")>><</if>>
+    /* Prosthesis */
+    <<if _glasses>><<run $aid.pros.push("Glasses")>><</if>>
+    <<if _contacts>><<run $aid.pros.push("Contacts")>><</if>>
+    <<if _hearaidrem>><<run $aid.pros.push("Hearing Aid (removable)")>><</if>>
+    <<if _hearaidimp>><<run $aid.pros.push("Hearing Aid (Implant)")>><</if>>
+    <<if _prosfingers>><<run $aid.pros.push("Prosthesis (Fingers)")>><</if>>
+    <<if _proshand>><<run $aid.pros.push("Prosthesis (Hand)")>><</if>>
+    <<if _prosarm>><<run $aid.pros.push("Prosthesis (Arm)")>><</if>>
+    <<if _prostoes>><<run $aid.pros.push("Prosthesis (Toes)")>><</if>>
+    <<if _prosfoot>><<run $aid.pros.push("Prosthesis (Foot)")>><</if>>
+    <<if _prosleg>><<run $aid.pros.push("Prosthesis (Leg)")>><</if>>
+    /* Aid */
+    <<if _cane>><<run $aid.aid.push("Cane")>><</if>>
+    <<if _crutches>><<run $aid.aid.push("Crutches")>><</if>>
+    <<if _walkter>><<run $aid.aid.push("Walker")>><</if>>
+    <<if _servaniguide>><<run $aid.aid.push("Service Animal (Guide)")>><</if>>
+    <<if _servaniother>><<run $aid.aid.push("Service Animal (Other)")>><</if>>
+    <<if _handwheel>><<run $aid.aid.push("Wheelchair (Hand)")>><</if>>
+    <<if _powerwheel>><<run $aid.aid.push("Wheelchair (Powered)")>><</if>>
+    <<if _reader>><<run $aid.aid.push("Text Reader")>><</if>>
+<</widget>>
+
+/*************************** 
+    CHOOSE CLASS WIDGETS 
+***************************/
+<<widget "WarriorStartingStats">>
+    <<set 
+        $class to "warrior",
+        $stat = {
+            strength : 5,
+            dexterity : 4,
+            willpower : 0,
+            magic : 1,
+            cunning : 1,
+            constitution : 3
+        },
+        $availablepts = 10
+    >>
+<</widget>>
+<<widget "MageStartingStats">>
+    <<set 
+        $class to "mage",
+        $stat = {
+            strength : 1,
+            dexterity : 1,
+            willpower : 4,
+            magic : 6,
+            cunning : 2,
+            constitution : 0
+        },
+        $availablepts = 10
+    >>
+<</widget>>
+<<widget "RogueStartingStats">>
+    <<set 
+        $class to "rogue",
+        $stat = {
+            strength : 1,
+            dexterity : 5,
+            willpower : 2,
+            magic : 1,
+            cunning : 5,
+            constitution : 0
+        },
+        $availablepts = 10
+    >>
+<</widget>>
+/* 
+ ~ Notes:
+    You could technically merge the popup widgets below into one, using an argument widget to set each option apart.
+
+    I'm using the same passage to display inside the popup because I am lazy. See the ClassExplanations Passage.
+*/
+<<widget "PopupWarrior">>
+    <<set _explanation to "warrior">>
+    <<run Dialog.create("The Warrior Class").wikiPassage("ClassExplanations").open();>>
+<</widget>>
+<<widget "PopupMage">>
+    <<set _explanation to "mage">>
+    <<run Dialog.create("The Mage Class").wikiPassage("ClassExplanations").open();>>
+<</widget>>
+<<widget "PopupRogue">>
+    <<set _explanation to "rogue">>
+    <<run Dialog.create("The Rogue Class").wikiPassage("ClassExplanations").open();>>
+<</widget>>
+<<widget "PopupExtraPoints">>
+    <<set _explanation to "points">>
+    <<run Dialog.create("A Gift from the Gods!").wikiPassage("ClassExplanations").open();>>
+<</widget>>
+
+/*************************** 
+    SPEND POINTS WIDGETS 
+***************************/
+/* The following widgets are used to update the spending points passage. It uses the new <<do>>/<<redo>> macros in a general way. But you could make it a bit more complex by tagging <<do>> sections (see the SugarCube Documentation).
+*/
+<<widget "LockedPoints">>
+    <<set 
+        _statlocked = {
+            strength : $stat.strength,
+            dexterity : $stat.dexterity,
+            willpower : $stat.willpower,
+            magic : $stat.magic,
+            cunning : $stat.cunning,
+            constitution : $stat.constitution
+        }
+    >>
+<</widget>>
+
+<<widget "RemoveSTR">>
+    <<if $stat.strength is _statlocked.strength>>
+        ←
+    <<else>>
+        <<link "←">>
+            <<set $stat.strength --, $availablepts ++>>
+            <<redo>>
+        <</link>>
+    <</if>>
+<</widget>>
+<<widget "AddSTR">>
+    <<if $availablepts is 0 >>
+        →
+    <<else>>
+        <<link "→">>
+            <<set $stat.strength ++, $availablepts -->>
+            <<redo>>
+        <</link>>
+    <</if>>
+<</widget>>
+
+<<widget "RemoveDEX">>
+    <<if $stat.dexterity is _statlocked.dexterity>>
+        ←
+    <<else>>
+        <<link "←">>
+            <<set $stat.dexterity --, $availablepts ++>>
+            <<redo>>
+        <</link>>
+    <</if>>
+<</widget>>
+<<widget "AddDEX">>
+    <<if $availablepts is 0 >>
+        →
+    <<else>>
+        <<link "→">>
+            <<set $stat.dexterity ++, $availablepts -->>
+            <<redo>>
+        <</link>>
+    <</if>>
+<</widget>>
+
+<<widget "RemoveWIL">>
+    <<if $stat.willpower is _statlocked.willpower>>
+        ←
+    <<else>>
+        <<link "←">>
+            <<set $stat.willpower --, $availablepts ++>>
+            <<redo>>
+        <</link>>
+    <</if>>
+<</widget>>
+<<widget "AddWIL">>
+    <<if $availablepts is 0 >>
+        →
+    <<else>>
+        <<link "→">>
+            <<set $stat.willpower ++, $availablepts -->>
+            <<redo>>
+        <</link>>
+    <</if>>
+<</widget>>
+
+<<widget "RemoveMAG">>
+    <<if $stat.magic is _statlocked.magic>>
+        ←
+    <<else>>
+        <<link "←">>
+            <<set $stat.magic --, $availablepts ++>>
+            <<redo>>
+        <</link>>
+    <</if>>
+<</widget>>
+<<widget "AddMAG">>
+    <<if $availablepts is 0 >>
+        →
+    <<else>>
+        <<link "→">>
+            <<set $stat.magic ++, $availablepts -->>
+            <<redo>>
+        <</link>>
+    <</if>>
+<</widget>>
+
+<<widget "RemoveCUN">>
+    <<if $stat.cunning is _statlocked.cunning>>
+        ←
+    <<else>>
+        <<link "←">>
+            <<set $stat.cunning --, $availablepts ++>>
+            <<redo>>
+        <</link>>
+    <</if>>
+<</widget>>
+<<widget "AddCUN">>
+    <<if $availablepts is 0 >>
+        →
+    <<else>>
+        <<link "→">>
+            <<set $stat.cunning ++, $availablepts -->>
+            <<redo>>
+        <</link>>
+    <</if>>
+<</widget>>
+
+<<widget "RemoveCON">>
+    <<if $stat.constitution is _statlocked.constitution>>
+        ←
+    <<else>>
+        <<link "←">>
+            <<set $stat.constitution --, $availablepts ++>>
+            <<redo>>
+        <</link>>
+    <</if>>
+<</widget>>
+<<widget "AddCON">>
+    <<if $availablepts is 0 >>
+        →
+    <<else>>
+        <<link "→">>
+            <<set $stat.constitution ++, $availablepts -->>
+            <<redo>>
+        <</link>>
+    <</if>>
+<</widget>>
+
+/********************************
+    CHOOSE BACKGROUND WIDGETS 
+********************************/
+<<widget "CommonerStartingStats">>
+    <<set 
+        $background to "commoner",
+        $statusStat = {
+            wealth : 0,
+            court : 0,
+            commoner : 40,
+            merchant : 15,
+            difficulty : "hard"
+        }
+    >>
+<</widget>>
+<<widget "BourgeoisStartingStats">>
+    <<set 
+        $background to "bourgeois",
+        $statusStat = {
+            wealth : 45,
+            court : 25,
+            commoner : 10,
+            merchant : 50,
+            difficulty : "medium"
+        }
+    >>
+<</widget>>
+<<widget "NobleStartingStats">>
+    <<set 
+        $background to "noble",
+        $statusStat = {
+            wealth : 100,
+            court : 60,
+            commoner : 20,
+            merchant : 40,
+            difficulty : "easy"
+        }
+    >>
+<</widget>>
+
+<<widget "PopupCommoner">>
+    <<set _explanation to "commoner">>
+    <<run Dialog.create("The Commoner").wikiPassage("StatusExplanations").open();>>
+<</widget>>
+<<widget "PopupBourgeois">>
+    <<set _explanation to "bourgeois">>
+    <<run Dialog.create("The Bourgeois").wikiPassage("StatusExplanations").open();>>
+<</widget>>
+<<widget "PopupNoble">>
+    <<set _explanation to "noble">>
+    <<run Dialog.create("The Noble").wikiPassage("StatusExplanations").open();>>
+<</widget>>
+
+/********************************
+    RO GENDER WIDGETS 
+********************************/
+<<widget "CamilleCycle">>
+    <<cycle "_camille">>
+        <<option "Camille (She/Her)">>
+        <<option "Camille (He/Him)">>
+        <<option "Camille (They/Them)">>
+    <</cycle>>
+<</widget>>
+<<widget "FranCycle">>
+    <<cycle "_fran">>
+        <<option "Frances (She/Her)">>
+        <<option "Frank (He/Him)">>
+        <<option "Frances (They/Them)">>
+    <</cycle>>
+<</widget>>
+<<widget "AlexCycle">>
+    <<cycle "_alex">>
+        <<option "Alexandra (She/Her)">>
+        <<option "Alexander (He/Him)">>
+        <<option "Alex (They/Them)">>
+    <</cycle>>
+<</widget>>
+
+/********************************
+    MAIN PAGE WIDGETS 
+********************************/
+<<widget "Randomiser">>
+    <<set
+        $mc.name to either ("Suzette", "Maribelle", "Francine", "Thomas", "Charles", "Alfonso", "Riley", "Blake", "Taylor"),
+        $mc.nickname to "{/}",
+        $mc.surname to either("Bartlett", "Kerr", "Silva"),
+        $mc.gender to either("female", "male", "nonbinary"),
+        $mc.trans to either("transgender", "cisgender", "NR"),
+        $mc.person to either("woman", "man", "person"),
+        $mc.title to either("lady", "lord", "liege"),
+        $mc.sexu to either("Heterosexual", "Homosexual", "Bisexual", "Pansexual", "Asexual"),
+        $mc.pronouns to either("She/Her", "He/Him", "They/Them (singular)", "They/Them (plural)", "Ae/Aer", "E/Em"),
+        $mc.age to random(18, 78),
+        $heterochromia to either(true, false),
+        _bald to either(true, false),
+        _dye to either(true, false),
+        _wig to either(true, false, "cover"),
+        _wigdye to either(true, false),
+        $facefeatures to "{/}",
+        $face.tattoo to either("No", "Covering the Face", "On the Forehead", "Under the Eye", "On the Cheeks", "Under the Chin", "Covering the Eyebrows", "Lining the lips"),
+        $face.piercing to either("No", "Eyebrow", "Cheek", "Nose", "Septum", "Ear", "Lip", "Tongue"),
+        $skin.color to either("white", "pink", "beige", "brown", "black", "blue", "green", "purple"),
+        $skin.satmut to either("muted", "saturated"),
+        $skin.undertone to either("warm", "neutral", "cold"),
+        $skin.features to "{/}",
+        $body.height to either("Very Short {below 5’1”/155cm}", "Short {5’1”–5’7”/155-170cm}", "Average {5’7”–6’/170-185cm}", "Tall {6’–6’5”/185-195cm }", "Very Tall {above 6’5”/195cm}"),
+        $body.weight to either("Thin", "Slender", "Average", "Curvy", "Chubby", "Fat"),
+        $body.musc to either("Ripped", "Muscular", "Athletic", "Toned", "Lean", "Soft"),
+        $scars to "{/}",
+        $aid.proc to "{/}",
+        $aid.pros to "{/}",
+        $aid.aid to "{/}",
+        $body.tattoo to either("No", "Half-Sleeve", "Full Sleeve", "Neck", "Chest", "Belly", "Leg", "Calf", "Foot", "Covered"),
+        $body.piercing to either("No", "Belly Button", "Nipple", "Surface (Chest)", "Surface (Arm)", "Surface (Back)", "Surface (Leg)", "Surface (Private)"),
+        _makeup to either(true, false),
+        $body.naislength to either("Short Nails", "Mid Nails", "Long Nails", "Fake Nails", "Sharp Nails", "Claws", "Hoofs"),
+        _nail to either(true, false),
+        _perfume to either(true, false),
+        $intext to random(0, 100),
+        $coldwarm to random(0, 100),
+        _class to random(1,3),
+        _bg to random(1,3),
+        $Camille to either("Camille (She/Her)", "Camille (He/Him)", "Camille (They/Them)"),
+        $Fran to either("Frances (She/Her)", "Frank (He/Him)", "Frances (They/Them)"),
+        $Alex to either("Alexandra (She/Her)", "Alexander (He/Him)", "Alex (They/Them)"),
+        $family.parents to either("Mother + Father", "Mother", "Father", "Two Fathers", "Two Mothers", "Nuclear Family", "No Parents"),
+        $family.siblings to random(0, 10),
+        $family.children to random(0, 5),
+        _preggo to either(true, false, false, false),
+        $mc.pet to either("a turtle", "a dog", "a cat", "a bird", "a rodent", "a snake", "a tiger", "a dragon", "a robot", "a horse", "a spider", "a moon", "a cow", "a pig")
+    >>
+    <<if $mc.trans is "NR">><<unset $mc.trans>><</if>>
+    <<PronounsSet>>
+    <<if $heterochromia>>
+            <<set $mc.eyes to either("white", "grey", "golden", "green", "blue", "maroon", "brown", "black", "red", "pink", "purple", "lime", "seafoam", "cream")>>
+        <<else>>
+            <<set 
+                _eyesleft to either("white", "grey", "golden", "green", "blue", "maroon", "brown", "black", "red", "pink", "purple", "lime", "seafoam", "cream"),
+                _eyesright to either("white", "grey", "golden", "green", "blue", "maroon", "brown", "black", "red", "pink", "purple", "lime", "seafoam", "cream"),
+                $mc.eyes to _eyesleft + " and " + _eyesright
+            >>
+    <</if>>
+    <<if _bald>>
+        <<set $hair to "bald">>
+        <<else>>
+            <<set 
+                $hair to {},
+                $hair.texture to either("Straight", "Wavy", "Curly (loose)", "Curly (tight)", "Coily"),
+                $hair.length to either("Buzzcut", "Short", "Ear-Length", "Chin-Length", "Shoulder-Lentgh", "Long", "Waist-Length", "Hip-Length", "Knee-Length", "Floor-Length"),
+                $hair.colour to either("Black", "Brown", "Auburn", "Red", "Blond", "White"),
+                $hair.uniform to either("Yes", "Graying", "White Streaks"),
+                $hair.bangs to either("No", "Curtain Bangs", "Bottleneck Bangs", "Blunt Bangs", "Curly Bangs", "Side-Swept Bangs", "Layered Bangs", "Choppy Bangs", "Braided Bangs", "Wispy Bangs", "Wavy Bangs", "Micro Bangs", "Shaggy Bangs", "Picey Bangs", "Clip-In Bangs"),
+                $hair.shave to either("No", "Completely", "Undercut", "Shaved Left Side", "Shaved Right Side", "Mohawk"),
+                $hair.do to either("Natural", "Covered", "Up do", "Braided", "Ponytail", "Buns", "Unstyled")
+            >>
+            <<if _dye>>
+                <<set 
+                    $dye to {},
+                    $dye.pattern to either("Uniform Dye", "Half-n-Half", "Streaks", "Roots", "Ends", "In-to-Out"),
+                    $dye.colour to either("Pink", "Blue", "Green", "Purple", "Platinum", "Silver", "Seafoam")
+                >>
+            <</if>>
+    <</if>>
+    <<if _wig is "cover">>
+            <<set $cover to either("Headwrap", "Cap", "Clips", "Extensions", "Hairband", "Barrette", "Pins")>>
+        <<elseif _wig>>
+            <<set 
+                $wig to {},
+                $wig.texture to either("Straight", "Wavy", "Curly (loose)", "Curly (tight)", "Coily"),
+                $wig.length to either("Buzzcut", "Short", "Ear-Length", "Chin-Length", "Shoulder-Lentgh", "Long", "Waist-Length", "Hip-Length", "Knee-Length", "Floor-Length"),
+                $wig.colour to either("Black", "Brown", "Auburn", "Red", "Blond", "White"),
+                $wig.bangs to either("No", "Curtain Bangs", "Bottleneck Bangs", "Blunt Bangs", "Curly Bangs", "Side-Swept Bangs", "Layered Bangs", "Choppy Bangs", "Braided Bangs", "Wispy Bangs", "Wavy Bangs", "Micro Bangs", "Shaggy Bangs", "Picey Bangs", "Clip-In Bangs"),
+                $wig.do to either("Natural", "Covered", "Up do", "Braided", "Ponytail", "Buns", "Unstyled")
+            >>
+            <<if _wigdye>>
+                <<set 
+                    $wigdye to {},
+                    $wigdye.pattern to either("Uniform Dye", "Half-n-Half", "Streaks", "Roots", "Ends", "In-to-Out"),
+                    $wigdye.colour to either("Pink", "Blue", "Green", "Purple", "Platinum", "Silver", "Seafoam")
+                >>
+            <</if>>
+    <</if>>
+    <<if $face.tattoo is "No">><<unset $face.tattoo>><</if>>
+    <<if $face.piercing is "No">><<unset $face.piercing>><</if>>
+    <<if $body.tattoo is "No">><<unset $body.tattoo>><</if>>
+    <<if $body.piercing is "No">><<unset $body.piercing>><</if>>
+    <<if _makeup>>
+        <<set $skin.makeup to either("A Bold Lip", "Smokey Eyes", "Clown Makeup", "Winged Liner", "Smokey Eye", "Disco Ball", "Vamp/Goth Makeup", "RenFair Makeup", "Drunk Makeup", "SFX Makeup", "E-Girl Makeup", "'Natural' Makeup", "Full Face", "Grunge Core", "Hippie Core", "MUA Comp Face")>><</if>>
+    <<if _nail>>
+        <<set
+            $body.nails to either("Single Swap", "French Manicure", "Onbré Nails", "Flora Design", "Dot Design", "Line Art", "Celestial Style", "Marble Design", "Printed Design", "Glitter Bomb"),
+            $body.nailscolour to either("Transparant Shine", "White", "Black", "Blue", "Green", "Red", "Yellow", "Orange", "Purple", "Pink", "Maroon", "Lime", "Silver", "Gold")
+        >><</if>>
+    <<if _perfume>>
+        <<set $skin.perfume to either("Floral", "Woody", "Gourmand", "Fruity", "Oriental", "Green", "Oceanic", "Citrus", "Spicy")>><</if>>
+    <<if _class is 1>>
+            <<WarriorStartingStats>>
+        <<elseif _class is 2>>
+            <<MageStartingStats>>
+        <<else>>
+            <<RogueStartingStats>>
+    <</if>>
+    <<if _bg is 1>>
+            <<CommonerStartingStats>>
+        <<elseif _bg is 2>>
+            <<BourgeoisStartingStats>>
+        <<else>>
+            <<NobleStartingStats>>
+    <</if>>
+    <<if _preggo>><<set $mc.pregnant to "I am pregnant">><</if>>
+<</widget>>
+<<widget "PreSet">>
+    <<set 
+        $mc.name to "Audrey",
+        $mc.nickname to "{/}",
+        $mc.surname to "Bartlett",
+        $mc.gender to "female",
+        $mc.trans to "cisgender",
+        $mc.person to "woman",
+        $mc.title to "lady",
+        $mc.sexu to "Bisexual",
+        $mc.pronouns to "They/Them (singular)",
+        $mc.age to "{/}",
+        $heterochromia to false,
+        $mc.eyes to "red",
+        $hair to "bald",
+        $cover to "Headwrap",
+        $facefeatures to ["a mole", "no eye lashes", "pointed ears", "a Hawk nose", "fangs"],
+        $face.tattoo to "Lining the lips",
+        $face.piercing to "Eyebrow",
+        $skin.color to "white",
+        $skin.satmut to "muted",
+        $skin.undertone to "cold",
+        $skin.features to ["Freckles"],
+        $body.height to "Very Short {below 5’1”/155cm}",
+        $body.weight to "Thin",
+        $body.musc to "Soft",
+        $scars to ["cutting the lip", "along the hip", "down the leg"], 
+        $aid.pros to ["Glasses", "Hearing Aid (removable)"],
+        $aid.aid to ["Cane"],
+        $body.tattoo to "Calf",
+        $body.piercing to "Nipple",
+        $skin.makeup to "Smokey Eyes",
+        $body.naislength to "Claws",
+        $body.nails to "Printed Design",
+        $body.nailscolour to "Yellow",
+        $skin.perfume to "Woody",
+        $intext to 9,
+        $coldwarm to 15,
+        $class to "mage",
+        $stat = {
+            strength : 1,
+            dexterity : 1,
+            willpower : 4,
+            magic : 6,
+            cunning : 2,
+            constitution : 0
+        },
+        $background to "noble",
+        $statusStat = {
+            wealth : 100,
+            court : 60,
+            commoner : 20,
+            merchant : 40,
+            difficulty : "easy"
+        },
+        $Camille to "Camille (She/Her)", 
+        $Fran to "Frances (They/Them)", 
+        $Alex to "Alexander (He/Him)",
+        $family.parents to "No Parents",
+        $family.siblings to 0,
+        $family.children to 0,
+        $mc.pet to "a horse"
+    >>
+<</widget>>
+<<widget "CheckIfDone">>
+    <<done>>
+        <<if $mc.name>>
+            <<addclass "#name" "green">>
+        <</if>>
+        <<if $mc.nickname>>
+            <<addclass "#nickname" "green">>
+        <</if>>
+        <<if $mc.surname>>
+            <<addclass "#surname" "green">>
+        <</if>>
+        <<if $mc.surname>>
+            <<addclass "#surname" "green">>
+        <</if>>
+        <<if $pages.gender>>
+            <<addclass "#gender" "green">>
+        <</if>>
+        <<if $pages.pronouns>>
+            <<addclass "#pronouns" "green">>
+        <</if>>
+        <<if $mc.age>>
+            <<addclass "#age" "green">>
+        <</if>>
+        <<if $mc.eyes>>
+            <<addclass "#eyes" "green">>
+        <</if>>
+        <<if $pages.hair>>
+            <<addclass "#hair" "green">>
+        <</if>>
+        <<if $pages.facefeat>>
+            <<addclass "#ffeat" "green">>
+        <</if>>
+        <<if $pages.faceacc>>
+            <<addclass "#facc" "green">>
+        <</if>>
+        <<if $skin.color>>
+            <<addclass "#skin" "green">>
+        <</if>>
+        <<if $body.height>>
+            <<addclass "#build" "green">>
+        <</if>>
+        <<if $pages.scars>>
+            <<addclass "#scars" "green">>
+        <</if>>
+        <<if $pages.pros>>
+            <<addclass "#pros" "green">>
+        <</if>>
+        <<if $pages.bodymod>>
+            <<addclass "#mods" "green">>
+        <</if>>
+        <<if $pages.makeup>>
+            <<addclass "#makeup" "green">>
+        <</if>>
+        <<if $pages.perso>>
+            <<addclass "#perso" "green">>
+        <</if>>
+        <<if $class>>
+            <<addclass "#class" "green">>
+        <</if>>
+        <<if $background>>
+            <<addclass "#back" "green">>
+        <</if>>
+        <<if $pages.rogen>>
+            <<addclass "#rogender" "green">>
+        <</if>>
+        <<if $pages.family>>
+            <<addclass "#family" "green">>
+        <</if>>
+        <<if $mc.pet>>
+            <<addclass "#pets" "green">>
+        <</if>>
+    <</done>>
+<</widget>>
+
+/********************************
+    CHANGE POPUP WIDGETS 
+********************************/
+/*
+    You could simplify these widgets by using Chapel's  <<popup>> macro (Dialog API set), which will do the same as coded below, only simpler for the coder.
+    But this template is base SugarCube only.
+*/
+<<widget "PopupNameChange">>
+    <<run Dialog.create("Change Your Name").wikiPassage("Popup-Name").open();>>
+<</widget>>
+
+<<widget "PopupNickNameChange">>
+    <<run Dialog.create("Change Your Nickname").wikiPassage("Popup-NickName").open();>>
+<</widget>>
+
+<<widget "PopupSurNameChange">>
+    <<run Dialog.create("Change Your Surname").wikiPassage("Popup-SurName").open();>>
+<</widget>>
+
+<<widget "PopupGenderChange">>
+    <<run Dialog.create("Change Your Gender").wikiPassage("Popup-Gender").open();>>
+<</widget>>
+<<widget "IfGenderIsCustom">>
+    /*
+        This is to check which option was selected, especially if it was custom, and autocheck the relevant radiobutton.
+        All of this use temporary variables so it doesn't override the actual variable if the dialog box is closed without actually confirming the change. 
+    */
+    <<if $mc.gender is "female">>
+        <<set _gender to "female">>
+    <<elseif $mc.gender is "male">>
+        <<set _gender to "male">>
+    <<elseif $mc.gender is "nonbinary">>
+        <<set _gender to "nonbinary">>
+    <<else>>
+        <<set _gender to "custom">>
+    <</if>>
+    <<if $mc.trans is "transgender">>
+        <<set _trans to "transgender">>
+    <<elseif $mc.trans is "cisgender">>
+        <<set _trans to "cisgender">>
+    <<else>>
+        <<set _trans to "NR">>
+    <</if>>
+    <<if $mc.gender is "woman">>
+        <<set _person to "woman">>
+    <<elseif $mc.gender is "man">>
+        <<set _person to "man">>
+    <<elseif $mc.gender is "person">>
+        <<set _person to "person">>
+    <<else>>
+        <<set _person to "custom">>
+    <</if>>
+    <<if $mc.gender is "lady">>
+        <<set _title to "lady">>
+    <<elseif $mc.gender is "lord">>
+        <<set _title to "lord">>
+    <<elseif $mc.gender is "liege">>
+        <<set _title to "liege">>
+    <<else>>
+        <<set _title to "custom">>
+    <</if>>
+<</widget>>
+
+<<widget "PopupPronounChange">>
+    <<run Dialog.create("Change Your Pronouns").wikiPassage("Popup-Pronouns").open();>>
+<</widget>>
+<<widget "IfPronounsIsCustom">>
+    /*
+        This is to check which option was selected, especially if it was custom, and autocheck the relevant radiobutton.
+        All of this use temporary variables so it doesn't override the actual variable if the dialog box is closed without actually confirming the change. 
+    */
+    <<if !$proset.custom>>
+        <<if $mc.pronouns is "She/Her">>
+            <<set _pronouns to "She/Her">>
+        <<elseif $mc.pronouns is "He/Him">>
+            <<set _pronouns to "He/Him">>
+        <<elseif $mc.pronouns is "They/Them (singular)">>
+            <<set _pronouns to "They/Them (singular)">>
+        <<elseif $mc.pronouns is "They/Them (plural)">>
+            <<set _pronouns to "They/Them (plural)">>
+        <<elseif $mc.pronouns is "Ae/Aer">>
+            <<set _pronouns to "Ae/Aer">>
+        <<elseif $mc.pronouns is "E/Em">>
+            <<set _pronouns to "E/Em">>
+        <</if>>
+    <<else>>
+        <<set _pronouns to "custom">>
+    <</if>>
+<</widget>>
+
+<<widget "PopupAgeChange">>
+    <<run Dialog.create("Change Your Age").wikiPassage("Popup-Age").open();>>
+<</widget>>
+
+<<widget "PopupEyesChange">>
+    <<run Dialog.create("Change Your Eye").wikiPassage("Popup-Eye").open();>>
+<</widget>>
+
+<<widget "PopupHairChange">>
+    <<run Dialog.create("Change Your Hair").wikiPassage("Popup-Hair").open();>>
+<</widget>>
+<<widget "PopupWigChange">>
+    <<run Dialog.create("Change Your Wig/Cover").wikiPassage("Popup-Hair-Wig").open();>>
+<</widget>>
+
+<<widget "PopupFaceFeatChange">>
+    <<run Dialog.create("Change Your Features").wikiPassage("Popup-FaceFeat").open();>>
+<</widget>>
+<<widget "FacialFeaturesPicked">>
+    <<if $facefeatures.includes("a full moustache")>><<set _fullmoustache to true>><</if>>
+    <<if $facefeatures.includes("a thin moustache")>><<set _thinmoustache to true>><</if>>
+    <<if $facefeatures.includes("a goatee")>><<set _goatee to true>><</if>>
+    <<if $facefeatures.includes("a full beard")>><<set _fullbeard to true>><</if>>
+    <<if $facefeatures.includes("some sideburns")>><<set _sideburns to true>><</if>>
+    <<if $facefeatures.includes("shadow")>><<set _shadow to true>><</if>>
+    <<if $facefeatures.includes("soul patch")>><<set _patch to true>><</if>>
+    <<if $facefeatures.includes("a handle bar")>><<set _handlebar to true>><</if>>
+    <<if $facefeatures.includes("wrinkles")>><<set _wrinkles to true>><</if>>
+    <<if $facefeatures.includes("a mole")>><<set _mole to true>><</if>>
+    <<if $facefeatures.includes("a unibrow")>><<set _brow to true>><</if>>
+    <<if $facefeatures.includes("thick brows")>><<set _thickbrow to true>><</if>>
+    <<if $facefeatures.includes("thin brows")>><<set _thinbrow to true>><</if>>
+    <<if $facefeatures.includes("no eye lashes")>><<set _noeyelash to true>><</if>>
+    <<if $facefeatures.includes("pointed ears")>><<set _pointedear to true>><</if>>
+    <<if $facefeatures.includes("small ears")>><<set _smallears to true>><</if>>
+    <<if $facefeatures.includes("large ears")>><<set _largeears to true>><</if>>
+    <<if $facefeatures.includes("a Button nose")>><<set _buttonnose to true>><</if>>
+    <<if $facefeatures.includes("a Roman nose")>><<set _romannose to true>><</if>>
+    <<if $facefeatures.includes("a Crooked nose")>><<set _crooked to true>><</if>>
+    <<if $facefeatures.includes("a Wide nose")>><<set _widenose to true>><</if>>
+    <<if $facefeatures.includes("a Hawk nose")>><<set _hawknose to true>><</if>>
+    <<if $facefeatures.includes("a pointy chin")>><<set _pointchin to true>><</if>>
+    <<if $facefeatures.includes("a rounded chin")>><<set _roundchin to true>><</if>>
+    <<if $facefeatures.includes("a square jaw")>><<set _squarejawe to true>><</if>>
+    <<if $facefeatures.includes("pronounced cheeks")>><<set _pronouncedcheeks to true>><</if>>
+    <<if $facefeatures.includes("a beauty mark below the right eye")>><<set _bmrighteye to true>><</if>>
+    <<if $facefeatures.includes("a beauty mark below the left eye")>><<set _bmlefteye to true>><</if>>
+    <<if $facefeatures.includes("a beauty mark on the cheek")>><<set _bmcheek to true>><</if>>
+    <<if $facefeatures.includes("a beauty mark above the lips")>><<set _bmlips to true>><</if>>
+    <<if $facefeatures.includes("freckles")>><<set _freckles to true>><</if>>
+    <<if $facefeatures.includes("fluff hair")>><<set _facehair to true>><</if>>
+    <<if $facefeatures.includes("fangs")>><<set _fangs to true>><</if>>
+    <<if $facefeatures.includes("tooth gap")>><<set _toothgap to true>><</if>>
+    <<if $facefeatures.includes("acne")>><<set _acne to true>><</if>>
+<</widget>>
+
+<<widget "PopupFaceAccChange">>
+    <<run Dialog.create("Change Your Facial Accessories").wikiPassage("Popup-FaceAcc").open();>>
+<</widget>>
+
+<<widget "PopupSkinColourChange">>
+    <<run Dialog.create("Change Your Skin Colour").wikiPassage("Popup-Skin").open();>>
+<</widget>>
+<<widget "PopupSkinChecker">>
+    <<set 
+        _undertone to $skin.undertone,
+        _color to $skin.color,
+        _satmut to $skin.satmut,
+    >>
+    <<if $skin.features.includes("Viligo")>><<set _vitiligo to true>><</if>>
+    <<if $skin.features.includes("Freckles")>><<set _freckles to true>><</if>>
+    <<if $skin.features.includes("Eczema")>><<set _eczema to true>><</if>>
+    <<if $skin.features.includes("Beauty Marks")>><<set _beatymarks to true>><</if>>
+    <<if $skin.features.includes("Albinism")>><<set _albinism to true>><</if>>
+<</widget>>
+
+<<widget "PopupBuildChange">>
+    <<run Dialog.create("Change Your Build").wikiPassage("Popup-Build").open();>>
+<</widget>>
+<<widget "PopupBodyBuild">>
+    <<set 
+        _height to ["--", "Very Short {below 5’1”/155cm}", "Short {5’1”–5’7”/155-170cm}", "Average {5’7”–6’/170-185cm}", "Tall {6’–6’5”/185-195cm}", "Very Tall {above 6’5”/195cm}"],
+        _type to ["--", "Thin", "Slender", "Average", "Curvy", "Chubby", "Fat"],
+        _muscle to ["--", "Ripped", "Muscular", "Athletic", "Toned", "Lean", "Soft"]
+    >>
+<</widget>>
+
+<<widget "PopupScarChange">>
+    <<run Dialog.create("Change Your Scar(s)").wikiPassage("Popup-Scar").open();>>
+<</widget>>
+<<widget "ScarsPicked">>
+    <<if $scars.includes("cutting the brow")>><<set _browscar to true>><</if>>
+    <<if $scars.includes("crossing the eye")>><<set _eyescar to true>><</if>>
+    <<if $scars.includes("across the nose")>><<set _nosescar to true>><</if>>
+    <<if $scars.includes("a full beardalong the cheek")>><<set _cheekscar to true>><</if>>
+    <<if $scars.includes("cutting the lip")>><<set _lipscar to true>><</if>>
+    <<if $scars.includes("on the chin")>><<set _chinscar to true>><</if>>
+    <<if $scars.includes("bite marks on the neck")>><<set _bitescar to true>><</if>>
+    <<if $scars.includes("along the neck")>><<set _neckscar to true>><</if>>
+    <<if $scars.includes("across the throat")>><<set _throatscar to true>><</if>>
+    <<if $scars.includes("across the heart")>><<set _heartscar to true>><</if>>
+    <<if $scars.includes("cutting the shoulder")>><<set _shoulderscar to true>><</if>>
+    <<if $scars.includes("across the torso")>><<set _torsoscar to true>><</if>>
+    <<if $scars.includes("a caesarian")>><<set _ceasarscar to true>><</if>>
+    <<if $scars.includes("along the hip")>><<set _hipscar to true>><</if>>
+    <<if $scars.includes("down the spine")>><<set _spinescar to true>><</if>>
+    <<if $scars.includes("across the back")>><<set _backcar to true>><</if>>
+    <<if $scars.includes("bite marks on the butt cheeks")>><<set _buttscar to true>><</if>>
+    <<if $scars.includes("down the leg")>><<set _legscar to true>><</if>>
+    <<if $scars.includes("across the foot")>><<set _footscar to true>><</if>>
+<</widget>>
+
+<<widget "PopupProsChange">>
+    <<run Dialog.create("Change Your Prosthesis and Procedures").wikiPassage("Popup-Pros").open();>>
+<</widget>>
+<<widget "ProsCheck">>
+    <<if $aid.proc.includes("HRT")>><<set _hrt to true>><</if>>
+    <<if $aid.proc.includes("Top Surgery")>><<set _topsurg to true>><</if>>
+    <<if $aid.proc.includes("Bottom Surgery")>><<set _bottomsurg to true>><</if>>
+    <<if $aid.proc.includes("Facial Reconstruction")>><<set _facesurg to true>><</if>>
+    <<if $aid.proc.includes("Other Reconstructive Surgery")>><<set _othersurg to true>><</if>>
+    /* Prosthesis */
+    <<if $aid.pros.includes("Glasses")>><<set _glasses to true>><</if>>
+    <<if $aid.pros.includes("Contacts")>><<set _contacts to true>><</if>>
+    <<if $aid.pros.includes("Hearing Aid (removable)")>><<set _hearaidrem to true>><</if>>
+    <<if $aid.pros.includes("Hearing Aid (Implant)")>><<set _hearaidimp to true>><</if>>
+    <<if $aid.pros.includes("Prosthesis (Fingers)")>><<set _prosfingers to true>><</if>>
+    <<if $aid.pros.includes("Prosthesis (Hand)")>><<set _proshand to true>><</if>>
+    <<if $aid.pros.includes("Prosthesis (Arm)")>><<set _prosarm to true>><</if>>
+    <<if $aid.pros.includes("Prosthesis (Toes)")>><<set _prostoes to true>><</if>>
+    <<if $aid.pros.includes("Prosthesis (Foot)")>><<set _prosfoot to true>><</if>>
+    <<if $aid.pros.includes("Prosthesis (Leg)")>><<set _prosleg to true>><</if>>
+    /* Aid */
+    <<if $aid.aid.includes("Cane")>><<set _cane to true>><</if>>
+    <<if $aid.aid.includes("Crutches")>><<set _crutches to true>><</if>>
+    <<if $aid.aid.includes("Walker")>><<set _walkter to true>><</if>>
+    <<if $aid.aid.includes("Service Animal (Guide)")>><<set _servaniguide to true>><</if>>
+    <<if $aid.aid.includes("Service Animal (Other)")>><<set _servaniother to true>><</if>>
+    <<if $aid.aid.includes("Wheelchair (Hand)")>><<set _handwheel to true>><</if>>
+    <<if $aid.aid.includes("Wheelchair (Powered)")>><<set _powerwheel to true>><</if>>
+    <<if $aid.aid.includes("Text Reader")>><<set _reader to true>><</if>>
+<</widget>>
+
+<<widget "PopupBodyModChange">>
+    <<run Dialog.create("Change Your Body Modification").wikiPassage("Popup-BodyMod").open();>>
+<</widget>>
+
+<<widget "PopupMakeupChange">>
+    <<run Dialog.create("Change Your Cosmetics").wikiPassage("Popup-Makeup").open();>>
+<</widget>>
+
+<<widget "PopupPersoChange">>
+    <<run Dialog.create("Change Your Personality").wikiPassage("Popup-Perso").open();>>
+<</widget>>
+<<widget "PersoBars">>
+    <center>
+        Introverted <progress @value="$intext" max="100"></progress> Extroverted<br>  
+        Cold <progress @value="$coldwarm" max="100"></progress> Warm    
+    </center>
+<</widget>>
+
+<<widget "PopupClassChange">>
+    <<run Dialog.create("Change Your Class").wikiPassage("Popup-Class").open();>>
+<</widget>>
+
+<<widget "PopupBackgroundChange">>
+    <<run Dialog.create("Change Your Background").wikiPassage("Popup-Back").open();>>
+<</widget>>
+
+<<widget "PopupROGenderChange">>
+    <<run Dialog.create("Change Your ROs' Gender").wikiPassage("Popup-ROGender").open();>>
+<</widget>>
+
+<<widget "PopupFamilyChange">>
+    <<run Dialog.create("Change Your Family").wikiPassage("Popup-Family").open();>>
+<</widget>>
+<<widget "CheckFam">>
+    <<set
+        _siblings to $family.siblings,
+        _children to $family.children,
+        _parents to $family.parents
+    >>
+    <<if $mc.pregnant>>
+        <<set _preggo to true>>
+    <</if>>
+<</widget>>
+
+<<widget "PopupPetsChange">>
+    <<run Dialog.create("Change Your Pets").wikiPassage("Popup-Pets").open();>>
+<</widget>>
+
+<<widget "PopupLexicon">>
+    <<run Dialog.create("Lexicon").wikiPassage("Lexicon").open();>>
+<</widget>>
+<<widget "PopupCredits">>
+    <<run Dialog.create("Credits").wikiPassage("Credits").open();>>
+<</widget>>
+<<widget "PopupStats">>
+    <<run Dialog.create("Statistics").wikiPassage("Statistics").open();>>
+<</widget>>
+

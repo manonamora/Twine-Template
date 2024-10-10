@@ -1,0 +1,1000 @@
+:: CC-Name [creation-page] {"position":"550,100","size":"100,100"}
+<h1>Choose your Name</h1>\
+This is the quintessential train for any IF project: the PC's name — assuming you are making it customisable.
+There are different ways to let the player customise their name: provide them with a list of option or let them fill the name in a textbox. The following example includes a combination of both options.
+
+//What is your name?//
+* <<linkappend "I have a feminine name">>:
+* [[Suzette|Index-CC][$mc.name to "Suzette"]]
+* [[Maribelle|Index-CC][$mc.name to "Maribelle"]]
+* [[Francine|Index-CC][$mc.name to "Francine"]]
+<</linkappend>>
+* <<linkappend "I have a masculine name">>:
+* [[Thomas|Index-CC][$mc.name to "Thomas"]]
+* [[Charles|Index-CC][$mc.name to "Charles"]]
+* [[Alfonso|Index-CC][$mc.name to "Alfonso"]]
+<</linkappend>>
+* <<linkappend "I have a gender-neutral name">>:
+* [[Riley|Index-CC][$mc.name to "Riley"]]
+* [[Blake|Index-CC][$mc.name to "Blake"]]
+* [[Taylor|Index-CC][$mc.name to "Taylor"]]
+<</linkappend>>
+* <<linkappend "I want to input my own name">>: <span id="error">Try //Manon// if you dare...</span>
+> First Name: <<textbox "$mc.name" "" autofocus>> <<button "Confirm">>
+    <<if $mc.name is "Manon">> 
+        /* This is an example of restricting options on the input, giving the player an error message if they indicate Manon (here). Pretty helpful if you want to ensure the player doesn't pick a name of an ROs or important NPC. */
+        <<replace "#error" t8n>>Yeah, can't use that one, buddy!<</replace>>
+    <<else>>
+        <<if !$mc.name>>
+            /* This example allows the player to include nothing in the textbox (and even empty space only). */
+            <<set $mc.name to "No-Name">>
+        <</if>>
+        <<goto "Index-CC">>
+    <</if>>
+<</button>>
+<</linkappend>>
+
+Once you are set on a name (by clicking one of the listed names or confirming the input), you will be sent back to the menu of traits.
+/* 
+ ~ Notes:
+    There is no reason for me to add this as the main text, but my to-go option for setting names has always been just a simple text-box. Or just not include this at all (unnamed PC or preset PC).
+
+    The textbox allowing for more complex names (multiple first names or hyphenated names), messing with the formatting of names (toLowerCase() or toUpperFirst() or toUpperCase()) can have weird consequences... 
+*/
+
+
+:: CC-Nickname [creation-page] {"position":"675,100","size":"100,100"}
+<h1>Choose your Nickname</h1>\
+This trait is not particularly common, though you could see it being used by the PC's relatives, friends, and/or ROs (or in a condescending manner by the PC's nemesis). If set, you may want to ensure it is included in the story in some fashion (specific scenes or at random).
+/* 
+ ~ Notes:
+    You could even set up different nicknames for the player, dependent on the NPC saying it.
+
+    You can use a nickname at random with something like the following code:
+    <<if $NicknameVariable>> <-checks if defined
+        <<print either($NameVariable, $NicknameVariable)>>
+    <</if>>
+    It could even be in a widget for convenience.
+*/
+There are multiple ways to set a nickname, from a list of pre-determined options to a simple textbox. The example below will give the player the options whether to have an nickname.
+
+//Do you go by a nickname?//
+* <<linkappend "Yes, I do!">>:
+> First Name: <<textbox "$mc.nickname" "" autofocus>> <<button [[Confirm|Index-CC]]>><</button>>
+<</linkappend>>
+* [[No|Index-CC][$mc.nickname to "{/}"]]
+
+Once you are set on a name (by following one of the listed options and), you will be sent back to the menu of traits.
+/*  
+    I'm only setting the nickname to a "fake thing" for the >No< option for the sake of the trait menu and the checking page.
+    You may want to ensure the variable is unset before the game starts if the player chose no nickname or left the textbox empty.
+*/
+
+
+:: CC-Surname [creation-page] {"position":"800,100","size":"100,100"}
+<h1>Choose your Surname</h1>\
+Similar to given names, this trait can be an way to add extra customisation to the PC. Thought, for many IF projects, this would be completely irrelevant, as the PC's backstory tend to be pre-set, which will include a surname. Still, there are many scenarios where the PC may need a/another surname.
+/* 
+ ~ Notes:
+    Examples of scenarios: going undercover (spy), giving someone a fake name to enter a place you shouldn't enter, starting a new life...
+
+    Another thing that could be tied to the name would be a background for the PC, and potentially special traits, bonuses, or other. See the [CC-Background] passage.
+*/
+The example below only includes pre-selected options for the player to choose.
+
+//What is your surname?//
+* [[Bartlett|Index-CC][$mc.surname to "Bartlett"]]
+* [[Kerr|Index-CC][$mc.surname to "Kerr"]]
+* [[Silva|Index-CC][$mc.surname to "Silva"]]
+
+Once you are set on a name (by clicking one of the listed options), you will be sent back to the menu of traits.
+/* 
+    Of course, you are not bound to a list of options. A textbox is also possible, letting the player choose for themselves (like with the name/nickname). 
+    Or the available options could be formatted inside a listbox or with ratiobutton. 
+*/
+
+
+:: CC-Gender [creation-page] {"position":"925,100","size":"100,100"}
+<h1>Set your Gender Identity</h1>\
+Setting the gender fo the PC can be as simple as a ternary list of options (woman/man/nb person), or as complex as the separation of different aspects of the gender identity (identity vs noun/title to refer to someone). Below is an example of the latter:
+/* 
+ ~ Notes:
+    Of course, these elements and the available options are not exhaustive, when defining one's gender or what is relevant for the PC's gender identity.
+    
+    This template also separates gender identity and gender presentation (see options in the [CC-Build] passage).
+*/
+//What term do you use to describe your gender?//
+* <label><<radiobutton "$mc.gender" "female" checked>> Female</label>
+* <label><<radiobutton "$mc.gender" "male">> Male</label>
+* <label><<radiobutton "$mc.gender" "nonbinary">> Nonbinary</label>
+* <label><<radiobutton "$mc.gender" "custom">> Something else</label>
+
+//Are you trans?//
+* <label><<radiobutton "$mc.trans" "transgender">> Yes</label>
+* <label><<radiobutton "$mc.trans" "cisgender">> No</label>
+* <label><<radiobutton "$mc.trans" "NR" checked>> Not relevant/Don't want to disclose</label>
+
+//People would typically refer to you as...//
+* <label><<radiobutton "$mc.person" "woman" checked>> a woman.</label>
+* <label><<radiobutton "$mc.person" "man">> a man.</label>
+* <label><<radiobutton "$mc.person" "person">> a person.</label>
+* <label><<radiobutton "$mc.person" "custom">> something else.</label>
+
+//Due to your title, people refer to you as...//
+* <label><<radiobutton "$mc.title" "lady" checked>> Lady $mc.name.</label>
+* <label><<radiobutton "$mc.title" "lord">> Lord $mc.name.</label>
+* <label><<radiobutton "$mc.title" "liege">> Liege $mc.name.</label>
+* <label><<radiobutton "$mc.title" "custom">> something else.</label>
+
+//What do you identify as?//
+* <label><<radiobutton "$mc.sexu" "Heterosexual" checked>> Heterosexual</label>
+* <label><<radiobutton "$mc.sexu" "Homosexual">> Homosexual</label>
+* <label><<radiobutton "$mc.sexu" "Bisexual">> Bisexual</label>
+* <label><<radiobutton "$mc.sexu" "Pansexual">> Pansexual</label>
+* <label><<radiobutton "$mc.sexu" "Asexual">> Asexual</label>
+
+<<button "Confirm">>
+    <<set $pages.gender to true>>
+    <<if $mc.trans is "NR">><<unset $mc.trans>><</if>>
+    <<if $mc.person is "custom" or $mc.gender is "custom" or $mc.title is "custom">>
+        <<run Dialog.create("Custom Answers").wikiPassage("GenderAddOn").open();>>
+    <<else>>
+        <<goto "Index-CC">>
+    <</if>>
+<</button>>
+/*
+ ~ Notes: 
+    The radio button macro restrict the player to choose from a limited pool of options. I have included an example on how to add manual customisation with a popup.
+
+    You could also choose to merge the first and second questions.
+
+    And, there are more gender and sexuality identities than the ones listed here. For the PC's sexuality, rather than choosing a term to define it, you could let the player pick which gender the PC is attracted to.
+*/
+
+
+:: CC-Pronouns [creation-page] {"position":"1050,100","size":"100,100"}
+<h1>Choose your Pronouns Set</h1>\
+Another important element to define is pronouns. Part of defining the PC's gender identity, having set pronouns will allow you to have NPCs refer to the PC in the third person. The most common sets are {{{she/her}}}, {{{he/him}}}, and {{{they/them}}}. The example below has expanded that list to a couple neopronoun sets, as well as adding a //Custom// option, for which the player can fill their preferences.
+
+//What pronoun set are you most comfortable with?//
+* <label><<radiobutton "$mc.pronouns" "She/Her" checked>>She/Her</label>
+* <label><<radiobutton "$mc.pronouns" "He/Him">>He/Him</label>
+* <label><<radiobutton "$mc.pronouns" "They/Them (singular)">>They/Them (singular)</label>
+* <label><<radiobutton "$mc.pronouns" "They/Them (plural)">>They/Them (plural)</label>
+* <label><<radiobutton "$mc.pronouns" "Ae/Aer">>Ae/Aer</label>
+* <label><<radiobutton "$mc.pronouns" "E/Em">>E/Em</label>
+* <label><<radiobutton "$mc.pronouns" "custom">>A different set...</label>
+
+<<button "Confirm">>
+    <<set $pages.pronouns to true>>
+    <<if $mc.pronouns is "custom">>
+        <<set $proset.custom to true>>
+        <<run Dialog.create("Custom Pronouns").wikiPassage("PronounAddOn").open();>>
+    <<else>>
+        <<set $proset.custom to false>>
+        <<PronounsSet>>
+        <<goto "Index-CC">>
+    <</if>>
+<</button>>
+
+You can choose the //Custom// option if you would like to customise a specific pronoun, even if your main ones are already listed above.
+/* 
+    If the PC is *never* referred to by the 3rd person throughout the game (e.g. an NPC talking about the PC), this whole section would be completely useless, and as such unneeded.
+
+    If you //still// want to include it, there would be no need to set all the separate pronouns variables (they, them, their, theirs, themselves).
+
+*/
+
+
+:: CC-Age [creation-page] {"position":"1175,100","size":"100,100"}
+<<set _agerange to ["Early 20s", "Mid 20s", "Late 20s", "Early 30s", "Mid 30s", "Late 30s", "Early 40s", "Mid 40s", "Late 40s", "Early 50s", "Mid 50s", "Late 50s", "Technically dead..."]>>\
+<h1>Indicate your Age</h1>\
+This trait might be one of the most unlikely one to be used in IF projects, namely because the settings/story will often force a specific age/range for the PC ahead of the writing. However, for more open stories (or ones where age actually affect the story), age can be another defining aspect of a PC.
+Below is an example that would give the player different ways to input their PC's age (if they wished to).
+
+//What is your age?//
+* <<linkappend "I can give a general bracket">>:
+> Your age: <<listbox "_agelist">><<optionsfrom _agerange>><</listbox>> <<button [[Confirm|Index-CC]]>><<set $mc.age to _agelist>><</button>>
+<</linkappend>>
+* <<linkappend "I'll be specific">>:
+> First Name: <<numberbox "_agenumber" 18 autofocus>> <<button [[Confirm|Index-CC]]>><<set $mc.age to _agenumber>><</button>>
+<</linkappend>>
+* [[I'd rather not share my age|Index-CC][$mc.age to "{/}"]]
+
+/* 
+ ~ Notes:
+    While I've included different ways to choose an age, I DO NOT RECOMMEND THE CODE ABOVE! Mainly because it would become a headache down the line, with having too many ranges of ages (brackets and specific numbers) to account for in the variation.
+        Unless you transform the number into a range for conditional variation.
+
+    You'd be better off with using a list of options (listbox/radiobutton/links) or numbers (numberbox), for simplicity sake. 
+        Side-note: you can't have a minimum/maximum number with this macro, but you can use the (<<numberpool>>) custom macro instead (downloadable on the SugarCube website).
+    
+    DO NOT USE TEXTBOXES to enter a number age, or you'd end up with a string variable instead of a number -  increasing the PC's age {<<set $age ++>>} will break the code.
+    
+    Even better yet, don't include an age variable :P
+    Less headaches...
+*/
+
+:: CC-Eyes [creation-page] {"position":"1400,100","size":"100,100"}
+<<set _eyecolours = ["white", "grey", "golden", "green", "blue", "maroon", "brown", "black", "red", "pink", "purple", "lime", "seafoam", "cream"]>>/*
+    The above is because I am too lazy to code each option as one line in the macro (<<option>>). You could even use an object instead to attach a value to each option, but again...
+    Lazy :P
+    And unnecessary in this project.
+*/\
+<h1>Choose your Eye Colour(s)</h1>\
+They say eyes are the window to the soul... so it's not unusual to have this trait included in games, with colours ranging from the usual blue/green/brown/black to more uncommon colours (e.g. pink, white, red, lime, etc...), or a combination of two eye colours (heterochromia).
+
+Do your eyes have <<link "the same colour">><<set $heterochromia to false>><<redo>><</link>> or <<link "different colours">><<set $heterochromia to true>><<redo>><</link>>?
+
+<<do>>\
+    <<if $heterochromia is false>>\
+        Eye Colours: <<cycle "$mc.eyes">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>>
+        //Cycle through the options until you find the colour you want.//
+        <<button [[Confirm|Index-CC]]>><</button>>
+    <<elseif $heterochromia is true>>\
+        Left: <<cycle "_eyesleft">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>>
+        Right: <<cycle "_eyesright">>
+            <<optionsfrom _eyecolours>>
+        <</cycle>>
+        //Cycle through the options until you find the colours you want.//
+        <<button [[Confirm|Index-CC]]>>
+            <<set $mc.eyes to _eyesleft + " and " + _eyesright>>
+            /* 
+                If eye colours matters in the story (creates variation, not just to be in the PC's page), you will ether want to use:
+                - the [.includes("colour")] function
+                - a variable for each eye
+                to help to so.. 
+            */
+        <</button>>
+    <</if>>\
+<</do>>
+/* 
+Notes:
+    This example accounts for Heterochromia only, but you could add here other eye disorders. 
+        I included the use of glasses and contacts in the Prothesis [CC-PROS] passage, but it could be included here instead.
+
+    Instead of cycles macros, you could use a listbox macro or a list of colours (radiobutton/links).
+*/
+
+
+:: CC-Hair  [creation-page] {"position":"1525,100","size":"100,100"}
+<<HairOptions>><h1>Let's Talk Hair!</h1>\
+Hair might be one of the most customisable characteristic there is in IF projects. Whether it is type/texture, density, length, colour, hairdo or accessories, the options are wide and varied.
+
+And I may have gone a bit overboard with this one...
+/*
+ ~ Notes:
+    While I merged everything about this trait in one single passage, to show how multiple macros are being used, I would recommend either:
+    - using the <<do>>/<<redo>> macro, see [CC-Cosmetics]
+    - having multiple passages for the different sub-traits
+
+    As well, this page doesn't really take into account that certain hair options are dependent on previous choices (specific hairdos for certain hair type).
+*/\
+\
+//Does hair grow on your head?//
+<<nobr>>
+    <<button "Yes, I have hair.">><<addclass ".hair" "visible">><<addclass ".wigq" "visible">><<set $hair to {}>><</button>>
+     | 
+    <<button "No, I am bald.">><<removeclass ".hair" "visible">><<addclass ".wigq" "visible">><<set $hair to "bald">><</button>>
+<</nobr>>
+<span class="hair">
+//What is your natural hair texture?// <<listbox "$hair.texture">>
+    <<optionsfrom _hairtexture>>
+<</listbox>>
+
+//How long is your natural hair?// <<listbox "$hair.length">>
+    <<optionsfrom _hairlength>>
+<</listbox>>
+
+//What is your natural hair colour?// <<listbox "$hair.colour">>
+    <<optionsfrom _haircolour>>
+<</listbox>>
+
+Is your natural hair colour uniform? <<listbox "$hair.uniform">>
+    <<optionsfrom _hairuniform>>
+<</listbox>>
+
+//Is your hair dyed?//
+<<nobr>>
+    <<button "Yes.">><<set $dye to {}>>
+        <<replace "#hairdye">>
+            //How is the hair dyed?// <<listbox "$dye.pattern">>
+                <<optionsfrom _hairdyied>>
+            <</listbox>><br>
+            <br>
+            //What colour is the dye? //<<listbox "$dye.colour">>
+                <<optionsfrom _dyecolour>>
+            <</listbox>>
+        <</replace>>
+    <</button>>
+     | 
+    <<button "No.">><<replace "#hairdye">><</replace>><<unset $dye>><</button>>
+<</nobr>>
+<span id="hairdye"></span>\
+
+//Do you have bangs?// <<listbox "$hair.bangs">>
+    <<optionsfrom _bangs>>
+<</listbox>>
+
+//Is your hair (or part of it) shaved?// <<listbox "$hair.shave">>
+    <<optionsfrom _shavedhair>>
+<</listbox>>
+
+//How is your hair styled?// <<listbox "$hair.do">>
+    <<optionsfrom _hairdo>>
+<</listbox>>
+</span>
+<span class="wigq">\
+//Do you wear a wig?//
+<<nobr>>
+    <<button "Yes, I wear a wig.">>
+        <<addclass ".wig" "visible">>
+        <<replace "#cover">><</replace>>
+        <<set $wig to {}>>
+    <</button>>
+     | 
+    <<button "No, but I wear something else.">>
+        <<replace "#cover">>
+            //What are you wearing on your head?// <<listbox "$cover">>
+                <<optionsfrom _hairaccess>>
+            <</listbox>> 
+        <</replace>>
+        <<removeclass ".wig" "visible">>
+        <<unset $wig>>
+    <</button>>
+     | 
+    <<button "No, I only have my hair.">>
+        <<removeclass ".wig" "visible">>
+        <<replace "#cover">><</replace>>
+        <<unset $wig>>
+    <</button>>
+<</nobr>>
+</span>\
+\
+<span class="wig">/*Yes, I'm reusing the same options as with the hair. But you don't have to :P */\
+//What is the wig's hair texture? //<<listbox "$wig.texture">>
+    <<optionsfrom _hairtexture>>
+<</listbox>>
+
+//How long is the wig?// <<listbox "$wig.length">>
+    <<optionsfrom _hairlength>>
+<</listbox>>
+
+//What is the wig primary colour?// <<listbox "$wig.colour">>
+    <<optionsfrom _haircolour>>
+<</listbox>>
+
+//Is your wig dyed?//
+<<nobr>>
+    <<button "Yes.">><<addclass ".wigdye" "visible">><<set $wigdye to {}>><</button>>
+     | 
+    <<button "No.">><<removeclass ".wigdye" "visible">><<unset $wigdye>><</button>>
+<</nobr>>
+<span class="wigdye">
+//How is the wig dyed?// <<listbox "$wigdye.pattern">>
+    <<optionsfrom _hairdyied>>
+<</listbox>>
+
+//What colour is the dye? //<<listbox "$wigdye.colour">>
+    <<optionsfrom _dyecolour>>
+<</listbox>>
+</span>\
+
+//Does the wig have bangs?// <<listbox "$wig.bangs">>
+    <<optionsfrom _bangs>>
+<</listbox>>
+
+//How is your wig styled?// <<listbox "$wig.do">>
+    <<optionsfrom _hairdo>>
+<</listbox>>
+</span>\
+\
+<span id="cover"></span>
+
+<<button [[Confirm|Index-CC]]>><<set $pages.hair to true>><</button>>
+
+Please answer the question below as they appear on the screen. If you would like to reset this page, <<link [[Click Here|CC-Hair]]>><<set $hair to {}, $wig>><</link>>. Click the button when you are done.
+
+/* 
+ ~ Notes:
+    Instead of <<add/removeclass>> and <<replace>>, you could use the <<do>>/<<redo>> macro. I just added this example so the template has a complete range of macro use, especially with the DOM macros.
+
+    Though I gave options for the hair colour (which have been kept relatively simple), a textbox input could work as well there. Same for the wig colour, and the dye.
+
+    For hair dyes, you could have the options of indicating more than one colour (either through textboxes, or another passage repeating the same macro for the number of colours chosen by the player).
+
+    When it comes to hairdos (natural hair or wig), it is possible to take into account the hair texture or the length of the hair. But you would need to structure the page differently and/or use special custom macro.
+
+    For the hair accessories, you could consider using a checkbox list instead (and have the accessories piling up on the PC's head). It is also possible to customise the accessories further (colour, texture, length, position...). But I've done enough here...
+*/
+
+
+:: CC-FacialFeatures [creation-page] {"position":"1650,100","size":"100,100"}
+<h1>Options for Facial Features</h1>\
+Many elements can make a face memorable, little noticeable features on one's face that make it special. Like a fancy moustache, a methodically placed beauty mark, or a scarred eyebrow. For a character creator, you can force players to pick that //one// think that sets their PC apart...
+... or give them a whole list of options so they can pick however many they want. Like below!
+/* 
+ ~ Notes:
+    Are all those options compatible? Absolutely not! :#
+    Unless you maybe have multiple faces...
+    
+    Anyway, it might be between if these below were separated by categories, with some using a radiobutton macro instead, to avoid impossible combinations.
+      BUT! ¯\_(ツ)_/¯
+        I hadn't used this specific macro before in this file... 
+*/
+//What facial feature(s) is(are) applicable to you?//
+* <label><<checkbox "_fullmoustache" false true>> a full moustache</label>
+* <label><<checkbox "_thinmoustache" false true>> a thin moustache</label>
+* <label><<checkbox "_goatee" false true>> a goatee</label>
+* <label><<checkbox "_fullbeard" false true>> a full beard</label>
+* <label><<checkbox "_sideburns" false true>> some sideburns</label>
+* <label><<checkbox "_shadow" false true>> shadow</label>
+* <label><<checkbox "_patch" false true>> soul patch</label>
+* <label><<checkbox "_handlebar" false true>> a handle bar</label>
+* <label><<checkbox "_wrinkes" false true>> wrinkles</label>
+* <label><<checkbox "_mole" false true>> a mole</label>
+* <label><<checkbox "_brow" false true>> a unibrow</label>
+* <label><<checkbox "_thickbrow" false true>> thick brows</label>
+* <label><<checkbox "_thinbrow" false true>> thin brows</label>
+* <label><<checkbox "_noeyelash" false true>> no eye lashes</label>
+* <label><<checkbox "_pointedear" false true>> pointed ears</label>
+* <label><<checkbox "_smallears" false true>> small ears</label>
+* <label><<checkbox "_largeears" false true>> large ears</label>
+* <label><<checkbox "_buttonnose" false true>> a Button nose</label>
+* <label><<checkbox "_romannose" false true>> a Roman nose</label>
+* <label><<checkbox "_crooked" false true>> a Crooked nose</label>
+* <label><<checkbox "_widenose" false true>> a Wide nose</label>
+* <label><<checkbox "_hawknose" false true>> a Hawk nose</label>
+* <label><<checkbox "_pointchin" false true>> a pointy chin</label>
+* <label><<checkbox "_roundchin" false true>> a rounded chin</label>
+* <label><<checkbox "_squarejaw" false true>> a square jaw</label>
+* <label><<checkbox "_pronouncedcheeks" false true>> pronounced cheeks</label>
+* <label><<checkbox "_bmrighteye" false true>> a beauty mark below the right eye</label>
+* <label><<checkbox "_bmlefteye" false true>> a beauty mark below the left eye</label>
+* <label><<checkbox "_bmcheek" false true>> a beauty mark on the cheek</label>
+* <label><<checkbox "_bmlips" false true>> a beauty mark above the lips</label>
+* <label><<checkbox "_freckles" false true>> freckles</label>
+* <label><<checkbox "_facehair" false true>> fluff hair</label>
+* <label><<checkbox "_fangs" false true>> fangs</label>
+* <label><<checkbox "_toothgap" false true>> tooth gap</label>
+* <label><<checkbox "_acne" false true>> acne</label>
+
+<<button [[Confirm|Index-CC]]>><<AllThisInAnArray>><<set $pages.facefeat to true>><</button>>
+
+
+:: CC-FaceAccessories [creation-page] {"position":"1775,100","size":"100,100"}
+<<set 
+    _tattoo to ["No", "Covering the Face", "On the Forehead", "Under the Eye", "On the Cheeks", "Under the Chin", "Covering the Eyebrows", "Lining the lips"],
+    _piercing to ["No", "Eyebrow", "Cheek", "Nose", "Septum", "Ear", "Lip", "Tongue"]
+>>\
+<h1>Pick your Face Accessories</h1>\
+Along with facial features, you can decide to add accessories to a PC's face, such as tattoes, piercings, or other modifications. If you are looking for cosmetics, see [[this page|CC-Cosmetics]].
+
+//Do you have any tattoes?// <<listbox "$face.tattoo">>
+    <<optionsfrom _tattoo>>
+<</listbox>>
+
+//Do you have any piercings?// <<listbox "$face.piercing">>
+    <<optionsfrom _piercing>>
+<</listbox>>
+
+//Do you have any other face modification? If so, which one(s)?//
+<<textbox "$face.mods" "">>
+
+<<button [[Confirm|Index-CC]]>>
+    <<if $face.tattoo is "No">>
+        <<unset $face.tattoo>>
+    <</if>>
+    <<if $face.piercing is "No">>
+        <<unset $face.piercing>>
+    <</if>>
+    <<if $face.mods is "">>
+        <<unset $face.mods>>
+    <</if>>
+    <<set $pages.faceacc to true>>
+<</button>>
+/* 
+ ~ Notes:
+    While I used listboxes here, you may want to replace it with checkboxes, if you intend on letting players pick multiple options for tattoes/piercings/mods...
+
+    You could also consider other placement for those elements (more specific/side of the face/etc...) or go into more details (e.g. temporary tattoes, clip earings, extensions...).
+*/
+
+
+:: CC-Skin [creation-page] {"position":"550,700","size":"100,100"}
+<h1>Choose your Skin Characteristics</h1>\
+This page includes probably one of the most common trait seen in IF projects (with a customisable PC). The range and type of options will depend on the type of game: a canonically [insert ethnicity] PC may be given a more limited range of tones, while a Fantasy or Sci-Fi setting where the PC can be of a different specie may have more unconventional skin colours (e.g. blue, green).
+/* 
+    The skin options available to the player should fit the project. A pre-set PC may not even be able to change this trait.
+*/
+The example below shows a more detailed way to set this trait:
+/* 
+    All the options from the three widgets could be combined in one (probably long) list. You may want to use other words to refer to skin tones. 
+*/
+Your skin colour is <<SkinColourCycle>>, with a <<SkinSatMutCycle>> <<SkinToneCycle>> undertone.
+
+//Does your skin have any notable features?//
+* <label><<checkbox "_vitiligo" false true>> Viligo</label>
+* <label><<checkbox "_freckles" false true>> Freckles</label>
+* <label><<checkbox "_eczema" false true>> Eczema</label>
+* <label><<checkbox "_beatymarks" false true>> Beauty Marks</label>
+* <label><<checkbox "_albinism" false true>> Albinism</label>
+
+<<button [[Confirm|Index-CC]]>>
+    <<set 
+        $skin.color to _color,
+        $skin.satmut to _satmut,
+        $skin.undertone to _undertone,
+        $skin.features to []
+    >>
+    <<if _vitiligo>><<run $skin.features.push("Viligo")>><</if>>
+    <<if _freckles>><<run $skin.features.push("Freckles")>><</if>>
+    <<if _eczema>><<run $skin.features.push("Eczema")>><</if>>
+    <<if _beatymarks>><<run $skin.features.push("Beauty Marks")>><</if>>
+    <<if _albinism>><<run $skin.features.push("Albinism")>><</if>>
+<</button>>
+
+
+:: CC-Build [creation-page] {"position":"675,700","size":"100,100"}
+<<BodyBuild>>\
+<h1>Set up the frame of the body</h1>\
+Tall, short, wide, thin... there are many ways to define how a body is framed. Below are examples of setting the PC's height, type, and musculature.
+
+//How tall are you?// <<listbox "$body.height">><<optionsfrom _height>><</listbox>>
+
+//What id your body type?// <<listbox "$body.weight">><<optionsfrom _type>><</listbox>>
+
+//How muscular are you?// <<listbox "$body.musc">><<optionsfrom _muscle>><</listbox>>
+
+<<button [[Confirm|Index-CC]]>><</button>>
+/*
+Notes:
+    Additionally, you could include length of limbs (arms/legs), or size of the head in regards of the body, or going more into detail about additional elements (beer belly, size of chest, etc...).
+
+    Different kinds of builds don't just open the door for additional variation depending on the situation (needs to crouch to pass a low door, can't win a fight because no muscles...), you could even add bonuses on stats (+1 strength if muscular)!
+*/
+
+
+:: CC-Scars  [creation-page] {"position":"800,700","size":"100,100"}
+<h1>Pick your <s>FIGHTER</s> Scars</h1>\
+/*Sorry, I was watching TEKKEN when I wrote this part...*/\
+To show off the PC's badassery, their very tragic backstory, or their stupid need to run into danger, one trait comes to mind: ''scars''. Long, short, deep, just a graze, maybe colour changing... you can go as in detail as you want.
+Below, however, shows only a list of locations for potential scars. 
+/* 
+Notes:
+    You could seperate this list and include the face scars into the [CC-FacialFeatures] passage instead.
+
+    You could also choose to customise each scar with: discoloration, healed/crusty, type of scarring...
+    Though I would recommend this to be done if only one or maybe two scars at most are chosen. Further than that and it would become tedious.
+*/
+//Do you have any scar on your body?//
+* <label><<checkbox "_browscar" false true>> cutting the brow</label>
+* <label><<checkbox "_eyescar" false true>> crossing the eye</label>
+* <label><<checkbox "_nosescar" false true>> across the nose</label>
+* <label><<checkbox "_cheekscar" false true>> along the cheek</label>
+* <label><<checkbox "_lipscar" false true>> cutting the lip</label>
+* <label><<checkbox "_chinscar" false true>> on the chin</label>
+* <label><<checkbox "_bitescar" false true>> bite marks on the neck</label>
+* <label><<checkbox "_neckscar" false true>> along the neck</label>
+* <label><<checkbox "_throatscar" false true>> across the throat</label>
+* <label><<checkbox "_heartscar" false true>> across the heart</label>
+* <label><<checkbox "_shoulderscar" false true>> cutting the shoulder</label>
+* <label><<checkbox "_torsoscar" false true>> across the torso</label>
+* <label><<checkbox "_ceasarscar" false true>> a caesarian</label>
+* <label><<checkbox "_hipscar" false true>> along the hip</label>
+* <label><<checkbox "_spinescar" false true>> down the spine</label>
+* <label><<checkbox "_backcar" false true>> across the back</label>
+* <label><<checkbox "_buttscar" false true>> bite marks on the butt cheeks</label>
+* <label><<checkbox "_legscar" false true>> down the leg</label>
+* <label><<checkbox "_footscar" false true>> across the foot</label>
+
+<<button [[Confirm|Index-CC]]>>
+    <<set $pages.scars to true>>
+    <<AllThisInAnArrayButItsScars>>
+<</button>>
+/* 
+Notes:
+    I was in the middle of a vampire book when I was working on this passage... 
+
+    The list does not include where the scar is located aside from the general spot. You could include a left/right, top/middle/bottom, front/side/back options if you want to add more details.
+*/
+
+
+:: CC-PROS [creation-page] {"position":"925,700","size":"100,100"}
+<h1>Indicate Procedures and Prothesis</h1>\
+If you are looking to be more inclusive with trans/nb and/or disability representations for the PC, you can find below potential options to do so. These will range from surgical procedures to worn prothesis.
+
+//Have you undergone any of the following Procedures?//
+* <label><<checkbox "_hrt" false true>> HRT</label> (Hormone Replacement Therapy)
+* <label><<checkbox "_topsurg" false true>> Top Surgery</label> (Breast Augmentation/Reduction/Implants/Removal/etc...)
+* <label><<checkbox "_bottomsurg" false true>> Bottom Surgery</label>
+* <label><<checkbox "_facesurg" false true>> Facial Reconstruction</label>
+* <label><<checkbox "_othersurg" false true>> Other Reconstructive Surgery</label>
+
+//Do you use any of the following prothesis?//
+* <label><<checkbox "_glasses" false true>> Glasses</label>
+* <label><<checkbox "_contacts" false true>> Contacts</label>
+* <label><<checkbox "_hearaidrem" false true>> Hearing Aid</label> (removable)
+* <label><<checkbox "_hearaidimp" false true>> Hearing Aid</label> (Implant)
+* <label><<checkbox "_prosfingers" false true>> Prosthesis</label> (Fingers)
+* <label><<checkbox "_proshand" false true>> Prosthesis</label> (Hand)
+* <label><<checkbox "_prosarm" false true>> Prosthesis</label> (Arm)
+* <label><<checkbox "_prostoes" false true>> Prosthesis</label> (Toes)
+* <label><<checkbox "_prosfoot" false true>> Prosthesis</label> (Foot)
+* <label><<checkbox "_prosleg" false true>> Prosthesis</label> (Leg)
+/* 
+ ~ Notes:
+    While not included here, you could add an option to determine on which side of the body a prosthesis is located, and go into even more details (which finger/toe).
+
+    This can similarly be applied to the aid section below: the prescription for Glasses and Contacts, or the type of Hearing Aid. 
+*/
+//Do you use any of the following aid?//
+* <label><<checkbox "_cane" false true>> Cane</label>
+* <label><<checkbox "_crutches" false true>> Crutches</label>
+* <label><<checkbox "_walkter" false true>> Walker</label>
+* <label><<checkbox "_servaniguide" false true>> Service Animal</label> (Guide)
+* <label><<checkbox "_servaniother" false true>> Service Animal</label> (Other)
+* <label><<checkbox "_handwheel" false true>> Wheelchair</label> (Hand)
+* <label><<checkbox "_powerwheel" false true>> Wheelchair</label> (Powered)
+* <label><<checkbox "_reader" false true>> Text Reader</label>
+
+<<button [[Confirm|Index-CC]]>>
+    <<set $pages.pros to true>>
+    <<ArraysForPros>>
+<</button>>
+
+
+:: CC-BodyFeatures [creation-page] {"position":"1050,700","size":"100,100"}
+<<set 
+    _tattoo to ["No", "Half-Sleeve", "Full Sleeve", "Neck", "Chest", "Belly", "Leg", "Calf", "Foot", "Covered"],
+    _piercing to ["No", "Belly Button", "Nipple", "Surface (Chest)", "Surface (Arm)", "Surface (Back)", "Surface (Leg)", "Surface (Private)"]
+>>\
+<h1>Options for Body Features</h1>\
+Similar to the Face Features, you can have many options to make the body even more //''special''//. Here are some grouped options:
+
+//Do you have any tattoes?//<<listbox "$body.tattoo">>
+    <<optionsfrom _tattoo>>
+<</listbox>>
+
+//Do you have any piercings?//<<listbox "$body.piercing">>
+    <<optionsfrom _piercing>>
+<</listbox>>
+
+//Do you have any other body modification?//
+<<textbox "$body.mods" "">>
+
+<<button [[Confirm|Index-CC]]>>
+    <<if $body.tattoo is "No">>
+        <<unset $body.tattoo>>
+    <</if>>
+    <<if $body.piercing is "No">>
+        <<unset $body.piercing>>
+    <</if>>
+    <<if $body.mods is "">>
+        <<unset $body.mods>>
+    <</if>>
+    <<set $pages.bodymod to true>>
+<</button>>
+/* 
+    Like with the Face Mods [CC-FaceAccessories], you may want to use checkboxes instead of listboxes (to give the player more options). And there are probably more spots on a body for mods, as well as better names for them.
+
+    You could also distinguish between the left and right side of the body.
+*/
+
+
+:: CC-Cosmetics [creation-page] {"position":"1175,700","size":"100,100"}
+<<CosmeticOptions>>
+<h1>Options for Cosmetic Use</h1>\
+Whether it is just a pop of colour or full-coverage, cosmetics can drastically change how a PC looks (even creating a disguise). 
+Obviously, the options proposed below would be highly dependent on the kind of IF project at hand. Different genre/settings would require different options. It might not even be relevant to the story itself (e.g. PC's age/wealth or just because).
+
+//Do you wear any make-up?//
+<<nobr>>
+    <<button "Yes, I wear make-up.">><<set $skin.makeup to true>><<redo "makeupplus">><</button>>
+     | 
+    <<button "No, I don't wear make-up.">><<unset $skin.makeup>><<redo "makeupplus">><</button>>
+<</nobr>>
+
+<<do tag "makeupplus">><<nobr>>
+    <<if $skin.makeup>> 
+        //What kind of make-up are you wearing?// <<listbox "$skin.makeup">>
+                <<optionsfrom _makeup>>
+        <</listbox>>
+    <</if>>
+<</nobr>><</do>>
+
+//How do your nails look like?// <<listbox "$body.naislength">>
+    <<optionsfrom _naillength>>    
+<</listbox>>
+
+//Are your nails painted?// 
+<<nobr>>
+    <<button "Yes, my nails are painted.">><<set $body.nails to true>><<redo "naisplus">><</button>>
+     | 
+    <<button "No, my nails are natural.">><<unset $body.nails>><redo "naisplus">><</button>>
+<</nobr>>
+
+<<do tag "naisplus">><<nobr>>
+    <<if $body.nails>>
+        //In what style are your nails painted?// <<listbox "$body.nails">>
+            <<optionsfrom _nailart>>
+        <</listbox>><br>
+        //What colour are your nails painted?// <<listbox "$body.nailscolour">>
+            <<optionsfrom _nailcolour>>
+        <</listbox>>
+    <</if>>
+<</nobr>><</do>>
+
+//Do you wear any perfume?//
+<<nobr>>
+    <<button "Yes, I wear perfume.">><<set $skin.perfume to true>><<redo "perfumeplus">><</button>>
+     | 
+    <<button "No, I don't wear any perfume.">><<unset $skin.perfume>><<redo "perfumeplus">><</button>>
+<</nobr>>
+
+<<do tag "perfumeplus">><<nobr>>
+    <<if $skin.perfume>>
+        //What kind of perfume are you wearing?// <<listbox "$skin.perfume">>
+            <<optionsfrom _perfume>>
+        <</listbox>>
+    <</if>>
+<</nobr>><</do>>
+
+<<button [[Confirm|Index-CC]]>>
+    <<set $pages.makeup to true>>
+<</button>>
+
+/*
+ ~ Notes:
+    While most questions separate the [NO/Nothing] from the options in the listboxes, theses could also be merged for convenience's sake.
+
+    I have also not included any explanations for the different options (like types of make-up), which you may want to include (popup?). Defined elements can help the player be on the same page as you (not everyone characterise what a "Full Face" of make-up the same way).
+*/
+
+
+:: CC-Personality [creation-page] {"position":"1400,700","size":"100,100"}
+<h1>Choose your Personality</h1>\
+While this trait can be tracked through a series of choices throughout a section (adding/removing points), you could ask the player to set a personality ahead of the story, which could give extra advantage to the PC (i.e. the PC being more outgoing, making them more charismatic). This way of setting personality can be useful for a Cheat Mode.
+
+//Are you more Introverted or Extroverted?//
+<center>\
+Introverted <input type="range" id="slidetest" name="slidetest" min="1" max="100" value="25" class="slider" data-var="$intext" oninput="SugarCubeInput(this)"> Extroverted
+</center>
+
+//Are you more Cold-natured or Warm-natured?//
+<center>\
+Cold <input type="range" id="slidetest" name="slidetest" min="1" max="100" value="25" class="slider" data-var="$coldwarm" oninput="SugarCubeInput(this)"> Warm
+</center>
+
+<<button [[Confirm|Index-CC]]>>
+    <<set $pages.perso to true>>
+<</button>>
+/*
+ ~ Notes:
+    Ok, so I kind of lied. The template has //some// custom code. Some JavaScript and jquery that affect an HTML slider. See the JavaScript passage.
+    Unless {:passagerender} or {State.setVar} change with new updates (VERY UNLIKELY), this shouldn't ever break. 
+*/
+
+
+:: CC-StatClass [creation-page] {"position":"1525,700","size":"100,100"}
+<h1>Choose your Class</h1>\
+This section will obviously be pretty specific, applying only to IF projects where the PC is involved in some sort of Combat mechanism or RPG system (with/out dice-check). This can be as general as a combat class (see below), or more specific, like a specialisation (e.g. Engineering or Navigator). If you want an example for a socio-economical type of class, see [[this page|CC-Background]]. 
+
+The basic example below would work more for a Fantasy setting, but it can be made more complex by including further options (e.g. type of mage/rogue/warrior). The code includes setting variables for different attributes/skills.
+
+//What class have you chosen for yourself?//
+<div id="choose-class">\
+    <div>
+        <icon>&#xf0e7;</icon>
+        <<link "Warrior">><<PopupWarrior>><</link>>
+        <<button [[Choose|CS2]]>>
+            <<WarriorStartingStats>>
+        <</button>>\
+    </div>\
+    <div>
+        <icon>&#xf0d0;</icon>
+        <<link "Mage">><<PopupMage>><</link>>
+        <<button [[Choose|CS2]]>>
+            <<MageStartingStats>>
+        <</button>>\
+    </div>\
+    <div>
+        <icon>&#xf070;</icon>
+        <<link "Rogue">><<PopupRogue>><</link>>
+        <<button [[Choose|CS2]]>>
+            <<RogueStartingStats>>
+        <</button>>\
+    </div>\
+</div>\
+
+You can click on the Class's moniker to learn more about it and see its attribute levels.
+Click on the //Choose// button to select the wanted class and move to the next step.
+/*
+ ~ Notes:
+    Because //lazy//, this page only has a basic SG icon as "illustration" for each class. I would recommend, however, to include a more fitting icon/image instead for your own project.
+
+    While there are only three class in this example, you could expand it to as many as you want.
+
+    Please ensure you've tested this for mobile, if you add any element to the page. Since the options are in a flex box, they should appear one below the other if the screen width decreases. Adding [flex-wrap: wrap;] in the StyleSheet for the [#choose-class] element should do the trick.
+*/
+
+
+:: CS2 [creation-page] {"position":"1525,825","size":"100,100"}
+<<PopupExtraPoints>><<LockedPoints>>\
+<h1>Spend your Points</h1>\
+Following the more RPG types of games, with level ups, you may want to award points to the players so they can improve their abilities. Here's one way of doing it below:
+
+//To upgrade your skills, and make future adventures easier, increase the level of your abilities!//
+<center><<do>>
+    strength : <<RemoveSTR>> $stat.strength <<AddSTR>>
+    dexterity : <<RemoveDEX>> $stat.dexterity <<AddDEX>>
+    willpower : <<RemoveWIL>> $stat.willpower <<AddWIL>>
+    magic : <<RemoveMAG>> $stat.magic <<AddMAG>>
+    cunning : <<RemoveCUN>> $stat.cunning <<AddCUN>>
+    constitution : <<RemoveCON>> $stat.constitution <<AddCON>>
+
+    points left: $availablepts
+<</do>></center>
+<<button [[Confirm|Index-CC]]>><</button>>
+/* 
+ ~ Notes:
+    This used to be a lot more complex, but the <<do>>/<<redo>> macro combo of 2.37 simplified a lot of stuff, especially in the widgets.
+
+    If you wanted to go even deeper, you could have:
+    - the player click on the name of the ability to get more information about it (similar to what was done with the [CC-StatClass] or [CC-Background] passage)
+    - add a limit to the amount of points that could be added to a skill (like can't be more than 10 strength if the PC's overall level is below 10)
+    - unlock special sub-skills after a certain level, which can also be upgraded
+    - etc...
+*/
+
+
+:: CC-Background [creation-page] {"position":"1650,700","size":"100,100"}
+<h1>Choose a Background</h1>\
+If the story doesn't give the PC a specific background/status, you could consider letting the player pick one. This could affect, in turn, the story as a whole (e.g. paths locked/background), characteristics of the PC (e.g. wealth), and/or NPCs could interact/perceive with the PC.
+
+The example below takes a more general socio-economical class approach, but you could go into more details withing one class (e.g. different noble status, reputation of the family, etc..).
+
+//What is your background?//
+<div id="choose-class">\
+    <div>
+        <icon>&#xf188;</icon>
+        <<link "Commoner">><<PopupCommoner>><</link>>
+        <<button [[Choose|Index-CC]]>>
+            <<CommonerStartingStats>>
+        <</button>>\
+    </div>\
+    <div>
+        <icon>&#xf015;</icon>
+        <<link "Bourgeois">><<PopupBourgeois>><</link>>
+        <<button [[Choose|Index-CC]]>>
+            <<BourgeoisStartingStats>>
+        <</button>>\
+    </div>\
+    <div>
+        <icon>&#xf185;</icon>
+        <<link "Noble">><<PopupNoble>><</link>>
+        <<button [[Choose|Index-CC]]>>
+            <<NobleStartingStats>>
+        <</button>>\
+    </div>\
+</div>
+You can click on the Class's moniker to learn more about it and see its attribute levels.
+Click on the //Choose// button to select the wanted class.
+/*
+ ~ Notes:
+    Is this the same code as the [CC-StatClass] passage? Absolutely!
+        The same principle applies between the two: general glass/title + attributes/stats. Essentially, any non-physical/input trait that may require further explanation (e.g. class, backstory, status, general build) can be formatted this way.
+
+    If you want to go all fancy, you could consider adding graphics to make the page POP!
+        I didn't because I didn't feel like it, so there are some barely-related icons instead. 
+
+    OOOORRRRR you can just make it a list of links. That works too :P
+*/
+
+
+:: CC-ROGender [creation-page] {"position":"2000,400","size":"100,100"}
+<h1>Choose the Gender of ROs</h1>\
+In many IF projects, you will find some (or all) ROs without a set gender, allowing instead the player to choose either/both gender and/or pronouns for these NPCs. There are multiple paths to consider, from having a manual choice for the player or link it to the sexuality of the PC (more dating-sim-like).
+
+The basic example below gives the player the option to set all genders at once, or separately for each RO.
+
+> During this story you will meet: 
+> ~ Camille Renaud (She/He/They)
+> ~ Frances/Frank Wallace (She/He/They)
+> ~ Alexander/Alexandra/Alex Curtis (She/He/They)
+
+//Do you want to set the gender of the ROs?//
+* [[Set them all as female (She/Her)|Index-CC][$pages.rogen to true, $Camille to "Camille (She/Her)", $Fran to "Frances (She/Her)", $Alex to "Alexandra (She/Her)"]]
+* [[Set them all as male (He/Him)|Index-CC][$pages.rogen to true, $Camille to "Camille (He/Him)", $Fran to "Frank (He/Him)", $Alex to "Alexander (He/Him)"]]
+* [[Set them all as nonbinary (They/Them)|Index-CC][$pages.rogen to true, $Camille to "Camille (They/Them)", $Fran to "Frances (They/Them)", $Alex to "Alex (They/Them)"]]
+* [[Randomise the gender|Index-CC][$pages.rogen to true, $Camille to "Camille (She/Her)", $Fran to "Frances (They/Them)", $Alex to "Alexander (He/Him)"]]
+* <<linkappend "Set each RO separately">>
+** <<CamilleCycle>> Renaud
+** <<FranCycle>> Wallace 
+** <<AlexCycle>> Curtis
+    <<button [[Confirm|Index-CC]]>>
+        <<set $Camille to _camille, $Fran to _fran, $Alex to _alex, $pages.rogen to true>>
+    <</button>>
+<</linkappend>>
+* [[Set the gender of the ROs when introduced|Index-CC][$pages.rogen to true, $Camille to "N/C", $Fran to "N/C", $Alex to "N/C"]]
+
+Please choose one of the options above. You will be sent back to the main menu.
+/* 
+ ~ Notes:
+    There are, of course, many more pronouns than the one listed here, without mentioning custom ones. But for simplicity's sake with template, I just showcased the interactivity.
+
+    Not all ROs should be gender selectable. Not all gender-selectable ROs should have the same options (gender/pronoun). I've just used the same options here out of laziness.
+
+    Also the randomisation here is not a true one. I've picked the genders at random before coding them. You can use the function [either()] to have proper randomisation.
+
+    I did not set the actual pronouns of the ROs (because there's no story here), but it would work the same way as the [<<PronounsSet>>] widget
+*/
+
+
+:: CC-Family [creation-page] {"position":"2125,400","size":"100,100"}
+<h1>Check-In with the Family</h1>\
+This isn't really a common trait to explore, considering family situations are usually pre-set by the story. However, if different family settings are meant to be explored in the game, or if it is unconsequential but could bring variation, here are a couple of optional questions about a potential family for the PC.
+
+//Do you have parents?//
+* <label><<radiobutton "$family.parents" "Mother + Father">>Two parents: a mother and a father</label>
+* <label><<radiobutton "$family.parents" "Mother">>One parent: a mother</label>
+* <label><<radiobutton "$family.parents" "Father">>One parent: a father</label>
+* <label><<radiobutton "$family.parents" "Two Fathers">>Two parents: two fathers</label>
+* <label><<radiobutton "$family.parents" "Two Mothers">>Two parents: two mothers</label>
+* <label><<radiobutton "$family.parents" "Nuclear Family">>More than two parents: a nuclear family</label>
+* <label><<radiobutton "$family.parents" "No Parents">>No parents</label>
+
+//How many siblings do you have?// <<numberbox "$family.siblings" 0>>
+
+//How many children do you have?//<<numberbox "$family.children" 0>>
+* <label><<checkbox "_preggo" false true>> I'm also pregnant!</label>
+
+<<button [[Confirm|Index-CC]]>>
+    <<set $pages.family to true>>
+    <<if _preggo>>
+        <<set $mc.pregnant to "I am pregnant">>
+    <<else>>
+        <<unset $mc.pregnant>>
+    <</if>>
+<</button>>
+/* 
+ ~ Notes:
+    Rather than letting the player choose, you could make it all part of the PC's background (see [CC-Background]), like a rich noble orphan or a nuclear warrior family, etc...
+
+    Of course, there could be wayyyyy more options than the questions listed above, like other non-traditional family structures, whether the PC is the eldest/youngest, the names/physique/psyche/etc of the family members...
+
+    The Numberbox macro does not have a minimum or maximum, though a custom macro restricting the range of number can be found here: http://www.motoslave.net/sugarcube/2/
+*/
+
+
+:: CC-Pets [creation-page] {"position":"2250,400","size":"100,100"}
+<<set _animal to ["--", "a turtle", "a dog", "a cat", "a bird", "a rodent", "a snake", "a tiger", "a dragon", "a robot", "a horse", "a spider", "a moon", "a cow", "a pig"]>>\
+<h1>Choosing a Pet</h1>\
+While you need none, there are plenty of reasons as to why you should include a pet/companion to your project - with the main one being because they are super cute! Whether the player must choose a singular companion or fill their menagerie, there are, as always, plenty of ways to include a pet option. Below is one example:
+
+//What pet do you have?// <<listbox "_pet">>
+    <<optionsfrom _animal>>
+<</listbox>>
+
+<<button [[Confirm|Index-CC]]>>
+    <<if _pet isnot "--">>
+        <<set $mc.pet to _pet>>
+    <<else>>
+        <<unset $mc.pet>>
+    <</if>>
+<</button>>
+
+Choose the option wanted from the list, and click the button to return to the menu.
+/* 
+ ~ Notes:
+    With the options, here, I've mixed multiple genres, just for fun. Those should, of course, be edited to fit your project.
+
+    Further customisation for a pet could include: its name, race/specie (animal dependent), colour(s) of its fur/scales/coat/etc, specific traits...
+
+    For a menagerie of pets: checkboxes.
+*/
+

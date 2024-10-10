@@ -1,0 +1,194 @@
+
+:: StoryTitle
+Settings Template
+
+:: StoryData
+{
+	"ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1",
+	"format": "SugarCube",
+	"format-version": "2.36.1",
+	"start": "Start"
+}
+:: StoryInit 
+<<cacheaudio "song" "assets/song.wav">>
+
+:: Start
+<h1>Settings Template</h1>
+This template is meant to showcase the different types of settings included in //SugarCube// ([[documentation|https://www.motoslave.net/sugarcube/2/docs/]]), that populate the Settings Pop-up, namely the Range, Toggle, and Drop List settings, as well as their potential applications in a SugarCube project for reader accessibility. The listed settings below are not an exhaustive list of what can be included in a project, nor are they required in every SugarCube project.
+
+To included these settings in your project, you only need to copy/paste the related code in the JavaScript and StyleSheet. The code for each setting is annotated. 
+> This template is not a guide about the Settings API. For further explanations, see my [[SugarCube Guide|https://manonamora.itch.io/twine-sugarcube-guide]].
+
+The //Settings Template// includes the following settings:
+<ul>
+	<li>//Font and Text Display//
+		<ul>
+			<li>Font type: Serif, Sans-serif, OpenDyslexic</li>
+			<li>Font size: 4 sizes</li>
+			<li>Line height: 4 heights</li>
+			<li>Text alignment: Left/Justified</li>
+		</ul>
+	</li>
+	<li>//Mode and Volume//
+		<ul>
+			<li>Theme: Dark/Light ([[Demo|Theme]])</li>
+			<li>Volume Slider ([[Demo|Volume]])</li>
+		</ul>
+	</li>
+	<li>//Accessibility//
+		<ul>
+			<li>Animation Toggle ([[Demo|Animation]])</li>
+			<li><<link "Notifications Toggle">><<if settings.notif>><<notify>>Notifications Enabled<</notify>><</if>><</link>></li>
+		</ul>
+	</li>
+	<li>//Saving//
+		<ul>
+			<li>Autosave Toggle</li>
+			<li>Autoname Toggle</li>
+		</ul>
+	</li>
+</ul>
+
+:: StoryMenu
+[[Credits]]
+
+:: Animation
+<h3>Using the setting with a conditional statement:</h3>
+<<if settings.textanim>><<type 40ms>>This text is animated!<</type>><<else>>This text is not animated.<</if>>
+{{{
+	<<if settings.textanim>><<type 40ms>>This text is animated!<</type>><<else>>This text is not animated.<</if>>
+}}}
+<h3>Using the setting with a CSS class.</h3>
+Toggle the Animation Setting to enable/disable the animated picture!
+<div class="example-image"></div>
+
+Notes: Wrapping an animated element with {{{<<if settings.textanim>><</if>>}}} will not update when the setting is toggled on the animated passage. Using the CSS class might not always be easy to code. Both ways are useful in different ways.
+> It is however possible to automate this process, by using a function to reload the page/passage when the toggle is interacted with. You will need to know some JavaScript to mess with it.
+
+[[Return to the Main Page|Start]]
+
+:: Volume
+Use the Volume Slider in the Setting to change the volume.
+<<button "Play Music">><<audio "song" play>><</button>> <<button "Stop Music">><<audio ":playing" stop>><</button>>
+
+[[Return to the Main Page|Start]]
+
+:: Theme
+Use the Theme Dropdown in the Settings to change the colour palette of the page.
+
+<h1>Heading 1</h1>\
+<h2>Heading 2</h2>\
+<h3>Heading 3</h3>\
+<h4>Heading 4</h4>\
+<h5>Heading 5</h5>\
+<h6>Heading 6</h6>\
+<hr>
+<center>''Lists:''</center>
+<ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+</ul>
+<hr>
+<center>''Basic Table:''</center>
+<table>
+<tr>
+    <th>Column 1</th>
+    <th>Column 2</th>
+    <th>Column 3</th>    
+</tr>
+<tr>
+    <td>Item 1</td>
+    <td>Item 2</td>
+    <td>Item 3</td>
+</tr>
+<tr>
+    <td>Item 1</td>
+    <td>Item 2</td>
+    <td>Item 3</td>
+</tr>
+</table>
+<hr>
+<center>''Links''</center>
+//Basic://
+[[Basic Macros]]
+//As a list://
+* [[Basic Macros]]
+Or 
+[[Return to the Main Page|Start]]
+
+:: Basic Macros {"position":"875,300","size":"100,100"}
+<h2>Textbox</h2>\
+<<textbox "_test" 2>>
+
+<h2>Text Area</h2>\
+<<textarea "_pieEssay" "">>
+
+<h2>Radio Buttons</h2>\
+What's your favorite pie?
+<<radiobutton "_pie" "blueberry" autocheck>> Choice 1
+<label><<radiobutton "_pie" "cherry" autocheck>> Choice 2 with a label </label>
+<<radiobutton "_pie" "coconut cream" autocheck>> Choice 3
+
+<h2>Number Box</h2>\
+<<numberbox "_wager" 100>>
+
+<h2>List Box</h2>\
+<<listbox "_answer" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+<</listbox>>
+
+<h2>Cycle</h2>\
+<<cycle "_answers" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+<</cycle>>
+
+<h2>Check Box</h2>\
+<<checkbox "_pieBlueberry" false true autocheck>> Option 1
+<label><<checkbox "_pieCherry" false true autocheck>> Option 2 with a label</label>
+<<checkbox "_pieCoconutCream" false true autocheck>> Option 3
+
+<h2>Button</h2>\
+<<button "I do not do anything">><</button>>
+
+
+[[Return to the Main Page|Start]]
+
+:: Credits
+The ''Settings Template'' was created by manonamora on Twine 2/Tweego with SugarCube (2.37.3).
+\
+<h3>The Settings Template</h3>\
+This template was made possible thanks to the assets and resources below:
+> //Code, APIs and Macros://
+* the [[SugarCube documentation|https://www.motoslave.net/sugarcube/2/docs/]]
+* various posts from the [[Intfiction.org Forum|https://intfiction.org/c/authoring/twine]] and [[Reddit r/twinegames|https://www.reddit.com/r/twinegames/]]
+* [[Chapel's Notify Macros|https://github.com/ChapelR/custom-macros-for-sugarcube-2]]
+> //Assets://
+* [[Canvas|https://www.canva.com]]
+* [[Freesound|https://freesound.org]]
+* [[GoogleFonts|https://fonts.google.com]]
+\
+<h3>manonamora</h3>\
+You can find:
+* my other templates on [[Itch|https://manonamora.itch.io/]], as well as my guides:
+** [[SugarCube Guide|https://manonamora.itch.io/twine-sugarcube-guide]]
+** [[Ready-to-Use Tweego and Guide|https://manonamora.itch.io/ready-to-use-tweego-folder]]
+** [[ChoiceScript to SugarCube Guide|https://manonamora.itch.io/choicescript-sugarcube-guide]]
+* my games and IF experiments on [[Itch|https://manonamora.itch.io/]]
+* me, and ask me questions, over on [[Tumblr|https://manonamora-if.tumblr.com]] or [[my website|https://manonamora.neocities.org/]]
+* my Twine Resource Masterlist on the [[IntFiction Forum|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]] (an out-of-date version is rebloggable on [[Tumbr|https://manonamora-if.tumblr.com/post/700577877042888704/]]).
+\
+<h3>Twine and SugarCube</h3>\
+You can download Twine over on the [[Twinery.org|https://twinery.org/]] website, which includes the SugarCube format.
+Thomas M. Edwards hosts the Documentation for the SugarCube format over on [[his website|https://www.motoslave.net/sugarcube/2/docs/]].
+
+There are resources and help available with Twine and SugarCube:
+* on the [[IntFiction Forum|https://intfiction.org/c/authoring/twine/46]]
+* on the [[Twine Subreddit|https://www.reddit.com/r/twinegames/]]
+* in the [[Twine Discord|https://discord.gg/n5dJvPp]]
+* and more listed in this [[Masterlist|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]]
+<hr>\
+<h5>You can find my other SugarCube templates [[here|https://manonamora.itch.io/twine-sugarcube-templates]].</h5>

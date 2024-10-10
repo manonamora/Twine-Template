@@ -1,0 +1,249 @@
+:: StoryTitle
+One Page Template
+
+
+:: StoryData
+{
+	"ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1",
+	"format": "SugarCube",
+	"format-version": "2.37.3",
+	"start": "Start"
+}
+
+
+:: StoryInterface [AVOID-EDIT] {"position":"100,225","size":"100,100"}
+<div id="passages"></div>
+<div id="menu" data-passage="menu">
+	<!--Side menu, editable in the sidemenu passage-->
+</div>
+<script>
+	/* Function to open/close the dropdown menu */
+	function myFunction() {
+        document.getElementById("myMenu").classList.toggle("show");
+    }
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+          	var dropdowns = document.getElementsByClassName("dropup-content");
+          	var i;
+            for (i = 0; i < dropdowns.length; i++) {
+            	var openDropdown = dropdowns[i];
+            	if (openDropdown.classList.contains('show')) {
+                  	openDropdown.classList.remove('show');
+            	}
+            }
+        }
+    }
+</script>
+<!-- The container for everything is #story -->
+
+
+:: StoryDisplayTitle [EDIT] {"position":"225,225","size":"100,100"}
+One Page Template
+
+
+:: Start [noreturn cover] {"position":"500,300","size":"100,100"}
+<h1>One Page
+Template</h1>\
+<p><<if Save.browser.size > 0>><<link "Resume Game">><<run Save.browser.continue();Engine.show();>><</link>><</if>>
+<<link "New Game" "Next">><</link>>
+<<link "Load Game">><<run UI.saves()>><</link>>
+<<link "Settings">><<run UI.settings()>><</link>></p>
+/*You can also add whatever you want*/
+
+
+:: menu [SOME] {"position":"225,350","size":"100,100"}
+<div id="title"><<include "StoryDisplayTitle">></div>/* If you don't want the extra passage, just swap the <<include>> for the title */
+<<include "navigation">>/* Remove this if you don't want players to undo/redo actions */
+<<include "sidemenu">>
+
+
+:: sidemenu [SOME nobr] {"position":"100,350","size":"100,100"}
+<div id="dropmenu">
+	<a onclick="myFunction()" class="dropbtn">MENU</a>
+	<div id="myMenu" class="dropup-content">
+		<<link 'STATISTICS'>>
+			<<popup "stats" "Statistics">>
+		<</link>>
+		<<link 'ACHIEVEMENTS'>>
+			<<popup "achievement" "Achievements">>
+		<</link>>
+		<<link 'CREDITS'>>
+			<<popup "credit" "Credits">>
+		<</link>>
+		<<link 'SAVES'>><<run UI.saves()>><</link>>
+		<<link 'SETTINGS'>><<run UI.settings()>><</link>>
+		<<link 'RESTART'>><<run UI.restart()>><</link>>
+		/*
+			You can include here whatever you want. While all the links here open popups, you can choose to send the player to a new passage instead.
+		*/
+	</div>
+</div>
+
+
+:: navigation [SOME] {"position":"225,350","size":"100,100"}
+<div>&emsp;<<link '⮘'>><<run Engine.backward()>><</link>>&emsp;|&emsp;<<if State.length === State.size>>⮚<<else>><<link '⮚'>><<run Engine.forward()>><</link>><</if>>&emsp;</div>
+
+
+:: stats [CODEX] {"position":"100,475","size":"100,100"}
+Here, you can put some info about the player, like characteristics or stats (check [sidemenu] if you want to change the name of the popup). 
+
+Below, you will also find an example for stats bars. Feel free to edit however you want (or change it for whatever your prefer).
+
+> //First Stat//:
+<<nobr>>
+<<set $var1 to 40, $var2 to 60>>
+<div class="statBarContainer">
+    <div class="statSingle" @style="'width:' + $var1 + '%;'"></div>
+</div>
+<</nobr>>
+> //Second Stat://
+<<nobr>>
+<div class="statBarContainer">
+	<div class="statBack"></div>
+    <div class="statFront" @style="'width:' + $var2 + '%;'"></div>
+	<div class="statText">
+		<span>Destiny: $var2%</span>
+		<span>Failure: <<print 100-$var2>>%</span>
+	</div>
+</div>
+<</nobr>><<unset $var1, $var2>>/* 
+	Note: I'm setting + deleting those variables here for the sake of the template.
+	For actual use, change $var1 and $var2 in the HTML <div> for whatever variable you are tracking.
+*/
+
+
+:: achievement [CODEX] {"position":"225,475","size":"100,100"}
+Here, you can add some achievements.
+
+
+:: credit [Credits] {"position":"350,475","size":"100,100"}
+The ''One Page Template'' was created by manonamora on Twine 2/Tweego with SugarCube 2.37.3.
+\
+<h3>The One Page Template</h3>\
+This template was made possible thanks to the assets and resources below:
+> //Macro://
+* [[Chapel|https://github.com/ChapelR/custom-macros-for-sugarcube-2/]]: Dialog API Macro Set (modified)
+> //Assets://
+* [[GoogleFonts|https://fonts.google.com]]
+\
+<h3>manonamora</h3>\
+You can find:
+* my other templates on [[Itch|https://manonamora.itch.io/]], as well as my guides:
+** [[SugarCube Guide|https://manonamora.itch.io/twine-sugarcube-guide]]
+** [[Ready-to-Use Tweego and Guide |https://manonamora.itch.io/ready-to-use-tweego-folder]] 
+** [[ChoiceScript to SugarCube Guide |https://manonamora.itch.io/choicescript-sugarcube-guide]] 
+* my games and IF experiments on [[Itch|https://manonamora.itch.io/]]
+* me, and ask me questions, over on [[Tumblr|https://manonamora-if.tumblr.com]] or [[my website|https://manonamora.neocities.org/]]
+* my Twine Resource Masterlist on the [[IntFiction Forum|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]] (an out-of-date version is rebloggable on [[Tumbr|https://manonamora-if.tumblr.com/post/700577877042888704/]]).
+\
+<h3>Twine and SugarCube</h3>\
+You can download Twine over on the [[Twinery.org|https://twinery.org/]] website, which includes the SugarCube format.
+Thomas M. Edwards hosts the Documentation for the SugarCube format over on [[his website|https://www.motoslave.net/sugarcube/2/docs/]].
+
+There are resources and help available with Twine and SugarCube:
+* on the [[IntFiction Forum|https://intfiction.org/c/authoring/twine/46]]
+* on the [[Twine Subreddit|https://www.reddit.com/r/twinegames/]]
+* in the [[Twine Discord|https://discord.gg/n5dJvPp]]
+* and more listed in this [[Masterlist|https://intfiction.org/t/twine-resource-masterlist-wiki/65903]]
+<hr>\
+<h5>You can find my other SugarCube templates [[here|https://manonamora.itch.io/twine-sugarcube-templates]].</h5>
+
+
+:: Next [noreturn] {"position":"625,300","size":"100,100"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tellus lorem, porta a eleifend id, iaculis ac risus. Nullam justo nibh, sodales in velit cursus, posuere feugiat mauris. Cras elementum, mauris eu consequat congue, odio velit maximus erat, sit amet euismod nunc metus ut massa. Fusce eu est non orci bibendum vehicula nec vel tortor. Sed non venenatis est, quis scelerisque ipsum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus aliquam tempor libero, a congue neque dapibus vel. Ut venenatis ultricies tortor sed ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+
+Nam tempor libero nibh, eu ornare ante consequat congue. Donec viverra urna id enim faucibus, eget accumsan est blandit. Maecenas vel nulla cursus, pulvinar eros gravida, vehicula massa. Vestibulum urna lectus, pretium at tristique at, accumsan a est. Nunc vel lacus nec nunc viverra condimentum. Donec ultricies dui eu aliquet luctus. In id egestas neque. Quisque eget metus sit amet orci porttitor iaculis quis consectetur neque. Duis eu ligula iaculis, tempus nunc id, eleifend neque. Mauris ac lorem ac mi condimentum consectetur a vitae arcu. Nulla in consequat lacus. Ut vitae diam sit amet leo elementum varius. 
+
+[[Styling]]
+
+
+:: Styling {"position":"750,300","size":"100,100"}
+<h1>Heading 1</h1>\
+<h2>Heading 2</h2>\
+<h3>Heading 3</h3>\
+<h4>Heading 4</h4>\
+<h5>Heading 5</h5>\
+<h6>Heading 6</h6>\
+<hr>
+<center>''Lists:''</center>
+<ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+</ul>
+<hr>
+<center>''Basic Table:''</center>
+<table>
+<tr>
+    <th>Column 1</th>
+    <th>Column 2</th>
+    <th>Column 3</th>    
+</tr>
+<tr>
+    <td>Item 1</td>
+    <td>Item 2</td>
+    <td>Item 3</td>
+</tr>
+<tr>
+    <td>Item 1</td>
+    <td>Item 2</td>
+    <td>Item 3</td>
+</tr>
+</table>
+<hr>
+<center>''Links''</center>
+//Basic://
+[[Basic Macros]]
+//As a list://
+* [[Basic Macros]]
+//With Div://
+<div class="choice">[[Basic Macros]]</div>
+
+
+:: Basic Macros {"position":"875,300","size":"100,100"}
+<h2>Textbox</h2>\
+<<textbox "_test" 2>>
+
+<h2>Text Area</h2>\
+<<textarea "_pieEssay" "">>
+
+<h2>Radio Buttons</h2>\
+What's your favorite pie?
+<<radiobutton "_pie" "blueberry" autocheck>> Choice 1
+<label><<radiobutton "_pie" "cherry" autocheck>> Choice 2 with a label </label>
+<<radiobutton "_pie" "coconut cream" autocheck>> Choice 3
+
+<h2>Number Box</h2>\
+<<numberbox "_wager" 100>>
+
+<h2>List Box</h2>\
+<<listbox "_answer" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+<</listbox>>
+
+<h2>Cycle</h2>\
+<<cycle "_answers" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+<</cycle>>
+
+<h2>Check Box</h2>\
+<<checkbox "_pieBlueberry" false true autocheck>> Option 1
+<label><<checkbox "_pieCherry" false true autocheck>> Option 2 with a label</label>
+<<checkbox "_pieCoconutCream" false true autocheck>> Option 3
+
+<h2>Button</h2>\
+<<button "I do not do anything">><</button>>
+
+
+[[End]]
+
+
+:: End [cover] {"position":"1000,300","size":"100,100"}
+<h1>END</h1>
+
+<center><<button "Restart?">><<run UI.restart()>><</button>> | <<button "Back">><<run Engine.backward()>><</button>></center>
+/*You can add/change whatever you want here. This is just an option for a final page.*/
+
