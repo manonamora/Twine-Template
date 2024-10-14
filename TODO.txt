@@ -4,8 +4,14 @@
    -> How to make your own UI mini guide on the page
       -> Harlowe too?
 To Do:
-    - Phone Template
+    - Phone Template?
     - À la Harlowe
+		V plain interface (only sidebar of icon/counter + main passage), only colour in links (incl. has visited) -> sidebar goes up
+			Need to see how the different macros look too...
+		CSS: https://foss.heptapod.net/games/harlowe/-/tree/branch/default/scss
+    	Icons: ⟲ (restart) ⛶ (fullscreen) ↶ (undo) ↷ (redo) + counter (number above title)
+			Do we want settings/saves? or make a one icon save? maybe https://www.compart.com/en/unicode/search?q=disk#characters ?
+		Animations/transitions won't be possible at all (that would be pure CSS by the user)
 
 ~ Harlowe Templates ~
   - Imitate SugarCube 
@@ -14,8 +20,16 @@ Use Header/Footer to wrap div around passage
 
 SugarCube version would work better with the script above than the wrapping
 
+~ Chapbook Templates? ~
+Could I emulate Harlowe/Sugarcube? Or change anything, since things are pretty hardcoded? unless I force it with !important :/
 
-Canvas format for pics:
-- iPhone 12/13 Pro Max iOs 14.6
-- iPad iPadOS 14.7.1
-- Laptop with HiDPI screen
+
+~ Other notes/Inspiration ~ 
+https://stackoverflow.com/questions/13591584/slant-the-top-of-a-div-using-css-without-skewing-text
+
+~ Canvas format for pics: ~
+	- iPhone 12/13 Pro Max iOs 14.6
+	- iPad iPadOS 14.7.1
+	- Laptop with HiDPI screen
+
+~ Min size: 320px ~
