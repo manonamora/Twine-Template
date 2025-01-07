@@ -1,0 +1,241 @@
+:: StoryTitle
+Chapbook Save Import/Export
+
+
+:: StoryData
+{
+  "ifid": "c15619b2-afc3-4065-8826-7b74e5790877",
+  "format": "Chapbook",
+  "format-version": "2.3.0",
+  "start": "Start",
+  "zoom": 1
+}
+
+:: Start {"position":"750,300","size":"100,100"}
+config.footer.center: "{embed passage: 'Saves'}"
+--
+<h1>Chapbook Save Import/Export</h1>
+This template showcases the use of an Import/Export save function for Chapbook, using some JavaScript.
+
+The JavaScript code used in this template was created by [[Maliface->https://maliface.itch.io/]] ([[Ko-Fi->https://ko-fi.com/malifaciousgames]]). 
+
+<center>[[Quick Guide on Saves]]<br>
+[[Install and Use the Code]]<br>
+[[JavaScript code]] </center>
+
+
+
+:: Install and Use the Code {"position":"750,425","size":"100,100"}
+<h1>Install and Use the Code</h1>
+<h3>Installing the JavaScript</h3>
+
+To include **Maliface's Chapbook Save** in your project, you will need to copy the needed [[JavaScript code]] and paste it in the JavaScript section of your project. <!--The code is also available in the JavaScript of this template-->
+
+From there, you can place the custom import/export elements wherever you need it.
+
+<h3>Setting the Custom Elements</h3>
+
+The Import and Export elements are comprised of two needed elements:
+* the container tag (<code>&lt;import-link&gt &lt;/import-link&gt</code> or <code>&lt;export-link&gt &lt;/export-link&gt</code>)
+* the displayed text (ex: Import or EXPORT)
+
+For examples:<br>
+<code>&lt;import-link&gtIMPORT&lt;/import-link&gt</code> → <import-link>IMPORT</import-link><br>
+<code>&lt;export-link&gtexport&lt;/export-link&gt</code> → <export-link>export</export-link>
+
+<h4>Options for placement</h4>
+
+Because those elements can be coded anywhere on the page, whether it be in the story passage or in the [[Header and/or Footer->https://klembot.github.io/chapbook/guide/customization/header-and-footer.html]], where to place them will depend on how accessible for the plater you want the functionality to be.
+
+Including Import/Export points in the Header/Footer will mean the player will be able to save/load their playthrough at any point of the story. You also only need to code it once, at the start of the game/story.<br>
+For example: <code>config.header.center: "&lt;export-link&gtEXPORT&lt;/export-link&gt | &lt;import-link&gtIMPORT&lt;/import-link&gt"</code>
+
+However, if you only want players to save a specific moments of the story (like the start of a new chapter), you may want to code those Import/Export points directly on those passages. This mean you will have to code the elements every time is needed.
+
+Which ever option you end up choosing, I would also recommend having an Import point at the **start of game/in the title page** (for transfered save files or emptied cache).
+
+<blockquote><i>Note:</i> this template coded the Import/Export points in the middle footer, but customised it further by creating a modal pop-up (JavaScript, HTML/CSS).</blockquote>
+
+<h3>Styling the Custom Elements</h3>
+
+While the custom elements are displayed as links by default, you can style them so they can be differentiated further from regular links.<br>
+For example: <export-link style="color: green; text-decoration:none; border: 1px solid red">Export</export-link>
+
+There are multiple ways of doing this:
+* **in-line styling**, by using the <code>style</code> attribute:<br>
+<code>&lt;export-link style="color:green"&gt</code>
+* **in the StyleSheet**, by targetting the container tag:<br>
+<code>#page import-link.link {color: red}</code>
+
+<blockquote><i>Warning:</i> Since Chapbook is built with a Theme Change, you will either need to ensure that the styling can be accessible in both palettes, or dive into the Chapbook built-in StyleSheet to get the variable names of the dynamic colours <br>(ex: <code>var(--page-link-color)</code>)</blockquote>
+
+~ [[Return to the Start->Start]]
+
+<!--&lt; and &gt; are here only because <code> wasn't displaying the code properly on the page. Please use < and > when you code.-->
+
+
+:: Quick Guide on Saves {"position":"625,425","size":"100,100"}
+<h1>Quick Guide on Saves</h1>
+By default...
+<blockquote>Chapbook is designed so that players don't need to manually save their progress, as is often typical in digital games. Instead, it silently saves the state of play every time the player navigates to a new passage.<br><div style="text-align:right;font-size:75%">[[Documentation->https://klembot.github.io/chapbook/guide/state/continuity.html?highlight=save#continuity-between-sessions]]</div></blockquote>
+
+While the autosave is pretty convenient, allowing players to continue their session where they last left it off, there are some points to take into account:
+* the player's progress is saved in their browser's cache (clearing the latter will delete the autosave)
+* you can't have multiple concurring playthroughts
+* you can't play one singular playthrough on different platforms/devices
+
+To go around these issues, you can give the player the option to create a save file, to download their progress and (re-)load at any point. 
+This requires custom code using the **[[Chapbook APIs->https://klembot.github.io/chapbook/api/]]** (to get information about the playthrough's state to save) and some **JavaScript** (to create/download the save file, and to let players select a save file). <br>
+<small>Specifically, <code>engine.state.saveToObject()</code> and <code>engine.state.restoreFromObject()</code> should be at the core of that code.</small>
+
+[align center]
+**OR**
+[align right]
+You can use custom code, tried and true.
+[align left]
+<h3>Maliface's Chapbook Save Code</h3>
+
+**Maliface's Chapbook Save** will create custom save files that the player can download and load at will. These save files will be game-specific (tied to the [[IFID->http://babel.ifarchive.org/]] of the game), and encode the current progress of the player within the story (to avoid cheating/breaking saves). <br>
+The downloadable files will be named by default after the game's title and the date/time of the download. Renaming these files won't affect loading a save.
+
+<blockquote><i>Warning:</i> save files can break if the game updates the name of Passages and Variables or changes IFID between plays. If changes are necessary, you may want to indicate to players their save files won't work anymore.</blockquote>
+
+This code also gives you access to two custom elements, which will either trigger the export (<code>&lt;export-link&gt</code>) or import (<code>&lt;import-link&gt</code>) functions from the code. These elements can be placed inside any passage of your project, including the [[Header or Footer->https://klembot.github.io/chapbook/guide/customization/header-and-footer.html]],
+
+~ [[Install and Use the Code]]<br>
+~ [[Return to the Start->Start]]
+
+
+
+:: Saves {"position":"950,300","size":"100,100"}
+<p id="save-menu" class="link" onclick="setup.showSaves('popup-save')">SAVES</p>
+<div id="popup-save" style='display:none;visibility: hidden;'>
+	<div id="popup-save-wrapper">
+		<div id="popup-titlebar">
+  			<h2 id="popup-title">SAVES</h2>
+	  		<span id="popup-close" onclick="setup.closeSaves('popup-save')">X</span>
+  		</div>
+		<div id="popup-body">
+        	<p>Here, you will be able to save and download your current progress, or load a pre-existing save file!</p>
+			<import-link> Import </import-link> - <export-link> Export </export-link>
+    	</div>
+	</div>
+</div>
+<!-- 
+	Some quick notes:
+   		- the popup is not innate to Chapbook, and was created from scratch
+        	- there is Styling needed in the Stylesheet
+            - there's also code at the bottom of the JavaScript, needed to open/close the popup
+		        - only the SAVES is visible to the player, and if clicked, it will show the popup
+    		    - clicking on X will hide the popup
+        - loading a save will close everything and refresh the page to the relevant saved passage
+        - there are probably better/more efficient ways of creating this, but this works so *shrugs*
+-->
+
+
+:: JavaScript code {"position":"750,550","size":"100,100"}
+<h1>Maliface's Chapbook Save custom code</h1>
+
+Below you can find the custom code created by Maliface to add to the JavaScript section of your project.
+<pre><code>
+window.chapbookSave = {
+
+   get fileName() {
+      const [m, date, hour] = new Date().toJSON().match(/(.+)T(.+)(?=\.)/);
+      return engine.story.name() + '-save-' + date + '-' + hour;
+   },
+   extension: '.tw-save',
+
+   export(encode = true) {
+
+      let json = JSON.stringify({
+         ifid: engine.story.ifid(),
+         state: engine.state.saveToObject()
+      });
+
+      if (encode) json = btoa(json.replace(/[^\x00-\x7F]/g, m => `UNI(${m.codePointAt(0)})`));
+
+      const url = URL.createObjectURL(new Blob([json], { type: 'text/plain' })),
+         link = document.createElement('a');
+
+      link.href = url;
+      link.download = this.fileName + this.extension;
+      link.click();
+
+      requestAnimationFrame(() => URL.revokeObjectURL(url));
+   },
+
+   decode(json) {
+
+      //is encoded
+      if (json[0].trim() !== '{') json = atob(json).replace(/UNI\((\d+)\)/g, (m, n) => String.fromCodePoint(n));
+
+      let data;
+      try {
+         data = JSON.parse(json);
+      } catch (e) {
+         throw new Error(`Couldn't parse file into a usable object. Save file broken.`);
+      }
+
+      if (data.ifid !== engine.story.ifid()) throw new Error(`Save file comes from another game!`);
+
+      return data;
+   },
+
+   import() {
+
+      const dataHandler = data => {
+         engine.state.restoreFromObject(this.decode(data).state);
+      };
+
+      const input = document.createElement('input');
+
+      input.type = 'file';
+      input.accept = this.extension;
+
+      input.onchange = () => {
+         const reader = new FileReader();
+         reader.onload = () => dataHandler(reader.result);
+         reader.readAsText(input.files[0]);
+      };
+
+      input.click();
+   }
+};
+
+
+customElements.define('import-link', class extends HTMLElement {
+   constructor() {
+      super();
+
+      this.addEventListener('click', () => chapbookSave.import());
+      this.addEventListener('keyup', e => {
+         if (e.key === 'Enter') chapbookSave.import();
+      });
+
+      this.setAttribute('tabindex', '0');
+      this.setAttribute('role', 'link');
+      this.setAttribute('title', 'Load game from file');
+      this.classList.add('link');
+   }
+});
+
+customElements.define('export-link', class extends HTMLElement {
+   constructor() {
+      super();
+
+      this.addEventListener('click', () => chapbookSave.export());
+      this.addEventListener('keyup', e => {
+         if (e.key === 'Enter') chapbookSave.export();
+      });
+
+      this.setAttribute('tabindex', '0');
+      this.setAttribute('role', 'link');
+      this.setAttribute('title', 'Download save file');
+      this.classList.add('link');
+   }
+});
+</code></pre>
+<blockquote><i>Note:</i> this code is also available inside this template (if you are opening it on Twine/Tweego).<br>Do note that this template includes custom function for the Save Popup.</blockquote>
+
+~ [[Return to the Start->Start]]
