@@ -1,0 +1,433 @@
+:: StoryTitle
+Chapbook Reference Page
+
+
+:: StoryData
+{
+	"ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1",
+	"format": "SugarCube",
+	"format-version": "2.37.3",
+	"start": "Start"
+}
+
+:: Start 
+<h1>The Chapbook Reference Page</h1>\
+    TODO: better intro
+This file is meant to be a one-page easy-to-search reference page for the Chapbook format of Twine. It lists all the code mentioned in the [[Chapbook Official Guide|https://klembot.github.io/chapbook/guide]], but does not explain its use or intricacies. Check the really well done Guide instead!
+> This Reference page does not include any API or engine code. Check the [[Technical Documentation|https://klembot.github.io/chapbook/api/]] instead.
+
+<h2>Chapbook</h2>\
+    TODO: Intro about Chapbook I guess
+
+<h2>Markup</h2>\
+Special code to format text, based on Markdown and Twine 1.
+> If not listed, use HTML/CSS instead.
+<h3>Text Formating</h3>\
+**Bold**: {{{__Bold__}}} or {{{**Bold**}}}
+//Italics//:: {{{_Italics_}}} or {{{*Italics*}}}
+Both: {{{__*Both*__}}} or {{{_**Both**_}}} or {{{**_Both_**}}} or {{{*__Both__*}}}
+<span style="font-family: monospace">Monospace</span>: {{{`Monospace`}}}
+<span style="font-size: 70%; text-transform: uppercase; letter-spacing: 0.08em">Small Caps</span>: {{{~~small caps~~}}}
+Ignoring Formatting: {{{\}}} (before character) like {{{\*}}}
+> //Note:// Does not work inside {{{[[Links]]}}}, See TODO: link insert.
+\
+<h3>Breaks</h3>\
+Line breaks: {{{‎‎}}} (two-space) or {{{\}}} at the end of the line
+Section/Scene: {{{***}}} (own line)
+\
+<h3>Lists</h3>\
+Bulletted: {{{* Text}}} or {{{- Text}}} or {{{+ Text}}}
+Numbered: {{{# Text}}} or {{{1. Text}}}
+\
+<h3>Links</h3>\
+{{{[[PassageName]]}}} or {{{[[Text|PassageName]]}}} or {{{[[Text->PassageName]]}}} or {{{[[PassageName<-Text]]}}}
+> Also works with External links (Web URL)
+\
+<h3>Forks</h3>\
+Or: Special Choice Options Styling.
+{{{
+    > [[Link 1]]
+    > [[Link 2]]
+}}}
+
+<h2>Modifiers</h2>\
+Similar to macros, not interactive.
+Must be used as follow:
+{{{
+    [modifier]
+    Text to continue
+}}}
+\
+<h3>Cancel Previous Modifier</h3>\
+{{{[continue]}}} or {{{[cont'd]}}} or {{{[cont]}}}.
+\
+<h3>Text Alignment</h3>\
+**Center**: {{{[align center]}}}
+**Left**: {{{[align left]}}}
+**Right**: {{{[align right]}}}
+\
+<h3>Delayed Text</h3>\
+{{{[after TIME]}}}: in minutes, seconds or milliseconds
+{{{[after 1 second]}}}/{{{[after 1s]}}}
+{{{[after 200 milliseconds]}}}/{{{[after 200ms]}}}
+{{{[after 3 minutes]}}}/{{{after 3min}}}
+> //Notes:// BUT only [[full numbers|https://github.com/mike182uk/timestring/blob/main/README.md#keywords]]! {{{[after 1s500ms]}}}
+> Can be coupled with other modifier: {{{[after 1s; append]}}}
+\
+<h3>Invisible Notes/Comments</h3>\
+{{{[note]}}} or {{{[note to myself]}}} or {{{[n.b.]}}}
+also accepts {{{[fixme]}}} and {{{[todo]}}}
+
+<h2>Inserts</h2>\
+Another type of macro, usually interactive.
+Is formatted as:
+{{{
+    {insert, parameters}
+}}}
+\
+<h3>Regular Links</h3>\
+{{{
+    {link to: 'PassageName', label: 'Some Text'}
+    {link to: 'PassageName'}
+    {link to: 'URL', label: 'Website'}
+    {link to: variable, label: 'Text in **bold**'}
+}}}
+\
+<h3>Reveal Links</h3>\
+{{{
+    {reveal link: 'text to click', text: 'replacing text'}
+    {reveal link: 'text to click', passage: 'PassageName'}
+}}}
+> //Note:// inserting a passage will also show the return to line
+\
+<h3>Cycling Links</h3>\
+{{{
+    {cycling link, choices: ['Choice 1', true, 1]}
+
+    {cycling link for: 'variable', choices: ['Choice 1', true, 1]}
+}}}
+\
+<h3>Back/Return Link</h3>\
+{{{
+    {back link, label: 'Some Text'}
+}}}
+> If {{{label}}} is not used, shows link named //Back//.
+\
+<h3>Restart Link</h3>\
+{{{
+    {restart link, label: 'Some Text'}
+}}}
+> If {{{label}}} is not used, shows link named //Restart//.
+\
+<h3>Embed Passage</h3>\
+{{{
+    {embed passage: 'PassageName'}
+    {embeded passage: variable}
+}}}
+\
+<h3>Embed Image</h3>\
+{{{
+    {embed image: 'URL', alt: 'text'}
+    {embed image: 'assets/cave.jpeg', alt: 'Cave entrance'}
+    {embed image: 'assets/fancy-border.jpeg', alt: ''}
+}}}
+> //Note:// Also has a specific tag for Flirk and Unsplash images ([[Documentation]]), but I'd recommend local URL, instead.
+\
+<h3>Embed Video</h3>\
+Only YouTube, not auto playback or accessibility features:
+{{{
+    {embed YouTube video: 'URL'}
+}}}
+
+<h2>Variables</h2>\
+Definition or change in variables need to be done at the start of a passage, separated by two dashes {{{--}}}:
+{{{
+    variable: value 
+    --
+    The actual passage
+}}}
+> //Notes:// Defining all variables at start helps avoid errors 
+> Can't use {{{browser}}}, {{{engine}}}, {{{now}}}, {{{passage}}}, {{{random}}}, {{{story}}} as var names.
+\
+<h3>Variable Types</h3>\
+Booleans (true/false), Numerical (1-0), Strings (words)
+{{{
+    boolean: true 
+    numberical: 0
+    string: 'some words'
+    --
+    The actual passage
+}}}
+\
+<h3>Displaying Variables</h3>\
+{{{
+    {variable}
+}}}
+> Can only display variable as is. If you want to combine value, create a separate variable (ex: {{{var1: var2 + var3}}})
+\
+<h3>Changing Values</h3>\
+{{{
+    amount: amount + 1
+        -> value + 1 
+    full_name: first + " " + last
+        -> 'John Doe'
+    check: age === 3
+        -> true (or false)
+
+}}}
+> See Conditional Display (below) for full list operators
+\
+<h4>Advanced Variable Change</h4>\
+To attach a conditional value:
+{{{
+    variable (var2 > value): value
+    transportation (kilometers > 1000): 'plane'  
+    language (country === 'Australia' || country === 'United States'): 'English'
+}}}
+\
+<h3>Random Variable</h3>\
+Built-in dice roll/coin flipper. Add to {{{random}}}:
+{{{
+    random.[dice]
+    random.d4 
+    variable: random.d4 
+    [if random.d4 === 4]
+}}}
+* {{{.coinFlip}}} (true/false)
+* {{{.fraction}}} (0-1, decimal)
+* {{{.d4}}}, {{{.d5}}}, {{{.d6}}}, {{{.d8}}}, {{{.10}}}, {{{.12}}}, {{{.20}}}, {{{.d25}}}, {{{.d50}}}, {{{.d100}}} (full number)
+> //Note:// everytime {{{random}}} is use, it rolls a **new** number!
+\
+<h3>Object Variables</h3>\
+{{{
+    object.property.sub
+    pc.skills.agility: 4
+}}}
+\
+<h4>Built-In Objects</h4>\
+Useful for display/conditional. Avoid changing it.
+Not an exhaustive list.
+* {{{browser}}}:
+** {{{.darkTheme}}}: if Dark theme enabled (true/false)
+** {{{.darkSystemTheme}}}: user browser preference (true/false)
+** {{{.height}}}/{{{.width}}}: window size (pixel)
+** {{{.online}}}: connected to the internet (true/false)
+* {{{engine}}}:
+** {{{.version}}}: version of Chapbook ('2.3.0')
+* {{{now}}}:
+** {{{.datestamp}}}: current date (m/d/y - user dependent)
+** {{{.timestamp}}}: current time (h:m:s - user dependent)
+** {{{.year}}}/{{{.month}}}/{{{.day}}}
+** {{{.hour}}}/{{{.minute}}}/{{{.second}}}
+** {{{.monthName}}}/{{{.weekdayName}}}
+* {{{passage}}}:
+** {{{.from}}}: last passage visited (or undefine if first)
+** {{{.fromText}}}: last link clicked 
+** {{{.name}}}: current passage name 
+** {{{.visits}}}: times visited current passage
+* {{{story}}}:
+** {{{.name}}}: name of project
+
+<h2>Conditional Display</h2>\
+Formatted like an insert. **Can only be used in passage**.
+{{{
+    [if condition]
+    [unless condition]
+    [else]
+}}}
+\
+<h3>Accepted Operators</h3>\
+Essentially JavaScript Operators:
+* {{{===}}}: equal to (explicit)
+* {{{!==}}}: not equal to
+* {{{>}}}/{{{>=}}}: greater than (or equal to)
+* {{{<}}}/{{{<=}}}: lesser than (or equal to)
+* {{{!}}}: not 
+* {{{&&}}}: and 
+* {{{||}}}: or
+* {{{()}}} (parentheses for more complex checks)
+\
+<h3>Examples of Basics Conditionals</h3>\
+{{{
+    [if variable] (if true)
+    [if !variable] (if not true)
+    [if var === 3]
+    [if var >= (var2 + var3)]
+    [if (var1 + var2) < 45]
+}}}
+\
+<h3>Unless Condition</h3>\
+Essentially:
+{{{
+    [unless condition]
+        -> is the same as
+    [if !condition]
+}}}
+\
+<h3>Else Modifier</h3>\
+For all the situation not covered by the single previous {{{[if]}}}:
+{{{
+    [if variable]
+        ...
+    [else]
+        ...
+}}}
+\
+<h3>Some Notes</h3>\
+Conditionals **cannot be nested**, and different {{{[if]}}} will run **independently** to the other ones. Either combine conditions (with {{{&&}}} or {{{||}}}) or create variables merging those conditions.
+
+To return to the story after a conditional block is coded, use {{{[continue]}}}.
+
+To always display or hide a conditional, use {{{[ifalways]}}} or {{{[ifnever]}}}. Subsequent {{{[else]}}} will be affected.
+
+<h2>Audio</h2>\
+Two different types: sound effect and ambient audio. Only one ambient track at a time, and loops. Sound effects one-off and can be played simultaneously (at once only, not adding while one is played).
+Both need to be defined before being used.
+\
+<h3>Sound Effect</h3>\
+{{{
+    sound.effect.name.[url/description]
+    {sound effect: 'name', volume: [0-1]}
+
+    sound.effect.explosion.url: 'boom.mp3'
+    sound.effect.explosion.description: 'a large explosion'
+
+    {sound effect: 'explosion'}
+    {sound effect: 'boom', volume: 0.8}
+}}}
+\
+<h3>Ambient Audio</h3>\
+{{{
+    sound.ambient.name.[url/description]
+    {ambien sount: 'name', volume: [0-1]}
+
+    sound.ambient.forest.url: 'forest.mp3'
+    sound.ambient.forest.description: 'midday forest sounds'
+
+    {ambient sound: 'forest'}
+    {ambient sound: 'lake', volume: 0.4}
+}}}
+To replace the track, use another {{{ {ambient sound:} }}} with a different track name.
+To stop all ambient sound: {{{ {no ambient sound} }}}
+\
+<h3>Audio variables</h3>\
+Two variables:
+* {{{sound.volume}}}: controls master volume (0-1, decimal)
+* {{{sound.mute}}}: temporarily mute all sound (true/false)
+\
+<h3>Manual Control</h3>\
+To bypass restriction of sounds, and create more complex effects:
+{{{
+    sound.effect[name].playing: true/fase
+    sound.ambient.[name].playing: true/false 
+    
+    sound.ambient.forest.playing: true
+    sound.ambient.rain.playing: true
+    sound.effect.bird.playing: true
+}}}
+> //Note:// the track description won't run this way. But you can use {{{<audio>}}} for this.
+
+<h2>Config</h2>\
+<h3>Config.Style</h3>\
+<h4>Page Elements<h4>\
+Chapbook HTML looks like below. All elements can be targetted in the StyleSheet. Some can be targetted through the Config.
+{{{
+    <body>
+        <state-css-variable>/<state-dark-theme-css-variable-override>
+            <#backdrop>
+                <page-skip>/<page-transition>
+                    <#page>
+                        <header>
+                            <#left><#center><#right>
+                        <article>[The passage]
+                        <footer>
+                            <#left><#center><#right>
+}}}
+> //Note:// By default, {{{footer#left}}} and {{{footer#right}}} are pre-filled: respectively, Project Title and Theme/Restart Link
+
+<h4>Fonts</h4>\
+Will accept any font the user has or is imported (StyleSheet). Include stacks when possible.
+{{{
+    config.style.page.font: 'font size type'
+    config.style.page.font: 'Arial 14'
+    config.style.page.font: 'Arial/Hevetica/sans-serif 1rem'
+    config.style.page.font: 'Arial 110% bold italics underline small caps'
+}}}
+Following elements can change their fonts:
+{{{
+    config.style.page.font
+    config.style.page.link.font
+    config.style.page.link.active.font
+
+    config.style.page.header.font
+    config.style.page.header.link.font
+    config.style.page.header.link.active.font
+}}}
+<h5>Import Fonts (Google)</h5>\
+{{{
+    config.style.googleFont: 'embed code <link> with stylesheet'
+    config.style.googleFont: '<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">'
+}}}
+<h5>Import Fonts (TypeKit/Adobe)</h5>\
+{{{
+    config.style.typekitFont: 'embed code <link> with stylesheet'
+    config.style.typekitFont: '<link rel="stylesheet" href="https://use.typekit.net/abdefgh.css">'
+}}}
+<h5>Import Fonts (Local)</h5>\
+{{{
+    config.style.fonts.[tag].[url/name]
+
+    config.style.fonts.leagueSpartan.url: 'fonts/league-spartan.woff2'
+    config.style.fonts.leagueSpartan.name: 'League Spartan'
+}}}
+> //Note:// You can also simply use the {{{@import}}} or {{{@font-family}}} CSS rules in the StyleSheet to import fonts.
+
+<h4>Colours</h4>\
+Chapbook uses the [[Reasoable Colors|https://www.reasonable.work/colors/]] palette. Code for the hues and shades are tabled in the [[documentation|https://klembot.github.io/chapbook/guide/customization/fonts-and-colors.html#colors]]. But it will also accept other notations (e.g. HEX or HSLA).
+{{{
+    config.style.backdrop: 'red-1' 
+    config.style.backdrop: '#ccc'
+    config.style.backdrop: 'hsla(0%, 65%, 48%, 0.75)'
+}}}
+Following elements can change colour (incl. dark theme):
+{{{
+    config.style.backdrop
+    config.style.page.color
+    config.style.page.link.color
+    config.style.page.link.lineColor
+    config.style.page.link.active.color
+    config.style.page.link.active.lineColor
+
+    config.style.dark.backdrop
+    config.style.dark.page.color
+    config.style.dark.page.link.color
+    config.style.dark.page.link.lineColor
+    config.style.dark.page.link.active.color
+    config.style.dark.page.link.active.lineColor
+}}}
+<h4>Font Scaling</h4>
+
+
+<h2>Styling?</h2>\
+
+
+
+<h1>Styling/font/colours</h1>
+<h1>Header/Footer</h1>
+<h1>Config</h1>
+
+
+
+
+>>>> TODO!!!
+Probably a StoryInterface too
+Better intro
+Don't understand the API
+Need to double check if I can just @import in 
+
+:: StoryInterface
+<div id="sidebar" data-passage="SideBar"></div>
+<div id="passages"></div>
+
+:: SideBar 
+[the list of headers]
