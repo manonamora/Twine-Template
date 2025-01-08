@@ -23,9 +23,9 @@ This file is meant to be a one-page easy-to-search reference page for the Chapbo
 Special code to format text, based on Markdown and Twine 1.
 > If not listed, use HTML/CSS instead.
 <h3>Text Formating</h3>\
-**Bold**: {{{__Bold__}}} or {{{**Bold**}}}
-//Italics//:: {{{_Italics_}}} or {{{*Italics*}}}
-Both: {{{__*Both*__}}} or {{{_**Both**_}}} or {{{**_Both_**}}} or {{{*__Both__*}}}
+''Bold'': {{{__Bold__}}} or {{{**Bold**}}}
+//Italics//: {{{_Italics_}}} or {{{*Italics*}}}
+//''Both''//: {{{__*Both*__}}} or {{{_**Both**_}}} or {{{**_Both_**}}} or {{{*__Both__*}}}
 <span style="font-family: monospace">Monospace</span>: {{{`Monospace`}}}
 <span style="font-size: 70%; text-transform: uppercase; letter-spacing: 0.08em">Small Caps</span>: {{{~~small caps~~}}}
 Ignoring Formatting: {{{\}}} (before character) like {{{\*}}}
@@ -62,15 +62,15 @@ Must be used as follow:
 {{{[continue]}}} or {{{[cont'd]}}} or {{{[cont]}}}.
 \
 <h3>Text Alignment</h3>\
-**Center**: {{{[align center]}}}
-**Left**: {{{[align left]}}}
-**Right**: {{{[align right]}}}
+* Center: {{{[align center]}}}
+* Left: {{{[align left]}}}
+* Right: {{{[align right]}}}
 \
 <h3>Delayed Text</h3>\
-{{{[after TIME]}}}: in minutes, seconds or milliseconds
-{{{[after 1 second]}}}/{{{[after 1s]}}}
-{{{[after 200 milliseconds]}}}/{{{[after 200ms]}}}
-{{{[after 3 minutes]}}}/{{{after 3min}}}
+* {{{[after TIME]}}}: in minutes, seconds or milliseconds
+* {{{[after 1 second]}}}/{{{[after 1s]}}}
+* {{{[after 200 milliseconds]}}}/{{{[after 200ms]}}}
+* {{{[after 3 minutes]}}}/{{{after 3min}}}
 > //Notes:// BUT only [[full numbers|https://github.com/mike182uk/timestring/blob/main/README.md#keywords]]! {{{[after 1s500ms]}}}
 > Can be coupled with other modifier: {{{[after 1s; append]}}}
 \
@@ -107,17 +107,21 @@ Is formatted as:
     {cycling link for: 'variable', choices: ['Choice 1', true, 1]}
 }}}
 \
-<h3>Back/Return Link</h3>\
+<h3>Text Input</h3>\
+Output will always be a string.
 {{{
-    {back link, label: 'Some Text'}
+    {text input}
+    {text input for: 'variable'}
+    {text input for: 'secret', required: false}
 }}}
-> If {{{label}}} is not used, shows link named //Back//.
+> //Notes:// if the variable is already defined, it will show the editable value to the player.
+> Unless {{{required}}} is false, the player won't move further until the input is filled
 \
-<h3>Restart Link</h3>\
+<h3>Dropdown</h3>\
 {{{
-    {restart link, label: 'Some Text'}
+    {dropdown menu, choices: ['Choice 1', 1, true]}
+    {dropdown menu for: 'meal', choices: ['Breakfast', 'Lunch', 'Dinner']}
 }}}
-> If {{{label}}} is not used, shows link named //Restart//.
 \
 <h3>Embed Passage</h3>\
 {{{
@@ -131,13 +135,32 @@ Is formatted as:
     {embed image: 'assets/cave.jpeg', alt: 'Cave entrance'}
     {embed image: 'assets/fancy-border.jpeg', alt: ''}
 }}}
-> //Note:// Also has a specific tag for Flirk and Unsplash images ([[Documentation]]), but I'd recommend local URL, instead.
+> //Note:// Also has a specific tag for Flickr and Unsplash images ([[Documentation|https://klembot.github.io/chapbook/guide/multimedia/images.html]]), but I'd recommend local URL, instead.
 \
 <h3>Embed Video</h3>\
 Only YouTube, not auto playback or accessibility features:
 {{{
     {embed YouTube video: 'URL'}
 }}}
+\
+<h3>Back/Return Link</h3>\
+{{{
+    {back link, label: 'Some Text'}
+}}}
+> If {{{label}}} is not used, shows link named //Back//.
+\
+<h3>Restart Link</h3>\
+{{{
+    {restart link, label: 'Some Text'}
+}}}
+> If {{{label}}} is not used, shows link named //Restart//.
+\
+<h3>Theme Switcher</h3>\
+{{{
+    {theme switcher}
+    {theme switcher, darkLabel: 'Use Light Theme', lightLabel: 'Use Dark Theme'}
+}}}
+> //Note:// Most useful if you override the content of the right footer, and want to place it somewhere else.
 
 <h2>Variables</h2>\
 Definition or change in variables need to be done at the start of a passage, separated by two dashes {{{--}}}:
@@ -173,7 +196,6 @@ Booleans (true/false), Numerical (1-0), Strings (words)
         -> 'John Doe'
     check: age === 3
         -> true (or false)
-
 }}}
 > See Conditional Display (below) for full list operators
 \
@@ -196,7 +218,7 @@ Built-in dice roll/coin flipper. Add to {{{random}}}:
 * {{{.coinFlip}}} (true/false)
 * {{{.fraction}}} (0-1, decimal)
 * {{{.d4}}}, {{{.d5}}}, {{{.d6}}}, {{{.d8}}}, {{{.10}}}, {{{.12}}}, {{{.20}}}, {{{.d25}}}, {{{.d50}}}, {{{.d100}}} (full number)
-> //Note:// everytime {{{random}}} is use, it rolls a **new** number!
+> //Note:// everytime {{{random}}} is use, it rolls a ''new'' number!
 \
 <h3>Object Variables</h3>\
 {{{
@@ -229,7 +251,7 @@ Not an exhaustive list.
 ** {{{.name}}}: name of project
 
 <h2>Conditional Display</h2>\
-Formatted like an insert. **Can only be used in passage**.
+Formatted like an insert. ''Can only be used in passage''.
 {{{
     [if condition]
     [unless condition]
@@ -274,7 +296,7 @@ For all the situation not covered by the single previous {{{[if]}}}:
 }}}
 \
 <h3>Some Notes</h3>\
-Conditionals **cannot be nested**, and different {{{[if]}}} will run **independently** to the other ones. Either combine conditions (with {{{&&}}} or {{{||}}}) or create variables merging those conditions.
+Conditionals ''cannot be nested'', and different {{{[if]}}} will run ''independently'' to the other ones. Either combine conditions (with {{{&&}}} or {{{||}}}) or create variables merging those conditions.
 
 To return to the story after a conditional block is coded, use {{{[continue]}}}.
 
@@ -327,9 +349,8 @@ To bypass restriction of sounds, and create more complex effects:
 }}}
 > //Note:// the track description won't run this way. But you can use {{{<audio>}}} for this.
 
-<h2>Config</h2>\
-<h3>Config.Style</h3>\
-<h4>Page Elements<h4>\
+<h2>Config Styles</h2>\
+<h3>Page Elements</h3>\
 Chapbook HTML looks like below. All elements can be targetted in the StyleSheet. Some can be targetted through the Config.
 {{{
     <body>
@@ -344,8 +365,39 @@ Chapbook HTML looks like below. All elements can be targetted in the StyleSheet.
                             <#left><#center><#right>
 }}}
 > //Note:// By default, {{{footer#left}}} and {{{footer#right}}} are pre-filled: respectively, Project Title and Theme/Restart Link
+\
+<h3>Header and Footer</h3>\
+Each with 6 locations to fill (left, center, right). Can be pure text, embed passage, code, etc...
+{{{
+-> header
+    config.header.left: "[[About]]"
+    config.header.center: story.name
+    config.header.right: "Money left: {money}"
 
-<h4>Fonts</h4>\
+-> footer
+    config.footer.left: '{embed passage: "Saves"}'	
+    config.footer.center: '{back link}'
+    config.footer.right: '{restart link}'
+}}}
+> //Note:// Changing the right footer will remove the theme switch - which is by default defined by the user's browser's preferences (otherwise, light is default).
+<h4>Borders</h4>\
+{{{
+-> type
+    config.style.page.footer.border
+    config.style.page.header.border
+    config.style.dark.page.footer.border
+    config.style.dark.page.header.border
+        -> 'none', 'thin-line', 'thick-line'
+
+-> color
+    config.style.page.footer.borderColor
+    config.style.page.header.borderColor
+    config.style.dark.page.footer.borderColor
+    config.style.dark.page.header.borderColor
+}}}
+> //Note:// yeah, you can indicate a different type for either theme. See below for colours.
+\
+<h3>Fonts</h3>\
 Will accept any font the user has or is imported (StyleSheet). Include stacks when possible.
 {{{
     config.style.page.font: 'font size type'
@@ -355,25 +407,32 @@ Will accept any font the user has or is imported (StyleSheet). Include stacks wh
 }}}
 Following elements can change their fonts:
 {{{
+-> main section
     config.style.page.font
     config.style.page.link.font
     config.style.page.link.active.font
 
+-> header
     config.style.page.header.font
     config.style.page.header.link.font
     config.style.page.header.link.active.font
+
+-> footer
+    config.style.page.footer.font
+    config.style.page.footer.link.font
+    config.style.page.footer.link.active.font
 }}}
-<h5>Import Fonts (Google)</h5>\
+<h4>Import Fonts (Google)</h4>\
 {{{
     config.style.googleFont: 'embed code <link> with stylesheet'
     config.style.googleFont: '<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">'
 }}}
-<h5>Import Fonts (TypeKit/Adobe)</h5>\
+<h4>Import Fonts (TypeKit/Adobe)</h4>\
 {{{
     config.style.typekitFont: 'embed code <link> with stylesheet'
     config.style.typekitFont: '<link rel="stylesheet" href="https://use.typekit.net/abdefgh.css">'
 }}}
-<h5>Import Fonts (Local)</h5>\
+<h4>Import Fonts (Local)</h4>\
 {{{
     config.style.fonts.[tag].[url/name]
 
@@ -381,8 +440,8 @@ Following elements can change their fonts:
     config.style.fonts.leagueSpartan.name: 'League Spartan'
 }}}
 > //Note:// You can also simply use the {{{@import}}} or {{{@font-family}}} CSS rules in the StyleSheet to import fonts.
-
-<h4>Colours</h4>\
+\
+<h3>Colours</h3>\
 Chapbook uses the [[Reasoable Colors|https://www.reasonable.work/colors/]] palette. Code for the hues and shades are tabled in the [[documentation|https://klembot.github.io/chapbook/guide/customization/fonts-and-colors.html#colors]]. But it will also accept other notations (e.g. HEX or HSLA).
 {{{
     config.style.backdrop: 'red-1' 
@@ -391,6 +450,7 @@ Chapbook uses the [[Reasoable Colors|https://www.reasonable.work/colors/]] palet
 }}}
 Following elements can change colour (incl. dark theme):
 {{{
+-> light theme
     config.style.backdrop
     config.style.page.color
     config.style.page.link.color
@@ -398,6 +458,7 @@ Following elements can change colour (incl. dark theme):
     config.style.page.link.active.color
     config.style.page.link.active.lineColor
 
+-> dark theme
     config.style.dark.backdrop
     config.style.dark.page.color
     config.style.dark.page.link.color
@@ -405,29 +466,187 @@ Following elements can change colour (incl. dark theme):
     config.style.dark.page.link.active.color
     config.style.dark.page.link.active.lineColor
 }}}
-<h4>Font Scaling</h4>
+You can also define the default theme with or disable switching:
+{{{
+    config.style.page.theme.override
+        -> 'light', 'dark', [anything else will be system based]
+    
+    config.style.page.theme.enableSwitching
+        -> false, true
+}}}
+> //Note:// if {{{enableSwitching}}} is disabled, any instance of {{{ {theme switcher} }}} will be hidden, and the Light Theme will only be used.
+\
+<h3>Page Styling</h3>\
+Other elements that can be targetted. Default is last option listed.
+> //Page Border//
+{{{
+    config.style.page.style.border
+        -> 'none', 'thin-line', 'thick-line', 'shadow'
+    -> if line is selected
+        config.style.page.style.borderColor
+        config.style.dark.page.style.borderColor
+}}}
+> //Page Transition//
+{{{
+    config.body.transition.name
+        -> 'none', 'fadeInOut', 'crossfade'
+    -> if other than 'none'
+        config.body.transition.duration
+}}}
+> //Vertical Alignment//: where text is displayed by default
+{{{
+    config.style.page.verticalAlign
+        -> 'top', 'bottom', 'center'
+}}}
+> //Fork Styling//
+{{{
+    config.style.page.fork.divider.style
+        -> 'dashed', 'double', 'solid', 'none', 'dotted'
+    -> if other than 'none'
+        config.style.page.fork.divider.size 
+        config.style.page.fork.divider.color
+}}}
+\
+<h3>Font Scaling</h3>\
+Font is scaled depending on screen size. Essentially increase the font size as the user's browser window widens.
+To disable it:
+{{{
+    config.style.fontScaling.enabled: false
+}}}
+Other scaling configs:
+{{{
+    config.style.fontScaling.baseViewportWidth (in px)
+        -> default is 1000
+    config.style.fontScaling.addAtDoubleWidth (in px)
+        -> default is 6
+    config.style.fontScaling.maximumSize (any unit)
+}}}
+> //Note:// if one of those configs is not set correctly, none will work.
+
+<h2>Custom Code</h2>\
+For Advanced users, as recommended. But go wild!
+\
+<h3>JavaScript</h3>\
+As replacement for {{{<script>}}}. Avoid until last resort. Or because you want to do code crimes :P
+Example:
+{{{
+    [JavaScript]
+      document.title = 'A Sticky Pickle';
+    [continue]
+      Until page is refreshed, the tab's name will be named 'A Sticky Pickle'
+}}}
+<h4>JavaScript Output</h4>\
+Done with the function {{{write()}}}. 
+Example will list numbers on page:
+{{{
+    [JavaScript]
+    for (let i = 1; i <= 10; i++) {
+        write(i + '... ');
+    }
+}}}
+Defined variables can also be used, with {{{ ${var} }}}:
+{{{
+    [JavaScript]
+    write(`The sky is ${color}.`);
+}}}
+<h4>Define Variables with JavaScript</h4>\
+With the {{{engine.state}}} API:
+{{{
+    [JavaScript]
+    engine.state.set('weather', 'sunny');
+        -> {weater} prints as sunny
+}}}
+<h4>CSS and Styling</h4>\
+As replacement for {{{<style>}}}. Only works for one passage.
+{{{
+    [CSS]
+    #page article {
+        color: green;
+    }
+
+}}}
+\
+<h3>Custom Insert</h3>\
+Done with {{{engine.extend()}}} function (required to check Chapbook version), and {{{engine.template}}} API. Best to put in your JavaScript. To print custom text on the page. 
+Example below is for a basic display of an emoji:
+{{{
+    engine.extend('2.0.0', () => {
+        engine.template.inserts.add({
+            match: /^smiley face$/i,
+            render: () => '😀'
+        });
+    });
+
+    -> creates the insert {smiley face}
+}}}
+You can up the complexity, adding parameters to the insert, and even parsing the value of variable. This can be quite useful for things like player/NPC pronouns (outside of variables).
+> //Note:// Knowledge of [[Chapbook's API|https://klembot.github.io/chapbook/api/index.html]] is highly recommended!
+\
+<h3>Custom Modifers</h3>\
+Done with {{{engine.extend()}}} function (required to check Chapbook version), and {{{engine.template}}} API. Best to put in your JavaScript.
+Example below will format the text into uppercase:
+{{{
+    engine.extend('2.0.0', () => {
+        engine.template.modifiers.add({
+            match: /^uppercase$/i,
+            process(output) {
+            output.text = output.text.toUpperCase();
+            }
+        });
+    });
+
+    -> creates the modifier [uppercase]
+}}}
+Aside from changing the text formatting, you could even change the content of the text (ex: removing letters) or create new logics.
+> //Note:// Knowledge of [[Chapbook's API|https://klembot.github.io/chapbook/api/index.html]] is highly recommended!
+
+<h2>That's the End!</h2>
+If you've gotten this far... hello!
+
+Go throw some money at Chris Klimas for creating Chapbook and making a dope-ass [[guide|https://klembot.github.io/chapbook/guide/]] for the format that is super comprehensive. And essentially making a format that's easy to get into! And also, for maintaining the Twine engine. Here's his [[Patreon|https://www.patreon.com/klembot]].
 
 
-<h2>Styling?</h2>\
-
-
-
-<h1>Styling/font/colours</h1>
-<h1>Header/Footer</h1>
-<h1>Config</h1>
-
-
-
-
->>>> TODO!!!
-Probably a StoryInterface too
-Better intro
-Don't understand the API
-Need to double check if I can just @import in 
-
-:: StoryInterface
-<div id="sidebar" data-passage="SideBar"></div>
-<div id="passages"></div>
-
-:: SideBar 
+:: StoryCaption
 [the list of headers]
+<a>Chabook</a>
+<a>Markup</a>
+<a>Modifiers</a>
+<a>Inserts</a>
+<a>Variables</a>
+<a>Conditional Display</a>
+<a>Audio</a>
+<a>Config Styles</a>
+<a>Custom Code</a>
+[Add the logo of Chapbook as Banner]
+
+:: StyleSheet [stylesheet]
+
+/* Inline #15 | https://twinery.org/2/#/stories/253368d7-4c33-4791-ba70-41a5cc46603f/play */
+
+#menu {
+  display: none;
+}
+
+#ui-bar-tray {
+}
+
+#ui-bar-history {
+  display: none;
+}
+
+/* Inline #12 | https://twinery.org/2/#/stories/253368d7-4c33-4791-ba70-41a5cc46603f/play */
+
+#ui-bar-body {
+  /* margin: 2.5em 0; */
+  margin: 1.5em 0;
+}
+
+
+:: TODO!!
+- Cross all the TODOs
+- add ID-s to all headers
+- add header link to sidebar 
+- add Chapbook logo to the Banner
+- finish Styling (maybe add a light mode?)
+- final run/read
+- publish
