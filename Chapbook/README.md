@@ -1,16 +1,14 @@
-# ========* Harlowe Templates *========
-This section hosts a number of Harlowe templates, both code-focused and UI (interface) focused.\
-The templates were created for 3.3.9, but *should* work with most Harlowe 3 versions (and potentially Harlowe 2 for the UI).
+# ========* Chapbook Templates *========
+This section hosts a number of Chapbook templates, both code-focused and UI (interface) focused.\
+The templates were created for 2.3.0, but *should* work with most Chapbook 2 versions.
 
 The directory of this section is organised as follow:
+* Reference Page
 * Code Templates
-  * Save System and Settings (also a Guide)
+  * Quick Config Template (WIP)
+  * Save System
     * Source Code Folder
-* UI Templates
-  * One Page (Chapbook-like)
-    * Source Code Folder
-    * Downloadable HTML
-  * Fixed SideBar (SugarCube-like - TBD)
+* UI Templates (TBD - not sure if doable? Maybe it'll be just vibes/themes)
 
 ## FORE-WARNING
 **All the templates have the same IFID (per format)!**\
