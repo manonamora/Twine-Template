@@ -12,17 +12,19 @@ Chapbook Reference Page
 
 :: Start 
 <h1>The Chapbook Reference Page</h1>\
-    TODO: better intro
-This file is meant to be a one-page easy-to-search reference page for the Chapbook format of Twine. It lists all the code mentioned in the [[Chapbook Official Guide|https://klembot.github.io/chapbook/guide]], but does not explain its use or intricacies. Check the really well done Guide instead!
-> This Reference page does not include any API or engine code. Check the [[Technical Documentation|https://klembot.github.io/chapbook/api/]] instead.
+The //Chapbook Reference Page// is a one-page document referencing all the markups, inserts, modifiers and configs mentioned in the Official [[Chapbook Guide|https://klembot.github.io/chapbook/guide]]. 
+This is not meant as an alternative guide for the format, since the official documentation is already top-notch. If you need explanations on how to use any of the code below, read the guide instead!
+> This Reference Page does not include any APIs available in Chapbook but not mentioned in the guide. You can find all the advanced APIs in the [[Technical Documentation|https://klembot.github.io/chapbook/api/]].
 
-<h2>Chapbook</h2>\
-    TODO: Intro about Chapbook I guess
+<h2 id="chapbook">Chapbook</h2>\
+Chapbook is a coding format created by [[Chris Klimas|https://www.patreon.com/klembot]] for Twine 2. This format was designed to be "easy to work with as an author and generate output that is a pleasure to read by players". It is recommended for new users, since it does not require any programming knowledge (unless you are attempting advanced stuff, read up on CSS and JavaScript), while still allowing for customisation.
 
-<h2>Markup</h2>\
+If you are new to the format, you will want to start with the [[Official Guide|https://klembot.github.io/chapbook/guide]], which goes step by step through the process of story creation.
+
+<h2 id="markup">Markup</h2>\
 Special code to format text, based on Markdown and Twine 1.
 > If not listed, use HTML/CSS instead.
-<h3>Text Formating</h3>\
+<h3 id="m-text">Text Formating</h3>\
 ''Bold'': {{{__Bold__}}} or {{{**Bold**}}}
 //Italics//: {{{_Italics_}}} or {{{*Italics*}}}
 //''Both''//: {{{__*Both*__}}} or {{{_**Both**_}}} or {{{**_Both_**}}} or {{{*__Both__*}}}
@@ -31,26 +33,26 @@ Special code to format text, based on Markdown and Twine 1.
 Ignoring Formatting: {{{\}}} (before character) like {{{\*}}}
 > //Note:// Does not work inside {{{[[Links]]}}}, See TODO: link insert.
 \
-<h3>Breaks</h3>\
-Line breaks: {{{‎‎}}} (two-space) or {{{\}}} at the end of the line
-Section/Scene: {{{***}}} (own line)
+<h3 id="m-breaks">Breaks</h3>\
+Line breaks (removes {{{<br>}}}): {{{‎‎}}} (two-space) or {{{\}}} at the end of the line
+Section/Scene (adds {{{<hr>}}}): {{{***}}} (own line)
 \
-<h3>Lists</h3>\
+<h3 id="m-lists">Lists</h3>\
 Bulletted: {{{* Text}}} or {{{- Text}}} or {{{+ Text}}}
 Numbered: {{{# Text}}} or {{{1. Text}}}
 \
-<h3>Links</h3>\
+<h3 id="m-links">Links</h3>\
 {{{[[PassageName]]}}} or {{{[[Text|PassageName]]}}} or {{{[[Text->PassageName]]}}} or {{{[[PassageName<-Text]]}}}
 > Also works with External links (Web URL)
 \
-<h3>Forks</h3>\
+<h3 id="m-forks">Forks</h3>\
 Or: Special Choice Options Styling.
 {{{
     > [[Link 1]]
     > [[Link 2]]
 }}}
 
-<h2>Modifiers</h2>\
+<h2 id="modif">Modifiers</h2>\
 Similar to macros, not interactive.
 Must be used as follow:
 {{{
@@ -58,7 +60,7 @@ Must be used as follow:
     Text to continue
 }}}
 \
-<h3>Cancel Previous Modifier</h3>\
+<h3 id="continue">Cancel Previous Modifier</h3>\
 {{{[continue]}}} or {{{[cont'd]}}} or {{{[cont]}}}.
 \
 <h3>Text Alignment</h3>\
@@ -607,10 +609,16 @@ Go throw some money at Chris Klimas for creating Chapbook and making a dope-ass 
 
 
 :: StoryCaption
-[the list of headers]
-<a>Chabook</a>
-<a>Markup</a>
-<a>Modifiers</a>
+//Table of Content//
+<a href="#chapbook">Chabook</a>
+<a href="#markup">Markup</a>
+    <a href="#m-text">Text Formatting</a>
+    <a href="#m-breaks">Breaks</a>
+    <a href="#m-lists">Lists</a>
+    <a href="#m-links">Links</a>
+    <a href="#m-forks">Forks</a>
+<a href="#modif">Modifiers</a>
+    <a href="#continue">Cancel Previous Modifier</a>
 <a>Inserts</a>
 <a>Variables</a>
 <a>Conditional Display</a>
