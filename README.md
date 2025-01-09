@@ -3,6 +3,7 @@ This Repo includes Twine and Twine-related templates and code.
 
 The directory of this repository is organised as follow:
 * Chapbook
+  * Reference Page
   * Code Template
     * Save Export/Import (ft [Maliface](https://github.com/MalifaciousGames))
 * Harlowe

@@ -3,6 +3,8 @@ h1 {
 }
 code {
   font-size: 75%;
+  background: #007f5f6b;
+  padding: 2px 2px;
 }
 
 #popup-save {
@@ -77,7 +79,7 @@ code {
 
 
 
-#popup-save import-link.link, #popup-save export-link.link {
+#popup-save a[data-save] {
   text-decoration: none;
   font-size: 110%;
   padding: 1%;
@@ -86,7 +88,7 @@ code {
   border-bottom: 1px solid red;
   border-radius: 4px;
 }
-#popup-save import-link.link:hover, #popup-save export-link.link:hover {
+#popup-save a[data-save]:hover {
   border: 1px solid;
   border-left: 1px dotted;
   border-bottom: 1px dotted;
@@ -95,18 +97,24 @@ code {
   font-size: 110%;
 }
 
-#popup-save import-link.link::before {
+#popup-save a[data-save]::before {
+  color: red;
+  padding-right: 3px
+}
+#popup-save a[data-save="import"]::before {
   content: "⇓";
-  color: red;
 }
-
-#popup-save export-link.link::before {
+#popup-save a[data-save="export"]::before {
   content: "⇑";
-  color: red;
 }
 
-#popup-save import-link.link:hover::before, #popup-save export-link.link:hover::before {
+#popup-save a[data-save]:hover::before {
   color: var(--page-color);
 }
 
 
+#example a[data-save="export"] {
+  color: green; 
+  text-decoration:none; 
+  border: 1px solid red;
+}

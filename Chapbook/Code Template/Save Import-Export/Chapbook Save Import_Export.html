@@ -223,6 +223,8 @@ ${i}`),b(i)}function $e(n,e=!1){return Ko(zo(n),An(),Pn(),e)}class Yo extends fe
 }
 code {
   font-size: 75%;
+  background: #007f5f6b;
+  padding: 2px 2px;
 }
 
 #popup-save {
@@ -297,7 +299,7 @@ code {
 
 
 
-#popup-save import-link.link, #popup-save export-link.link {
+#popup-save a[data-save] {
   text-decoration: none;
   font-size: 110%;
   padding: 1%;
@@ -306,7 +308,7 @@ code {
   border-bottom: 1px solid red;
   border-radius: 4px;
 }
-#popup-save import-link.link:hover, #popup-save export-link.link:hover {
+#popup-save a[data-save]:hover {
   border: 1px solid;
   border-left: 1px dotted;
   border-bottom: 1px dotted;
@@ -315,121 +317,182 @@ code {
   font-size: 110%;
 }
 
-#popup-save import-link.link::before {
+#popup-save a[data-save]::before {
+  color: red;
+  padding-right: 3px
+}
+#popup-save a[data-save="import"]::before {
   content: "⇓";
-  color: red;
 }
-
-#popup-save export-link.link::before {
+#popup-save a[data-save="export"]::before {
   content: "⇑";
-  color: red;
 }
 
-#popup-save import-link.link:hover::before, #popup-save export-link.link:hover::before {
+#popup-save a[data-save]:hover::before {
   color: var(--page-color);
 }
 
 
-</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* Maliface's Chapbook Save custom code 
-	https://github.com/MalifaciousGames
+#example a[data-save="export"] {
+  color: green; 
+  text-decoration:none; 
+  border: 1px solid red;
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* Maliface's Chapbook Save custom code 
+	https://github.com/MalifaciousGames/Mali-s-Scripts/blob/main/chapbook-scripts
 */
-window.chapbookSave = {
+; {
+   window.SaveSystem = {
 
-   get fileName() {
-      const [m, date, hour] = new Date().toJSON().match(/(.+)T(.+)(?=\.)/);
-      return engine.story.name() + '-save-' + date + '-' + hour;
-   },
-   extension: '.tw-save',
+      config: {
+         fileName: null, // a string or function that returns one
+         extension: '.tw-save', // the file's extension
+         encoded: true, // whether the save is encoded to base64 (larger but not human-readable)
+         version: null, // the game version, can be anything
+         metadata: null, // arbitrary data or a function that returns it
 
-   export(encode = true) {
+         // where you put callbacks responsible for updating saves from older versions of CHAPBOOK
+         engineUpdaters: [],
 
-      let json = JSON.stringify({
-         ifid: engine.story.ifid(),
-         state: engine.state.saveToObject()
-      });
+         // where you put callbacks responsible for updating saves from older GAME versions
+         gameUpdaters: []
+      },
 
-      if (encode) json = btoa(json.replace(/[^\x00-\x7F]/g, m => `UNI(${m.codePointAt(0)})`));
+      getFileName(saveData) {
 
-      const url = URL.createObjectURL(new Blob([json], { type: 'text/plain' })),
-         link = document.createElement('a');
+         switch (typeof this.config.fileName) {
+            case 'string': return this.config.fileName;
+            case 'function': return this.config.fileName.call(null, saveData);
+         }
 
-      link.href = url;
-      link.download = this.fileName + this.extension;
-      link.click();
+         const [m, date, hour] = new Date().toJSON().match(/(.+)T(.+)(?=\.)/);
+         return engine.story.name() + '-save-' + date + '-' + hour;
+      },
 
-      requestAnimationFrame(() => URL.revokeObjectURL(url));
-   },
+      // where we store states
+      lastState: null,
+      currentState: engine.state.saveToObject(),
 
-   decode(json) {
+      export() {
 
-      //is encoded
-      if (json[0].trim() !== '{') json = atob(json).replace(/UNI\((\d+)\)/g, (m, n) => String.fromCodePoint(n));
+         const saveObject = {
+            game: {
+               ifid: engine.story.ifid(),
+               version: this.config.version
+            },
+            state: this.lastState ?? this.currentState ?? engine.state.saveToObject(),
+            chapbook: {
+               version: engine.version
+            }
+         };
 
-      let data;
-      try {
-         data = JSON.parse(json);
-      } catch (e) {
-         throw new Error(`Couldn't parse file into a usable object. Save file broken.`);
+         // push current passage to last turn's state so it runs and plays properly
+         saveObject.state.trail ??= [];
+         saveObject.state.trail.push(engine.state.get('trail').at(-1));
+
+         // set metadata
+         if (typeof this.config.metadata === 'function') {
+            saveObject.metadata = this.config.metadata.call(null, saveObject);
+         } else if (this.config.metadata) {
+            saveObject.metadata = this.config.metadata;
+         }
+
+         let json = JSON.stringify(saveObject);
+
+         if (this.config.encoded) json = btoa(json.replace(/[^\x00-\x7F]/g, m => `u<(${m.codePointAt(0)}>`));
+
+         const url = URL.createObjectURL(new Blob([json], { type: 'text/plain' })), link = document.createElement('a');
+
+         link.href = url;
+         link.download = this.getFileName() + this.config.extension;
+         link.click();
+
+         requestAnimationFrame(() => URL.revokeObjectURL(url));
+      },
+
+      import() {
+         const input = document.createElement('input');
+
+         input.type = 'file';
+         input.accept = this.extension;
+
+         input.onchange = () => {
+            const reader = new FileReader();
+            reader.onload = () => this.saveHandler(reader.result);
+            reader.readAsText(input.files[0]);
+         };
+
+         input.click();
+      },
+
+      saveHandler(json) {
+         // we receive the FileReader's results
+
+         // decode if needed
+         if (json.trim()[0] !== '{') json = atob(json).replace(/u<(\d+)>/g, (m, n) => String.fromCodePoint(n));
+
+         let data;
+         try {
+            data = JSON.parse(json);
+         } catch (e) {
+            throw new Error(`Save file could not be parsed into a usable object, sorry.`);
+         }
+
+         const { game, state, chapbook } = data;
+
+         // sanity checks
+         if (!state) throw new Error(`Save file is lacking a state object, something went very wrong.`);
+         if (game.ifid !== engine.story.ifid()) throw new Error(`Save file does not come from this game.`);
+
+         // was made in an older version of chapbook, call the updaters if any
+         if (chapbook.version !== engine.version && this.config.engineUpdaters?.length) {
+            for (const cb of this.config.engineUpdaters) cb.call(null, data, chapbook.version, engine.version);
+         }
+
+         // came from an older version of the game, update
+         if (game.version !== this.config.version && this.config.gameUpdaters?.length) {
+            for (const cb of this.config.gameUpdaters) cb.call(null, data, game.version, this.config.version);
+         }
+
+         try {
+            engine.state.restoreFromObject(state);
+         } catch (e) {
+            throw new Error(`Chapbook was unable to restore the saved state, this is an internal error.`);
+         }
+
       }
+   };
 
-      if (data.ifid !== engine.story.ifid()) throw new Error(`Save file comes from another game!`);
+   engine.extend('2.0.0', () => {
 
-      return data;
-   },
+      window.addEventListener('body-content-change', () => {
+         SaveSystem.lastState = structuredClone(SaveSystem.currentState);
+         SaveSystem.currentState = engine.state.saveToObject();
+      });
 
-   import() {
+      window.addEventListener('click', e => {
+         const type = e.target.getAttribute('data-save');
+         if (type) {
+            SaveSystem[type]();
+         }
+      });
 
-      const dataHandler = data => {
-         engine.state.restoreFromObject(this.decode(data).state);
-      };
+      engine.template.inserts.add({
+         match: /^load save/i,
+         render(label) {
+            return `<a class="link" tabindex="0" role="link" data-save="import">${label ?? 'Load from file'}</a>`;
+         }
+      });
 
-      const input = document.createElement('input');
+      engine.template.inserts.add({
+         match: /^save to file/i,
+         render(label) {
+            return `<a class="link" tabindex="0" role="link" data-save="export">${label ?? 'Save to file'}</a>`;
+         }
+      });
 
-      input.type = 'file';
-      input.accept = this.extension;
-
-      input.onchange = () => {
-         const reader = new FileReader();
-         reader.onload = () => dataHandler(reader.result);
-         reader.readAsText(input.files[0]);
-      };
-
-      input.click();
-   }
+   });
 };
-
-
-customElements.define('import-link', class extends HTMLElement {
-   constructor() {
-      super();
-
-      this.addEventListener('click', () => chapbookSave.import());
-      this.addEventListener('keyup', e => {
-         if (e.key === 'Enter') chapbookSave.import();
-      });
-
-      this.setAttribute('tabindex', '0');
-      this.setAttribute('role', 'link');
-      this.setAttribute('title', 'Load game from file');
-      this.classList.add('link');
-   }
-});
-
-customElements.define('export-link', class extends HTMLElement {
-   constructor() {
-      super();
-
-      this.addEventListener('click', () => chapbookSave.export());
-      this.addEventListener('keyup', e => {
-         if (e.key === 'Enter') chapbookSave.export();
-      });
-
-      this.setAttribute('tabindex', '0');
-      this.setAttribute('role', 'link');
-      this.setAttribute('title', 'Download save file');
-      this.classList.add('link');
-   }
-});
+/* End of save system */
 
 /* Custom functions for this template to display/hide the Saves Popup */
 window.setup = {};
@@ -448,54 +511,78 @@ This template showcases the use of an Import/Export save function for Chapbook, 
 
 The JavaScript code used in this template was created by [[Maliface-&gt;https://maliface.itch.io/]] ([[Ko-Fi-&gt;https://ko-fi.com/malifaciousgames]]). 
 
-&lt;center&gt;[[Quick Guide on Saves]]&lt;br&gt;
-[[Install and Use the Code]]&lt;br&gt;
-[[JavaScript code]] &lt;/center&gt;</tw-passagedata><tw-passagedata pid="2" name="Install and Use the Code" tags="" position="750,425" size="100,100">&lt;h1&gt;Install and Use the Code&lt;/h1&gt;
+&gt; [[Quick Guide on Saves]]
+&gt; [[Install and Use the Code]]</tw-passagedata><tw-passagedata pid="2" name="Install and Use the Code" tags="" position="750,425" size="100,100">&lt;h1&gt;Install and Use the Code&lt;/h1&gt;
 &lt;h3&gt;Installing the JavaScript&lt;/h3&gt;
 
-To include **Maliface&#39;s Chapbook Save** in your project, you will need to copy the needed [[JavaScript code]] and paste it in the JavaScript section of your project. &lt;!--The code is also available in the JavaScript of this template--&gt;
+To include **Maliface&#39;s Chapbook Save** in your project, you will need to copy the needed [[JavaScript code|https://github.com/MalifaciousGames/Mali-s-Scripts/tree/main/chapbook-scripts/save-system]] (either .js version) and paste it in the JavaScript section of your project. &lt;!--The code is also available in the JavaScript of this template--&gt;
 
-From there, you can place the custom import/export elements wherever you need it.
+From there, you can place the custom save/load inserts wherever you need it.
 
-&lt;h3&gt;Setting the Custom Elements&lt;/h3&gt;
+&lt;h3&gt;Setting the Custom Inserts&lt;/h3&gt;
+The Save and Load inserts must be coded as follow:
+&lt;pre&gt;&lt;code&gt;    {&amp;#8203;save to file&amp;#8203;}
+    {&amp;#8203;save to file: &#39;Optional Text Link&#39;&amp;#8203;}
+    {&amp;#8203;save to file: &#39;EXPORT&#39;&amp;#8203;}
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;    {&amp;#8203;load save&amp;#8203;}
+    {&amp;#8203;load save: &#39;Optional Text Link&#39;&amp;#8203;}
+    {&amp;#8203;load save: &#39;IMPORT&#39;&amp;#8203;}
+&lt;/code&gt;&lt;/pre&gt;
+Unless a custom text is indicated, the inserts will look like this:&lt;br&gt;
+{save to file} - {load save}
 
-The Import and Export elements are comprised of two needed elements:
-* the container tag (&lt;code&gt;&amp;lt;import-link&amp;gt &amp;lt;/import-link&amp;gt&lt;/code&gt; or &lt;code&gt;&amp;lt;export-link&amp;gt &amp;lt;/export-link&amp;gt&lt;/code&gt;)
-* the displayed text (ex: Import or EXPORT)
-
-For examples:&lt;br&gt;
-&lt;code&gt;&amp;lt;import-link&amp;gtIMPORT&amp;lt;/import-link&amp;gt&lt;/code&gt; → &lt;import-link&gt;IMPORT&lt;/import-link&gt;&lt;br&gt;
-&lt;code&gt;&amp;lt;export-link&amp;gtexport&amp;lt;/export-link&amp;gt&lt;/code&gt; → &lt;export-link&gt;export&lt;/export-link&gt;
-
-&lt;h4&gt;Options for placement&lt;/h4&gt;
+&lt;h4&gt;Placement Options&lt;/h4&gt;
 
 Because those elements can be coded anywhere on the page, whether it be in the story passage or in the [[Header and/or Footer-&gt;https://klembot.github.io/chapbook/guide/customization/header-and-footer.html]], where to place them will depend on how accessible for the plater you want the functionality to be.
 
-Including Import/Export points in the Header/Footer will mean the player will be able to save/load their playthrough at any point of the story. You also only need to code it once, at the start of the game/story.&lt;br&gt;
-For example: &lt;code&gt;config.header.center: &quot;&amp;lt;export-link&amp;gtEXPORT&amp;lt;/export-link&amp;gt | &amp;lt;import-link&amp;gtIMPORT&amp;lt;/import-link&amp;gt&quot;&lt;/code&gt;
+Including Save/Load points in the Header/Footer will mean the player will be able to save/load their playthrough at any point of the story. You also only need to code it once, at the start of the game/story.&lt;br&gt;
+For example: &lt;code&gt;config.header.center: &quot;{&amp;#8203;save to file&amp;#8203;} | {&amp;#8203;load save&amp;#8203;}&quot;&lt;/code&gt;
 
 However, if you only want players to save a specific moments of the story (like the start of a new chapter), you may want to code those Import/Export points directly on those passages. This mean you will have to code the elements every time is needed.
 
 Which ever option you end up choosing, I would also recommend having an Import point at the **start of game/in the title page** (for transfered save files or emptied cache).
 
-&lt;blockquote&gt;&lt;i&gt;Note:&lt;/i&gt; this template coded the Import/Export points in the middle footer, but customised it further by creating a modal pop-up (JavaScript, HTML/CSS).&lt;/blockquote&gt;
+&lt;blockquote&gt;&lt;i&gt;Note:&lt;/i&gt; this template coded the Save/Load points in the middle footer, but customised it further by creating a modal pop-up (JavaScript, HTML/CSS).&lt;/blockquote&gt;
 
-&lt;h3&gt;Styling the Custom Elements&lt;/h3&gt;
+&lt;h3&gt;Styling the Custom Inserts&lt;/h3&gt;
 
-While the custom elements are displayed as links by default, you can style them so they can be differentiated further from regular links.&lt;br&gt;
-For example: &lt;export-link style=&quot;color: green; text-decoration:none; border: 1px solid red&quot;&gt;Export&lt;/export-link&gt;
+While the custom inserts are displayed as links by default (and will be affected by any [[config.style|https://klembot.github.io/chapbook/guide/customization/index.html]] you coded in your project), you can style them so they can be differentiated further from regular links.&lt;br&gt;
+For example: &lt;span id=&quot;example&quot;&gt;{save to file: &#39;EXPORT&#39;}&lt;/span&gt;
 
-There are multiple ways of doing this:
-* **in-line styling**, by using the &lt;code&gt;style&lt;/code&gt; attribute:&lt;br&gt;
-&lt;code&gt;&amp;lt;export-link style=&quot;color:green&quot;&amp;gt&lt;/code&gt;
-* **in the StyleSheet**, by targetting the container tag:&lt;br&gt;
-&lt;code&gt;#page import-link.link {color: red}&lt;/code&gt;
+You can target all custom insterts with the &lt;code&gt;[data-save]&lt;/code&gt; attribute, like this:
+&lt;pre&gt;&lt;code&gt;[data-save] {border: 1px solid white;}&lt;/code&gt;&lt;/pre&gt;
+Or differentiate it further, by selecting either of its value:
+&lt;pre&gt;&lt;code&gt;    [data-save=&quot;export&quot;] {font-size: 150%}
+	[data-save=&quot;import&quot;] {font-weight: bold}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;&lt;i&gt;Warning:&lt;/i&gt; Chapbook will override certain styling rules (like colour or text-decoration), because of how the format style its links.&lt;/blockquote&gt;
+
+To get around this, you can:
+* add the relevant ID/class/elements before the attribute:&lt;br&gt;
+&lt;code&gt;#page &gt; header .link[data-save] {color: purple;}&lt;/code&gt; if in header&lt;br&gt;
+&lt;code&gt;#page .link[data-save] {color: yellow;}&lt;/code&gt; if in story&lt;br&gt;
+&lt;code&gt;#page &gt; footer .link[data-save] {color: grey;}&lt;/code&gt; if in footer
+
+This options is by far the easiest and least prone to coding error. You simply need to take into account where you are placing the insert (in the header/footer or not). This will affect all the custom save/load inserts in your project.
+
+* wrap your inserts with an another element:&lt;br&gt;
+&lt;code&gt;&lt;&amp;#8203;span id=&quot;export&quot;&gt;{&amp;#8203;save to file&amp;#8203;}&lt;&amp;#8203;/span&gt;&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;#export [data-save] {color: red;}&lt;/code&gt;
+
+This is more or less what this template uses, because it made it easier to track it in the StyleSheet considering the other customisation made. This way allows you to affect all the custom inserts in your project (if all have the same ID/Class), or target singular ones (if you give them a different ID/Class).
+
+* edit the JavaScript code to replace &lt;code&gt;class=&quot;link&quot;&lt;/code&gt; with something custom:&lt;br&gt;
+&lt;code&gt;&lt;&amp;#8203;a class=&quot;export&quot; tabindex=&quot;0&quot; role=&quot;link&quot; data-save=&quot;export&quot;&gt;&lt;/code&gt;
+&lt;code&gt;.export {color: red;}&lt;/code&gt;
+
+This last one allows you to style the custom inserts from scratch, but you will need to edit the custom JavaScript yourself (every time you copy it from the Github Repo). While the edit is fairly minimal, I wouldn&#39;t recommend this option if you don&#39;t feel comfortable editing the code. It will also affect all the custom inserts in your project.
 
 &lt;blockquote&gt;&lt;i&gt;Warning:&lt;/i&gt; Since Chapbook is built with a Theme Change, you will either need to ensure that the styling can be accessible in both palettes, or dive into the Chapbook built-in StyleSheet to get the variable names of the dynamic colours &lt;br&gt;(ex: &lt;code&gt;var(--page-link-color)&lt;/code&gt;)&lt;/blockquote&gt;
 
-~ [[Return to the Start-&gt;Start]]
+&gt; [[Quick Guide on Saves]]
+&gt; [[Return to the Start-&gt;Start]]
 
-&lt;!--&amp;lt; and &amp;gt; are here only because &lt;code&gt; wasn&#39;t displaying the code properly on the page. Please use &lt; and &gt; when you code.--&gt;
+&lt;!--a bunch of &amp;#8203; are here only because &lt;code&gt; wasn&#39;t displaying the code properly on the page. They create a fake invisible space so the code doesn&#39;t create the insert..--&gt;
 </tw-passagedata><tw-passagedata pid="3" name="Saves" tags="" position="950,300" size="100,100">&lt;p id=&quot;save-menu&quot; class=&quot;link&quot; onclick=&quot;setup.showSaves(&#39;popup-save&#39;)&quot;&gt;SAVES&lt;/p&gt;
 &lt;div id=&quot;popup-save&quot; style=&#39;display:none;visibility: hidden;&#39;&gt;
 	&lt;div id=&quot;popup-save-wrapper&quot;&gt;
@@ -505,7 +592,7 @@ There are multiple ways of doing this:
   		&lt;/div&gt;
 		&lt;div id=&quot;popup-body&quot;&gt;
         	&lt;p&gt;Here, you will be able to save and download your current progress, or load a pre-existing save file!&lt;/p&gt;
-			&lt;import-link&gt; Import &lt;/import-link&gt; - &lt;export-link&gt; Export &lt;/export-link&gt;
+			{load save} - {save to file}
     	&lt;/div&gt;
 	&lt;/div&gt;
 &lt;/div&gt;
@@ -521,7 +608,7 @@ There are multiple ways of doing this:
 --&gt;
 </tw-passagedata><tw-passagedata pid="4" name="Quick Guide on Saves" tags="" position="625,425" size="100,100">&lt;h1&gt;Quick Guide on Saves&lt;/h1&gt;
 By default...
-&lt;blockquote&gt;Chapbook is designed so that players don&#39;t need to manually save their progress, as is often typical in digital games. Instead, it silently saves the state of play every time the player navigates to a new passage.&lt;br&gt;&lt;div style=&quot;text-align:right;font-size:75%&quot;&gt;[[Documentation-&gt;https://klembot.github.io/chapbook/guide/state/continuity.html?highlight=save#continuity-between-sessions]]&lt;/div&gt;&lt;/blockquote&gt;
+&lt;blockquote&gt;Chapbook is designed so that players don&#39;t need to manually save their progress, as is often typical in digital games. Instead, it silently saves the state of play every time the player navigates to a new passage.&lt;br&gt;&lt;div style=&quot;text-align:right;font-size:75%&quot;&gt;[[Documentation-&gt;https://klembot.github.io/chapbook/guide/state/continuity.html#continuity-between-sessions]]&lt;/div&gt;&lt;/blockquote&gt;
 
 While the autosave is pretty convenient, allowing players to continue their session where they last left it off, there are some points to take into account:
 * the player&#39;s progress is saved in their browser&#39;s cache (clearing the latter will delete the autosave)
@@ -536,18 +623,18 @@ This requires custom code using the **[[Chapbook APIs-&gt;https://klembot.github
 **OR**
 [align right]
 You can use custom code, tried and true.
-[align left]
+[continue]
 &lt;h3&gt;Maliface&#39;s Chapbook Save Code&lt;/h3&gt;
 
 **Maliface&#39;s Chapbook Save** will create custom save files that the player can download and load at will. These save files will be game-specific (tied to the [[IFID-&gt;http://babel.ifarchive.org/]] of the game), and encode the current progress of the player within the story (to avoid cheating/breaking saves). &lt;br&gt;
 The downloadable files will be named by default after the game&#39;s title and the date/time of the download. Renaming these files won&#39;t affect loading a save.
 
-&lt;blockquote&gt;&lt;i&gt;Warning:&lt;/i&gt; save files can break if the game updates the name of Passages and Variables or changes IFID between plays. If changes are necessary, you may want to indicate to players their save files won&#39;t work anymore.&lt;/blockquote&gt;
+&lt;blockquote&gt;&lt;i&gt;Warning:&lt;/i&gt; save files can break if certain elements in-game are updated, namely the IFID (restart required), save version (if ever indicated), Passage names (restart required is game was saved on deleted passage), and variables (need a [[compatibility updater|https://github.com/MalifaciousGames/Mali-s-Scripts/tree/main/chapbook-scripts/save-system#save-updating]]). If changes are necessary, you may want to warn players their save files won&#39;t work anymore. &lt;/blockquote&gt;
 
-This code also gives you access to two custom elements, which will either trigger the export (&lt;code&gt;&amp;lt;export-link&amp;gt&lt;/code&gt;) or import (&lt;code&gt;&amp;lt;import-link&amp;gt&lt;/code&gt;) functions from the code. These elements can be placed inside any passage of your project, including the [[Header or Footer-&gt;https://klembot.github.io/chapbook/guide/customization/header-and-footer.html]],
+This code also gives you access to two custom inserts, which will either trigger the export (&lt;code&gt;{&amp;#8203;save to file&amp;#8203;}&lt;/code&gt;) or import (&lt;code&gt;{&amp;#8203;load save&amp;#8203;}&lt;/code&gt;) functions from the code. These inserts can be placed inside any passage of your project, including the [[Header or Footer-&gt;https://klembot.github.io/chapbook/guide/customization/header-and-footer.html]],
 
-~ [[Install and Use the Code]]&lt;br&gt;
-~ [[Return to the Start-&gt;Start]]
+&gt; [[Install and Use the Code]]
+&gt; [[Return to the Start-&gt;Start]]
 </tw-passagedata><tw-passagedata pid="5" name="JavaScript code" tags="" position="750,550" size="100,100">&lt;h1&gt;Maliface&#39;s Chapbook Save custom code&lt;/h1&gt;
 
 Below you can find the custom code created by Maliface to add to the JavaScript section of your project.
