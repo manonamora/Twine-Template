@@ -1,0 +1,120 @@
+h1 {
+  text-align:center;
+}
+code {
+  font-size: 75%;
+  background: #007f5f6b;
+  padding: 2px 2px;
+}
+
+#popup-save {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+#popup-save::before {
+  content: "";
+  display: block;
+  height: inherit;
+  width: inherit;
+  background: var(--page-background-color);
+  opacity: 0.6;
+}
+
+#popup-save-wrapper {
+  min-width: 250px;
+  max-width: 500px;
+  height: max-content;
+  min-height: 100px;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding: 1em;
+
+  background-color: var(--page-background-color);
+  border: var(--page-border);
+  border-radius: 3px;
+  box-shadow: var(--page-box-shadow);
+  color: var(--page-color);
+  font-family: var(--page-font-family);
+  font-size: var(--page-font-size);
+  font-style: var(--page-font-style);
+  font-variant: var(--page-font-variant);
+  font-weight: var(--page-font-weight);
+}
+
+#popup-close {
+  position: absolute;
+  top: 12px;
+  right: 1px;
+  font-size: 1.5em;
+  height: 58px;
+  width: 50px;
+  cursor: pointer;
+  transition: 0.4s;
+  color: darkred;
+}
+#popup-close:hover {
+  color: var(--page-color);
+  font-size: 2em;
+  text-shadow: 0px 0px 20px red;
+}
+
+#popup-title {
+  text-align: center;
+  margin: 0.2em 0 0.3em;
+  line-height: 0.8em;
+}
+#popup-body {
+  padding: 3% 2% 3%;
+}
+
+
+
+#popup-save a[data-save] {
+  text-decoration: none;
+  font-size: 110%;
+  padding: 1%;
+  border: 1px dotted red;
+  border-left: 1px solid red;
+  border-bottom: 1px solid red;
+  border-radius: 4px;
+}
+#popup-save a[data-save]:hover {
+  border: 1px solid;
+  border-left: 1px dotted;
+  border-bottom: 1px dotted;
+  text-decoration: none;
+  background: none;
+  font-size: 110%;
+}
+
+#popup-save a[data-save]::before {
+  color: red;
+  padding-right: 3px
+}
+#popup-save a[data-save="import"]::before {
+  content: "⇓";
+}
+#popup-save a[data-save="export"]::before {
+  content: "⇑";
+}
+
+#popup-save a[data-save]:hover::before {
+  color: var(--page-color);
+}
+
+
+#example a[data-save="export"] {
+  color: green; 
+  text-decoration:none; 
+  border: 1px solid red;
+}

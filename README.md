@@ -2,7 +2,10 @@
 This Repo includes Twine and Twine-related templates and code.
 
 The directory of this repository is organised as follow:
-* Chapbook (TBD)
+* Chapbook
+  * Reference Page
+  * Code Template
+    * Save Export/Import (ft [Maliface](https://github.com/MalifaciousGames))
 * Harlowe
   * Code Templates
     * Save System and Settings (also a Guide)
@@ -62,6 +65,7 @@ You can find a more comprehensive list of specs of this Folder [here](Tweego%20F
 ## Links
 You can also find these templates on my [itch.io page](https://manonamora.itch.io/), specifically:
 
+* [100% Good Twine Chapbook Temapltes](https://manonamora.itch.io/twine-chapbook-templates)
 * [100% Good Twine Harlowe Templates](https://manonamora.itch.io/twine-harlowe-templates)
 * [100% Good Twine SugarCube Templates](https://manonamora.itch.io/twine-sugarcube-templates)
 * [100% Good Ready-to-Use Tweego Folder](https://manonamora.itch.io/ready-to-use-tweego-folder)

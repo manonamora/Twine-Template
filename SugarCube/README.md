@@ -11,6 +11,7 @@ The directory of this section is organised as follow:
     * 2.36 Version
     * Source Code
 * UI Templates
+  * Minimalist (Harlowe-like - WIP)
   * One Page (Chapbook-like)
     * 2.36 Version
     * Source Code
@@ -37,6 +38,7 @@ I have a whole explanation on how to do so [here](../ChangeIFID.md) or on [itch.
 ## Links
 You can find all my templates on my [itch.io page](https://manonamora.itch.io/), specifically:
 
+* [100% Good Twine Chapbook Temapltes](https://manonamora.itch.io/twine-chapbook-templates)
 * [100% Good Twine Harlowe Templates](https://manonamora.itch.io/twine-harlowe-templates)
 * [100% Good Twine SugarCube Templates](https://manonamora.itch.io/twine-sugarcube-templates)
 * [100% Good Ready-to-Use Tweego Folder](https://manonamora.itch.io/ready-to-use-tweego-folder)

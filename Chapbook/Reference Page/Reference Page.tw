@@ -1,0 +1,753 @@
+:: StoryTitle
+Chapbook Reference Page
+
+
+:: StoryData
+{
+	"ifid": "C15CE33F-61F6-4909-BB59-73EE7A3D57B1",
+	"format": "SugarCube",
+	"format-version": "2.37.3",
+	"start": "Start"
+}
+
+:: Start 
+<h1>The Chapbook Reference Page</h1>\
+The //Chapbook Reference Page// is a one-page document referencing all the markups, inserts, modifiers and configs mentioned in the Official [[Chapbook Guide|https://klembot.github.io/chapbook/guide]]. 
+This is not meant as an alternative guide for the format, since the official documentation is already top-notch. If you need explanations on how to use any of the code below, read the guide instead!
+> This Reference Page does not include any APIs available in Chapbook but not mentioned in the guide. You can find all the advanced APIs in the [[Technical Documentation|https://klembot.github.io/chapbook/api/]].
+
+<h2 id="chapbook">Chapbook</h2>\
+Chapbook is a coding format created by [[Chris Klimas|https://www.patreon.com/klembot]] for Twine 2. This format was designed to be "easy to work with as an author and generate output that is a pleasure to read by players". It is recommended for new users, since it does not require any programming knowledge (unless you are attempting advanced stuff, read up on CSS and JavaScript), while still allowing for customisation.
+
+If you are new to the format, you will want to start with the [[Official Guide|https://klembot.github.io/chapbook/guide]], which goes step by step through the process of story creation.
+
+<h2 id="markup">Markup</h2>\
+Special code to format text, based on Markdown and Twine 1.
+> If not listed, use HTML/CSS instead.
+<h3 id="m-text">Text Formatting</h3>\
+''Bold'': {{{__Bold__}}} or {{{**Bold**}}}
+//Italics//: {{{_Italics_}}} or {{{*Italics*}}}
+//''Both''//: {{{__*Both*__}}} or {{{_**Both**_}}} or {{{**_Both_**}}} or {{{*__Both__*}}}
+<span style="font-family: monospace">Monospace</span>: {{{`Monospace`}}}
+<span style="font-size: 70%; text-transform: uppercase; letter-spacing: 0.08em">Small Caps</span>: {{{~~small caps~~}}}
+Ignoring Formatting: {{{\}}} (before character) like {{{\*}}}
+> //Note:// Does not work inside {{{[[Links]]}}}, use a {{{ {link} }}} insert instead.
+\
+<h3 id="m-breaks">Breaks</h3>\
+Line breaks (removes {{{<br>}}}): {{{‎‎}}} (two-space) or {{{\}}} at the end of the line
+Section/Scene (adds {{{<hr>}}}): {{{***}}} (own line)
+\
+<h3 id="m-lists">Lists</h3>\
+Bulleted: {{{* Text}}} or {{{- Text}}} or {{{+ Text}}}
+Numbered: {{{# Text}}} or {{{1. Text}}}
+\
+<h3 id="m-links">Links</h3>\
+{{{[[PassageName]]}}} or {{{[[Text|PassageName]]}}} or {{{[[Text->PassageName]]}}} or {{{[[PassageName<-Text]]}}}
+> Also works with External links (Web URL)
+\
+<h3 id="m-forks">Forks</h3>\
+Or: Special Choice Options Styling.
+{{{
+    > [[Link 1]]
+    > [[Link 2]]
+}}}
+
+<h2 id="modif">Modifiers</h2>\
+Similar to macros, not interactive.
+Must be used as follow:
+{{{
+    [modifier]
+    Text to continue
+}}}
+\
+<h3 id="continue">Continue</h3>\
+"Cancels" previous modifier and returns to default.
+{{{[continue]}}} or {{{[cont'd]}}} or {{{[cont]}}}.
+\
+<h3 id="alignment">Text Alignment</h3>\
+* Center: {{{[align center]}}}
+* Left: {{{[align left]}}}
+* Right: {{{[align right]}}}
+\
+<h3 id="delayed">Delayed Text</h3>\
+* {{{[after TIME]}}}: in minutes, seconds or milliseconds
+* {{{[after 1 second]}}}/{{{[after 1s]}}}
+* {{{[after 200 milliseconds]}}}/{{{[after 200ms]}}}
+* {{{[after 3 minutes]}}}/{{{after 3min}}}
+> //Notes:// BUT only [[full numbers|https://github.com/mike182uk/timestring/blob/main/README.md#keywords]]! {{{[after 1s500ms]}}}
+> Can be coupled with other modifier: {{{[after 1s; append]}}}
+\
+<h3 id="notes">Invisible Notes/Comments</h3>\
+{{{[note]}}} or {{{[note to myself]}}} or {{{[n.b.]}}}
+also accepts {{{[fixme]}}} and {{{[todo]}}}
+
+<h2 id="insert">Inserts</h2>\
+Another type of macro, usually interactive.
+Is formatted as:
+{{{
+    {insert, parameters}
+}}}
+\
+<h3 id="i-links">Regular Links</h3>\
+{{{
+    {link to: 'PassageName', label: 'Some Text'}
+    {link to: 'PassageName'}
+    {link to: 'URL', label: 'Website'}
+    {link to: variable, label: 'Text in **bold**'}
+}}}
+\
+<h3 id="reveals">Reveal Links</h3>\
+{{{
+    {reveal link: 'text to click', text: 'replacing text'}
+    {reveal link: 'text to click', passage: 'PassageName'}
+}}}
+> //Note:// inserting a passage will also show the return to line
+\
+<h3 id="cycling">Cycling Links</h3>\
+{{{
+    {cycling link, choices: ['Choice 1', true, 1]}
+
+    {cycling link for: 'variable', choices: ['Choice 1', true, 1]}
+}}}
+\
+<h3 id="input">Text Input</h3>\
+Output will always be a string.
+{{{
+    {text input}
+    {text input for: 'variable'}
+    {text input for: 'secret', required: false}
+}}}
+> //Notes:// if the variable is already defined, it will show the editable value to the player.
+> Unless {{{required}}} is false, the player won't move further until the input is filled
+\
+<h3 id="dropdown">Dropdown</h3>\
+{{{
+    {dropdown menu, choices: ['Choice 1', 1, true]}
+    {dropdown menu for: 'meal', choices: ['Breakfast', 'Lunch', 'Dinner']}
+}}}
+\
+<h3 id="include">Embed Passage</h3>\
+{{{
+    {embed passage: 'PassageName'}
+    {embed passage: variable}
+}}}
+\
+<h3 id="image">Embed Image</h3>\
+{{{
+    {embed image: 'URL', alt: 'text'}
+    {embed image: 'assets/cave.jpeg', alt: 'Cave entrance'}
+    {embed image: 'assets/fancy-border.jpeg', alt: ''}
+}}}
+> //Note:// Also has a specific tag for Flickr and Unsplash images ([[Documentation|https://klembot.github.io/chapbook/guide/multimedia/images.html]]), but I'd recommend local URL, instead.
+\
+<h3 id="video">Embed Video</h3>\
+Only YouTube, not auto playback or accessibility features:
+{{{
+    {embed YouTube video: 'URL'}
+}}}
+\
+<h3 id="back">Back Link</h3>\
+{{{
+    {back link, label: 'Some Text'}
+}}}
+> If {{{label}}} is not used, shows link named //Back//.
+\
+<h3 id="restart">Restart Link</h3>\
+{{{
+    {restart link, label: 'Some Text'}
+}}}
+> If {{{label}}} is not used, shows link named //Restart//.
+\
+<h3 id="theme">Theme Switcher</h3>\
+{{{
+    {theme switcher}
+    {theme switcher, darkLabel: 'Use Light Theme', lightLabel: 'Use Dark Theme'}
+}}}
+> //Note:// Most useful if you override the content of the right footer, and want to place it somewhere else.
+
+<h2 id="variables">Variables</h2>\
+Definition or change in variables need to be done at the start of a passage, separated by two dashes {{{--}}}:
+{{{
+    variable: value 
+    --
+    The actual passage
+}}}
+> //Notes:// Defining all variables at start helps avoid errors 
+> Can't use {{{browser}}}, {{{engine}}}, {{{now}}}, {{{passage}}}, {{{random}}}, {{{story}}} as var names.
+\
+<h3 id="v-type">Variable Types</h3>\
+Booleans (true/false), Numerical (1-0), Strings (words)
+{{{
+    boolean: true 
+    numerical: 0
+    string: 'some words'
+    --
+    The actual passage
+}}}
+\
+<h3 id="v-display">Displaying Variables</h3>\
+{{{
+    {variable}
+}}}
+> Can only display variable as is. If you want to combine value, create a separate variable (ex: {{{var1: var2 + var3}}})
+\
+<h3 id="v-set">Changing Values</h3>\
+{{{
+    amount: amount + 1
+        -> value + 1 
+    full_name: first + " " + last
+        -> 'John Doe'
+    check: age === 3
+        -> true (or false)
+}}}
+> See Conditional Display (below) for full list operators
+\
+<h4>Advanced Variable Change</h4>\
+To attach a conditional value:
+{{{
+    variable (var2 > value): value
+    transportation (kilometers > 1000): 'plane'  
+    language (country === 'Australia' || country === 'United States'): 'English'
+}}}
+\
+<h3 id="v-random">Random Variable</h3>\
+Built-in dice roll/coin flipper. Add to {{{random}}}:
+{{{
+    random.[dice]
+    random.d4 
+    variable: random.d4 
+    [if random.d4 === 4]
+}}}
+* {{{.coinFlip}}} (true/false)
+* {{{.fraction}}} (0-1, decimal)
+* {{{.d4}}}, {{{.d5}}}, {{{.d6}}}, {{{.d8}}}, {{{.10}}}, {{{.12}}}, {{{.20}}}, {{{.d25}}}, {{{.d50}}}, {{{.d100}}} (full number)
+> //Note:// every time {{{random}}} is use, it rolls a ''new'' number!
+\
+<h3 id="v-object">Object Variables</h3>\
+{{{
+    object.property.sub
+    pc.skills.agility: 4
+}}}
+\
+<h4>Built-In Objects</h4>\
+Useful for display/conditional. Avoid changing it.
+Not an exhaustive list.
+* {{{browser}}}:
+** {{{.darkTheme}}}: if Dark theme enabled (true/false)
+** {{{.darkSystemTheme}}}: user browser preference (true/false)
+** {{{.height}}}/{{{.width}}}: window size (pixel)
+** {{{.online}}}: connected to the internet (true/false)
+* {{{engine}}}:
+** {{{.version}}}: version of Chapbook ('2.3.0')
+* {{{now}}}:
+** {{{.datestamp}}}: current date (m/d/y - user dependent)
+** {{{.timestamp}}}: current time (h:m:s - user dependent)
+** {{{.year}}}/{{{.month}}}/{{{.day}}}
+** {{{.hour}}}/{{{.minute}}}/{{{.second}}}
+** {{{.monthName}}}/{{{.weekdayName}}}
+* {{{passage}}}:
+** {{{.from}}}: last passage visited (or undefine if first)
+** {{{.fromText}}}: last link clicked 
+** {{{.name}}}: current passage name 
+** {{{.visits}}}: times visited current passage
+* {{{story}}}:
+** {{{.name}}}: name of project
+
+<h2 id="cond">Conditional Display</h2>\
+Formatted like an insert. ''Can only be used in passage''.
+{{{
+    [if condition]
+    [unless condition]
+    [else]
+}}}
+\
+<h3 id="i-operator">Accepted Operators</h3>\
+Essentially JavaScript Operators:
+* {{{===}}}: equal to (explicit)
+* {{{!==}}}: not equal to
+* {{{>}}}/{{{>=}}}: greater than (or equal to)
+* {{{<}}}/{{{<=}}}: lesser than (or equal to)
+* {{{!}}}: not 
+* {{{&&}}}: and 
+* {{{||}}}: or
+* {{{()}}} (parentheses for more complex checks)
+\
+<h3 id="i-basics">Examples of Basics Conditionals</h3>\
+{{{
+    [if variable] (if true)
+    [if !variable] (if not true)
+    [if var === 3]
+    [if var >= (var2 + var3)]
+    [if (var1 + var2) < 45]
+}}}
+\
+<h3 id="i-unless">Unless Condition</h3>\
+Essentially:
+{{{
+    [unless condition]
+        -> is the same as
+    [if !condition]
+}}}
+\
+<h3 id="i-else">Else Modifier</h3>\
+For all the situation not covered by the single previous {{{[if]}}}:
+{{{
+    [if variable]
+        ...
+    [else]
+        ...
+}}}
+\
+<h3 id="i-notes">Some Notes</h3>\
+Conditionals ''cannot be nested'', and different {{{[if]}}} will run ''independently'' to the other ones. Either combine conditions (with {{{&&}}} or {{{||}}}) or create variables merging those conditions.
+
+To return to the story after a conditional block is coded, use {{{[continue]}}}.
+
+To always display or hide a conditional, use {{{[ifalways]}}} or {{{[ifnever]}}}. Subsequent {{{[else]}}} will be affected.
+
+<h2 id="audio">Audio</h2>\
+Two different types: sound effect and ambient audio. Only one ambient track at a time, and loops. Sound effects one-off and can be played simultaneously (at once only, not adding while one is played).
+Both need to be defined before being used.
+\
+<h3 id="effect">Sound Effect</h3>\
+{{{
+    sound.effect.name.[url/description]
+    {sound effect: 'name', volume: [0-1]}
+
+    sound.effect.explosion.url: 'boom.mp3'
+    sound.effect.explosion.description: 'a large explosion'
+
+    {sound effect: 'explosion'}
+    {sound effect: 'boom', volume: 0.8}
+}}}
+\
+<h3 id="ambient">Ambient Audio</h3>\
+{{{
+    sound.ambient.name.[url/description]
+    {ambient sound: 'name', volume: [0-1]}
+
+    sound.ambient.forest.url: 'forest.mp3'
+    sound.ambient.forest.description: 'midday forest sounds'
+
+    {ambient sound: 'forest'}
+    {ambient sound: 'lake', volume: 0.4}
+}}}
+To replace the track, use another {{{ {ambient sound:} }}} with a different track name.
+To stop all ambient sound: {{{ {no ambient sound} }}}
+\
+<h3 id="a-var">Audio Variables</h3>\
+Two variables:
+* {{{sound.volume}}}: controls master volume (0-1, decimal)
+* {{{sound.mute}}}: temporarily mute all sound (true/false)
+\
+<h3 id="a-control">Manual Control</h3>\
+To bypass restriction of sounds, and create more complex effects:
+{{{
+    sound.effect[name].playing: true/false
+    sound.ambient.[name].playing: true/false 
+    
+    sound.ambient.forest.playing: true
+    sound.ambient.rain.playing: true
+    sound.effect.bird.playing: true
+}}}
+> //Note:// the track description won't run this way. But you can use {{{<audio>}}} for this.
+
+<h2 id="config">Config and Styles</h2>\
+<h3 id="c-elements">Page Elements</h3>\
+Chapbook HTML looks like below. All elements can be targetted in the StyleSheet. Some can be targetted through the Config.
+{{{
+    <body>
+        <state-css-variable>/<state-dark-theme-css-variable-override>
+            <#backdrop>
+                <page-skip>/<page-transition>
+                    <#page>
+                        <header>
+                            <#left><#center><#right>
+                        <article>[The passage]
+                        <footer>
+                            <#left><#center><#right>
+}}}
+> //Note:// By default, {{{footer#left}}} and {{{footer#right}}} are pre-filled: respectively, Project Title and Theme/Restart Link
+\
+<h3 id="header-footer">Header and Footer</h3>\
+Each with 6 locations to fill (left, center, right). Can be pure text, embed passage, code, etc...
+{{{
+-> header
+    config.header.left: "[[About]]"
+    config.header.center: story.name
+    config.header.right: "Money left: {money}"
+
+-> footer
+    config.footer.left: '{embed passage: "Saves"}'	
+    config.footer.center: '{back link}'
+    config.footer.right: '{restart link}'
+}}}
+> //Note:// Changing the right footer will remove the theme switch - which is by default defined by the user's browser's preferences (otherwise, light is default).
+<h4>Borders</h4>\
+{{{
+-> type
+    config.style.page.footer.border
+    config.style.page.header.border
+    config.style.dark.page.footer.border
+    config.style.dark.page.header.border
+        -> 'none', 'thin-line', 'thick-line'
+
+-> color
+    config.style.page.footer.borderColor
+    config.style.page.header.borderColor
+    config.style.dark.page.footer.borderColor
+    config.style.dark.page.header.borderColor
+}}}
+> //Note:// yeah, you can indicate a different type for either theme. See below for colours.
+\
+<h3 id="fonts">Fonts</h3>\
+Will accept any font in the user's device or is imported (StyleSheet). Include stacks when possible.
+{{{
+    config.style.page.font: 'font size type'
+    config.style.page.font: 'Arial 14'
+    config.style.page.font: 'Arial/Hevetica/sans-serif 1rem'
+    config.style.page.font: 'Arial 110% bold italics underline small caps'
+}}}
+Following elements can change their fonts:
+{{{
+-> main section
+    config.style.page.font
+    config.style.page.link.font
+    config.style.page.link.active.font
+
+-> header
+    config.style.page.header.font
+    config.style.page.header.link.font
+    config.style.page.header.link.active.font
+
+-> footer
+    config.style.page.footer.font
+    config.style.page.footer.link.font
+    config.style.page.footer.link.active.font
+}}}
+<h4>Import Fonts (Google)</h4>\
+{{{
+    config.style.googleFont: 'embed code <link> with stylesheet'
+    config.style.googleFont: '<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">'
+}}}
+<h4>Import Fonts (TypeKit/Adobe)</h4>\
+{{{
+    config.style.typekitFont: 'embed code <link> with stylesheet'
+    config.style.typekitFont: '<link rel="stylesheet" href="https://use.typekit.net/abdefgh.css">'
+}}}
+<h4>Import Fonts (Local)</h4>\
+{{{
+    config.style.fonts.[tag].[url/name]
+
+    config.style.fonts.leagueSpartan.url: 'fonts/league-spartan.woff2'
+    config.style.fonts.leagueSpartan.name: 'League Spartan'
+}}}
+> //Note:// You can also simply use the {{{@import}}} or {{{@font-family}}} CSS rules in the StyleSheet to import fonts.
+\
+<h3 id="colours">Colours</h3>\
+Chapbook uses the [[Reasonable Colors|https://www.reasonable.work/colors/]] palette. Code for the hues and shades are tabled in the [[documentation|https://klembot.github.io/chapbook/guide/customization/fonts-and-colors.html#colors]]. But it will also accept other notations (e.g. HEX or HSLA).
+{{{
+    config.style.backdrop: 'red-1' 
+    config.style.backdrop: '#ccc'
+    config.style.backdrop: 'hsla(0%, 65%, 48%, 0.75)'
+}}}
+Following elements can change colour (incl. dark theme):
+{{{
+-> light theme
+    config.style.backdrop
+    config.style.page.color
+    config.style.page.link.color
+    config.style.page.link.lineColor
+    config.style.page.link.active.color
+    config.style.page.link.active.lineColor
+
+-> dark theme
+    config.style.dark.backdrop
+    config.style.dark.page.color
+    config.style.dark.page.link.color
+    config.style.dark.page.link.lineColor
+    config.style.dark.page.link.active.color
+    config.style.dark.page.link.active.lineColor
+}}}
+You can also define the default theme with or disable switching:
+{{{
+    config.style.page.theme.override
+        -> 'light', 'dark', [anything else will be system based]
+    
+    config.style.page.theme.enableSwitching
+        -> false, true
+}}}
+> //Note:// if {{{enableSwitching}}} is disabled, any instance of {{{ {theme switcher} }}} will be hidden, and the Light Theme will only be used.
+\
+<h3 id="c-styling">Page Styling</h3>\
+Other elements that can be targetted. Default is last option listed.
+> //Page Border//
+{{{
+    config.style.page.style.border
+        -> 'none', 'thin-line', 'thick-line', 'shadow'
+    -> if line is selected
+        config.style.page.style.borderColor
+        config.style.dark.page.style.borderColor
+}}}
+> //Page Transition//
+{{{
+    config.body.transition.name
+        -> 'none', 'fadeInOut', 'crossfade'
+    -> if other than 'none'
+        config.body.transition.duration
+}}}
+> //Vertical Alignment//: where text is displayed by default
+{{{
+    config.style.page.verticalAlign
+        -> 'top', 'bottom', 'center'
+}}}
+> //Fork Styling//
+{{{
+    config.style.page.fork.divider.style
+        -> 'dashed', 'double', 'solid', 'none', 'dotted'
+    -> if other than 'none'
+        config.style.page.fork.divider.size 
+        config.style.page.fork.divider.color
+}}}
+\
+<h3 id="scaling">Font Scaling</h3>\
+Font is scaled depending on screen size. Essentially increase the font size as the user's browser window widens.
+To disable it:
+{{{
+    config.style.fontScaling.enabled: false
+}}}
+Other scaling configs:
+{{{
+    config.style.fontScaling.baseViewportWidth (in px)
+        -> default is 1000
+    config.style.fontScaling.addAtDoubleWidth (in px)
+        -> default is 6
+    config.style.fontScaling.maximumSize (any unit)
+}}}
+> //Note:// if one of those configs is not set correctly, none will work.
+
+<h2 id="custom">Custom Code</h2>\
+For Advanced users, as recommended. But go wild!
+\
+<h3 id="javascript">JavaScript</h3>\
+As replacement for {{{<script>}}}. Avoid until last resort. Or because you want to do code crimes :P
+Example:
+{{{
+    [JavaScript]
+      document.title = 'A Sticky Pickle';
+    [continue]
+      Until page is refreshed, the tab's name will be named 'A Sticky Pickle'
+}}}
+<h4>JavaScript Output</h4>\
+Done with the function {{{write()}}}. 
+Example will list numbers on page:
+{{{
+    [JavaScript]
+    for (let i = 1; i <= 10; i++) {
+        write(i + '... ');
+    }
+}}}
+Defined variables can also be used, with {{{ ${var} }}}:
+{{{
+    [JavaScript]
+    write(`The sky is ${color}.`);
+}}}
+<h4>Define Variables with JavaScript</h4>\
+With the {{{engine.state}}} API:
+{{{
+    [JavaScript]
+    engine.state.set('weather', 'sunny');
+        -> {weather} prints as sunny
+}}}
+<h3 id="stylesheet">CSS and Styling</h3>\
+As replacement for {{{<style>}}}. Only works for one passage.
+{{{
+    [CSS]
+    #page article {
+        color: green;
+    }
+
+}}}
+\
+<h3 id="c-insert">Custom Insert</h3>\
+Done with {{{engine.extend()}}} function (required to check Chapbook version), and {{{engine.template}}} API. Best to put in your JavaScript. To print custom text on the page. 
+Example below is for a basic display of an emoji:
+{{{
+    engine.extend('2.0.0', () => {
+        engine.template.inserts.add({
+            match: /^smiley face$/i,
+            render: () => '😀'
+        });
+    });
+
+    -> creates the insert {smiley face}
+}}}
+You can up the complexity, adding parameters to the insert, and even parsing the value of variable. This can be quite useful for things like player/NPC pronouns (outside of variables).
+> //Note:// Knowledge of [[Chapbook's API|https://klembot.github.io/chapbook/api/index.html]] is highly recommended!
+\
+<h3 id="c-modifier">Custom Modifiers</h3>\
+Done with {{{engine.extend()}}} function (required to check Chapbook version), and {{{engine.template}}} API. Best to put in your JavaScript.
+Example below will format the text into uppercase:
+{{{
+    engine.extend('2.0.0', () => {
+        engine.template.modifiers.add({
+            match: /^uppercase$/i,
+            process(output) {
+            output.text = output.text.toUpperCase();
+            }
+        });
+    });
+
+    -> creates the modifier [uppercase]
+}}}
+Aside from changing the text formatting, you could even change the content of the text (ex: removing letters) or create new logics.
+> //Note:// Knowledge of [[Chapbook's API|https://klembot.github.io/chapbook/api/index.html]] is highly recommended!
+
+<h2 id="end">That's the End!</h2>
+If you've gotten this far... hello!
+
+All credits for the information provided here should go to Chris Klimas, as he created Chapbook and its Documentation/Guide. The Chapbook logo was also taken from Chapbook's page.
+
+Go throw some money at Chris Klimas for creating Chapbook and making a dope-ass [[guide|https://klembot.github.io/chapbook/guide/]] for the format that is super comprehensive. And essentially making a format that's easy to get into! And also, for maintaining the Twine engine. Here's his [[Patreon|https://www.patreon.com/klembot]].
+
+If you need more resources, here's a general [[Resource List|https://intfiction.org/t/twine-resource-masterlist-wiki/65903?u=manonamora]] for Twine, including resources for Chapbook and where to request help.
+
+:: StoryCaption
+* ''<a href="#chapbook">Chabook</a>''
+* ''<a href="#markup">Markup</a>''
+** <a href="#m-text">Text Formatting</a>
+** <a href="#m-breaks">Breaks</a>
+** <a href="#m-lists">Lists</a>
+** <a href="#m-links">Links</a>
+** <a href="#m-forks">Forks</a>
+* ''<a href="#modif">Modifiers</a>''
+** <a href="#continue">Continue</a>
+** <a href="#alignment">Text Alignment</a>
+** <a href="#delayed">Delayed Text</a>
+** <a href="#notes">Invisible Notes</a>
+* ''<a href="#insert">Inserts</a>''
+** <a href="#i-links">Regular Links</a>
+** <a href="#reveals">Reveal Links</a>
+** <a href="#cycling">Cycling Links</a>
+** <a href="#input">Text Input</a>
+** <a href="#dropdown">Dropdown</a>
+** <a href="#include">Embed Passage</a>
+** <a href="#image">Embed Image</a>
+** <a href="#video">Embed Video</a>
+** <a href="#back">Back Link</a>
+** <a href="#restart">Restart Link</a>
+** <a href="#theme">Theme Switcher</a>
+* ''<a href="#variables">Variables</a>''
+** <a href="#v-type">Variable Types</a>
+** <a href="#v-display">Displaying Variables</a>
+** <a href="#v-set">Changing Values</a>
+** <a href="#v-random">Random Variable</a>
+** <a href="#v-object">Object Variables</a>
+* ''<a href="#cond">Conditional Display</a>''
+** <a href="#i-operator">Accepted Operators</a>
+** <a href="#i-basics">Basic Examples</a>
+** <a href="#i-unless">Unless Condition</a>
+** <a href="#i-else">Else Modifier</a>
+** <a href="#i-notes">Some Notes</a>
+* ''<a href="#audio">Audio</a>''
+** <a href="#effect">Sound Effect</a>
+** <a href="#ambient">Ambient Audio</a>
+** <a href="#a-var">Audio Variables</a>
+** <a href="#a-control">Manual Control</a>
+* ''<a href="#config">Config and Styles</a>''
+** <a href="#c-elements">Page Elements</a>
+** <a href="#header-footer">Header and Footer</a>
+** <a href="#fonts">Fonts</a>
+** <a href="#colours">Colours</a>
+** <a href="#c-styling">Page Styling</a>
+** <a href="#scaling">Font Scaling</a>
+* ''<a href="#custom">Custom Code</a>''
+** <a href="#javascript">JavaScript</a>
+** <a href="#stylesheet">CSS and Styling</a>
+** <a href="#c-insert">Custom Insert</a>
+** <a href="#c-modifier">Custom Modifier</a>
+* ''<a href="#end">Credits and Resource</a>''
+
+:: Logo [Twine.image]
+data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNTAiIGhlaWdodD0iMjUwIiB2aWV3Qm94PSIwIDAgMTMyLjI5MiAxMzIuMjkyIj48cGF0aCBkPSJNMCAwaDEzMi4yOTJ2MTMyLjI5MkgwQy0uMDk5IDg1LjQzIDAgNDUuNTE4IDAgMHptMTI0Ljg4MyAxMTkuMDU3YzAtLjgyNS0xLjk4LTQuMTQyLTMuMTMyLTUuMjQ1LTEuNTEzLTEuNDUtMi4zNTYtMS4xMzgtMi4yNjIuODM5LjA4MyAxLjc1LjgzOCAyLjk3IDIuNTY5IDQuMTQ3IDEuMzUuOTIgMi44MjUgMS4wNTUgMi44MjUuMjU5em0tMTUuNTIyLTIuMTExYy40ODUtLjI3OCAxLjI0LS41MSAxLjY3Ni0uNTE3IDEuMTAyLS4wMTcuOTktLjUzLS4zMTktMS40NjItMS4wNS0uNzQ3LTEuMjYtLjc3LTMuNzUtLjQxMi0yLjMxMy4zMzMtMi44ODQuMjk3LTQuNjIxLS4yOTMtMS4wOS0uMzctMi41My0uOTUtMy4yLTEuMjg3LTMuMDA2LTEuNTE5LTYuNzg0LTYuMDg5LTcuOTYtOS42My0uMzE3LS45NTUtLjczMy0xLjgzMy0uOTIzLTEuOTUtLjcyOC0uNDUtMS45NS4yMjgtMi41MDQgMS4zOS0uNTc1IDEuMjA1LS41NzIgMS4yMTYuOTIzIDMuODA0IDIuMjYxIDMuOTE1IDMuMDY2IDQuOTkgNC43ODcgNi40IDIuMDIxIDEuNjU1IDYuMDk1IDMuNzEyIDguMTMgNC4xMDMgMi41ODcuNDk4IDYuNzcyLjQxOSA3Ljc2MS0uMTQ2em0tODEuMzA2LS41NTRjMS41MzMtLjQwMiAzLjE5LS45NCAzLjY4Mi0xLjE5Ny40OTItLjI1NyAxLjY2LS44NDEgMi41OTYtMS4yOTkgMS45NS0uOTUzIDcuMDctNS41NDUgNy44MzctNy4wMy43NzktMS41MDYuNjUyLTIuNDEtLjM5NC0yLjgwNy0uNS0uMTktMS4xMjEtLjIyNi0xLjM4LS4wOC0uMjU4LjE0Ny0xLjczNyAxLjYyMy0zLjI4NyAzLjI4LTIuMzYgMi41MjYtMy4yNjkgMy4yMjctNS41OTggNC4zMi0xLjUzLjcxOC0zLjcyOSAxLjQ4Mi00Ljg4NyAxLjctMi4zNDUuNDM4LTYuMjM0LjIzNi03LjYyNC0uMzk3LS43NjItLjM0Ny0xLjE1My0uMjg4LTIuNDU2LjM3LS44NTMuNDMtMS42MDguODMyLTEuNjc3Ljg5NC0uMDY5LjA2MS4zMzcuNjA2LjkwMSAxLjIxLjc0OC44IDEuNTAyIDEuMTc5IDIuNzcyIDEuMzkxIDMuMTgyLjUzMyA2LjYxNi40MDQgOS41MTUtLjM1NXptLTE5LjAzOC0uODUxYzEuMDIzLS42IDEuNTM4LTEuMTcgMS42NjctMS44NDYuMjM3LTEuMjM4LjEyMy0xLjQwNy0xLjEzNS0xLjY4My0yLjAyMy0uNDQ0LTUuMTM2IDIuNTI2LTQuNDY4IDQuMjY1LjI5Ljc1NSAxLjkwNy40NTMgMy45MzYtLjczNnptNTguNzE2LjQ5N2MyLjYyMi0uNTk2IDQuNTM4LTEuNzE3IDUuODM0LTMuNDE0LjY3Mi0uODggMS4yMjQtMi4wMTQgMS4yMjctMi41Mi4wMDMtLjUwNi4xLTEuMjc3LjIxNy0xLjcxMy4xNy0uNjMzLjA2Ny0uNzk0LS41MDUtLjc5NC0xLjI4NSAwLTEuNzg5LjM5LTIuNTYgMS45ODItMS4zNTMgMi43OTctNC4wMyA0LjEwNi03LjE4NSAzLjUxNC0xLjQ1MS0uMjcyLTUuMTcyLTMuNTA5LTUuODA3LTUuMDUyLS42Ni0xLjYwNC0uOTUyLTUuMDQyLS42NjMtNy43OTcuMzE1LTIuOTk1IDEuNDM1LTYuNDM5IDMuNjM3LTExLjE4IDEuNTUtMy4zNCAxLjU1My0zLjM1Ni45NjktNC41OC0uMzIyLS42NzYtLjc1NS0xLjIyNy0uOTYyLTEuMjI2LTEuNzM0LjAxLTYuNTE2IDEyLjk2Ny02LjgyIDE4LjQ3OC0uNDEyIDcuNDc3IDIuMTk0IDExLjg5NyA4LjM1MiAxNC4xNjQgMS41NjMuNTc2IDIuMjQ2LjU5OCA0LjI2Ni4xMzh6bTE1LjM2My0uNDhjLjY3LTEuMDIzLjIzLTIuMTc4LTEuMDEtMi42NDgtMS4wNi0uNDAyLTIuNzExLjU4NC0yLjcxMSAxLjYxNyAwIDEuODc4IDIuNjggMi42MiAzLjcyMSAxLjAzMXptLTM0LjM5OC0uMmMuMTcgMCAuNTA2LS42NTQuNzQ1LTEuNDU0LjM5My0xLjMwOS4zNy0xLjUwMi0uMjMtMS45NC0uODEtLjU5My0xLjU4MS0uNjA0LTIuMzI0LS4wMzQtLjgwNi42MTktMS40MSAxLjg4My0xLjE4MiAyLjQ3Ni4yNDQuNjM4IDEuNTg2IDEuMzA4IDIuMjExIDEuMTA1LjI1OS0uMDg0LjYxLS4xNTMuNzgtLjE1M3ptNjguOTE2LS41NThjMS4wMTItMi42MzgtMS4xMzUtNC44MDItNC4xOTUtNC4yMjgtLjk0LjE3Ny0xLjI4NS40NDgtMS40NjEgMS4xNTItLjMwNSAxLjIxNC4xNDUgMS44NTQgMS45ODcgMi44MjggMS43OC45NDIgMy4zNjIgMS4wNDggMy42NjkuMjQ4em0tMTA0LjU2MS00LjA0YzAtLjIwMS0uMjYtLjc2Mi0uNTc3LTEuMjQ2LS44MjctMS4yNjItLjM0My0xLjQ1NC45NDItLjM3MyAxLjQ4IDEuMjQ1IDEuNzUxIDEuMTcyIDEuNzUxLS40NzIgMC0uOTY2LS4yMjktMS42MS0uNzQyLTIuMDg5LS42OS0uNjQzLS44NTYtLjY1Ni0yLjM4LS4xOTQtLjkwMi4yNzQtMS42NjQuNS0xLjY5My41MDItLjAzLjAwMi0uMzkyLjU3Ny0uODA1IDEuMjc3LS44NzMgMS40OC0uNTM2IDIuMjUuOTkgMi4yNi41MS4wMDMgMS4xNjQuMTU5IDEuNDU1LjM0Ny42OS40NDYgMS4wNTkuNDQxIDEuMDU5LS4wMTJ6bTEwLjg4NS0uNDljLjk3LS41MDIgMS45NTYtMi4wNiAxLjU1Ny0yLjQ2LS4xMTUtLjExNi0uNDk1LjI1OS0uODQ0LjgzMi0uNDQuNzI1LTEuMTQ5IDEuMi0yLjMyNCAxLjU2Mi0xLjU5NS40OS0xLjYyNC41Mi0uNTI1LjU0NC42NC4wMTMgMS42MDEtLjIwMiAyLjEzNi0uNDc5em05NC41ODItMS4yNDdjLTEuMjItMS4wNDItMi4xMDMtMS4zNTktMi4xMDMtLjc1MyAwIC40IDIuMTEgMS43MjggMi44MDkgMS43NjcuMjgzLjAxNi0uMDM0LS40NC0uNzA2LTEuMDE0em0tOTguNjYyLTIuMTI1YzIuOTE3LTIuNjY2IDMuNTUxLTQuOTQ1IDEuMzc3LTQuOTQ1LTEuMTU3IDAtMy4zNTkgMS41NDQtMy45MjMgMi43NS0uNTc1IDEuMjMtLjQ5IDMuOTUyLjEyMiAzLjk1Mi4yNzUgMCAxLjM2Ni0uNzkgMi40MjQtMS43NTd6bTkyLjY1MiAxLjQ0OGMuODY4LS4yNDMgMS40NjItMS4xMDIuNzYxLTEuMTAyLS4yMSAwLTEuNjktLjYzNS0zLjI5LTEuNDEtMi43NjgtMS4zNDMtNC4xNjItMS43My00LjEzNi0xLjE0Ny4wMjguNjIyIDIuMDMgMy4xMTcgMi44MjYgMy41Mi45My40NyAyLjQ1Ni41MjUgMy44MzkuMTM5em0xMC4wNDMtMi41MTNjLjgxMy0yLjM2NC44Ni01Ljg1NC4xMTItOC4zNDUtLjkyLTMuMDYyLTMuNzM4LTYuNTgtNi4yNDgtNy44LTIuNjI1LTEuMjc1LTYuMDE3LTIuMjUtOC40OTUtMi40NDFsLTIuNzU3LS4yMTMtLjYxMSAxLjI4MWMtLjMzNi43MDUtLjU0MyAxLjM0Ni0uNDYgMS40MjUuMDg0LjA3OSAxLjg1My4zOTIgMy45MzIuNjk2IDIuMDc5LjMwNCA0LjQxMS44NzYgNS4xODMgMS4yNyAyLjE1IDEuMDk2IDQuOTgzIDMuODg2IDUuNzUgNS42Ni45IDIuMDg1Ljk0NCA1LjMzLjEwMiA3LjY3LS44MTIgMi4yNTgtLjQgMy4wMDggMS41NTkgMi44NDQgMS4xOS0uMSAxLjMwNC0uMjIyIDEuOTMzLTIuMDQ3ek0xMDEuNiAxMDYuODhjMC0uNzI0LTMuMDMtMy40MjUtNC40NTgtMy45NzUtLjgwMy0uMzA4LTEuNTUtLjQ3LTEuNjYyLS4zNTgtLjE1NC4xNTQgMS4yMDcgMi40NzYgMi4xMTUgMy42MDUuMTEuMTM2IDMuMjA0IDEuMDIxIDMuNzQgMS4wNy4xNDYuMDEzLjI2NS0uMTQxLjI2NS0uMzQyem0tNjguODU0LTIuNTY5Yy41MTctLjQxIDEuODI2LTIuODM2IDEuODI2LTMuMzgzIDAtLjkyMS0yLjE4My41NTEtMy42ODUgMi40ODYtMi4zMjkgMi45OTktMi4zOCAzLjM0NC0uMzI4IDIuMjE1Ljk0Ni0uNTIxIDEuOTMtMS4xMTQgMi4xODctMS4zMTh6bTQwLjg2OC45NjdjMy43NzYtLjkgNy43MTItMi4xNiA5Ljg3MS0zLjE2MS42MTItLjI4NCAxLjE4My0uNTE2IDEuMjY5LS41MTYuMDg2IDAgMS40OTEtLjc5NCAzLjEyMi0xLjc2MyA2LjQ0LTMuODMxIDE2LTE0LjQ5MyAxNS4zNDMtMTcuMTEyLS4xMjItLjQ4NS0uNDE1LS44OC0uNjUyLS44OC0uMjM3IDAtMiAuNTEtMy45MTggMS4xMzQtMy4wOTUgMS4wMDctMy41NzcgMS4yNzktNC4yOTMgMi40MTItMS4xNzcgMS44NjQtNi4wMzMgNi4yMTItOC4yNzggNy40MTItMS4wNjcuNTctMi4zNCAxLjM1Ny0yLjgyNyAxLjc0OC0yLjQyIDEuOTQzLTEwLjg2OSAzLjg0Mi0xNy42NCAzLjk2NGwtNC43NDguMDg2LS4yOTEgMS45NGMtLjM3NyAyLjUxMy0uMTAyIDQuNjIuNjc5IDUuMTkyIDEuMTQzLjgzNiA3Ljk5Ni41ODMgMTIuMzYzLS40NTZ6bS02My42NC4wNmMuNTEtLjM4OC42MTMtLjk1LjU2LTMuMDc2LS4wNzYtMy4wMi4yMjYtMy43NDYgMi44MjYtNi43OTcgMS41MjctMS43OTIgMS43NDMtMi4yMyAxLjU2Ny0zLjE3NS0uMjkzLTEuNTc0LS42Mi0xLjc5Mi0xLjg5My0xLjI2NS0xLjI4Mi41MzEtMy41MDMgMy4xOTQtNC44MyA1Ljc5My0xLjE5IDIuMzMyLTEuNTQ5IDYuNzY1LS42NTYgOC4xMjguNjQzLjk4IDEuNDcyIDEuMTE1IDIuNDI2LjM5MnptNDMuMTk3LTQuNjk2Yy4yNC0xLjY1OC4zNTctMy4xNDIuMjYtMy4yOTgtLjA5Ni0uMTU1LTEuNDYtLjc3OS0zLjAzMy0xLjM4NS0zLjY3MS0xLjQxNi00LjM3LTEuOTItOC40NzQtNi4xMTEtMy40NC0zLjUxNS00Ljc0Ni01LjQ3MS02Ljg1Ni0xMC4yNzgtLjc0LTEuNjg4LTEuMjgtMi40NzgtMS42NzYtMi40NTgtLjMyLjAxNi0yLjUuMDU2LTQuODQyLjA4OGwtNC4yNi4wNi4yNTQgMi4wMjZjLjM2NyAyLjkzNCAzLjg2NyA5LjMzNCA3LjUzOCAxMy43ODIgMS41NzYgMS45MSA1Ljc4NiA1LjQxNyA3LjY5NiA2LjQxMy43OTcuNDE1IDEuNjQ5Ljk5NiAxLjg5MyAxLjI5LjU5NC43MTYgNC4xODUgMi41MDggNi45OTggMy40OTRsMi4yOC43OTguODkzLS43MDNjLjc0OC0uNTg4Ljk2NS0xLjE5NiAxLjMzLTMuNzE4em01MC4zNy0xLjQwOGMyLjM1Ni0uNzU4IDMuMTI3LTEuMjEgNC42NzQtMi43NDQgMS43MTgtMS43MDUgMi4zNTktMy4wMDMgMS40ODEtMy4wMDMtLjIwMyAwLS45NTcuNTczLTEuNjc1IDEuMjczLTEuMjggMS4yNDgtNC4zMjUgMi45Ni01LjI2NSAyLjk2LS4yNjEgMC0uODguMjY2LTEuMzc3LjU5LS42MzUuNDE3LTEuODAyLjYxNS0zLjk1Ni42NzEtMy44NS4xLTMuNjcuMDctMy40OTcuNTkxLjM5NSAxLjE5OCA1LjM4NyAxLjAyMyA5LjYxNC0uMzM4em0tNzEuMjUuMDkyYy42NzItLjI4MSAxLjIyMy0uNjM4IDEuMjIzLS43OTQgMC0uMTU1LTEuMzEtLjI4Ny0yLjkxLS4yOTItMy42NTYtLjAxMi01LjUyOC0uMzMyLTcuMjgyLTEuMjQ2LTEuNDQtLjc1LTQuNTUtMy44MTMtNS4zMDQtNS4yMjItLjI0LS40NDgtLjUxNC0uNzM3LS42MDktLjY0My0uMDk0LjA5NS0uMDIuNDY2LjE2NC44MjQuMTg1LjM1OS41MjIgMS4wNDkuNzUgMS41MzQgMS4xNTIgMi40NTkgNC4zMTIgNC44OTcgNy4zODUgNS43IDIuOTA2Ljc1OCA0Ljk5Ni44MDIgNi41ODIuMTM5em0tMTQuMjctMS45NThjLjE3OCAwIC4zMjMtLjE2LjMyMy0uMzUzIDAtLjUxMS0uNDctLjQzNC0xLjI1NS4yMDUtLjYyNy41MS0uNjMuNTQtLjAzOS4zNTMuMzU2LS4xMTMuNzkyLS4yMDUuOTctLjIwNXptOTQuODE3LjAzOGMuNzE2LS40NTMtLjA5MS0uODEtMS4yMDEtLjUzMi0uNjg3LjE3My0uODA3LjMxMy0uNDU3LjUzNS42MDEuMzgxIDEuMDU0LjM4IDEuNjU4LS4wMDJ6bS00MC41MTktMi4zOWMwLS4yOC0uMjk4LTEuMTc1LS42NjItMS45OS0uMzY1LS44MTMtMS43MzItNC4wMi0zLjAzOS03LjEyNGE2MjUuNDc3IDYyNS40NzcgMCAwIDAtMy41Ny04LjMzNGMtLjY1OC0xLjQ4LTEuMTk1LTIuNzc1LTEuMTk1LTIuODc4IDAtLjQyOS00LjU3NS03LjcwNy01LjYzOS04Ljk3LS4xOTctLjIzNC0uMzYzLS41NTEtLjM2OC0uNzA1LS4wMTQtLjQxMi0yLjA5Ni0yLjU2My0zLjg5Mi00LjAyMS01LjQyLTQuNDAyLTEyLjE0MS00Ljc1Mi0xNi4wNTYtLjgzNy0xLjAyMiAxLjAyMi0xLjY5NyAyLjEyNC0yLjExNyAzLjQ1Ni0uNTg0IDEuODUyLS41ODQgMi4wMDQtLjAwOCAyLjg4NC43OTMgMS4yMSAxLjcwNyAxLjAxMyAyLjAwMi0uNDMyLjY0OS0zLjE3MSAzLjkzNy01Ljg0IDcuMTk2LTUuODQgNC40OTQgMCAxMC4xNjggNC44NDcgMTMuOTUyIDExLjkxOS44MzEgMS41NTIgMS44NzUgMy4zNzggMi4zMiA0LjA1Ny44MjQgMS4yNTggMi42NDggNS43MDIgNS4wNjcgMTIuMzQ3IDIuMTU1IDUuOTIgMi41NDIgNi43NDggMy4yNzUgNy4wMiAxLjAzLjM4IDIuNzM0LjAzNiAyLjczNC0uNTUzem0tMjQuMzQxLTMuNzkzYzAtLjI3NS0uMTk2LS41NjUtLjQzNS0uNjQ0LS4zNC0uMTE0LS4zNDctLjUyOC0uMDM0LTEuODgyLjU0Ny0yLjM3Mi42MDQtMTUuODU2LjA3Ny0xOC42MDgtLjQ5MS0yLjU3LTEtMy42Ny0yLjQ3NC01LjM0OS0uNzY0LS44Ny0xLjM4Ni0xLjI0LTIuMDg5LTEuMjQtMS41IDAtMS41OTMuNTk4LS4zNTggMi4zMTcgMS44NDMgMi41NjcgMi4yNDQgNS4zNjcgMi4wNDQgMTQuMjY0LS4wOTQgNC4xNzItLjA3MSA3LjkzLjA1IDguMzUzLjI5IDEuMDExIDIuMjEyIDMuMjkgMi43NzYgMy4yOS4yNDMgMCAuNDQzLS4yMjYuNDQzLS41em0tMjQuNzctMS4wMmMyLjg5MS0uNjI5IDMuMTk4LS45NDcgMi40NDEtMi41MzMtLjY4LTEuNDI2LS45MDgtMS40NjEtNC41MzMtLjY5OS0yLjc5Ni41ODgtMy4xMS44NDMtMy4xMTkgMi41MTgtLjAwOCAxLjY4NC40NjMgMS43NDkgNS4yMTIuNzE1em0tNi41NzUtMi4yMzZjLS4xNjYtMi42NzEuNDk3LTUuODMyIDEuNzQtOC4yOTQuNjA2LTEuMjAxLjg4LTIuMTEyLjY3My0yLjI0LS41MDItLjMxLS45ODIuMDc0LTEuNjEgMS4yODgtMS42NTcgMy4yMDUtMi40MDYgOC4xMzQtMS41NyAxMC4zMzMuNTY5IDEuNDk2Ljg5OSAxLjAyOS43NjctMS4wODd6bTQ4LjI3OCAxLjI4N2EuMzU0LjM1NCAwIDAgMC0uMzUzLS4zNTMuMzU0LjM1NCAwIDAgMC0uMzUyLjM1M2MwIC4xOTQuMTU4LjM1Mi4zNTIuMzUyYS4zNTQuMzU0IDAgMCAwIC4zNTMtLjM1MnptMTguODc0LTEuNzY0Vjg1LjlsLTQuMjM0LS4yOGMtMi4zMjgtLjE1NC01LjIzOS0uMTgtNi40NjgtLjA1Ny0yLjIwNy4yMi0yLjIzMi4yMzYtMiAxLjE2LjMzNSAxLjMzNi43OTQgMS43NzQgMi4xMTggMi4wMjMgMi4wMDYuMzc2IDcuNjk4LjY5IDkuMTczLjUwNmwxLjQxLS4xNzd6bTQuMjMyIDEuNjFjLjczNi0uMzA3IDEuMjktLjgyNiAxLjQxMy0xLjMyMi4xMS0uNDUuMTU2LTMuMTIuMS01LjkzM2wtLjEtNS4xMTUtMS4yMzYtLjA5MmMtMi4yNjYtLjE3LTIuMjEzLS4zNTYtMi4xNTUgNy41ODkuMDI1IDMuNDM3LjE3IDUuMzguNDAzIDUuMzguMiAwIC45MDktLjIyOCAxLjU3NS0uNTA3em0tMzEuOTA2LS45MTVjLjczOS0uMzk1IDEuOTE4LTIuNDAzIDEuNi0yLjcyMi0uMjk0LS4yOTMtNi40NjQtLjc1NC03LjI3Mi0uNTQzLS41NTkuMTQ2LS42OTcuNDg1LS42OTcgMS43MDYgMCAxLjM5LjA4NCAxLjUzNS45NyAxLjY3IDEuOTcyLjI5OCA0Ljc0LjI0MSA1LjQtLjExMXpNNDMuMDQgODYuMjQzYzAtLjk2Ni0uODgyLTEuNTQtMS40NjgtLjk1Ni0uMjQ3LjI0OC0uMjM1LjU5OC4wMzcgMS4xMDYuNTU4IDEuMDQzIDEuNDMuOTUyIDEuNDMtLjE1em0tMzAuNjkyLTIuNjk1Yy0xLjY3OS0xLjQyNy0zLjA3LTIuMTItMy45OTItMS45OS0uODM1LjEyLS45MzMuNjgyLS4xOCAxLjAzNS4yNTcuMTIgMS40OTkuNzAzIDIuNzU5IDEuMjk2IDEuMjYuNTkyIDIuMzcuOTk0IDIuNDY5Ljg5My4wOTgtLjEwMS0uMzc3LS42NTctMS4wNTYtMS4yMzR6bTEwMS45NTMtLjkzYzAtMS41MTctLjE4NC0yLjY1NS0uNS0zLjA4Ny0uMjc1LS4zNzYtLjU2NC0uNjA1LS42NDItLjUwOC0uMDc3LjA5Ni0uMDc0IDEuNDg1LjAwOCAzLjA4Ni4xMTIgMi4xODIuMjczIDIuOTEuNjQyIDIuOTEuMzcyIDAgLjQ5MS0uNTgzLjQ5MS0yLjQwMnptLTkzLjE4NC0uMDI0Yy40NTgtLjgyMy43MzktMS41OS42MjQtMS43MDUtLjI4OS0uMjktMi43NjggMS40ODEtMy4zMiAyLjM3LS42MTEuOTg3LS4yNzMgMS4zOTkuODk2IDEuMDkuNjM3LS4xNyAxLjI1NC0uNzcgMS44LTEuNzU1em05OS42MjIgMS4xMzdjLjg1LS4yMzUuNzgtMS4xODEtLjA4OC0xLjE4MS0xLjE5IDAtLjc4Ni0uNjk2Ljc5OS0xLjM3NiAyLjAzMS0uODcgMi41MjgtMS41MTggMi4xMTctMi43NTctLjQyLTEuMjY1LTEuNTM4LTEuNDM1LTIuOTI4LS40NDUtLjg2MS42MTMtMS4xNzMuNjc5LTEuNTg4LjMzNC0uNzExLS41OS0xLjQ4NS4wOTYtMi4zMjkgMi4wNjMtMS4xOTUgMi43OS0uNzIxIDIuODk5IDEuODY3LjQzIDEuOC0xLjcxNiAzLjgwNy0yLjk3MiA0LjE3LTIuNjA4LjE3My4xNzItMi45NjEgMy4yNjMtMy45NSAzLjg5Ni0uMjQ4LjE1OC0uODQ4Ljc0LTEuMzMzIDEuMjlsLS44ODIgMS4wMDIgMS43NjQtLjIzOWMuOTctLjEzIDIuMDQyLS4zMTUgMi4zODEtLjQwOXptLTM3LjgzNS0uNDY3YzAtMi4yNTItNi45MjUtNy4yNjctOS42NTYtNi45OTMtMS40NjIuMTQ3LTEuNjYuOTg3LS4yMzIuOTg3IDEuOTM3IDAgNC4zMDUgMS4zNjkgNi43OCAzLjkxOSAyLjIyIDIuMjg5IDMuMTA4IDIuODg1IDMuMTA4IDIuMDg3em0tNzAuNDMtMi44NzRjLS43My0yLjcwNi0uNjgzLTIuNjM1LTEuMzUyLTIuMDgtLjMyOC4yNzItLjUzOC4zMDEtLjUzOC4wNzUgMC0uNzgyLTEuMTU3LTEuNDgtMi40NTctMS40OC0xLjQ1NSAwLTEuNzc2LjM4Mi0xLjc3NiAyLjExMSAwIC44LjIxOSAxLjA3MiAxLjExMSAxLjM4MyAxLjkwNi42NjQgMi4yMDMuNTE1IDEuMzU1LS42NzYtMS4zODItMS45NC0uNTMzLTEuODU1IDEuNDA4LjE0MiAxLjA1MSAxLjA4MiAyLjA1MyAyLjIyIDIuMjI2IDIuNTI5LjYxMyAxLjA5NC42MjMuMjE3LjAyNC0yLjAwNHptNDEuNjY5LTEuNTYzYy45ODctLjQxMiAxLjg4NC0uNTE2IDMuMDgyLS4zNTggMi4xMi4yODIgMi4yNjItLjMyNC4yMDUtLjg3OC0xLjExLS4yOTktMS44MjYtLjI5OC0yLjgyOS4wMDItMS41MjUuNDU3LTMuOTA2IDIuMzg0LTMuNTg1IDIuOTAyLjEyLjE5NS41NC4wMzUuOTc0LS4zNzIuNDE4LS4zOTMgMS4zODctLjk3NyAyLjE1My0xLjI5NnptMTYuMTQ1LTUuMDNjMS42MjgtMi41OTYgNS44MDYtNy4xMTMgOC4yNDYtOC45MTUgMi44MjYtMi4wODggNS43MDktMy40NSA4LjYzNi00LjA4IDIuNTM3LS41NDcgMi43OS0uNTQzIDQuNzQxLjA3MSAzLjU5OSAxLjEzMiA1LjMzNCAzLjQwNSA0Ljg1NSA2LjM2LS4xNTUuOTUyLS4wNDkgMS4zNDkuNDY1IDEuNzM4IDEuNzkgMS4zNTUgMy4xNy0uMjYzIDIuODE0LTMuMjk4LS40ODMtNC4xMDctMi44NDctNi4zLTcuOTI0LTcuMzUtNC42LS45NS03Ljc3OC0uMjg3LTEzLjQwMyAyLjgwMS0yLjk2IDEuNjI0LTUuNDgyIDQuMDY3LTkuNTUyIDkuMjUzLTIuNjcgMy40MDItMi45OCA0LjM5NC0xLjg5MyA2LjA1NC41OTUuOTA4LjYuOTA5IDEuMTQ3LjE5LjMwMi0uMzk3IDEuMTQzLTEuNjY4IDEuODY4LTIuODI1em0zOC4xOSAyLjc1OGM0LjA5Mi0uNjcgNy4wOS0yLjAzOCA5LjM1Ny00LjI3IDIuNjctMi42MjkgMy4yNTctNC4yODQgMi4xNTMtNi4wNzEtMS4wOS0xLjc2Mi00LjE4MS0zLjk2MS02Ljc1Ny00LjgwNy0zLjU3MS0xLjE3Mi03Ljk1OS0uODQzLTcuNjg1LjU3Ny4wODkuNDYyLjc3MS42OTMgMi45ODQgMS4wMDkgNC42NjIuNjY2IDguMjQgMy4xNTIgOC4yNCA1LjcyNCAwIDIuMTEyLTQuMDcxIDQuNjE0LTguNzYxIDUuMzgzLTYuNzY0IDEuMTEtMTQuMjctMy4yMS0xNi42NTQtOS41ODQtLjc4LTIuMDg2LS44MDUtMi4xMS0yLjA2My0yLjAwNS0xLjE5LjEtMS4yNy4xODItMS4yMjIgMS4yNDUuMDc4IDEuNzQzIDMuNzQ3IDcuMzA4IDUuOTMzIDkgMS44ODUgMS40NTggNS44NDcgMy4zNTQgNy45NSAzLjgwNCAxLjgxNi4zODkgNC4xMzMuMzg3IDYuNTI1LS4wMDV6bS0yOC41OTgtMS42NDNjLjUwNS0uOTAzLjg2NS0xLjY5NC44MDItMS43NTctLjE5My0uMTkzLTQuMTI4IDIuMzcyLTQuMTI4IDIuNjkgMCAuMzcyLjY1Ni42NDQgMS42NDUuNjguNTU2LjAyIDEuMDE0LS40MiAxLjY4MS0xLjYxM3ptLTQ3LjI0Ny0uNDRjOC0yLjY0NCA4LjgxLTMuMDg2IDguNTgzLTQuNjgxLS4xNjUtMS4xNjgtMS4zMDgtMS4yMTItMy40MzYtLjEzMy01LjQ2NiAyLjc2OS0xNi4wNDMgMy40MTQtMjAuMTIgMS4yMjctMi4xOS0xLjE3NC0zLjktMi45NDUtMy45LTQuMDM4IDAtMS4xNiAyLjEyNy0zLjM2OSA0LjE2OC00LjMyNiAxLjA1Mi0uNDk0IDEuMzItLjgyOCAxLjQxLTEuNzU2LjA5LS45MjYtLjAxNy0xLjE0Ni0uNTU1LTEuMTQ2LTEuNDI3IDAtNC4wMDEgMS4xNzgtNS41NDUgMi41MzctMi4zMDQgMi4wMjctMi44OCAzLjM2OS0yLjcwNyA2LjMwNy4wODMgMS40MDcgMi4zNjUgMy43OTMgNC42MDIgNC44MDkgMy44OTMgMS43NjkgNi4yMSAyLjIyMyAxMC43OTcgMi4xMTYgMy4yODMtLjA3NyA0Ljc4OC0uMjgzIDYuNzAzLS45MTZ6bTI0LjE0MS0uMDk0Yy0uNTItLjk4Ny0xLTEuMzQtMS44MjgtMS4zNDgtMS4zMi0uMDExLS4zNDggMS4zODYgMS41IDIuMTU1Ljc1LjMxMy44MjQuMTM0LjMyOC0uODA3em0zNC40MjItLjY1Yy40NC0uNzEyLTEuMjE4LTIuNDMyLTIuNTc0LTIuNjctMS42ODYtLjI5NS0yLjYzNS0uOS01LjAxMy0zLjIwMi0yLjEwNi0yLjAzOS0yLjY4MS0yLjIyMy0zLjg4OC0xLjI0Ni0uNjM3LjUxNi0uNzIuNzc2LS40MjQgMS4zMjguNTI4Ljk4NyAyLjU2NiAzLjA4NiAzLjc2NSAzLjg3OCAyLjYxMiAxLjcyNSA3LjUzNCAyLjg4MiA4LjEzNCAxLjkxMnptLTQ4LjE1Ni0xLjc2MWMwLS43My0uODUxLS45NzQtMS4yMzUtLjM1My0uMjk1LjQ3OC4xMDMgMS4wNTguNzI3IDEuMDU4LjI4IDAgLjUwOC0uMzE3LjUwOC0uNzA1em04LjIyNS0uNzVjMS4yMi0uNjI2IDIuNzExLTIuMTUxIDIuNzExLTIuNzc0IDAtLjc3Ni0uNy0xLjQxNS0xLjU1LTEuNDE1LTEuMTQgMC0yLjY4MyAxLjczLTIuNjgzIDMuMDA2IDAgMS42MDIuMjgxIDEuODIxIDEuNTIyIDEuMTg0em01Ny4zNDctMS4zYy0uMzY1LS43MTYtMS41MzgtMi40OTItMi42MDUtMy45NDgtNC01LjQ1Mi01LjM2OS03LjY2NC02LjQ5OS0xMC40OTUtMS4xMDYtMi43NzItMi4xNC0zLjgyNi0yLjE0LTIuMTgyIDAgLjgyMiAzLjIwMyA2LjkzNCA0LjM5MiA4LjM4MS40MjcuNTIgMS4yNzQgMS44MTggMS44ODQgMi44ODUuNjA5IDEuMDY3IDEuNjY5IDIuNTQ1IDIuMzU0IDMuMjgzLjY4Ni43MzggMS4yNDcgMS42NCAxLjI0NyAyLjAwMyAwIC44NTIuOTQgMS43OTMgMS41NTYgMS41NTcuMzgyLS4xNDcuMzQ1LS40NC0uMTg5LTEuNDg0em0xNi43NjgtLjE3NWMuOS0uNjU4LjYyMi0yLjE1Mi0uNDI3LTIuMy0xLjA0Ni0uMTQ5LTEuODMzLjUxMi0xLjgzMyAxLjU0IDAgMS4xNzQgMS4xNiAxLjU2NCAyLjI2Ljc2em0tOTQuNzg0LS42OTFjLjg0My0uNDI3Ljg2My0uNTM3Ljk3OS01LjU1MS4wODktMy44NDIuMzA4LTUuODE4Ljg4LTcuOTM4Ljc5OC0yLjk1NiAzLjA0Ni04LjUyIDMuNTc0LTguODQ3Ljc1NC0uNDY1LjE0OS0xLjYtMS44OTctMy41NTktMS4yMTItMS4xNjEtMi42NDEtMi4zOTUtMy4xNzUtMi43NDItLjkwNC0uNTg5LTEuMDMtLjU5Mi0xLjg1Mi0uMDUzLTEuODYxIDEuMjItNS40MzQgMTAuMTgxLTYuNjc0IDE2Ljc0LS42NDYgMy40MTgtLjc1IDExLjAyNS0uMTY2IDEyLjExNy4zNzEuNjkzLjU4Ny43MiAzLjkzMi41IDEuOTQ2LS4xMjcgMy45MjYtLjQyNyA0LjQtLjY2N3ptNTYuOTg3LS43Yy4yLS41NzktLjQyNi0yLjM4Mi0uODI2LTIuMzgyLS4xNzIgMC0uNDEyLjQtLjUzNS44ODctLjMxNyAxLjI2NS45NTggMi42NjYgMS4zNiAxLjQ5NXpNNy4zMzggNjYuOTU3Yy4yMzMtLjIzMy40MjMtLjYxOC40MjMtLjg1NyAwLS41ODctLjk5My0xLjU0Mi0xLjYwNC0xLjU0Mi0uNjcxIDAtMS42OTggMS42My0xLjQ0NCAyLjI5LjI0NC42MzggMi4wMjMuNzExIDIuNjI1LjExem0zOS45MzQtMy44MWMwLS4xOTQtLjIzOC0uMzUzLS41MjktLjM1My0uMjkxIDAtLjUzLjE2LS41My4zNTMgMCAuMTk0LjIzOS4zNTMuNTMuMzUzLjI5MSAwIC41My0uMTU5LjUzLS4zNTN6bTE1LjczMi0zLjAzOGMyLjk0MS0zLjY2IDMuOTc0LTUuNTczIDMuNDU3LTYuMzk4LTEuMDI0LTEuNjM0LTIuMDgyLS43NTktNy44MTIgNi40NzEtLjk4NSAxLjI0My0uOTg1IDEuMjQ0LjA4OCAyLjQwMiAxLjEzNCAxLjIyNCAxLjQzNyAxLjA0NyA0LjI2Ny0yLjQ3NXptMTMuMDAzLS45NDljLS4xMjYtLjQyNi0uODI3LTEuODA3LTEuNTU4LTMuMDY4YTI0NC4zOTQgMjQ0LjM5NCAwIDAgMS0yLjU4LTQuNTg3IDc2Ny4yNjcgNzY3LjI2NyAwIDAgMC0zLjE3My01LjczM2MtMy45MTYtNy4wMDItNS45OTQtMTMuODYtNS45MzUtMTkuNTgyLjA1My01LjA5OCAyLjc1LTguNTE2IDcuMjAxLTkuMTI2IDEuNTI4LS4yMSAyLjI5OC4wNyA1LjIzNCAxLjg5OC43OS40OTIgMS4wMjYuNTA5IDEuNTA3LjExIDEuMzI3LTEuMTAyLTEuMTY0LTMuODYxLTQuMzQ5LTQuODItMi4zMTUtLjY5OC00LjMyMi0uNDg2LTYuNjQ3LjcwMi00Ljc3NiAyLjQ0MS02LjgwNiA3LjUyNi02LjA3IDE1LjIwOC4yMDUgMi4xMzUuNTQgNC40MzcuNzQ1IDUuMTE2LjUgMS42NTUgNi4xNCAxMy4zNjUgOC42NjYgMTcuOTkxIDIuMTMgMy45MDEgMi42NTQgNC43ODcgMy41NTMgNS45OTggMS4yNTQgMS42OSAxLjQ3IDEuNzg4IDIuNjI2IDEuMTkuNzk5LS40MTMuOTYxLS42ODMuNzgtMS4yOTd6TTM4LjA2IDU1LjM4NmMxLjQ0NC0zLjYyMyAxLjYxMy01LjEyOC43NzQtNi44OGwtLjY3Ni0xLjQxLS4wMzMgMi4xMTZjLS4wMzggMi40MzktLjkzNSA1LjU1NS0yLjQ3NiA4LjYxLS41OTIgMS4xNzEtMS4wNzYgMi4zMi0xLjA3NiAyLjU1MiAwIDEuMDI5IDIuNTMzLTIuNTk0IDMuNDg3LTQuOTg4em02Ni4wODIgMi4zODFjLjQ3My0uNjMgMS4xMy0xLjgzMyAxLjQ2LTIuNjcybC42LTEuNTI1LS44MDEuMjQyYy0xLjg3LjU2NS0zLjQyIDMuMTE1LTIuODM0IDQuNjYuMjY2LjY5OS42NS41MjYgMS41NzUtLjcwNXptMTcuNjg5LTEuMzA2Yy45OTQtLjk4My0xLjA3Ny0yLjcwMi0yLjc1LTIuMjgzLTEuMTEuMjc5LTEuMTggMS4yNzEtLjE2IDIuMjIzLjczNS42ODQgMi4yNDYuNzE1IDIuOTEuMDZ6TTEzLjQ4IDU1LjE4NmMuMzM2LS43MzYuMzA2LTEuMDgzLS4xNTgtMS44NTItLjc3LTEuMjc1LTEuODQtMS4zOTQtMi41NjUtLjI4Ni0uNDc1LjcyNC0uNSAxLjAyNC0uMTQ2IDEuNjk3Ljg1IDEuNjEzIDIuMjM4IDEuODI2IDIuODcuNDQxem03NS41NzMuMTY0Yy4wODEtLjA4LjE5OS00LjE0Ni4yNjItOS4wMzMuMTEtOC41NDUuMDg3LTguOTA4LS41OTEtOS40MjMtLjM4OC0uMjk1LTEuMTItLjU0LTEuNjI3LS41NDctLjg1LS4wMS0uOTM4LjEzMy0xLjE0MyAxLjg0MS0uMTIzIDEuMDE5LS4yMjQgNS40MzktLjIyNiA5LjgyMmwtLjAwMyA3Ljk3IDEuNTkxLS4yNDJjLjg3NS0uMTMzIDEuNjU3LS4zMDcgMS43MzctLjM4OHptLTM5LjYwNy0xLjkwNGMuMTI4LS45Ny4zNDItNS4xMzcuNDc2LTkuMjU4LjI2OC04LjI4LjIzNy04LjQwMy0xLjg5Ni03LjUybC0uOTk3LjQxNC0uMjEyIDguODY0Yy0uMTE2IDQuODc2LS4xMjYgOS4wMDMtLjAyMSA5LjE3Mi4xMDQuMTcuNjkuMjYgMS4zMDMuMiAxLjA1LS4xMDIgMS4xMjctLjIxIDEuMzQ3LTEuODcyem02Ni4zNDUtLjE3N2MtLjEyNi0xLjYyNC0xLjAxNi0yLjMzNy0xLjkwNy0xLjUzLTEuMjg3IDEuMTY1LS41NDYgMy4wNjMgMS4xMiAyLjg2OC43NzctLjA5Ljg3Mi0uMjUyLjc4Ny0xLjMzOHptLTk4LjU4My4xNTdjMS4wMjQtLjcxOC45OTUtMS40ODctLjA3Ni0xLjk3NS0xLjY0Ni0uNzUtMi45Mi41NjUtMS43NzQgMS44MzEuNzU1LjgzNS44NTIuODQzIDEuODUuMTQ0em0xMDUuODQtMS45OTFjLjIzNC0uMjMzLjQyNC0uODY4LjQyNC0xLjQxMSAwLS45MDgtLjEwNi0uOTg3LTEuMzIzLS45NzctLjcyNy4wMDYtMS42LjIyMi0xLjk0LjQ4LS42MTUuNDY3LS44MyAxLjY0OC0uMzgyIDIuMDk2LjM5OC4zOTkgMi43NzQuMjYgMy4yMjItLjE4OHpNMzcuMTkgNTAuMDQ5Yy0uMjc5LS40NS0uODU0LS4wMi0uODU0LjYzOSAwIC40NDguMDk4LjQ3LjUyNS4xMTUuMjktLjI0LjQzNy0uNTguMzI5LS43NTR6bTI1LjY2Ny44OTJjMi4yNzktLjI1OCAyLjUyNi0uNjc0IDEuNTM4LTIuNTg0LS42NDYtMS4yNS0uOTk4LTEuMzAzLTcuMjQ1LTEuMDg2bC01LjExNS4xNzd2MS41ODhjMCAxLjU4NS4wMDMgMS41ODggMS40MSAxLjc4MiAyLjI2LjMxIDcuMTgyLjM3NSA5LjQxMi4xMjN6bS0xOC44My0uNTY0Yy41NzgtLjU3OC41MzMtMS44Ny0uMDgzLTIuMzgtLjI3OC0uMjMxLTEuMDMzLS4zNy0xLjY3Ni0uMzA4LS45ODcuMDk1LTEuMTg3LjI2Ny0xLjI4MyAxLjEwNC0uMDYzLjU0NS4wNzYgMS4yMi4zMDggMS40OTkuNTExLjYxNyAyLjE1LjY2NyAyLjczNC4wODV6bTYwLjk3NS4wNWMzLjMtLjI4NCA3LjQ0OC0xLjM1IDguNTA0LTIuMTg3LjU4My0uNDYxLjU2MS0xLjcyOC0uMDQ1LTIuNTU3LS40NjgtLjYzOS0uNTI0LS42NC0xLjQzNi0uMDQzLTIuMDgyIDEuMzY0LTMuOTczIDEuNjI0LTExLjg0NiAxLjYyOC04LjQ4Mi4wMDQtOS4yMy4xNzQtOC44ODcgMi4wMi4xLjU0LjM1NyAxLjEuNTcxIDEuMjQyLjUxOC4zNDcgOC42NjUuMjgzIDEzLjE0LS4xMDJ6bS05My4yNC0uNzQ2Yy41Ni0uODktLjI0NC0yLjQwOS0xLjI3Ny0yLjQwOS0xLjY4NyAwLTIuMjQxIDEuNjczLS44NzIgMi42MzQuOTQuNjYgMS42MzcuNTg2IDIuMTQ4LS4yMjV6bTcxLjU3LjE5Yy40Ni0uMjg1LjMxLTEuODEtLjIzMy0yLjM1Mi0uMjgtLjI4LTEuMTkzLS41MjYtMi4wMjgtLjU0Ni0uODM2LS4wMi0yLjY4OS0uMTg3LTQuMTE3LS4zNy0yLjE4Mi0uMjgtMi43ODgtLjIzOS0zLjc4NC4yNTYtMS4zNTkuNjc1LTEuMzkzLjc4Ni0uNjc0IDIuMTc4LjQ4NS45MzcuNzE3IDEuMDM1IDIuNzM0IDEuMTU2IDIuNDYzLjE0NyA3LjY3OC0uMDYgOC4xMDMtLjMyM3ptMzMuMjE1LTIuOTIyYy0xLjU0OC0yLjA3My0yLjA3NS0yLjEwNi0uNzExLS4wNDQuNTEzLjc3Ni45MzMgMS42Mi45MzMgMS44NzcgMCAuMjU2LjE5OS42NjYuNDQxLjkxMS4zNTUuMzU4LjQ2My4zMDcuNTUxLS4yNjIuMDYzLS40LS40NjUtMS40NzgtMS4yMTQtMi40ODJ6TTE0LjA0NSA0OS4wNThjLjA4OC0uMjY1LS4wNDQtLjM5Ny0uMzA5LS4zMDlhMS4xMDMgMS4xMDMgMCAwIDAtLjYxNy42MThjLS4wODguMjY0LjA0NC4zOTcuMzA5LjMwOC4yNTQtLjA4NS41MzItLjM2Mi42MTctLjYxN3ptOC4zNy0xLjgxYy4xNS0xLjEwOS4wMjctMS4zMS0xLjQ2Ny0yLjM4NS0xLjg5OS0xLjM2Ny0zLjEyMi0xLjMwNC0zLjY5LjE4OS0uNDA4IDEuMDc1LS4xMDQgMS40NjggMi40OTggMy4yMjMgMS44MjMgMS4yMyAyLjM3OSAxLjAxNiAyLjY1OC0xLjAyN3ptMTUuNjc0LTEuMjk5Yy0uMDEzLS43LS45NDUtMi4wNzEtMS4yMjItMS43OTUtLjE4Ni4xODYuODEyIDIuNDEzIDEuMDgyIDIuNDEzLjA4MyAwIC4xNDYtLjI3OC4xNC0uNjE4em0tMjIuMDU3LTEuNjczYy41My0xLjM4NyAxLjAxLTEuODY2IDMuNDkyLTMuNDc3IDMuMTYyLTIuMDU0IDYuMjQ2LTIuOTczIDguNTM3LTIuNTQzLjk3Ny4xODMgMS4yNTcuMTMxIDEuMTQyLS4yMTItLjE5NC0uNTgxLTEuNDMtLjkyMy0zLjUwMi0uOTY3LTEuOTQ3LS4wNDItNS45MzcgMS44NDItNy42NiAzLjYxNy0zLjQ5MiAzLjU5OC0zLjYzOCAzLjg0Mi0zLjI1IDUuNDUyLjEuNDIuNzI1LS41MiAxLjI0LTEuODd6bTU3LjU4Ni0xLjg2OWMzLjI0Mi01LjAyOCA1LjEwNi04LjUwMyA0Ljk4OS05LjMwMS0uMTU3LTEuMDc1LTEuOTUzLTEuNTU3LTIuODMyLS43NjEtLjM0OS4zMTUtLjYzNC43NDYtLjYzNS45NTktLjAwMi4yMTItMS4wNSAyLjA1My0yLjMzIDQuMDktMi44NyA0LjU2OC0zLjAwNyA0LjkxNi0yLjU3IDYuNDk3LjU1MSAxLjk5OSAxLjM2MyAxLjY0MyAzLjM3OC0xLjQ4NHptMjkuMDk1LjM5NWMxLjk5LTEgNC4yNjMtMS4yNDIgNi43MzYtLjcxNyAxLjYyNy4zNDUgMS43ODQtLjIyOC4yMTItLjc3Ni0xLjMyNS0uNDYyLTMuNTAyLS40ODctNS4zMzctLjA2LTEuNTYuMzYyLTUuMjkxIDMuMTEtNC45NTcgMy42NS4xNC4yMjcuNDY5LjA3NS44NDUtLjM5LjMzOC0uNDE4IDEuNDY0LTEuMTg2IDIuNTAxLTEuNzA4em0xNi43ODYuMzI1Yy42OC0uNzI4IDEuNi0yLjExNyAyLjA0NC0zLjA4Ny45NjgtMi4xMTUgMS43MzMtNi40NjIgMS40MjYtOC4wOTktLjI0NC0xLjMtMS40My0zLjAxNi0yLjA4LTMuMDA4LTEuMjA1LjAxNi0xLjQyMy42NC0xLjQ0OSA0LjEzNy0uMDIyIDMuMTQ4LS4xMTUgMy42MzEtLjk0IDQuODhhMzQuMTM0IDM0LjEzNCAwIDAgMC0xLjUzMyAyLjU3N2MtLjU4NiAxLjEzNS0uNTg2IDEuMjU5IDAgMi41NTguMzM4Ljc1Ljc2OCAxLjM2NS45NTUgMS4zNjUuMTg3IDAgLjg5Ny0uNTk1IDEuNTc3LTEuMzIzek0xNC43NDYgNDEuOTFjLjY2LS42Ni41MDEtMi4yNjctLjQwNi00LjA4Ni0xLjExMS0yLjIzLTEuNzI2LTQuODY4LTEuNDQ2LTYuMjExLjEyNS0uNjA0LjYxLTIuMjg0IDEuMDc1LTMuNzM0LjQ2Ni0xLjQ1Ljg0OC0yLjc1NS44NDgtMi45MDEgMC0uMTQ2LS40OTgtLjUyMy0xLjEwNy0uODM4LTEuNjM0LS44NDUtMi41MjYtLjIxMS0zLjcwNiAyLjYzMy0xLjg0NyA0LjQ1Ni0xLjA2NCAxMS4xMzYgMS42NSAxNC4wNzUgMS4zOSAxLjUwNyAyLjMyNiAxLjgyOCAzLjA5MiAxLjA2MnptMjYuMTc2LTIuMjVjMy4yNDEtMy4yNzQgOC4yNDctNi40ODIgMTIuMzQ3LTcuOTEzIDEuODQ0LS42NDMgMy41NDItMS4zMTUgMy43NzQtMS40OTMuMjQ2LS4xODguNDE5LTEuMTg5LjQxMy0yLjM4OGEzOC4yNDcgMzguMjQ3IDAgMCAxIC4yNC00LjA2OGMuMjMxLTEuODUuMi0xLjk4OC0uNDEyLTEuODEzLS4zNjUuMTA0LTEuNDk5LjI5NS0yLjUyLjQyNC0yLjY3LjM0LTcuNzUgMi4wMDItMTAuMDM2IDMuMjg2LTMuNDI3IDEuOTI1LTkuNTA0IDYuMjEtMTAuOCA3LjYxNi0yLjAwMiAyLjE3My0xLjk1NCAzLjMwMi4xODYgNC4zMTcuNjc2LjMyIDEuMzIyLjgzNiAxLjQzNiAxLjE0NS40NzUgMS4yODYgMS45NzkgMy4yMDcgMi41MDkgMy4yMDYuMzEzLS4wMDEgMS42MDItMS4wNDQgMi44NjMtMi4zMTl6bTU3LjcwNS0xLjA5NGMxLjI0Ny0xLjEwMSAyLjI2Ny0yLjI3MiAyLjI2Ny0yLjYwMiAwLS42NzYtMy41MjItMy44OTctNy4wMjItNi40MjEtMy45NzQtMi44NjctOS41MzgtNS4yMjctMTYuOTY2LTcuMTk3LTIuODAxLS43NDItOS4zOTctMS4yNzMtMTAuMjM2LS44MjQtLjYwNi4zMjQtLjg3NSAxLTEuNTIyIDMuODI1LS4xOTYuODU3LjM1OCAyLjUwNy45OSAyLjk1Mi4xOTkuMTM5IDEuODY5LjI1IDMuNzEyLjI0NiA1LjI1My0uMDA5IDguNjE4Ljg1MiAxNC42ODggMy43NTcgMy45MDcgMS44NyA3LjI2NSA0LjI5MiA5LjYwOCA2LjkzLjY1NC43MzUgMS40MiAxLjMzNyAxLjcwMSAxLjMzNy4yODIgMCAxLjUzMy0uOTAxIDIuNzgtMi4wMDN6bTEyLjk4NS0uOTcyYzEuMDktMS40MyAxLjEyNS0xLjYxMS4zMDctMS42MS0uODc1LjAwMy0yLjc5NCAxLjIzOS0zLjI1MyAyLjA5Ny0uMzU2LjY2NS0uMjkuNzI0LjgxNy43MjQuOTU5IDAgMS4zOTUtLjI0OCAyLjEzLTEuMjF6bS04Ni43NjEtMi41OTZhNDE4LjU4IDQxOC41OCAwIDAgMS0xLjkzNy0xLjM0NGMtMS4zNS0uOTQtNC41Ny0xLjg1OS00LjU3LTEuMzA0IDAgLjA5OS40MTguNjguOTI4IDEuMjkuNjg5LjgyMiAxLjQ4NiAxLjI1IDMuMDg3IDEuNjU2IDEuOTg1LjUwNCAzLjQxNy4zMzMgMi40OTItLjI5OHptNDUuNDM1LS4yMDljLjE0Mi0uMjE2LjI1OS0uNjMxLjI1OS0uOTIyIDAtMS42OTMtMS45MTctMS44Ni0yLjgtLjI0NS0uNTAyLjkxOS0uNDkyIDEuMDI3LjE0NiAxLjUuNzE1LjUzMyAxLjkzNi4zNjMgMi4zOTUtLjMzM3ptNDEuNTc4LTMuNTAzYy45NDUtLjYxOCAxLjcyLTEuMjQ3IDEuNzI0LTEuMzk3LjAwNC0uMTUtLjQyOC0uNDM4LS45NTgtLjY0LTEuODkzLS43Mi01LjczOC45NzgtNS43MzggMi41MzMgMCAxLjM5NCAyLjQ1NCAxLjE1IDQuOTcyLS40OTZ6bS04My42MTktMS4zMTJjLjM3Ni0uMjAxLjY4My0uNjIzLjY4My0uOTM4IDAtLjg2My00LjU1Ny00Ljk3My02LjEzMi01LjUzMS0uNjAzLS4yMTQtLjY0OC0uMDg3LS40ODIgMS4zOC4xOTkgMS43NjMuOTM3IDIuNzU4IDMuMjYyIDQuMzk4IDEuNjMgMS4xNDkgMS43NTQgMS4xOCAyLjY3LjY5em05MS4wNi0xLjkyOGMuNDIyLS40ODUuOTc2LS44ODIgMS4yMzItLjg4MnMuNDY2LS4xNzIuNDY2LS4zODJjMC0uNDQ0LS4wODctLjQxMS0xLjg1Mi42ODctLjcyOC40NTItMS4zMjMuOTY2LTEuMzIzIDEuMTQgMCAuNTkzLjcwNi4zMjMgMS40NzctLjU2M3ptLTQuMDM4LS43NTFsLjc5Mi0uMjEyLS45Mi0xLjA5M2MtMS4wNTMtMS4yNTEtLjYwMy0xLjY4NC43OTgtLjc2NyAxLjE3Ljc2OCAxLjYyOC4zMjMgMS42MDItMS41NTYtLjAzOC0yLjc5NC0uOTc3LTIuODYyLTMuNzItLjI2OC0xLjM4NiAxLjMxLTEuOTg4IDIuMTQ4LTEuOTg4IDIuNzY0IDAgLjQ4Ni4xMDUuOTg5LjIzNSAxLjExOC4yOS4yOTEgMi4xMzguMjk5IDMuMjAxLjAxNHptLTk0Ljk1LTIuMDNjLjMxOC0uODI4LS44MzUtMy4xNDgtMS40NDEtMi45MDJsLTEuMDYuNDI5Yy0uNTg2LjIzNy0uNzM3LS4zOTgtLjE3Ny0uNzQ0LjE5NC0uMTIuMzUzLS41MjYuMzUzLS45MDIgMC0uNTkyLS4yNTItLjY4NC0xLjg1Mi0uNjgtMS4wMi4wMDMtMi4wNTYuMTM1LTIuMzA1LjI5My0uNjc4LjQzLS4xNjQgMS4zNDQgMS4wMzQgMS44NC41ODQuMjQyIDEuMzEuODE5IDEuNjEzIDEuMjgzIDEuMDA1IDEuNTMzIDMuNDQgMi40MTIgMy44MzYgMS4zODN6bTc0LjE0LTEuNjA4YzMuNjM5LTQuMjI1IDExLjA0Mi01LjY1NCAxNS42ODktMy4wM2wxLjY2Ni45NDIgMS4yNTQtLjk1NmMxLjE5LS45MDggMS4yMjQtLjk5LjY2LTEuNjEzLS4zMjctLjM2MS0xLjY0MS0xLjE2NS0yLjkyLTEuNzg2LTQuMzUzLTIuMTEzLTEwLjY3OS0xLjY4My0xNC43MjIgMS4wMDEtNC4wNzggMi43MDctNS4zNTcgNC42Mi00LjM1IDYuNTAzLjU1OSAxLjA0MyAxLjA5LjgzNiAyLjcyMy0xLjA2em0tNTAuNTgtLjIwMmMuNzA0LS4yOTQgMS4yNzgtLjczIDEuMjc4LS45Ny0uMDAyLS45NTMtMi43OTUtMy41MjQtNS40NjctNS4wMzMtNC4zNjEtMi40NjMtNi45NTEtMy4xMDctMTEuNjQyLTIuODk1LTQuMDc1LjE4NC02LjQxLjc4NS03LjAzNSAxLjgxMS0uMzAyLjQ5NS0uMTc3Ljc3MS42NTQgMS40NDIuOTY1Ljc3OCAxLjA4Ljc5NCAxLjg4MS4yNjkuNjI5LS40MTIgMS43MS0uNTU2IDQuMDg4LS41NDUgNC45NjYuMDI0IDguNDkgMS4zMTIgMTIuMjMgNC40NyAxLjI2MSAxLjA2NiAyLjM5MyAxLjk0OCAyLjUxNCAxLjk2MS4xMjIuMDEzLjc5Ny0uMjE2IDEuNS0uNTF6bTc3LjYyNS0uMTQ5YzEuMjE1LS44IDMuMDI5LTMuMzgxIDMuMDI5LTQuMzEgMC0xLjExNi0yLjQzLS44ODQtMy41ODguMzQzLTEuMDIgMS4wODItMS4xMDMgMS4zNDYtMS4wNCAzLjMyNy4wNDggMS41MTUuMTg3IDEuNTcgMS41OTkuNjR6TTIwLjY1OSAxOC43OThjLS45NzItLjkwMy0xLjQzNy0xLjE0Ni0xLjU1LS44MDktLjE5NS41ODUgMS41MTIgMi4xMjMgMi4zNDIgMi4xMS40MjItLjAwNy4xOS0uMzg5LS43OTItMS4zem02Ni44MTYuNjEyYy44OTgtLjQ4IDEuNTEzLTIuMzYgMS4wNTQtMy4yMTctLjQ1NC0uODQ4LTIuMzItLjg5OC0zLjIxNy0uMDg3LS43OTIuNzE2LS44NCAyLjM0Ny0uMDkxIDMuMDk1LjYzNy42MzcgMS4zMzMuNzAyIDIuMjU0LjIxem0tMzMuMTczLTEuNjQyYzEuMzQyLTEuNzA2Ljg0LTIuNTk5LTEuNDYzLTIuNTk5LTEuMTc3IDAtMi4wMS44MDUtMi4wMjggMS45NTgtLjAyNyAxLjc1IDIuMjg1IDIuMTc0IDMuNDkxLjY0em0tMzguNDI3LjQyNWMwLS41NjItNC45NjctNC42MDUtNS45MzctNC44MzItLjUxOC0uMTIyLTEuMjE4LS4zMzYtMS41NTUtLjQ3Ny0uNDYxLS4xOTMtLjcwMi0uMDE4LS45NzguNzA3LS4zMzUuODgyLS4yMzQgMS4wODggMS4yMDUgMi40NDcuODY1LjgxNyAyLjA5OSAxLjY1MyAyLjc0MyAxLjg2IDEuMTU0LjM2OSA0LjUyMi41OSA0LjUyMi4yOTV6Ii8+PC9zdmc+
+
+:: StoryBanner
+<<include "Logo">>
+
+:: StoryDisplayTitle
+Table of Contents
+
+:: StyleSheet [stylesheet]
+body {
+  background-color: #222;
+}
+    /*Sidebar*/
+#ui-bar-history, #menu {
+  display: none;
+}
+#ui-bar-body {
+  margin: 1.5em 0;
+}
+#ui-bar-body > :not(:first-child) {
+  margin-top: 0;
+  text-align: left;
+}
+#story-caption {
+  height: calc(100vh - 320px);
+  overflow: auto;
+}
+img {
+    width: 232px;
+  background: #eee;
+}
+ul {
+  padding-left: 1em;
+}
+li strong a {
+  font-size: 110%;
+}
+
+    /*Headers*/
+h1 {
+    text-align: center;
+}
+#passages h1, #passages h2 {
+    background: #0b1f0b;
+    border-radius: 5px;
+    padding: 0.5em;
+}
+h3 {
+    margin-top: 2em;
+    text-indent: 1em;
+}
+h4 {
+    margin-left: 3em;
+    font-size: 115%;
+}
+
+    /* Blockcode */
+blockquote {
+    border-left: 4px #0b1f0b solid;
+    padding: 5px;
+}
+    /* Code */
+code, pre {
+    font-family:monospace,monospace;
+    font-size:1em;
+    background: #03350369;
+    border-radius: 1em;
+    padding: 0.2em 0.5em;
+}
+pre {
+    overflow:auto;
+    white-space: pre-wrap;
+}
+code {
+    display: inline-block;
+}
+pre code {
+    background: transparent !important;
+    border-radius: 0;
+    padding: 0;
+}
+

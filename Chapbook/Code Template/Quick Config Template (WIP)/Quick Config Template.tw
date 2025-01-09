@@ -1,0 +1,34 @@
+:: StoryTitle
+Chapbook Quick Config
+
+
+:: StoryData
+{
+  "ifid": "c15619b2-afc3-4065-8826-7b74e5790877",
+  "format": "Chapbook",
+  "format-version": "2.3.0",
+  "start": "Start",
+  "zoom": 1
+}
+
+:: Start
+{embed passage: 'Config'}
+<h1>Chapbook Quick Config Template</h1>
+
+- Single Theme - No Palette Change 
+- Dual Theme - No Palette Change 
+- Section with a Palette Change (flip-flop/reuse of {embed})
+
+But do I want this to be one template for all or separate for each?
+Because `config.style.page.theme.enableSwitching` allows for the removal of theme 
+Lol Maybe this won't be a Quick Config Template :lol:
+
+:: Config
+_fakeVariable: 0
+--
+[note]
+There is nothing in here, except for this note that says... you can embed passages to run code! Like the configs! So you can hide all of the code away in a side passage, and keep your main story passage cool looking!
+AND! it's super practical to call a certain set of configs/palettes for multiple passages (since you can't rely on tags with Chapbook).
+Just a warning, you can't embed a passage above the {--} break.
+
+:: 
