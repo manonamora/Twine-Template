@@ -1,0 +1,223 @@
+ /*~ ~ ~ ~ ~ ~ ~  TABLE OF CONTENTS ~ ~ ~ ~ ~ ~ ~ 
+    I-     Root Variables
+    II-    Base CSS
+        a- Body
+        b- Base + Sidebar
+    III-     HTML CSS
+        a- Headers (h1, h2, etc...)
+        b- <label>
+        c- <blockquote>
+        d- <hr>
+        e- Tables
+        f- Lists
+        g- <a>/Links
+    IV-      Macros
+        a- Textbox, Textarea, Select, Checkbox
+        b- Buttons
+    V-     UI Dialog
+        a- Base CSS
+        b- Settings Dialog?
+        c- Saves Dialog
+    VII-   Mobile
+    VIII-     Title Page
+
+    Notes:            
+        CTRL/Cmd+F the Title to jump
+*/
+
+/***************************
+    ROOT VARIABLES
+***************************/
+/*
+    Since colours are repeated in many spots, they've been merged here. You can edit the colours directly here, or manually change every 'var(--)' into the colour you want.
+*/
+
+:root {
+    --background: #000;
+    --font: #fff;
+    --link: #4169E1;
+    --hoverlink: #00bfff;
+    --visitedlink: #6941e1;
+    --visitedlinkhover: #E3E;
+}
+
+/***************************
+    BASE CSS
+***************************/
+    /***************************
+        Body
+    ***************************/
+*, :before, :after {
+    position: relative;
+    box-sizing: inherit;
+}
+html, body {
+    margin: 0;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+#story {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100%;
+    padding: 5% 5%;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: Georgia,serif;
+    font-size: 1.5em;
+    line-height: 1.5em;
+    background-color: var(--background);
+    color:var(--font);
+}
+
+    /***************************
+        Base + Sidebar
+    ***************************/
+#wrapper {
+    display:block;
+}
+
+#sidebar {
+    display:flex;
+    justify-content:space-between;
+    text-align:center;
+}
+
+/***************************
+    HTML CSS
+***************************/
+    /***************************
+        Headers
+    ***************************/
+h1, h2, h3, h4, h5, h6 {
+	line-height: 1em;
+	margin: 0.3em 0 0.6em 0;
+}
+h1 {
+	font-size: 3em;
+}
+h2 {
+	font-size: 2.25em;
+}
+h3 {
+	font-size: 1.75em;
+}
+
+
+
+
+/**    III-     HTML CSS
+        b- <label>
+        c- <blockquote>
+        d- <hr>
+        e- Tables
+        f- Lists
+**/    
+.passage a {
+    color: var(--link);
+    font-weight: bold;
+	text-decoration: none;
+	transition: color 0.2s ease-in-out;
+}
+.passage a:hover {
+    color: var(--hoverlink);
+}
+
+.passage a.link-visited {
+    color: var(--visitedlink);
+}
+.passage a.link-visited:hover {
+    color: var(--visitedlinkhover);
+}
+
+.passage a.link-broken {
+	color: #993333;
+	border-bottom: 2px solid #993333;
+	cursor: not-allowed;
+}
+
+
+
+
+/***************************
+    Macros
+***************************/
+    /***************************
+        Textbox, Textarea,
+        Select, Checkbox
+    ***************************/
+        /*Note: input = text/nubmer-box, select = listbox*/
+input, textarea, select {
+    color: var(--font);
+    background-color: var(--background);
+    border: 3px solid var(--font);
+    padding: 5px;
+}
+
+	/*
+		These are created by (input-box:).
+	*/
+	textarea {
+		resize:none;
+		background-color: var(--background);
+		font:inherit;
+		color:inherit;
+		border-style:none;
+		padding: 2px;
+	}
+	/*
+		These are created by (input:)
+	*/
+	input[type=text] {
+		background-color: var(--background);
+		font:inherit;
+		color:inherit;
+		border-style:none;
+	}
+
+	/*
+		These are created by (checkbox:).
+	*/
+	input[type=checkbox] {
+		transform: scale(1.5);
+		margin:0 0.5em 0.5em 0.5em;
+		vertical-align: middle;
+	}
+
+
+    /***************************
+        Buttons
+    ***************************/
+button {
+    display: block;
+	text-align: center;
+    padding: 0px 8px;
+    color: var(--link);
+    border: 2px solid var(--link);
+	border-radius: 16px;
+    transition: color 0.2s ease-in-out;
+
+}
+button:hover {
+    color: var(--hoverlink);
+    border-color: var(--hoverlink);
+}
+
+
+
+/***************************
+    MOBILE
+***************************/
+@media(min-width: 576px) {
+    #story {
+        padding:5% 20%
+    }
+    #sidebar {
+        left:-5em;
+        width:3em;
+        position:absolute;
+        flex-direction:column
+    }
+}

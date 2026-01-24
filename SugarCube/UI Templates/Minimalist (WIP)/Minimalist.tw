@@ -22,6 +22,11 @@ Minimalist Template
 
 
 :: Start [title noreturn] {"position":"500,100","size":"100,100"}
+<h1>Minimalist Template</h1>
+A Harlowe-inspired Interface Template, for minimalists projects.
+
+The styling of this template is based on the styling of the basic [[Harlowe interface|https://foss.heptapod.net/games/harlowe/-/tree/branch/default/scss]].
+
 [[NEW GAME|Next]]
 <<if Save.browser.size > 0>><<link "RESUME GAME">><<run Save.browser.continue();Engine.show();>><</link>>
 <</if>>\
@@ -84,8 +89,6 @@ Sed quam magna, mattis sit amet suscipit eget, imperdiet quis felis. Sed pulvina
 [[Basic Macros]]
 //As a list://
 * [[Basic Macros]]
-//With Div://
-<div class="choice">[[Basic Macros]]</div>
 
 
 :: Basic Macros {"position":"875,100","size":"100,100"}
